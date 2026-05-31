@@ -58,6 +58,7 @@ export const webDAVLog = {
 }
 
 export const initWebDAVLog = async () => {
+  if (!settingState.setting['common.isEnableWebDAVLog']) return
   const logPath = getWebDAVLogPath()
   try {
     const isExists = await existsFile(logPath)
@@ -68,6 +69,7 @@ export const initWebDAVLog = async () => {
 }
 
 export const clearWebDAVLogs = async () => {
+  if (!settingState.setting['common.isEnableWebDAVLog']) return
   const logPath = getWebDAVLogPath()
   try {
     await unlink(logPath)
