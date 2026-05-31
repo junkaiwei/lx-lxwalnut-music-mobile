@@ -436,11 +436,16 @@ const Main = () => {
   const pagerViewRef = useRef<ComponentRef<typeof PagerView>>(null);
   const [activeNavId, setActiveNavIdState] = useState(commonState.navActiveId)
   const navStatus = useSettingValue('common.navStatus'); // 获取菜单显示状态
+  const navOrder = useSettingValue('common.navOrder'); // 获取菜单排序
 
-  // 根据 navStatus 动态生成可见的菜单项、viewMap 和 indexMap
+  // 根据 navOrder 和 navStatus 动态生成可见的菜单项
   const visibleNavs = useMemo(() => {
-    return NAV_MENUS.filter(menu => isMenuVisible(menu.id, navStatus));
-  }, [navStatus]);
+    // 从 navOrder 中筛选，然后关联到 NAV_MENUS 中的信息
+    return navOrder.filter(id => isMenuVisible(id, navStatus)).map(id => {
+      const menuInfo = NAV_MENUS.find(menu => menu.id === id);
+      return menuInfo || { id, icon: 'unknown' };
+    });
+  }, [navStatus, navOrder]);
 
   const { viewMap, indexMap } = useMemo(() => {
     const viewMap: Partial<Record<NAV_ID_Type, number>> = {};
@@ -452,7 +457,15 @@ const Main = () => {
     return { viewMap, indexMap };
   }, [visibleNavs]);
 
-  const activeIndexRef = useRef(viewMap[commonState.navActiveId] ?? 0);
+  // 获取初始索引，如果当前 activeNavId 不在可见菜单中，则使用第一个可见菜单的索引
+  const getInitialIndex = () => {
+    let idx = viewMap[commonState.navActiveId];
+    if (idx == null && visibleNavs.length > 0) {
+      idx = 0;
+    }
+    return idx ?? 0;
+  };
+  const activeIndexRef = useRef(getInitialIndex());
 
   const onPageSelected = useCallback(({ nativeEvent }: PagerViewOnPageSelectedEvent) => {
     activeIndexRef.current = nativeEvent.position;
@@ -473,14 +486,33 @@ const Main = () => {
     []
   );
 
+  // 当可见菜单改变时，确保当前页索引是有效的
+  useEffect(() => {
+    let index = viewMap[commonState.navActiveId];
+    if (index == null && visibleNavs.length > 0) {
+      index = 0;
+      activeIndexRef.current = index;
+      if (visibleNavs[0]) {
+        setNavActiveId(visibleNavs[0].id);
+      }
+    } else if (index != null) {
+      activeIndexRef.current = index;
+      pagerViewRef.current?.setPageWithoutAnimation(index);
+    }
+  }, [viewMap, visibleNavs]);
+
   useEffect(() => {
     const handleUpdate = (id: CommonState['navActiveId']) => {
       setActiveNavIdState(id)
       pagerViewRef.current?.setScrollEnabled(!!settingState.setting['common.homePageScroll'] && id !== 'nav_play_history');
-      const index = viewMap[id];
-      if (index == null || activeIndexRef.current === index) return;
-      activeIndexRef.current = index;
-      pagerViewRef.current?.setPageWithoutAnimation(index);
+      let index = viewMap[id];
+      if (index == null && visibleNavs.length > 0) {
+        index = 0;
+      }
+      if (index != null && activeIndexRef.current !== index) {
+        activeIndexRef.current = index;
+        pagerViewRef.current?.setPageWithoutAnimation(index);
+      }
     };
     const handleConfigUpdate = (
       keys: Array<keyof LX.AppSetting>,
@@ -496,7 +528,7 @@ const Main = () => {
       global.state_event.off('navActiveIdUpdated', handleUpdate);
       global.state_event.off('configUpdated', handleConfigUpdate);
     };
-  }, [viewMap]);
+  }, [viewMap, visibleNavs]);
 
   // 根据 visibleNavs 动态渲染 PagerView 的子组件
   const pages = useMemo(() => {
