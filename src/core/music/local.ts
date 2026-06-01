@@ -14,6 +14,7 @@ import {
 import { getLocalFilePath } from '@/utils/music'
 import { readLyric, readPic } from '@/utils/localMediaMetadata'
 import { stat, existsFile, mkdir, writeFile, readDir } from '@/utils/fs'
+import { requestStoragePermission } from '@/utils/tools'
 import settingState from '@/store/setting/state'
 import { btoa } from 'react-native-quick-base64'
 import playerState from '@/store/player/state'
@@ -124,6 +125,12 @@ const downloadWebDAVMusic = async (musicInfo: LX.WebDAV.MusicInfo): Promise<stri
   const module = await loadWebDAVModule()
   const { getWebDAVDownloadUrl, updateWebDAVMusicMeta } = module
   const { downloadFile } = await import('@/utils/fs')
+  
+  // 请求存储权限
+  const hasPermission = await requestStoragePermission()
+  if (!hasPermission) {
+    throw new Error('没有存储权限，无法下载音乐')
+  }
   
   const downloadUrl = getWebDAVDownloadUrl(musicInfo)
   const downloadDir = settingState.setting['download.path'] || '/storage/emulated/0/Music/LX-N Music'
