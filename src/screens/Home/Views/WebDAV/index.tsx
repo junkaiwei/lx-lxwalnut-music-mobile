@@ -393,20 +393,41 @@ export default memo(() => {
   }, [])
 
   const handleBatchDownload = useCallback(() => {
-    if (filteredSongs.length === 0) {
-      toast('没有歌曲可以下载')
-      return
-    }
     void confirmDialog({
-      title: '下载到本地',
-      message: `确定要下载当前列表中的 ${filteredSongs.length} 首歌曲吗？下载后的歌曲将添加到下载列表中，并自动读取音乐标签。`,
-      confirmButtonText: '开始下载',
+      title: '扫描并下载',
+      message: '此操作将先扫描 WebDAV 目录，然后下载所有扫描到的歌曲。下载后的歌曲将添加到下载列表中，并自动读取音乐标签。',
+      confirmButtonText: '开始扫描并下载',
     }).then((confirmed) => {
-      if (confirmed) {
-        void handleWebDAVDownloadAndImport(filteredSongs, setBatchLoadingText)
-      }
+      if (!confirmed) return
+
+      setLoading(true)
+      setScanText('开始扫描...')
+      void scanWebDAVSongs(selectedFolder, (count, path) => {
+        setScanText(`已找到 ${count} 首，正在扫描：${path}`)
+      })
+        .then((config) => {
+          const scannedSongs = config.songs ?? []
+          setSongs(scannedSongs)
+          setScannedAt(config.scannedAt)
+          setScanText('')
+
+          if (scannedSongs.length === 0) {
+            toast('没有扫描到可下载的歌曲')
+            return
+          }
+
+          void handleWebDAVDownloadAndImport(scannedSongs, setBatchLoadingText)
+        })
+        .catch((err: any) => {
+          const message = err.message ?? String(err)
+          setScanText(message)
+          toast(message, 'long')
+        })
+        .finally(() => {
+          setLoading(false)
+        })
     })
-  }, [filteredSongs])
+  }, [selectedFolder])
 
   const loadFolders = useCallback((folder: LX.WebDAV.DriveFolder | null) => {
     setFolderLoading(true)
@@ -712,10 +733,10 @@ export default memo(() => {
         </Button>
         <Button
           style={{ ...styles.scanButton, backgroundColor: theme['c-primary-background-hover'], marginLeft: 8 }}
-          disabled={!hasConfig || loading || !!batchLoadingText || filteredSongs.length === 0}
+          disabled={!hasConfig || loading || !!batchLoadingText}
           onPress={handleBatchDownload}
         >
-          <Text color={theme['c-primary-font']}>下载到本地</Text>
+          <Text color={theme['c-primary-font']}>扫描并下载</Text>
         </Button>
       </View>
       <FlatList
