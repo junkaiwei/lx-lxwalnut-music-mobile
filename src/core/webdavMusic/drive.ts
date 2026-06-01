@@ -23,8 +23,6 @@ function getClient() {
   const username = settings['sync.webdav.username']
   const password = settings['sync.webdav.password']
 
-  webDAVLog.info('getClient called', { url, username: username ? '***' : undefined })
-
   if (!url || !username) {
     webDAVLog.error('WebDAV 未配置')
     throw new Error('WebDAV 未配置')
@@ -67,14 +65,12 @@ export const saveWebDAVConfig = async (config: LX.WebDAV.Config) => {
 }
 
 export const listWebDAVFolders = async (folder?: LX.WebDAV.DriveFolder | null) => {
-  webDAVLog.info('listWebDAVFolders called', { folderPath: folder?.path })
   const client = getClient()
   const basePath = folder?.path ?? '/'
   
   let contents: Array<FileStat & { type: string }>
   try {
     contents = await client.getDirectoryContents(basePath) as Array<FileStat & { type: string }>
-    webDAVLog.info('listWebDAVFolders success', { basePath, count: contents.length })
   } catch (error: any) {
     webDAVLog.error('listWebDAVFolders error', { error, status: error.status })
     if (error.status === 404 || error.status === 409) {
@@ -141,7 +137,6 @@ const scanFolder = async (
   folder: LX.WebDAV.DriveFolder | null,
   onProgress?: (count: number, folderPath: string) => void
 ) => {
-  webDAVLog.info('scanFolder called', { folderPath: folder?.path })
   const client = getClient()
   const result: LX.WebDAV.MusicInfo[] = []
   const basePath = folder?.path ?? '/'
@@ -149,7 +144,6 @@ const scanFolder = async (
   let contents: Array<FileStat & { type: string }>
   try {
     contents = await client.getDirectoryContents(basePath) as Array<FileStat & { type: string }>
-    webDAVLog.info('scanFolder got directory contents', { basePath, count: contents.length })
   } catch (error: any) {
     webDAVLog.error('scanFolder error', { error, status: error.status })
     if (error.status === 404 || error.status === 409) {
@@ -175,7 +169,6 @@ const scanFolder = async (
     if (!audioExts.has(ext)) continue
     result.push(toMusicInfo(item, path))
   }
-  webDAVLog.info('scanFolder completed', { basePath, songCount: result.length })
   return result
 }
 
@@ -210,16 +203,10 @@ export const scanWebDAVSongs = async (
   config.songs = mergedSongs
   config.scannedAt = Date.now()
   await saveWebDAVConfig(config)
-  webDAVLog.info('scanWebDAVSongs: merged songs', { 
-    newCount: songs.length, 
-    existingCount: existingSongsMap.size,
-    mergedCount: mergedSongs.length 
-  })
   return config
 }
 
 export const getWebDAVDownloadUrl = (musicInfo: LX.WebDAV.MusicInfo) => {
-  webDAVLog.info('getWebDAVDownloadUrl called', { musicId: musicInfo.id, fileName: musicInfo.meta.fileName, filePath: musicInfo.meta.filePath, remotePath: musicInfo.meta.remotePath, songId: musicInfo.meta.songId })
   const settings = settingState.setting
   const url = settings['sync.webdav.url']
   
@@ -228,7 +215,6 @@ export const getWebDAVDownloadUrl = (musicInfo: LX.WebDAV.MusicInfo) => {
   
   if (!remoteFilePath.startsWith('/')) {
     remoteFilePath = '/' + remoteFilePath
-    webDAVLog.info('getWebDAVDownloadUrl normalized remoteFilePath', { original: musicInfo.meta.remotePath || musicInfo.meta.songId || musicInfo.meta.filePath, normalized: remoteFilePath })
   }
   
   // 检查路径是否是本地路径（包含 /storage/emulated/ 或 /sdcard/）
@@ -247,7 +233,6 @@ export const getWebDAVDownloadUrl = (musicInfo: LX.WebDAV.MusicInfo) => {
   const baseUrl = url.endsWith('/') ? url.slice(0, -1) : url
   const encodedFilePath = encodeURIComponent(remoteFilePath.substring(1))
   const downloadUrl = `${baseUrl}/${encodedFilePath}`
-  webDAVLog.info('getWebDAVDownloadUrl result', { downloadUrl, encodedFilePath, remoteFilePath })
   return downloadUrl
 }
 
@@ -257,11 +242,9 @@ export interface WebDAVMusicMetaUpdate {
 }
 
 export const updateWebDAVMusicMeta = async (musicId: string, update: WebDAVMusicMetaUpdate): Promise<void> => {
-  webDAVLog.info('updateWebDAVMusicMeta called', { musicId, update })
   const config = await getWebDAVConfig()
   const songIndex = config.songs.findIndex(song => song.id === musicId)
   if (songIndex === -1) {
-    webDAVLog.warn('updateWebDAVMusicMeta: song not found', { musicId })
     return
   }
   
@@ -275,5 +258,4 @@ export const updateWebDAVMusicMeta = async (musicId: string, update: WebDAVMusic
   
   config.songs[songIndex] = song
   await saveWebDAVConfig(config)
-  webDAVLog.info('updateWebDAVMusicMeta: updated successfully', { musicId })
 }

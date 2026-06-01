@@ -11,25 +11,13 @@ import { readPic, readMetadata } from '@/utils/localMediaMetadata'
 export const getDefaultDownloadDir = () => {
   // 优先使用 WebDAV 专用路径配置
   const webdavPath = settingState.setting['webdav.downloadPath']
-  const globalDownloadPath = settingState.setting['download.path']
-  
-  webDAVLog.info('getDefaultDownloadDir: checking settings', { 
-    webdavPath, 
-    webdavPathType: typeof webdavPath,
-    globalDownloadPath,
-    privateDir: getWebDAVPrivateDirectory()
-  })
   
   if (webdavPath && typeof webdavPath === 'string' && webdavPath.trim()) {
-    const resolvedPath = webdavPath.trim()
-    webDAVLog.info('getDefaultDownloadDir: using webdav configured path', { path: resolvedPath })
-    return resolvedPath
+    return webdavPath.trim()
   }
   
   // 默认使用私有目录
-  const defaultPath = getWebDAVPrivateDirectory()
-  webDAVLog.info('getDefaultDownloadDir: using private directory', { path: defaultPath })
-  return defaultPath
+  return getWebDAVPrivateDirectory()
 }
 
 export const getWebDAVDownloadPath = () => {
@@ -43,7 +31,6 @@ export const getWebDAVDownloadPath = () => {
 export const handleWebDAVDownload = async (musicInfo: LX.WebDAV.MusicInfo): Promise<string | null> => {
   // 先请求存储权限
   const hasPermission = await requestStoragePermission()
-  webDAVLog.info('handleWebDAVDownload: storage permission check', { hasPermission })
   if (!hasPermission) {
     if (hasPermission === null) {
       toast('您已拒绝存储权限，请在系统设置中开启', 'long')
@@ -60,28 +47,22 @@ export const handleWebDAVDownload = async (musicInfo: LX.WebDAV.MusicInfo): Prom
 
   webDAVLog.info('handleWebDAVDownload: starting download', { 
     fileName, 
-    downloadDir, 
-    filePath,
-    downloadUrl: downloadUrl?.substring(0, 100) + '...' 
+    filePath 
   })
 
   try {
     await mkdir(downloadDir)
-    webDAVLog.info('handleWebDAVDownload: download directory created/verified', { downloadDir })
     
     // 检查文件是否存在
     const fileExists = await existsFile(filePath)
-    webDAVLog.info('handleWebDAVDownload: file existence check', { filePath, fileExists })
     
     // 如果配置中有 filePath 但文件不存在，清除旧的 filePath 以便重新下载
     if (musicInfo.meta.filePath && !fileExists) {
-      webDAVLog.info('handleWebDAVDownload: file was deleted, clearing old filePath', { oldPath: musicInfo.meta.filePath })
       await updateWebDAVMusicMeta(musicInfo.id, { filePath: undefined })
     }
     
     // 如果文件已存在，显示提示并返回
     if (fileExists) {
-      webDAVLog.info('handleWebDAVDownload: file already exists', { filePath })
       toast(`文件已存在：${fileName}`)
       return null
     }
@@ -98,10 +79,7 @@ export const handleWebDAVDownload = async (musicInfo: LX.WebDAV.MusicInfo): Prom
       headers['Authorization'] = 'Basic ' + btoa(`${username}:${password}`)
     }
 
-    webDAVLog.info('handleWebDAVDownload: downloading file', { downloadUrl, filePath })
-    
-    const downloadResult = await downloadFile(downloadUrl, filePath, { headers }).promise
-    webDAVLog.info('handleWebDAVDownload: download result', { downloadResult })
+    await downloadFile(downloadUrl, filePath, { headers }).promise
     
     // 检查下载是否成功
     const fileExistsAfterDownload = await existsFile(filePath)
@@ -109,11 +87,10 @@ export const handleWebDAVDownload = async (musicInfo: LX.WebDAV.MusicInfo): Prom
       throw new Error(`下载失败：文件未保存到 ${filePath}。请检查存储权限或下载路径是否正确。`)
     }
     
-    webDAVLog.info('handleWebDAVDownload: download completed successfully')
+    webDAVLog.info('handleWebDAVDownload: download completed successfully', { fileName })
     
     // 读取文件元数据（包括专辑名称等信息）
     const fileMetadata = await readMetadata(filePath).catch(() => null)
-    webDAVLog.info('handleWebDAVDownload: read file metadata', { metadata: fileMetadata })
     
     const updates: Record<string, any> = { filePath }
     
@@ -121,15 +98,12 @@ export const handleWebDAVDownload = async (musicInfo: LX.WebDAV.MusicInfo): Prom
     if (fileMetadata) {
       if (fileMetadata.albumName) {
         updates.albumName = fileMetadata.albumName
-        webDAVLog.info('handleWebDAVDownload: found album name in file', { albumName: fileMetadata.albumName })
       }
       if (fileMetadata.name && !musicInfo.name) {
         updates.name = fileMetadata.name
-        webDAVLog.info('handleWebDAVDownload: found song name in file', { name: fileMetadata.name })
       }
       if (fileMetadata.singer && !musicInfo.singer) {
         updates.singer = fileMetadata.singer
-        webDAVLog.info('handleWebDAVDownload: found singer in file', { singer: fileMetadata.singer })
       }
     }
     
@@ -142,9 +116,6 @@ export const handleWebDAVDownload = async (musicInfo: LX.WebDAV.MusicInfo): Prom
     if (picPath) {
       newPicUrl = picPath.startsWith('/') ? `file://${picPath}` : picPath
       await updateWebDAVMusicMeta(musicInfo.id, { picUrl: newPicUrl })
-      webDAVLog.info('handleWebDAVDownload: saved embedded cover to meta', { picUrl: newPicUrl })
-    } else {
-      webDAVLog.info('handleWebDAVDownload: no embedded cover found in file')
     }
     
     // 触发 UI 刷新
@@ -165,11 +136,6 @@ export const handleFetchWebDAVPicFromOnline = async (
 ) => {
   try {
     toast('正在从在线音源搜索同名歌曲...')
-    webDAVLog.info('handleFetchWebDAVPicFromOnline: searching for', {
-      musicId: musicInfo.id,
-      name: musicInfo.name,
-      singer: musicInfo.singer
-    })
 
     // 使用 findMusic 搜索同名歌曲
     const searchResult = await findMusic({
@@ -178,11 +144,6 @@ export const handleFetchWebDAVPicFromOnline = async (
       albumName: musicInfo.meta.albumName,
       interval: musicInfo.interval,
       source: musicInfo.source,
-    })
-
-    webDAVLog.info('handleFetchWebDAVPicFromOnline: search result count', {
-      count: searchResult.length,
-      results: searchResult
     })
 
     if (searchResult.length === 0) {
@@ -195,40 +156,24 @@ export const handleFetchWebDAVPicFromOnline = async (
     const newPicUrl = matchedSong.img || matchedSong.meta?.picUrl
 
     if (!newPicUrl) {
-      webDAVLog.warn('handleFetchWebDAVPicFromOnline: matched song has no cover', matchedSong)
       toast('找到的歌曲没有封面')
       return null
     }
 
-    webDAVLog.info('handleFetchWebDAVPicFromOnline: found cover', {
-      source: matchedSong.source,
-      name: matchedSong.name,
-      singer: matchedSong.singer,
-      picUrl: newPicUrl
-    })
-
+    // 更新配置
     await updateWebDAVMusicMeta(musicInfo.id, { picUrl: newPicUrl })
-
-    if (listId) {
-      await updateListMusics([{
-        id: listId,
-        musicInfo: { ...musicInfo, meta: { ...musicInfo.meta, picUrl: newPicUrl } }
-      }])
+    
+    // 如果是当前播放的歌曲，更新 UI
+    if (playerState.playMusicInfo.musicInfo?.id === musicInfo.id) {
+      global.app_event.picUpdated()
     }
-
-    global.app_event.picUpdated()
-
-    toast('封面获取成功！')
+    
+    toast('封面更新成功')
     return newPicUrl
   } catch (error: any) {
-    webDAVLog.error('handleFetchWebDAVPicFromOnline: failed', { error: error.message, stack: error.stack })
-    const errorMessage = error.message || String(error)
-    if (errorMessage.includes('timeout')) {
-      toast('搜索超时，请重试', 'long')
-    } else {
-      toast(`获取封面失败：${errorMessage}`, 'long')
-    }
-    throw error
+    webDAVLog.error('handleFetchWebDAVPicFromOnline: failed', { error: error.message })
+    toast(`获取封面失败：${error.message}`, 'long')
+    return null
   }
 }
 

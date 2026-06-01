@@ -146,29 +146,22 @@ const downloadWebDAVMusic = async (musicInfo: LX.WebDAV.MusicInfo): Promise<stri
     downloadDir = getWebDAVPrivateDirectory()
   }
   
-  webDAVLog?.info('downloadWebDAVMusic: using download directory', { downloadDir, webdavPath })
-  
   const fileName = musicInfo.meta.fileName
   
   let filePath = `${downloadDir}/${fileName}`
 
   if (downloadPromises.has(filePath)) {
-    webDAVLog?.info('downloadWebDAVMusic: waiting for existing download', { filePath })
     return downloadPromises.get(filePath)!
   }
 
-  webDAVLog?.info('downloadWebDAVMusic called', { musicId: musicInfo.id, fileName, filePath })
-
   if (await existsFile(filePath)) {
-    webDAVLog?.info('downloadWebDAVMusic: file exists locally', { filePath })
     return filePath
   }
 
-  webDAVLog?.info('downloadWebDAVMusic: starting new download', { filePath })
+  webDAVLog?.info('downloadWebDAVMusic: starting new download', { musicId: musicInfo.id, fileName })
   const downloadPromise = (async () => {
     try {
       await mkdir(downloadDir)
-      webDAVLog?.info('downloadWebDAVMusic: download directory created', { downloadDir })
 
       const username = settingState.setting['sync.webdav.username']
       const password = settingState.setting['sync.webdav.password']
@@ -179,14 +172,12 @@ const downloadWebDAVMusic = async (musicInfo: LX.WebDAV.MusicInfo): Promise<stri
         headers['Authorization'] = 'Basic ' + btoa(`${username}:${password}`)
       }
 
-      webDAVLog?.info('downloadWebDAVMusic: fetching file', { downloadUrl, filePath })
       await downloadFile(downloadUrl, filePath, { headers }).promise
 
-      webDAVLog?.info('downloadWebDAVMusic: download completed successfully', { filePath })
+      webDAVLog?.info('downloadWebDAVMusic: download completed successfully', { musicId: musicInfo.id, fileName })
 
       // 读取文件元数据（包括专辑名称等信息）
       const fileMetadata = await readMetadata(filePath).catch(() => null)
-      webDAVLog?.info('downloadWebDAVMusic: read file metadata', { metadata: fileMetadata })
       
       const updates: Record<string, any> = { filePath }
       
@@ -194,15 +185,12 @@ const downloadWebDAVMusic = async (musicInfo: LX.WebDAV.MusicInfo): Promise<stri
       if (fileMetadata) {
         if (fileMetadata.albumName) {
           updates.albumName = fileMetadata.albumName
-          webDAVLog?.info('downloadWebDAVMusic: found album name in file', { albumName: fileMetadata.albumName })
         }
         if (fileMetadata.name && !musicInfo.name) {
           updates.name = fileMetadata.name
-          webDAVLog?.info('downloadWebDAVMusic: found song name in file', { name: fileMetadata.name })
         }
         if (fileMetadata.singer && !musicInfo.singer) {
           updates.singer = fileMetadata.singer
-          webDAVLog?.info('downloadWebDAVMusic: found singer in file', { singer: fileMetadata.singer })
         }
       }
       
@@ -214,7 +202,6 @@ const downloadWebDAVMusic = async (musicInfo: LX.WebDAV.MusicInfo): Promise<stri
 
       // 更新播放器状态中的音乐信息
       if (playerState.playMusicInfo.musicInfo?.id === musicInfo.id) {
-        webDAVLog?.info('downloadWebDAVMusic: updating player state with new filePath', { filePath })
         const playerAction = await import('@/store/player/action')
         const updatedMusicInfo = { ...playerState.playMusicInfo.musicInfo }
         if (updatedMusicInfo && updatedMusicInfo.meta) {
@@ -251,20 +238,14 @@ const readEmbeddedCoverAndSave = async (
   updateWebDAVMetaFn: typeof import('@/core/webdavMusic/drive').updateWebDAVMusicMeta
 ) => {
   try {
-    webDAVLog?.info('readEmbeddedCoverAndSave: reading embedded cover', { musicId: musicInfo.id, filePath })
     const picPath = await readPic(filePath)
     if (picPath) {
-      webDAVLog?.info('readEmbeddedCoverAndSave: found embedded cover', { picPath })
       const updatedPicUrl = picPath.startsWith('/') ? `file://${picPath}` : picPath
       await updateWebDAVMetaFn(musicInfo.id, { picUrl: updatedPicUrl })
-      webDAVLog?.info('readEmbeddedCoverAndSave: saved cover to meta', { picUrl: updatedPicUrl })
 
       if (playerState.playMusicInfo.musicInfo?.id === musicInfo.id) {
-        webDAVLog?.info('readEmbeddedCoverAndSave: triggering pic update for current playing song')
         global.app_event.picUpdated()
       }
-    } else {
-      webDAVLog?.info('readEmbeddedCoverAndSave: no embedded cover found, will use online source')
     }
   } catch (error) {
     webDAVLog?.warn('readEmbeddedCoverAndSave: failed to read embedded cover', { error })
@@ -285,7 +266,6 @@ export const getMusicUrl = async ({
   if (!isRefresh) {
     const isWebDAV = 'webdav' in musicInfo.meta && (musicInfo.meta as any).webdav === true
     if (isWebDAV) {
-      webDAVLog?.info('getMusicUrl: detected WebDAV music, calling downloadWebDAVMusic', { musicId: musicInfo.id })
       return downloadWebDAVMusic(musicInfo as LX.WebDAV.MusicInfo)
     }
 
@@ -353,7 +333,6 @@ export const getPicUrl = async ({
           
           if (coverExtensions.includes(ext) && baseName.includes(audioFileName)) {
             foundPicUrl = `file://${picCachePath}/${fileName}`
-            webDAVLog?.info('getPicUrl: found cover in cache', { audioFileName, picUrl: foundPicUrl })
             break
           }
         }
@@ -382,7 +361,6 @@ export const getPicUrl = async ({
       if (audioFilePath) {
         const audioExists = await existsFile(audioFilePath).catch(() => false)
         if (!audioExists) {
-          webDAVLog?.warn('getPicUrl: original audio file not found, trying download dir', { audioFilePath, downloadDir })
           targetFilePath = `${downloadDir}/${musicInfo.meta.fileName}`
         }
       } else {
@@ -392,7 +370,6 @@ export const getPicUrl = async ({
       // 第3步：检查目标文件是否存在，如果存在则提取封面
       const targetExists = await existsFile(targetFilePath).catch(() => false)
       if (targetExists) {
-        webDAVLog?.info('getPicUrl: found audio file, extracting cover', { targetFilePath })
         try {
           const pic = await extractPic(targetFilePath)
           if (pic) {

@@ -138,30 +138,16 @@ const getMusicPlayUrl = async (
     const { existsFile } = await import('@/utils/fs')
     let fileExists = await existsFile(filePathToCheck)
     
-    webDAVLog?.info('getMusicPlayUrl: checking file existence', { 
-      musicId: currentMusicInfo.id, 
-      filePathToCheck, 
-      fileExists,
-      configuredDownloadDir,
-      webdavPath,
-      fileName,
-      existingFilePath 
-    })
-    
     // 如果配置的路径中不存在，检查配置的下载目录
     if (!fileExists && existingFilePath) {
       const alternativePath = `${configuredDownloadDir}/${fileName}`
-      webDAVLog?.info('getMusicPlayUrl: trying alternative path', { alternativePath })
       filePathToCheck = alternativePath
       fileExists = await existsFile(filePathToCheck)
-      webDAVLog?.info('getMusicPlayUrl: alternative path check result', { filePathToCheck, fileExists })
     }
     
     if (!fileExists) {
       setStatusText('正在下载歌曲...')
       webDAVLog?.info('getMusicPlayUrl: WebDAV file not found, starting download', { musicId: currentMusicInfo.id, expectedPath: filePathToCheck })
-    } else {
-      webDAVLog?.info('getMusicPlayUrl: WebDAV file exists locally', { musicId: currentMusicInfo.id, filePath: filePathToCheck })
     }
   }
 
@@ -190,7 +176,6 @@ const getMusicPlayUrl = async (
     .then((url) => {
       if (global.lx.isPlayedStop || diffCurrentMusicInfo(musicInfo)) return null
 
-      webDAVLog?.info('getMusicPlayUrl: returning url', { musicId: currentMusicInfo.id, url })
       return url
     })
     .catch(async (err) => {
@@ -220,23 +205,19 @@ export const setMusicUrl = (
   global.lx.gettingUrlId = createGettingUrlId(musicInfo)
   void getMusicPlayUrl(musicInfo, isRefresh)
     .then((url) => {
-      webDAVLog?.info('setMusicUrl: received url', { url, musicId: musicInfo.id })
       if (!url) return
       // 在调用 setResource 之前清除 gettingUrlId 和状态文本
       // 这样播放器状态事件才能被正确处理
       const currentMusicInfo = playerState.playMusicInfo.musicInfo
       if (musicInfo.id === currentMusicInfo?.id) {
-        webDAVLog?.info('setMusicUrl: clearing gettingUrlId and status text', { musicId: musicInfo.id })
         global.lx.gettingUrlId = ''
         clearLoadTimeout()
         // 立即清空状态文本，避免"正在下载歌曲..."一直显示
         setStatusText('')
-        webDAVLog?.info('setMusicUrl: status text cleared, about to call setResource', { url })
         
         // 如果是 WebDAV 音乐，且下载完成后正在播放，我们需要停止当前可能的幽灵播放并重新设置资源
         const isWebDAVMusic = 'webdav' in currentMusicInfo.meta && (currentMusicInfo.meta as any).webdav === true
         if (isWebDAVMusic) {
-          webDAVLog?.info('setMusicUrl: WebDAV music detected, ensuring clean resource setup', { musicId: musicInfo.id })
           // 停止播放并清除队列，防止幽灵播放
           void setStop().then(() => {
             setResource(currentMusicInfo, url, playerState.progress.nowPlayTime)
@@ -244,11 +225,6 @@ export const setMusicUrl = (
         } else {
           setResource(currentMusicInfo, url, playerState.progress.nowPlayTime)
         }
-      } else {
-        webDAVLog?.info('setMusicUrl: musicInfo does not match current play info', { 
-          musicInfoId: musicInfo.id, 
-          currentPlayId: currentMusicInfo?.id 
-        })
       }
     })
     .catch((err: any) => {
