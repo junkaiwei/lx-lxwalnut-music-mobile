@@ -30,17 +30,23 @@ const styles = createStyle({
     paddingVertical: 4,
   },
   scrollBarTrack: {
-    width: 16,
+    width: 28,
     flex: 1,
-    borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  scrollBarTrackLine: {
+    width: 8,
+    height: '100%',
+    borderRadius: 4,
     backgroundColor: 'rgba(0, 0, 0, 0.2)',
   },
   scrollBarThumb: {
-    width: 16,
-    height: 50,
-    borderRadius: 8,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
     position: 'absolute',
+    width: 8,
+    height: 30,
+    borderRadius: 4,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   btns: {
     flexDirection: 'row',
@@ -135,12 +141,12 @@ export default forwardRef<ConfirmAlertType, ConfirmAlertProps>(
     const calculateTrackRatio = useCallback(() => {
       const scrollableHeight = Math.max(0, contentHeight - containerHeight)
       if (scrollableHeight <= 0) return 0
-      const availableTrackHeight = trackHeight - Math.max(40, Math.min(trackHeight * 0.3, trackHeight))
+      const availableTrackHeight = trackHeight - Math.max(30, Math.min(trackHeight * 0.15, trackHeight))
       return availableTrackHeight / scrollableHeight
     }, [contentHeight, containerHeight, trackHeight])
 
     const calculateThumbHeight = useCallback(() => {
-      return Math.max(40, Math.min(trackHeight * 0.3, trackHeight))
+      return Math.max(30, Math.min(trackHeight * 0.15, trackHeight))
     }, [trackHeight])
 
     const calculateMaxThumbPosition = useCallback(() => {
@@ -205,6 +211,33 @@ export default forwardRef<ConfirmAlertType, ConfirmAlertProps>(
       onPanResponderTerminate: () => {},
     })
 
+    const trackPanResponder = PanResponder.create({
+      onStartShouldSetPanResponder: () => true,
+      onPanResponderGrant: (_, gestureState) => {
+        const newPosition = Math.max(0, Math.min(gestureState.y0 - 0 - calculateThumbHeight() / 2, calculateMaxThumbPosition()))
+        thumbPosition.setValue(newPosition)
+        const ratio = calculateTrackRatio()
+        if (ratio > 0) {
+          const scrollY = newPosition / ratio
+          scrollViewRef.current?.scrollTo({ y: scrollY, animated: false })
+        }
+        startYRef.current = gestureState.y0
+        startPositionRef.current = newPosition
+      },
+      onPanResponderMove: (_, gestureState) => {
+        const deltaY = gestureState.dy
+        const newPosition = Math.max(0, Math.min(startPositionRef.current + deltaY, calculateMaxThumbPosition()))
+        thumbPosition.setValue(newPosition)
+        const ratio = calculateTrackRatio()
+        if (ratio > 0) {
+          const scrollY = newPosition / ratio
+          scrollViewRef.current?.scrollTo({ y: scrollY, animated: false })
+        }
+      },
+      onPanResponderRelease: () => {},
+      onPanResponderTerminate: () => {},
+    })
+
     return (
       <Dialog
         onHide={onHide}
@@ -236,9 +269,11 @@ export default forwardRef<ConfirmAlertType, ConfirmAlertProps>(
           <View style={styles.scrollBarContainer}>
             <View 
               ref={scrollBarTrackRef} 
-              style={{ ...styles.scrollBarTrack, backgroundColor: theme['c-primary-dark-100-alpha-300'] }}
+              style={styles.scrollBarTrack}
               onLayout={onTrackLayout}
+              {...trackPanResponder.panHandlers}
             >
+              <View style={{ ...styles.scrollBarTrackLine, backgroundColor: theme['c-primary-dark-100-alpha-300'] }} />
               <Animated.View
                 {...panResponder.panHandlers}
                 style={{
