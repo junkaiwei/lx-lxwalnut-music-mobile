@@ -205,7 +205,7 @@ export default memo(() => {
         />
       </View>
       {selectedPlaylist && (
-        <View style={[StyleSheet.absoluteFill, { backgroundColor: theme['c-content-background'] }]}>
+        <View style={[StyleSheet.absoluteFill]}>
           <SonglistDetail info={selectedPlaylist} onBack={handleBack} initialScrollToInfo={scrollToMusicInfo} />
         </View>
       )}
