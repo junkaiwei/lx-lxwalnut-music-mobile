@@ -40,12 +40,12 @@ const mergeSetting = (
       const isPrimitive = checkPrimitiveType(targetValue)
       let shouldSkip = false
       
-      // 非基本类型且不是 navStatus 或 navOrder，跳过
-      if (!isPrimitive && key !== 'common.navStatus' && key !== 'common.navOrder') {
+      // 非基本类型且不是 navStatus、navOrder 或 sectionExpandedStatus，跳过
+      if (!isPrimitive && key !== 'common.navStatus' && key !== 'common.navOrder' && key !== 'common.sectionExpandedStatus') {
         shouldSkip = true
       } 
-      // 如果是 navStatus 或 navOrder
-      else if (key === 'common.navStatus' || key === 'common.navOrder') {
+      // 如果是 navStatus、navOrder 或 sectionExpandedStatus
+      else if (key === 'common.navStatus' || key === 'common.navOrder' || key === 'common.sectionExpandedStatus') {
         // 如果目标值和原始值都是数组
         if (Array.isArray(targetValue) && Array.isArray(originSettingCopy[key])) {
           // 比较数组内容
@@ -53,7 +53,14 @@ const mergeSetting = (
             shouldSkip = true
           }
         } 
-        // 如果其中一个不是数组，使用原始相等比较
+        // 如果都是对象类型（用于 sectionExpandedStatus）
+        else if (typeof targetValue === 'object' && typeof originSettingCopy[key] === 'object' && targetValue !== null && originSettingCopy[key] !== null) {
+          // 比较对象内容
+          if (JSON.stringify(targetValue) === JSON.stringify(originSettingCopy[key])) {
+            shouldSkip = true
+          }
+        }
+        // 如果其中一个不是数组/对象，使用原始相等比较
         else if (targetValue == originSettingCopy[key]) {
           shouldSkip = true
         }
