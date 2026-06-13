@@ -1,5 +1,5 @@
 import { memo, useCallback, useMemo, useState, useEffect, useRef } from 'react'
-import { View, TouchableOpacity, FlatList, ActivityIndicator, RefreshControl, Animated, PanResponder, type GestureResponderEvent, type PanResponderGestureState } from 'react-native'
+import { View, TouchableOpacity, FlatList, ActivityIndicator, RefreshControl, Animated, PanResponder, BackHandler, type GestureResponderEvent, type PanResponderGestureState } from 'react-native'
 import { useMyList, useActiveListId, useListFetching } from '@/store/list/hook'
 import { setActiveList, updateUserListPosition } from '@/core/list'
 import { getListMusics, getListPrevSelectId } from '@/utils/data'
@@ -8,6 +8,7 @@ import Text from '@/components/common/Text'
 import Image from '@/components/common/Image'
 import { Icon } from '@/components/common/Icon'
 import { createStyle } from '@/utils/tools'
+import commonState from '@/store/common/state'
 import MusicList from './MusicList'
 import ListMenu, { type ListMenuType, type Position } from './MyList/ListMenu'
 import ListNameEdit, { type ListNameEditType } from './MyList/ListNameEdit'
@@ -291,6 +292,37 @@ export default memo(() => {
   const [showMusicList, setShowMusicList] = useState(false)
   const [isTouchingDragHandle, setIsTouchingDragHandle] = useState(false)
 
+  // 追踪 showMusicList 的最新状态
+  const showMusicListRef = useRef(false)
+  useEffect(() => {
+    showMusicListRef.current = showMusicList
+  }, [showMusicList])
+
+  // 返回卡片列表的处理函数
+  const handleBackToList = useCallback(() => {
+    setShowMusicList(false)
+    setActiveList(LIST_IDS.DEFAULT)
+  }, [])
+
+  // 处理物理返回键
+  useEffect(() => {
+    const onBackPress = () => {
+      if (showMusicListRef.current) {
+        // 检查是否有其他原生屏幕在 Home 屏幕之上
+        if (commonState.componentIds.length > 1) {
+          return false
+        }
+        // 返回卡片列表
+        handleBackToList()
+        return true
+      }
+      return false
+    }
+
+    const subscription = BackHandler.addEventListener('hardwareBackPress', onBackPress)
+    return () => subscription.remove()
+  }, [handleBackToList])
+
   // 拖动排序相关状态
   const heightsRef = useRef<number[]>([])
   const animsRef = useRef<DragAnim[]>([])
@@ -397,13 +429,6 @@ export default memo(() => {
       }
     })
   }, [allList, listInfoMap])
-
-  // 返回卡片列表
-  const handleBackToList = useCallback(() => {
-    setShowMusicList(false)
-    // 将 activeListId 重置为默认列表，这样下次打开应用时会显示卡片列表
-    setActiveList(LIST_IDS.DEFAULT)
-  }, [])
 
   // 拖动排序相关函数
   const handleLayoutHeight = useCallback((index: number, height: number) => {
