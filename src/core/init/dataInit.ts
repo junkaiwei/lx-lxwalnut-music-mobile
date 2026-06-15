@@ -10,12 +10,14 @@ import { unlink } from '@/utils/fs'
 import { TEMP_FILE_PATH } from '@/utils/tools'
 // import { play, playList } from '../player/player'
 import wyUserApi from '@/utils/musicSdk/wy/user'
+import txUserApi from '@/utils/musicSdk/tx/user'
 import {
   setWyFollowedArtists,
   setWyLikedSongs,
   setWySubscribedAlbums,
   setWySubscribedPlaylists,
-  setWyUid
+  setWyUid,
+  setTxLikedSongs
 } from '@/store/user/action.ts'
 import {getDownloadTasks} from "@/utils/data/download.ts";
 import downloadActions from '@/store/download/action';
@@ -81,6 +83,34 @@ export default async (appSetting: LX.AppSetting) => {
       .catch(err => {
         bootLog(`Wy like list init failed: ${err.message}`)
       })
+  }
+
+  // 获取QQ音乐喜欢列表
+  const tx_cookie = appSetting['common.tx_cookie']
+  if (tx_cookie) {
+    bootLog('Tx like list init...')
+    ;(async () => {
+      try {
+        const allLikedMids: string[] = []
+        let page = 1
+        const pageSize = 100
+        let hasMore = true
+
+        while (hasMore) {
+          const result = await txUserApi.getFavSongs(page, pageSize)
+          if (result.list && result.list.length > 0) {
+            allLikedMids.push(...result.list.map((song: any) => song.mid))
+          }
+          hasMore = result.hasMore
+          page++
+        }
+
+        setTxLikedSongs(allLikedMids)
+        bootLog(`Tx like list inited. (${allLikedMids.length} songs)`)
+      } catch (err: any) {
+        bootLog(`Tx like list init failed: ${err.message}`)
+      }
+    })()
   }
 
   setNavActiveId((await getViewPrevState()).id)

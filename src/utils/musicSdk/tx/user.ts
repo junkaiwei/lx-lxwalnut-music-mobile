@@ -269,7 +269,7 @@ export default {
             name: song.albumname || song.album?.name || '',
           },
           strMediaMid: song.strMediaMid || song.media_mid || '',
-          songmid: song.songmid || '',
+          songmid: song.songmid || song.mid || '',
           interval: song.interval || 0,
         })),
       };
@@ -361,10 +361,10 @@ export default {
 
       for (const mid of songMids) {
         try {
-          // 尝试直接解析为数字，如果成功说明已经是 songId
-          const parsedId = parseInt(mid)
-          if (!isNaN(parsedId) && String(parsedId) === mid.trim()) {
+          // 使用正则判断是否为纯数字 songId（避免 parseInt 截断问题）
+          if (/^\d+$/.test(mid.trim())) {
             // 传入的是数字 songId，直接使用
+            const parsedId = parseInt(mid)
             songInfo.push({ songId: parsedId, songType: 13 })
             txLog.info('使用传入的 songId', { mid, songId: parsedId })
           } else {
@@ -375,9 +375,30 @@ export default {
               songInfo.push({ songId: musicInfo.songId, songType: 13 })
               txLog.info('从 mid 获取到 songId', { mid, songId: musicInfo.songId, name: musicInfo.name })
             } else {
-              txLog.error('无法获取歌曲 songId', { mid })
-              errorLog.error(`[QQ音乐] 无法获取歌曲 songId: ${mid}`)
-              failedMids.push(mid)
+              // 如果 getMusicInfo 返回 null，尝试使用备用方法
+              // 某些歌曲可能没有 media_mid，但仍然可以通过其他方式获取
+              txLog.warn('getMusicInfo 返回空，尝试备用方法', { mid })
+              // 尝试使用搜索 API 获取歌曲信息
+              try {
+                const searchResult = await this.searchSong(mid)
+                if (searchResult && searchResult.length > 0) {
+                  const foundSong = searchResult[0]
+                  if (foundSong.songId) {
+                    songInfo.push({ songId: foundSong.songId, songType: 13 })
+                    txLog.info('通过搜索获取到 songId', { mid, songId: foundSong.songId, name: foundSong.name })
+                  } else {
+                    txLog.error('搜索结果中没有 songId', { mid })
+                    failedMids.push(mid)
+                  }
+                } else {
+                  txLog.error('无法获取歌曲 songId', { mid })
+                  errorLog.error(`[QQ音乐] 无法获取歌曲 songId: ${mid}`)
+                  failedMids.push(mid)
+                }
+              } catch (searchErr: any) {
+                txLog.error('搜索歌曲失败', { mid, error: searchErr.message })
+                failedMids.push(mid)
+              }
             }
           }
         } catch (err: any) {
@@ -733,7 +754,9 @@ export default {
       return {
         list: songs.map((song: any) => ({
           id: song.id,
-          mid: song.mid,
+          // 统一使用 songId 作为 mid（与 likeKey 一致）
+          mid: String(song.id),
+          songmid: song.songmid || song.mid,
           name: song.name || song.title,
           singer: (song.singer || []).map((s: any) => s.name).join('/'),
           albumName: song.album?.name || '',
@@ -955,15 +978,26 @@ export default {
 
       for (const mid of songMids) {
         try {
-          const parsedId = parseInt(mid)
-          if (!isNaN(parsedId) && String(parsedId) === mid.trim()) {
+          // 使用正则判断是否为纯数字 songId（避免 parseInt 截断问题）
+          if (/^\d+$/.test(mid.trim())) {
+            const parsedId = parseInt(mid)
             songInfo.push({ songId: parsedId, songType: 13 })
           } else {
             const musicInfo = await getMusicInfo(mid)
             if (musicInfo && musicInfo.songId) {
               songInfo.push({ songId: musicInfo.songId, songType: 13 })
             } else {
-              failedMids.push(mid)
+              // 备用方法：使用 searchSong
+              try {
+                const searchResult = await this.searchSong(mid)
+                if (searchResult && searchResult.length > 0 && searchResult[0].songId) {
+                  songInfo.push({ songId: searchResult[0].songId, songType: 13 })
+                } else {
+                  failedMids.push(mid)
+                }
+              } catch {
+                failedMids.push(mid)
+              }
             }
           }
         } catch (err: any) {
@@ -1132,5 +1166,101 @@ export default {
       }
       throw error
     }
+  },
+
+  /**
+   * 获取"我喜欢"歌单ID
+   * dirid: 201 = 我喜欢
+   */
+  async getLikedListId(): Promise<string | null> {
+    try {
+      const playlists = await this.getUserPlaylists()
+      const likedList = playlists.find((p: any) => p.dirid === 201 || p.isFavorites)
+      return likedList ? String(likedList.id || likedList.tid) : null
+    } catch (error: any) {
+      txLog.error('获取"我喜欢"歌单ID失败', { error: error.message })
+      return null
+    }
+  },
+
+  /**
+   * 通过 songmid 获取歌曲详情
+   * 备用方法，当 getMusicInfo 失败时使用
+   */
+  async searchSong(songmid: string): Promise<any[]> {
+    txLog.info('=== searchSong 开始 ===', { songmid })
+
+    try {
+      // 使用歌曲详情API获取歌曲信息
+      const payload = {
+        comm: { ct: 24, cv: 1800 },
+        req: {
+          module: 'music.pf_song_detail_svr',
+          method: 'get_song_detail_yqq',
+          param: {
+            song_type: 0,
+            song_mid: songmid,
+          },
+        },
+      }
+
+      txLog.info('searchSong: 请求payload', { payload: JSON.stringify(payload) })
+      const body = await this.sendSignedRequest(payload)
+
+      txLog.info('searchSong: 原始响应', { body: JSON.stringify(body) })
+
+      // 检查响应
+      if (!body || body.code !== 0) {
+        txLog.warn('searchSong: 获取歌曲详情失败', { songmid, code: body?.code })
+        return []
+      }
+
+      // 获取歌曲详情
+      const trackInfo = body.req?.data?.track_info
+      if (!trackInfo) {
+        txLog.warn('searchSong: 未找到歌曲信息', { songmid })
+        return []
+      }
+
+      const songId = trackInfo.id
+      if (!songId || songId === 0) {
+        txLog.warn('searchSong: songId 无效', { songmid, songId })
+        return []
+      }
+
+      txLog.info('searchSong: 获取成功', { songmid, songId, name: trackInfo.title })
+
+      return [{
+        songId,
+        songmid: trackInfo.mid,
+        name: trackInfo.title,
+        singer: (trackInfo.singer || []).map((s: any) => s.name).join('/'),
+      }]
+    } catch (error: any) {
+      txLog.error('searchSong 失败', { songmid, error: error.message })
+      return []
+    }
+  },
+
+  /**
+   * 喜欢/取消喜欢歌曲
+   * @param songMid 歌曲 mid
+   * @param like true=喜欢, false=取消喜欢
+   */
+  async likeSong(songMid: string, like: boolean): Promise<boolean> {
+    const likedListId = await this.getLikedListId()
+    if (!likedListId) {
+      throw new Error('未找到"我喜欢"歌单，请先登录QQ音乐')
+    }
+
+    if (like) {
+      await this.addSongToPlaylist(likedListId, [songMid])
+      txLog.info('喜欢歌曲成功', { songMid })
+    } else {
+      await this.removeSongFromPlaylist(likedListId, [songMid])
+      txLog.info('取消喜欢歌曲成功', { songMid })
+    }
+
+    return true
   },
 };

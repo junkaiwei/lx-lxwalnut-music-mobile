@@ -112,8 +112,10 @@ export const toNewMusicInfo = (oldMusicInfo: any): LX.Music.MusicInfo => {
         break
       case 'tx':
         meta.strMediaMid = oldMusicInfo.strMediaMid
+        meta.songmid = oldMusicInfo.songmid
         meta.albumMid = oldMusicInfo.albumMid
-        meta.id = oldMusicInfo.songId
+        // getListDetailNew 返回的字段名是 id 不是 songId，兼容两种写法
+        meta.id = oldMusicInfo.songId || oldMusicInfo.id
         break
       case 'mg':
         meta.copyrightId = oldMusicInfo.copyrightId
@@ -159,6 +161,7 @@ export const toOldMusicInfo = (minfo: LX.Music.MusicInfo): any => {
         break
       case 'tx':
         oInfo.strMediaMid = minfo.meta.strMediaMid
+        oInfo.songmid = minfo.meta.songmid || minfo.meta.songId
         oInfo.albumMid = minfo.meta.albumMid
         oInfo.songId = minfo.meta.id
         break

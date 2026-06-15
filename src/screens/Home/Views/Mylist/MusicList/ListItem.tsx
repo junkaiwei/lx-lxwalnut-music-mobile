@@ -11,6 +11,8 @@ import Badge, { type BadgeType } from '@/components/common/Badge'
 import Image from '@/components/common/Image'
 import PlayingIcon from '@/components/common/PlayingIcon'
 import { useI18n } from '@/lang'
+import { useIsWyLiked, useIsTxLiked } from '@/store/user/hook'
+import { handleLikeMusic, handleTxLikeMusic } from '@/components/OnlineList/listAction'
 
 export const ITEM_HEIGHT = scaleSizeH(LIST_ITEM_HEIGHT)
 
@@ -67,6 +69,26 @@ export default memo(
     const isSelected = selectedList.includes(item)
     const isSupported = useAssertApiSupport(item.source)
     const moreButtonRef = useRef<TouchableOpacity>(null)
+
+    // 爱心按钮逻辑
+    const isWyLiked = useIsWyLiked(item.meta.songId)
+    // 统一使用 songId（meta.id）作为喜欢状态的键（如果存在且为纯数字），否则使用 songmid
+    const txSongId = (item.meta as any).id
+    const isNumericId = txSongId && /^\d+$/.test(String(txSongId))
+    const txSongMid = isNumericId 
+      ? String(txSongId) 
+      : (item.meta as any).songmid || (item.meta as any).strMediaMid || (typeof item.id === 'string' && item.id.startsWith('tx_') ? item.id.slice(3) : item.id)
+    const isTxLiked = useIsTxLiked(txSongMid)
+    const showLikeButton = item.source === 'wy' || item.source === 'tx'
+    const isLiked = item.source === 'wy' ? isWyLiked : item.source === 'tx' ? isTxLiked : false
+
+    const handleLike = () => {
+      if (item.source === 'wy') {
+        handleLikeMusic(item as LX.Music.MusicInfoOnline)
+      } else if (item.source === 'tx') {
+        handleTxLikeMusic(item as LX.Music.MusicInfoOnline)
+      }
+    }
 
     const tagInfo = item.source === 'local' ? { type: null, text: '' } : useQualityTag(item as LX.Music.MusicInfoOnline)
 
@@ -144,13 +166,19 @@ export default memo(
           {isShowInterval ? (
             <Text
               size={11}
-              color={active ? theme['c-primary-alpha-400'] : theme['c-250']}
+              color={active ? theme['c-primary-alpha-400'] : theme['c-500']}
               numberOfLines={1}
             >
               {item.interval}
             </Text>
           ) : null}
         </TouchableOpacity>
+        {/* 爱心按钮 */}
+        {showLikeButton ? (
+          <TouchableOpacity onPress={handleLike} style={styles.likeButton}>
+            <Icon name={isLiked ? "love-filled" : "love"} size={16} color={isLiked ? theme['c-liked'] : theme['c-350']} />
+          </TouchableOpacity>
+        ) : null}
         {/* <View style={styles.listItemRight}> */}
         <TouchableOpacity onPress={handleShowMenu} ref={moreButtonRef} style={styles.moreButton}>
           <Icon name="dots-vertical" style={{ color: theme['c-350'] }} size={12} />
@@ -254,5 +282,11 @@ const styles = createStyle({
     // paddingBottom: 10,
     // backgroundColor: 'rgba(0,0,0,0.2)',
     justifyContent: 'center',
+  },
+  likeButton: {
+    height: '80%',
+    paddingHorizontal: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 })

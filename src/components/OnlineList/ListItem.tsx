@@ -10,8 +10,8 @@ import { LIST_ITEM_HEIGHT } from '@/config/constant'
 import { createStyle, type RowInfo } from '@/utils/tools'
 import Image from '@/components/common/Image'
 import PlayingIcon from '@/components/common/PlayingIcon'
-import { useIsWyLiked } from '@/store/user/hook'
-import { handleLikeMusic } from './listAction'
+import { useIsWyLiked, useIsTxLiked } from '@/store/user/hook'
+import { handleLikeMusic, handleTxLikeMusic } from './listAction'
 
 export const ITEM_HEIGHT = scaleSizeH(LIST_ITEM_HEIGHT)
 
@@ -83,7 +83,14 @@ export default memo(
     const theme = useTheme()
     const isPlaying = playingId === item.id;
     const isSelected = selectedList.includes(item)
-    const isLiked = useIsWyLiked(item.meta.songId)
+    const isWyLiked = useIsWyLiked(item.meta.songId)
+    // 统一使用 songId（meta.id）作为喜欢状态的键（如果存在且为纯数字），否则使用 songmid
+    const txSongId = (item.meta as any).id
+    const isNumericId = txSongId && /^\d+$/.test(String(txSongId))
+    const txSongMid = isNumericId 
+      ? String(txSongId) 
+      : (item.meta as any).songmid || (item.meta as any).strMediaMid || (typeof item.id === 'string' && item.id.startsWith('tx_') ? item.id.slice(3) : item.id)
+    const isTxLiked = useIsTxLiked(txSongMid)
 
     const moreButtonRef = useRef<TouchableOpacity>(null)
     const handleShowMenu = () => {
@@ -99,10 +106,15 @@ export default memo(
       }
     }
 
-    const showLikeButton = item.source === 'wy'
+    const showLikeButton = item.source === 'wy' || item.source === 'tx'
+    const isLiked = item.source === 'wy' ? isWyLiked : item.source === 'tx' ? isTxLiked : false
 
     const handleLike = () => {
-      handleLikeMusic(item)
+      if (item.source === 'wy') {
+        handleLikeMusic(item)
+      } else if (item.source === 'tx') {
+        handleTxLikeMusic(item)
+      }
     }
 
     const tagInfo = useQualityTag(item)

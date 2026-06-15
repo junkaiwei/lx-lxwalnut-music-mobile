@@ -11,7 +11,7 @@ import Button from '@/components/common/Button'
 import { getPlaylistType, savePlaylistType } from '@/utils/data'
 import wyApi from '@/utils/musicSdk/wy/user'
 import txApi from '@/utils/musicSdk/tx/user'
-import {addWyLikedSong, removeWyLikedSong, updateWySubscribedPlaylistTrackCount} from '@/store/user/action'
+import {addWyLikedSong, removeWyLikedSong, updateWySubscribedPlaylistTrackCount, addTxLikedSong, removeTxLikedSong} from '@/store/user/action'
 import { clearListDetailCache } from '@/core/songlist'
 import {Text, View} from "react-native";
 import {useWySubscribedPlaylists} from "@/store/user/hook.ts";
@@ -247,10 +247,20 @@ export default forwardRef<MusicMultiAddModalType, MusicMultiAddModalProps>(({ on
       })
       
       txApi.addSongToPlaylist(toListId, songMids).then(() => {
+        // 如果添加到"我喜欢"歌单（dirid=201），同步更新本地喜欢状态
+        // 统一使用 songId（meta.id）作为喜欢状态的键
+        if (listInfo.dirid === 201) {
+          for (const music of selectedList) {
+            const txSongId = (music.meta as any).id
+            const isNumericId = txSongId && /^\d+$/.test(String(txSongId))
+            const likeKey = isNumericId ? String(txSongId) : String(music.meta.mid || music.meta.songId)
+            addTxLikedSong(likeKey)
+          }
+        }
         onAdded?.()
         toast(t('list_edit_action_tip_add_success'))
         global.app_event.playlist_updated({ source: 'tx', listId: toListId })
-        log.info('[MusicMultiAddModal] QQ歌单添加成功', { toListId, songCount: songMids.length })
+        log.info('[MusicMultiAddModal] QQ歌单添加成功', { toListId, songCount: songMids.length, dirid: listInfo.dirid })
       }).catch((err) => {
         log.error('[MusicMultiAddModal] QQ歌单添加失败', {
           error: err.message || err,

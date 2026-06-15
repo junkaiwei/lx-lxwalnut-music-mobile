@@ -4,7 +4,8 @@ import playerState from '@/store/player/state'
 import { prefetch } from '@/components/common/ImageBackground'
 import { setBgPic } from '@/core/common'
 import wyUserApi from '@/utils/musicSdk/wy/user';
-import { setWyFollowedArtists, setWyLikedSongs, setWySubscribedAlbums } from '@/store/user/action';
+import txUserApi from '@/utils/musicSdk/tx/user';
+import { setWyFollowedArtists, setWyLikedSongs, setWySubscribedAlbums, setTxLikedSongs } from '@/store/user/action';
 import { toast } from '@/utils/tools';
 
 // const handleUpdateSourceNmaes = () => {
@@ -94,6 +95,37 @@ export default async (setting: LX.AppSetting) => {
     }
   };
 
+  const handleTxCookieUpdate = async (keys: Array<keyof LX.AppSetting>, setting: Partial<LX.AppSetting>) => {
+    if (!keys.includes('common.tx_cookie')) return;
+    const cookie = setting['common.tx_cookie'];
+    if (cookie) {
+      console.log('正在刷新QQ音乐数据...');
+      try {
+        // 获取所有喜欢的歌曲（分页获取）
+        const allLikedMids: string[] = [];
+        let page = 1;
+        const pageSize = 100;
+        let hasMore = true;
+
+        while (hasMore) {
+          const result = await txUserApi.getFavSongs(page, pageSize);
+          if (result.list && result.list.length > 0) {
+            allLikedMids.push(...result.list.map((song: any) => song.mid));
+          }
+          hasMore = result.hasMore;
+          page++;
+        }
+
+        setTxLikedSongs(allLikedMids);
+        console.log(`QQ音乐喜欢歌曲加载成功，共 ${allLikedMids.length} 首`);
+      } catch (err: any) {
+        toast(`QQ音乐数据获取失败: ${err.message}`);
+      }
+    } else {
+      setTxLikedSongs([]);
+    }
+  };
+
   const handleLogSettingUpdate = (keys: Array<keyof LX.AppSetting>, setting: Partial<LX.AppSetting>) => {
     if (keys.includes('common.isEnableLog')) {
       global.lx.isEnableLog = setting['common.isEnableLog']!
@@ -110,5 +142,6 @@ export default async (setting: LX.AppSetting) => {
   global.state_event.on('playerMusicInfoChanged', handlePicUpdate)
   global.state_event.on('configUpdated', handleConfigUpdate)
   global.state_event.on('configUpdated', handleWyCookieUpdate);
+  global.state_event.on('configUpdated', handleTxCookieUpdate);
   global.state_event.on('configUpdated', handleLogSettingUpdate);
 }

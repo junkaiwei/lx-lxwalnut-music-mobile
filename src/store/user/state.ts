@@ -30,6 +30,8 @@ export interface InitState {
   wy_subscribed_albums: SubscribedAlbumInfo[]
   wy_subscribed_playlists: SubscribedPlaylistInfo[]
   wy_vip_type: number
+  // QQ音乐
+  tx_liked_song_ids: Set<string>
 }
 const state: InitState = {
   wy_uid: null,
@@ -38,6 +40,8 @@ const state: InitState = {
   wy_subscribed_albums: [],
   wy_subscribed_playlists: [],
   wy_vip_type: 0,
+  // QQ音乐
+  tx_liked_song_ids: new Set(),
 }
 
 export default state

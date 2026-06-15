@@ -13,10 +13,11 @@ import { httpFetch } from '@/utils/request'
 import musicDetailApi from '@/utils/musicSdk/wy/musicDetail'
 import userState from '@/store/user/state'
 import {weapi} from "@/utils/musicSdk/wy/utils/crypto.js";
-import {addWyLikedSong, removeWyLikedSong} from "@/store/user/action.ts";
+import {addWyLikedSong, removeWyLikedSong, addTxLikedSong, removeTxLikedSong} from "@/store/user/action.ts";
 import {navigations} from "@/navigation";
 import commonState from '@/store/common/state'
 import wyApi from '@/utils/musicSdk/wy/user'
+import txApi from '@/utils/musicSdk/tx/user'
 
 export const handleShowAlbumDetail = (componentId: string, musicInfo: LX.Music.MusicInfoOnline) => {
   const albumId = musicInfo.meta.albumId
@@ -80,6 +81,49 @@ export const handleLikeMusic = async (musicInfo: LX.Music.MusicInfoOnline) => {
     } else {
       toast('取消喜欢成功');
       removeWyLikedSong(songId);
+    }
+  } catch (error: any) {
+    toast(`操作失败: ${error.message}`);
+  }
+}
+
+export const handleTxLikeMusic = async (musicInfo: LX.Music.MusicInfoOnline) => {
+  const cookie = settingState.setting['common.tx_cookie']
+  if (!cookie) {
+    toast('请先设置QQ音乐 Cookie')
+    return
+  }
+  if (musicInfo.source !== 'tx') {
+    toast('非QQ音源无法执行此操作')
+    return
+  }
+
+  // 安全提取元数据
+  const rawSongMid = (musicInfo.meta as any).songmid || (musicInfo.meta as any).strMediaMid || musicInfo.id
+  // 兼容 musicInfo.id 带有 "tx_" 前缀的情况
+  const songMid = typeof rawSongMid === 'string' && rawSongMid.startsWith('tx_') ? rawSongMid.slice(3) : rawSongMid
+  const songId = (musicInfo.meta as any).id
+
+  // 严格的纯数字 ID 校验（使用正则，完全避开 parseInt 截断问题）
+  const isNumericId = songId && /^\d+$/.test(String(songId))
+
+  // 统一使用 songId 作为喜欢状态的键（如果存在），否则使用 songMid
+  const likeKey = isNumericId ? String(songId) : songMid
+
+  // 决定传递给底层的标识符：如果是纯数字 songId，使用它；否则使用 songMid
+  const songIdentifier = isNumericId ? String(songId) : songMid
+
+  const isLiked = userState.tx_liked_song_ids.has(likeKey)
+  const like = !isLiked
+
+  try {
+    await txApi.likeSong(songIdentifier, like);
+    if (like) {
+      toast('喜欢成功');
+      addTxLikedSong(likeKey);
+    } else {
+      toast('取消喜欢成功');
+      removeTxLikedSong(likeKey);
     }
   } catch (error: any) {
     toast(`操作失败: ${error.message}`);

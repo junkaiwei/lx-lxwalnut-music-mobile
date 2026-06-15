@@ -93,6 +93,7 @@ export default ({
             cover: p.cover,
             songCount: p.songCount,
             creator: { nickname: 'QQ音乐' },
+            dirid: p.dirid,
           }))
           setTxPlaylists(formattedPlaylists)
         }).catch(() => {
@@ -109,6 +110,7 @@ export default ({
           cover: p.cover,
           songCount: p.songCount,
           creator: { nickname: 'QQ音乐' },
+          dirid: p.dirid,
         }))
         setTxPlaylists(formattedPlaylists)
       }).catch(() => {

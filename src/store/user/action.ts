@@ -115,3 +115,21 @@ export const updateWySubscribedPlaylistTrackCount = (id: string | number, change
     global.state_event.wySubscribedPlaylistsChanged();
   }
 };
+
+// QQ音乐喜欢歌曲
+export const setTxLikedSongs = (ids: (string | number)[]) => {
+  state.tx_liked_song_ids = new Set(ids.map(String))
+  global.state_event.txLikedListChanged()
+}
+export const addTxLikedSong = (id: string | number) => {
+  const strId = String(id)
+  if (state.tx_liked_song_ids.has(strId)) return
+  state.tx_liked_song_ids.add(strId)
+  global.state_event.txLikedListChanged()
+}
+export const removeTxLikedSong = (id: string | number) => {
+  const strId = String(id)
+  if (!state.tx_liked_song_ids.has(strId)) return
+  state.tx_liked_song_ids.delete(strId)
+  global.state_event.txLikedListChanged()
+}

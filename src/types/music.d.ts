@@ -88,6 +88,7 @@ declare namespace LX {
 
     interface MusicInfoMeta_tx extends MusicInfoMeta_online {
       strMediaMid: string // 歌曲strMediaMid
+      songmid?: string // 歌曲mid
       id?: number // 歌曲songId
       albumMid?: string // 歌曲albumMid
     }
