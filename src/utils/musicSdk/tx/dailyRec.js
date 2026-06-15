@@ -63,6 +63,7 @@ const transformSong = (item, index) => {
         strMediaMid: file?.media_mid || '',
         id: item.id,
         albumMid,
+        vid: item.mv?.vid || '',
       },
     }
     

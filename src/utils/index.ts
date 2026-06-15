@@ -116,6 +116,7 @@ export const toNewMusicInfo = (oldMusicInfo: any): LX.Music.MusicInfo => {
         meta.albumMid = oldMusicInfo.albumMid
         // getListDetailNew 返回的字段名是 id 不是 songId，兼容两种写法
         meta.id = oldMusicInfo.songId || oldMusicInfo.id
+        meta.vid = oldMusicInfo.vid || oldMusicInfo.meta?.vid || ''
         break
       case 'mg':
         meta.copyrightId = oldMusicInfo.copyrightId

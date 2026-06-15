@@ -91,6 +91,12 @@ export default forwardRef<ListMenuType, ListMenuProps>((props: ListMenuProps, re
       }
     }
 
+    if (selectInfo.musicInfo?.source === 'tx') {
+      if (selectInfo.musicInfo.meta.vid && menuSetting.playMV) {
+        wyMenuItems.push({ action: 'playMv', label: '播放MV' });
+      }
+    }
+
     const remainingMenu = []
     if (menuSetting.songDetail)
       remainingMenu.push({ action: 'musicSourceDetail', label: t('music_source_detail') })

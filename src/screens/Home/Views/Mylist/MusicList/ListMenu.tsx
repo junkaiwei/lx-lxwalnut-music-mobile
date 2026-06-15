@@ -113,6 +113,12 @@ export default forwardRef<ListMenuType, ListMenuProps>((props, ref) => {
         }
       }
 
+      if (musicInfo.source === 'tx') {
+        if (musicInfo.meta.vid && menuSetting.playMV) {
+          menu.push({ action: 'playMv', label: '播放MV' })
+        }
+      }
+
       if (menuSetting.dislike) menu.push({ action: 'dislike', disabled: hasDislike(musicInfo), label: t('dislike') })
       menu.push({ action: 'clearCache', label: t('clear_music_cache') })
       menu.push({ action: 'remove', label: t('delete') })

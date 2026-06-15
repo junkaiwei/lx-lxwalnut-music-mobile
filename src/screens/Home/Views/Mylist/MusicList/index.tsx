@@ -37,7 +37,8 @@ import MusicToggleModal, { type MusicToggleModalType } from './MusicToggleModal'
 import {handleShowAlbumDetail, handleShowArtistDetail} from "@/components/OnlineList/listAction.ts";
 import {useSettingValue} from "@/store/setting/hook.ts";
 import {updateSetting} from "@/core/common.ts";
-import {getMvUrl} from "@/utils/musicSdk/wy/mv.js";
+import {getMvUrl as getWyMvUrl} from "@/utils/musicSdk/wy/mv.js";
+import {getMvUrl as getTxMvUrl} from "@/utils/musicSdk/tx/mv.js";
 import commonState from '@/store/common/state';
 import SimilarSongsModal, { type SimilarSongsModalType } from '@/components/SimilarSongsModal'
 
@@ -108,13 +109,23 @@ export default ({ onBack }: MusicListProps) => {
   }, []);
 
   const handlePlayMv = useCallback((info: SelectInfo) => {
-    const mvId = info.musicInfo.meta.mv;
-    if (!mvId) return;
-    getMvUrl(mvId).then(data => {
-      global.app_event.showVideoPlayer(data.url);
-    }).catch(err => {
-      toast(err.message || '获取MV失败');
-    });
+    if (info.musicInfo.source === 'wy') {
+      const mvId = info.musicInfo.meta.mv;
+      if (!mvId) return;
+      getWyMvUrl(mvId).then(data => {
+        global.app_event.showVideoPlayer(data.url);
+      }).catch(err => {
+        toast(err.message || '获取MV失败');
+      });
+    } else if (info.musicInfo.source === 'tx') {
+      const vid = info.musicInfo.meta.vid;
+      if (!vid) return;
+      getTxMvUrl(vid).then(data => {
+        global.app_event.showVideoPlayer(data.url);
+      }).catch(err => {
+        toast(err.message || '获取MV失败');
+      });
+    }
   }, []);
 
   const showMenu = useCallback(

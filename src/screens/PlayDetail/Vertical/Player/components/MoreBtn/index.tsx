@@ -14,7 +14,8 @@ import {handleLikeMusic, handleShowAlbumDetail, handleShowArtistDetail} from '@/
 import MusicAddModal, { type MusicAddModalType } from '@/components/MusicAddModal'
 import MusicDownloadModal, { type MusicDownloadModalType } from '@/screens/Home/Views/Mylist/MusicList/MusicDownloadModal'
 import settingState from '@/store/setting/state'
-import {getMvUrl} from "@/utils/musicSdk/wy/mv.js";
+import {getMvUrl as getWyMvUrl} from "@/utils/musicSdk/wy/mv.js";
+import {getMvUrl as getTxMvUrl} from "@/utils/musicSdk/tx/mv.js";
 import SimilarSongsModal, { type SimilarSongsModalType } from '@/components/SimilarSongsModal'
 import { isOneDriveMusicInfo } from '@/core/oneDrive/utils'
 import { usePlayMusicInfo } from '@/store/player/hook'
@@ -102,13 +103,23 @@ export default memo(({ componentId }: { componentId: string }) => {
   };
 
   const onPlayMv = useCallback((info: SelectInfo) => {
-    const mvId = info.musicInfo.meta.mv;
-    if (!mvId) return;
-    getMvUrl(mvId).then(data => {
-      global.app_event.showVideoPlayer(data.url);
-    }).catch(err => {
-      toast(err.message || '获取MV失败');
-    });
+    if (info.musicInfo.source === 'wy') {
+      const mvId = info.musicInfo.meta.mv;
+      if (!mvId) return;
+      getWyMvUrl(mvId).then(data => {
+        global.app_event.showVideoPlayer(data.url);
+      }).catch(err => {
+        toast(err.message || '获取MV失败');
+      });
+    } else if (info.musicInfo.source === 'tx') {
+      const vid = info.musicInfo.meta.vid;
+      if (!vid) return;
+      getTxMvUrl(vid).then(data => {
+        global.app_event.showVideoPlayer(data.url);
+      }).catch(err => {
+        toast(err.message || '获取MV失败');
+      });
+    }
   }, []);
 
   const onLike = (info: SelectInfo) => {

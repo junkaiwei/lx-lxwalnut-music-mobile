@@ -31,7 +31,8 @@ import { handleShare } from '@/screens/Home/Views/Mylist/MusicList/listAction';
 import settingState from '@/store/setting/state';
 import commonState from '@/store/common/state';
 import SimilarSongsModal, { type SimilarSongsModalType } from '@/components/SimilarSongsModal'
-import { getMvUrl } from '@/utils/musicSdk/wy/mv.js'
+import { getMvUrl as getWyMvUrl } from '@/utils/musicSdk/wy/mv.js'
+import { getMvUrl as getTxMvUrl } from '@/utils/musicSdk/tx/mv.js'
 import { isOneDriveMusicInfo } from '@/core/oneDrive/utils'
 
 export interface PlayerPlaylistType {
@@ -230,15 +231,28 @@ export default forwardRef<PlayerPlaylistType, {}>((props, ref) => {
   };
 
   const onPlayMv = (info: SelectInfo) => {
-    const mvId = (info.musicInfo as LX.Music.MusicInfoOnline).meta.mv
-    if (!mvId) return
+    const musicInfo = info.musicInfo as LX.Music.MusicInfoOnline
+    if (musicInfo.source === 'wy') {
+      const mvId = musicInfo.meta.mv
+      if (!mvId) return
 
-    panelRef.current?.setVisible(false)
-    getMvUrl(mvId).then(data => {
-      global.app_event.showVideoPlayer(data.url)
-    }).catch(err => {
-      toast(err.message || '获取MV失败')
-    })
+      panelRef.current?.setVisible(false)
+      getWyMvUrl(mvId).then(data => {
+        global.app_event.showVideoPlayer(data.url)
+      }).catch(err => {
+        toast(err.message || '获取MV失败')
+      })
+    } else if (musicInfo.source === 'tx') {
+      const vid = musicInfo.meta.vid
+      if (!vid) return
+
+      panelRef.current?.setVisible(false)
+      getTxMvUrl(vid).then(data => {
+        global.app_event.showVideoPlayer(data.url)
+      }).catch(err => {
+        toast(err.message || '获取MV失败')
+      })
+    }
   }
 
   const handlePanelHide = () => {

@@ -27,7 +27,8 @@ import {createStyle, toast} from '@/utils/tools'
 import wyApi from '@/utils/musicSdk/wy/user'
 import txUserApi from '@/utils/musicSdk/tx/user'
 import {batchDownload} from "@/core/download.ts"
-import {getMvUrl} from "@/utils/musicSdk/wy/mv.js"
+import {getMvUrl as getWyMvUrl} from "@/utils/musicSdk/wy/mv.js"
+import {getMvUrl as getTxMvUrl} from "@/utils/musicSdk/tx/mv.js"
 import {useI18n} from "@/lang"
 import {removeWyLikedSong, updateWySubscribedPlaylistTrackCount} from "@/store/user/action.ts"
 import {clearListDetailCache} from "@/core/songlist.ts"
@@ -162,13 +163,23 @@ export default forwardRef<OnlineListType, OnlineListProps>(
       handleShowAlbumDetail(componentId, info.musicInfo)
     }
     const handlePlayMv = useCallback((info: SelectInfo) => {
-      const mvId = info.musicInfo.meta.mv
-      if (!mvId) return
-      getMvUrl(mvId).then(data => {
-        global.app_event.showVideoPlayer(data.url)
-      }).catch(err => {
-        toast(err.message || '获取MV失败')
-      })
+      if (info.musicInfo.source === 'wy') {
+        const mvId = info.musicInfo.meta.mv
+        if (!mvId) return
+        getWyMvUrl(mvId).then(data => {
+          global.app_event.showVideoPlayer(data.url)
+        }).catch(err => {
+          toast(err.message || '获取MV失败')
+        })
+      } else if (info.musicInfo.source === 'tx') {
+        const vid = info.musicInfo.meta.vid
+        if (!vid) return
+        getTxMvUrl(vid).then(data => {
+          global.app_event.showVideoPlayer(data.url)
+        }).catch(err => {
+          toast(err.message || '获取MV失败')
+        })
+      }
     }, [])
     const handleMoveMusic = (info: SelectInfo) => {
       if (info.selectedList.length) {

@@ -80,6 +80,12 @@ export default forwardRef<PlayDetailMenuType, PlayDetailMenuProps>((props, ref) 
       }
     }
 
+    if (musicInfo?.source === 'tx') {
+      if (musicInfo.meta.vid && menuSetting.playMV) {
+        menuItems.push({ action: 'playMv', label: '播放MV' })
+      }
+    }
+
     if (musicInfo && musicInfo.source !== 'local') {
      if (menuSetting.songDetail) menuItems.push({ action: 'musicSourceDetail', label: t('music_source_detail') });
     }

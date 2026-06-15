@@ -91,6 +91,7 @@ declare namespace LX {
       songmid?: string // 歌曲mid
       id?: number // 歌曲songId
       albumMid?: string // 歌曲albumMid
+      vid?: string // MV vid
     }
     interface MusicInfo_tx extends MusicInfoBase<'tx'> {
       meta: MusicInfoMeta_tx
