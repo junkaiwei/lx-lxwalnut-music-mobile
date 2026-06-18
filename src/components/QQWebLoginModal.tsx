@@ -56,7 +56,7 @@ const LoadingSpinner = () => {
   );
 };
 
-export default forwardRef<QQWebLoginModalType, {}>((props, ref) => {
+const QQWebLoginModal = forwardRef<QQWebLoginModalType, object>((props, ref) => {
   const modalRef = useRef<ModalType>(null);
   const webViewRef = useRef<WebView>(null);
   const theme = useTheme();
@@ -161,7 +161,11 @@ export default forwardRef<QQWebLoginModalType, {}>((props, ref) => {
           </TouchableOpacity>
         </View>
       </View>
-const LOGIN_URL = 'https://y.qq.com/n/ryqq/login';
+    </Modal>
+  );
+});
+
+export default QQWebLoginModal;
 
 const styles = StyleSheet.create({
   container: {
