@@ -98,8 +98,9 @@ export default memo(({ componentId }: { componentId: string }) => {
   });
 
   const imageContainerStyle = useMemo(() => {
+    const isSmallWindow = winHeight < 700
     const baseWidth = isNewUI 
-      ? Math.min(winWidth * 0.75, (winHeight - statusBarHeight - HEADER_HEIGHT) * 0.45)
+      ? Math.min(winWidth * (isSmallWindow ? 0.5 : 0.75), (winHeight - statusBarHeight - HEADER_HEIGHT) * (isSmallWindow ? 0.3 : 0.45))
       : Math.min(winWidth * 0.85, (winHeight - statusBarHeight - HEADER_HEIGHT) * 0.5);
     const imgWidth = baseWidth * (coverSize / 100);
     const radius = isCoverSpin ? imgWidth / 2 : 4;

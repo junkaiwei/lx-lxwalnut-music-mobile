@@ -1,7 +1,7 @@
 {
   "name": "lx-lxnetease-music-mobile",
-  "version": "26.06.10",
-  "versionCode": 260610,
+  "version": "26.06.11",
+  "versionCode": 260611,
   "private": true,
   "scripts": {
     "dev": "react-native run-android --active-arch-only",

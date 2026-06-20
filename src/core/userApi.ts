@@ -58,7 +58,7 @@ export const overwriteUserApis = async (data: { list: LX.UserApi.UserApiInfo[], 
     // 1. 清理不再存在的旧脚本
     const allKeys = await getAllKeys();
     const oldScriptKeys = allKeys.filter(key => key.startsWith(storageDataPrefix.userApi) && key !== storageDataPrefix.userApi);
-    const newScriptIds = new Set(Object.keys(data.scripts));
+    const newScriptIds = new Set(Object.keys(data.scripts ?? {}));
     const keysToRemove = oldScriptKeys.filter(key => {
       const scriptId = key.substring(storageDataPrefix.userApi.length);
       return !newScriptIds.has(scriptId);
@@ -68,7 +68,7 @@ export const overwriteUserApis = async (data: { list: LX.UserApi.UserApiInfo[], 
     // 2. 批量保存新的元数据和所有脚本内容
     const saveTasks: Array<[string, any]> = [];
     saveTasks.push([storageDataPrefix.userApi, data.list]);
-    for (const [id, script] of Object.entries(data.scripts)) {
+    for (const [id, script] of Object.entries(data.scripts ?? {})) {
       saveTasks.push([`${storageDataPrefix.userApi}${id}`, script]);
     }
     await saveDataMultiple(saveTasks);

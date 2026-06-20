@@ -202,6 +202,10 @@ export default memo(({ componentId }: { componentId: string }) => {
                   <Pic componentId={componentId} />
                 </View>
                 <SongInfo />
+                <MiniLyric
+                  onPress={handleSwitchToLyricPage}
+                  style={[styles.miniLyricContainerNew, styles[`miniLyricAlign${miniLyricAlign.charAt(0).toUpperCase() + miniLyricAlign.slice(1)}`]]}
+                />
               </Animated.View>
             ) : (
               <Animated.View collapsable={false} style={[styles.picPageContainerOld, slideStyle]}>
@@ -212,18 +216,12 @@ export default memo(({ componentId }: { componentId: string }) => {
                 />
               </Animated.View>
             )}
-            {isNewUI ? (
-              <MiniLyric
-                onPress={handleSwitchToLyricPage}
-                style={[styles.miniLyricContainerNew, styles[`miniLyricAlign${miniLyricAlign.charAt(0).toUpperCase() + miniLyricAlign.slice(1)}`]]}
-              />
-            ) : null}
           </View>
           <View collapsable={false}>
             <LyricPage activeIndex={pageIndex} />
           </View>
         </PagerView>
-        <Player componentId={componentId} isNewUI={isNewUI} />
+        {(!isNewUI || pageIndex === 0) && <Player componentId={componentId} isNewUI={isNewUI} />}
       </View>
       <PlayerPlaylist ref={playlistRef} />
     </>
@@ -255,7 +253,7 @@ const styles = createStyle({
     flex: 1,
     justifyContent: 'flex-start',
     position: 'relative',
-    paddingTop: 10,
+    paddingTop: 12,
   },
   picContainer: {
     alignItems: 'center',

@@ -143,7 +143,7 @@ export default async (setting: LX.AppSetting) => {
         let apis: any = {}
         let qualitys: LX.QualityList = {}
         for (const [source, { actions, type, qualitys: sourceQualitys }] of Object.entries(
-          info.sources
+          info.sources ?? {}
         )) {
           if (type != 'music') continue
           apis[source as LX.Source] = {}

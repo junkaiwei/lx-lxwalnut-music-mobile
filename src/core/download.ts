@@ -376,7 +376,7 @@ export const retryTask = (taskId: string) => {
     }, 200);
   }
   // 如果文件已存在，但元信息失败，则只重试元信息
-  else if (Object.values(task.metadataStatus).includes('fail')) {
+  else if (Object.values(task.metadataStatus ?? {}).includes('fail')) {
     void retryMetadata(task.id);
   }
 };

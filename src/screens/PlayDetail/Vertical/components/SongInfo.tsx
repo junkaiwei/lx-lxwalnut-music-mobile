@@ -10,10 +10,13 @@ import { Icon } from '@/components/common/Icon'
 import { handleLikeMusic, handleTxLikeMusic } from '@/components/OnlineList/listAction'
 import playerState from '@/store/player/state'
 import { useIsWyLiked, useIsTxLiked } from '@/store/user/hook'
+import { useWindowSize } from '@/utils/hooks'
 
 export default memo(() => {
   const playMusicInfo = usePlayMusicInfo()
   const theme = useTheme()
+  const { height: winHeight } = useWindowSize()
+  const isSmallWindow = winHeight < 700
   const musicInfo = playMusicInfo.musicInfo ? ('progress' in playMusicInfo.musicInfo ? playMusicInfo.musicInfo.metadata.musicInfo : playMusicInfo.musicInfo) : null
 
   const handleArtistPress = (artist: { id: string | number; name: string }) => {
@@ -75,7 +78,7 @@ export default memo(() => {
   }, [songName, artistText])
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, isSmallWindow && { marginTop: 8, marginBottom: 4 }]}>
       <View style={styles.songNameRow}>
         <TouchableOpacity onPress={handleSongNamePress} activeOpacity={0.6} style={styles.songNameTouch}>
           <Text

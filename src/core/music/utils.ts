@@ -501,7 +501,7 @@ export const getOnlineOtherSourceMusicUrl = async ({
     itemQuality = getPlayQuality(preferredQuality, musicInfo)
     userApiLog.info(`[换源播放]   用户偏好音质: ${preferredQuality}`)
     userApiLog.info(`[换源播放]   实际选择音质: ${itemQuality}`)
-    userApiLog.info(`[换源播放]   支持的音质: ${Object.keys(musicInfo.meta._qualitys).join(', ')}`)
+    userApiLog.info(`[换源播放]   支持的音质: ${Object.keys(musicInfo.meta._qualitys ?? {}).join(', ')}`)
 
     if (preferredQuality !== itemQuality) {
       userApiLog.info(`[换源播放]   音质降级: ${preferredQuality} -> ${itemQuality}`)
@@ -577,7 +577,7 @@ export const getOnlineOtherSourceMusicUrl = async ({
       })
   }
 
-  const availableQualities = Object.keys(musicInfo.meta._qualitys) as LX.Quality[]
+  const availableQualities = Object.keys(musicInfo.meta._qualitys ?? {}) as LX.Quality[]
   const sortedQualities = availableQualities
     .filter(q => QUALITY_RANK.includes(q))
     .sort((a, b) => QUALITY_RANK.indexOf(a) - QUALITY_RANK.indexOf(b))
@@ -743,7 +743,7 @@ export const handleGetOnlineMusicUrl = async ({
       })
   }
 
-  const availableQualities = Object.keys(musicInfo.meta._qualitys) as LX.Quality[]
+  const availableQualities = Object.keys(musicInfo.meta._qualitys ?? {}) as LX.Quality[]
   const sortedQualities = availableQualities
     .filter(q => QUALITY_RANK.includes(q))
     .sort((a, b) => QUALITY_RANK.indexOf(a) - QUALITY_RANK.indexOf(b))

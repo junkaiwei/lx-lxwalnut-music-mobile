@@ -24,12 +24,15 @@ import { usePlayMusicInfo } from '@/store/player/hook'
 import { type Position } from '@/screens/Home/Views/Mylist/MusicList/ListMenu'
 import { getMvUrl as getWyMvUrl } from '@/utils/musicSdk/wy/mv.js'
 import { getMvUrl as getTxMvUrl } from '@/utils/musicSdk/tx/mv.js'
+import { useWindowSize } from '@/utils/hooks'
 
 const BTN_SIZE = scaleSizeW(50)
 
 export default memo(({ componentId }: { componentId: string }) => {
   const theme = useTheme()
   const iconColor = theme.isDark ? theme['c-font'] : theme['c-primary']
+  const { height: winHeight } = useWindowSize()
+  const isSmallWindow = winHeight < 700
   const menuRef = useRef<PlayDetailMenuType>(null)
   const musicAddModalRef = useRef<MusicAddModalType>(null)
   const musicDownloadModalRef = useRef<MusicDownloadModalType>(null)
@@ -159,7 +162,7 @@ export default memo(({ componentId }: { componentId: string }) => {
   }, [])
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, isSmallWindow && { paddingVertical: 6 }]}>
       <TouchableOpacity style={styles.btnItem} onPress={handleLyricPress} activeOpacity={0.6}>
         <SvgIcon name="lyric" color={enabledLyric ? theme['c-primary'] : iconColor} size={enabledLyric ? BTN_SIZE * 0.9 : BTN_SIZE * 0.8} />
       </TouchableOpacity>

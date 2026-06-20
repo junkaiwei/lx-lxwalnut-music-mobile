@@ -47,7 +47,7 @@ export default memo(({ task: initialTask, onRemove }: { task: LX.Download.Downlo
   }, [task.id, initialTask]); // 依赖 task.id 和 initialTask
 
 
-  const hasMetaError = useMemo(() => Object.values(task.metadataStatus).includes('fail'), [task.metadataStatus]);
+  const hasMetaError = useMemo(() => Object.values(task.metadataStatus ?? {}).includes('fail'), [task.metadataStatus]);
 
   const handleRetry = useCallback(() => {
     retryTask(task.id);

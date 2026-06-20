@@ -203,13 +203,14 @@ export default ({ isNewUI }: { isNewUI: boolean }) => {
     )
   }
 
-  const containerHeight = Math.max(winSize.height * 0.14, 80)
+  const isSmallWindow = winSize.height < 700
+  const containerHeight = Math.max(winSize.height * (isSmallWindow ? 0.1 : 0.14), isSmallWindow ? 40 : 80)
   const playBtnSize = Math.min(winSize.width * PLAY_BTN_SIZE_RATIO, containerHeight * 0.75)
   const smallBtnSize = playBtnSize * PREV_NEXT_SIZE_RATIO
   const extraBtnSize = smallBtnSize * EXTRA_BTN_SIZE_RATIO
 
   return (
-    <View style={[styles.newContainer, { height: containerHeight }]}>
+    <View style={[styles.newContainer, { height: containerHeight }, isSmallWindow && { paddingVertical: 10 }]}>
       <TouchableOpacity
         style={[styles.oldControlBtn, { width: extraBtnSize, height: extraBtnSize, marginLeft: -15 }]}
         activeOpacity={0.5}

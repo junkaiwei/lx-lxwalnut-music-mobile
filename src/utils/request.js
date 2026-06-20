@@ -153,7 +153,7 @@ const handleRequestData = async (
     } else if (options.formData) {
       headers['Content-Type'] = 'multipart/form-data'
       const formBody = []
-      for (let [key, value] of Object.entries(options.form)) {
+      for (let [key, value] of Object.entries(options.formData)) {
         let encodedKey = encodeURIComponent(key)
         let encodedValue = encodeURIComponent(value)
         formBody.push(`${encodedKey}=${encodedValue}`)

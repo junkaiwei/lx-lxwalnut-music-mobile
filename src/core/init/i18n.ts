@@ -16,7 +16,7 @@ export default async (setting: LX.AppSetting) => {
     ) {
       lang = deviceLanguage as I18n['locale']
     } else {
-      lang = 'en_us'
+      lang = 'zh_cn'
     }
     updateSetting({ 'common.langId': lang })
   }

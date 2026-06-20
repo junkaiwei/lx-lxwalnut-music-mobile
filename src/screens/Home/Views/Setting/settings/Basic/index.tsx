@@ -45,6 +45,7 @@ export default memo(() => {
         <IsStartupAutoPlay />
         <IsEnableSlideSwitchSong />
         <IsPlayDetailNewUI />
+        <IsNewListUI />
         {/*<IsStartupPushPlayDetailScreen />*/}
         {global.lx.isCarMode ? (
           <>
@@ -52,9 +53,8 @@ export default memo(() => {
             <IsShowExitBtn />
           </>
         ) : null}
-        <IsHomePageScroll />
         <IsShowMyListSubMenu />
-        <IsNewListUI />
+        <IsHomePageScroll />
         <IsUseSystemFileSelector />
         <IsAlwaysKeepStatusbarHeight />
         <DrawerLayoutPosition />
