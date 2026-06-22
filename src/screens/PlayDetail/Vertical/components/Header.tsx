@@ -1,6 +1,7 @@
 import { memo, useRef, useCallback, useMemo, useEffect } from 'react'
 import { View, StyleSheet, TouchableOpacity, ScrollView, Animated } from 'react-native'
 import { Icon } from '@/components/common/Icon'
+import TimeoutExitEditModal, { type TimeoutExitEditModalType, useTimeInfo } from '@/components/TimeoutExitEditModal'
 import { pop, navigations } from '@/navigation'
 import { useTheme } from '@/store/theme/hook'
 import { usePlayMusicInfo } from '@/store/player/hook'
@@ -140,13 +141,18 @@ const AnimatedIndicatorDot = ({ isActive }: { isActive: boolean }) => {
 
 export default memo(({ isNewUI, pageIndex }: { isNewUI: boolean; pageIndex?: number }) => {
   const popupRef = useRef<SettingPopupType>(null)
+  const timerModalRef = useRef<TimeoutExitEditModalType>(null)
   const statusBarHeight = useStatusbarHeight()
   const theme = useTheme()
+  const timeInfo = useTimeInfo()
   const back = () => {
     void pop(commonState.componentIds[commonState.componentIds.length - 1]?.id!)
   }
   const showSetting = () => {
     popupRef.current?.show()
+  }
+  const showTimer = () => {
+    timerModalRef.current?.show()
   }
   const iconColor = theme.isDark ? theme['c-font'] : theme['c-primary']
   const activeIndex = pageIndex ?? 0
@@ -176,7 +182,12 @@ export default memo(({ isNewUI, pageIndex }: { isNewUI: boolean; pageIndex?: num
             </View>
           </View>
           <View style={styles.rightArea}>
-            <Icon name="music_time" color={iconColor} size={22} />
+            <Icon
+              name="music_time"
+              color={timeInfo.active ? theme['c-primary-font-active'] : iconColor}
+              size={22}
+              onPress={showTimer}
+            />
             <Icon name="slider" color={iconColor} size={22} onPress={showSetting} />
           </View>
         </View>
@@ -189,6 +200,7 @@ export default memo(({ isNewUI, pageIndex }: { isNewUI: boolean; pageIndex?: num
         </View>
       )}
       <SettingPopup ref={popupRef} direction="vertical" />
+      <TimeoutExitEditModal ref={timerModalRef} timeInfo={timeInfo} />
     </View>
   )
 })
