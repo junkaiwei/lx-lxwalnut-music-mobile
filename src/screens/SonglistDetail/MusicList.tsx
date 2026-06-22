@@ -10,6 +10,7 @@ import { LIST_IDS } from '@/config/constant'
 import listState from '@/store/list/state'
 import { getListMusics } from '@/core/list'
 import txUserApi from '@/utils/musicSdk/tx/user'
+import { log } from '@/utils/log'
 
 export interface MusicListProps {
   componentId: string
@@ -108,6 +109,7 @@ export default forwardRef<MusicListType, MusicListProps>(({componentId, isCreato
     ref,
     () => ({
       async loadList(source, id, isRefresh = false) {
+        console.log(`[SonglistDetail] loadList 被调用`, { source, id, isRefresh })
         clearListDetail()
         const listDetailInfo = songlistState.listDetailInfo
         const createDetailInfo = (detail: typeof listDetailInfo.info): DetailInfo => ({
@@ -124,6 +126,7 @@ export default forwardRef<MusicListType, MusicListProps>(({componentId, isCreato
           listDetailInfo.source === source &&
           listDetailInfo.list.length
         ) {
+          log.info(`[SonglistDetail] MusicList.loadList 使用缓存`, { listCount: listDetailInfo.list.length })
           requestAnimationFrame(() => {
             listRef.current?.setList(listDetailInfo.list)
           })
@@ -133,11 +136,15 @@ export default forwardRef<MusicListType, MusicListProps>(({componentId, isCreato
         listRef.current?.setStatus('loading')
         const page = 1
         setListDetailInfo(info.source, info.id)
+        log.info(`[SonglistDetail] MusicList.loadList 开始`, { source, id, page, isRefresh })
         return getListDetail(id, source, page, isRefresh)
           .then((listDetail) => {
+            log.info(`[SonglistDetail] MusicList.loadList 获取到数据`, { songCount: listDetail.list.length, total: listDetail.total })
             const result = setListDetail(listDetail, id, page)
+            log.info(`[SonglistDetail] MusicList.loadList setListDetail 后`, { resultSongCount: result.list.length })
             if (isUnmountedRef.current) return createDetailInfo(result.info)
             requestAnimationFrame(() => {
+              log.info(`[SonglistDetail] MusicList.loadList setList`, { listCount: result.list.length })
               listRef.current?.setList(result.list)
               listRef.current?.setStatus(
                 songlistState.listDetailInfo.maxPage <= page ? 'end' : 'idle',
@@ -146,6 +153,7 @@ export default forwardRef<MusicListType, MusicListProps>(({componentId, isCreato
             return createDetailInfo(result.info)
           })
           .catch((err) => {
+            log.info(`[SonglistDetail] MusicList.loadList 错误`, { error: err?.message, stack: err?.stack?.substring(0, 200) })
             if (songlistState.listDetailInfo.list.length && page === 1) clearListDetail()
             listRef.current?.setStatus('error')
             throw err
@@ -200,7 +208,7 @@ export default forwardRef<MusicListType, MusicListProps>(({componentId, isCreato
           songlistState.listDetailInfo.list = currentList
           songlistState.listDetailInfo.total = currentList.length
           listRef.current?.setList(currentList)
-          console.log(`[乐观更新] 已添加歌曲到列表: ${song.name}, 当前共 ${currentList.length} 首`)
+          log.info(`[乐观更新] 已添加歌曲到列表: ${song.name}, 当前共 ${currentList.length} 首`)
         }
       },
     }),

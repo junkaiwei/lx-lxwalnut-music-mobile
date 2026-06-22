@@ -6,6 +6,7 @@ import songlistState, {
 import songlistActions from '@/store/songlist/action'
 import { deduplicationList, toNewMusicInfo } from '@/utils'
 import musicSdk from '@/utils/musicSdk'
+import { log } from '@/utils/log'
 
 interface DetailPageCache {
   data: ListDetailInfo
@@ -122,9 +123,13 @@ const getListDetailLimit = async (
 
   return (
     musicSdk[source]?.songList.getListDetail(id, sourcePage + 1).then((result: ListDetailInfo) => {
-      if (listCache !== cache.get(listKey)) return
+      log.info(`[SonglistCore] getListDetailLimit 获取到歌曲`, { source, id, songCount: result.list.length, total: result.total, limit: result.limit })
+      if (listCache !== cache.get(listKey)) {
+        log.warn(`[SonglistCore] getListDetailLimit 缓存已失效，重新创建`)
+        cache.set(listKey, (listCache = new Map()))
+      }
       result.list = deduplicationList(
-        result.list.map((m) => toNewMusicInfo(m)) as LX.Music.MusicInfoOnline[]
+        result.list.map((m) => toNewMusicInfo(m)).filter(Boolean) as LX.Music.MusicInfoOnline[]
       )
       let p = page
       const tempList = listCache.get(tempListKey) as ListDetailInfo['list']

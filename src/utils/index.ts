@@ -26,9 +26,9 @@ export function compareVer(currentVer: string, targetVer: string): -1 | 0 | 1 {
   return 0
 }
 
-export const toNewMusicInfo = (oldMusicInfo: any): LX.Music.MusicInfo => {
+export const toNewMusicInfo = (oldMusicInfo: any): LX.Music.MusicInfo | null => {
   if (!oldMusicInfo || !oldMusicInfo.songmid || !oldMusicInfo.source) {
-    throw new Error('Invalid music info')
+    return null
   }
 
   const meta: Record<string, any> = {

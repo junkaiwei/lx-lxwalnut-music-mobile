@@ -72,7 +72,7 @@ const getListLimit = async (
     musicSdk[source]?.leaderboard.getList(bangId, sourcePage + 1).then((result: ListDetailInfo) => {
       if (listCache !== cache.get(listKey)) return
       result.list = deduplicationList(
-        result.list.map((m) => toNewMusicInfo(m)) as LX.Music.MusicInfoOnline[]
+        result.list.map((m) => toNewMusicInfo(m)).filter(Boolean) as LX.Music.MusicInfoOnline[]
       )
       let p = page
       const tempList = listCache.get(tempListKey) as ListDetailInfo['list']

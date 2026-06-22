@@ -283,6 +283,21 @@ export default {
 
     log.info(`[TX SongList] getListDetailNew 成功`, { songCount: data.songlist.length, dissname: data.dissinfo?.dissname })
 
+    // 打印第一条歌曲结构
+    if (data.songlist.length > 0) {
+      const firstSong = data.songlist[0]
+      log.info(`[TX SongList] 第一条歌曲结构`, {
+        keys: Object.keys(firstSong),
+        title: firstSong.title,
+        name: firstSong.name,
+        id: firstSong.id,
+        mid: firstSong.mid,
+        hasSinger: !!firstSong.singer,
+        hasAlbum: !!firstSong.album,
+        hasFile: !!firstSong.file,
+      })
+    }
+
     // 打印新接口 dissinfo 完整结构，方便排查
     log.info(`[TX SongList] 新接口 dissinfo 完整数据`, {
       dissinfoKeys: data.dissinfo ? Object.keys(data.dissinfo) : [],
@@ -357,16 +372,20 @@ export default {
   },
 
   async filterListDetailNew(rawList) {
+    log.info(`[TX SongList] filterListDetailNew 输入`, { count: rawList.length })
     const qualityInfoRequest = getBatchMusicQualityInfo(rawList)
     let qualityInfoMap = {}
 
     try {
       qualityInfoMap = await qualityInfoRequest.promise
+      log.info(`[TX SongList] filterListDetailNew 质量信息获取成功`, { count: Object.keys(qualityInfoMap).length })
     } catch (error) {
-      console.error('Failed to fetch quality info:', error)
+      log.error(`[TX SongList] filterListDetailNew 质量信息获取失败`, { error: error.message })
     }
 
-    return rawList.map((item) => {
+    const result = rawList
+      .filter((item) => item.mid) // 过滤掉 mid 为空的歌曲，避免 toNewMusicInfo 抛出异常
+      .map((item) => {
       const { types = [], _types = {} } = qualityInfoMap[item.id] || {}
 
       return {
@@ -394,6 +413,8 @@ export default {
         vid: item.mv?.vid || '',
       }
     })
+    log.info(`[TX SongList] filterListDetailNew 输出`, { count: result.length, firstSong: result.length > 0 ? result[0].name : 'none' })
+    return result
   },
 
   // 获取歌曲列表内的音乐
@@ -482,7 +503,9 @@ export default {
       console.error('Failed to fetch quality info:', error)
     }
 
-    return rawList.map((item) => {
+    return rawList
+      .filter((item) => item.mid) // 过滤掉 mid 为空的歌曲
+      .map((item) => {
       const { types = [], _types = {} } = qualityInfoMap[item.id] || {}
 
       return {

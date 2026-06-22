@@ -130,6 +130,7 @@ export default ({ info, onBack, initialScrollToInfo }: { info: ListInfoItem, onB
   const handleBack = onBack
 
   const refreshList = useCallback((isRefresh = false) => {
+    console.log(`[SonglistDetail] refreshList called, musicListRef:`, !!musicListRef.current, { source: info.source, id: info.id, isRefresh })
     musicListRef.current?.loadList(info.source, info.id, isRefresh).then(setDetailInfo)
   }, [info.source, info.id])
 
@@ -151,6 +152,7 @@ export default ({ info, onBack, initialScrollToInfo }: { info: ListInfoItem, onB
 
   useEffect(() => {
     // 打开歌单详情时强制刷新（获取实时数据）
+    console.log(`[SonglistDetail] useEffect refreshList, musicListRef:`, !!musicListRef.current)
     refreshList(true)
   }, [refreshList])
 

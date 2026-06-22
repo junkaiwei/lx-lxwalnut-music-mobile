@@ -13,6 +13,7 @@ import java.util.List;
 import com.lxwalnut.music.mobile.cache.CachePackage;
 import com.lxwalnut.music.mobile.crypto.CryptoPackage;
 import com.lxwalnut.music.mobile.lyric.LyricPackage;
+import com.lxwalnut.music.mobile.recognition.MusicRecognitionPackage;
 import com.lxwalnut.music.mobile.userApi.UserApiPackage;
 import com.lxwalnut.music.mobile.utils.UtilsPackage;
 import com.lxwalnut.music.mobile.widget.WidgetPackage;
@@ -38,6 +39,7 @@ public class MainApplication extends NavigationApplication {
           packages.add(new CryptoPackage());
           packages.add(new UserApiPackage());
           packages.add(new WidgetPackage());
+          packages.add(new MusicRecognitionPackage());
           return packages;
         }
 

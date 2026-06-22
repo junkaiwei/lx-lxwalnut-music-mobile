@@ -18,6 +18,7 @@ import { navigations } from "@/navigation"
 import commonState from '@/store/common/state'
 import ImageBackground from '@/components/common/ImageBackground'
 import { defaultHeaders } from '@/components/common/Image'
+import { startMusicRecognition } from '@/core/musicRecognition'
 
 interface MyListItemProps {
   item: LX.List.MyListInfo;
@@ -278,6 +279,10 @@ export default memo(() => {
     global.app_event.changeMenuVisible(false);
     setNavActiveId('nav_play_history');
   };
+  const handleMusicRecognitionPress = () => {
+    global.app_event.changeMenuVisible(false);
+    startMusicRecognition();
+  };
   const filteredNavMenus = useMemo(() => {
     if (!navOrder) return NAV_MENUS.filter(
       menu => menu.id !== 'nav_play_history' && (menu.id === 'nav_setting' || (navStatus[menu.id] ?? true))
@@ -328,6 +333,9 @@ export default memo(() => {
       </ScrollView>
 
       <View style={styles.footer}>
+        <TouchableOpacity style={styles.footerBtn} onPress={handleMusicRecognitionPress}>
+          <Icon name="music" size={22} color={theme['c-font-label']} />
+        </TouchableOpacity>
         <TouchableOpacity style={styles.footerBtn} onPress={handleHistoryPress}>
           <Icon name="music_time" size={25} color={theme['c-font-label']} />
         </TouchableOpacity>
