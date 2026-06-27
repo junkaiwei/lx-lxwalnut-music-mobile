@@ -12,6 +12,8 @@ import Backup from '../settings/Backup'
 import Other from '../settings/Other'
 import Version from '../settings/Version'
 import About from '../settings/About'
+import ThemeScreen from '../settings/ThemeScreen'
+import PlatformScreen from '../settings/PlatformScreen'
 import { createStyle } from '@/utils/tools'
 import { SETTING_SCREENS, type SettingScreenIds } from '../Main'
 
@@ -31,6 +33,10 @@ const styles = createStyle({
 const ListItem = memo(
   ({ id }: { id: SettingScreenIds }) => {
     switch (id) {
+      case 'theme':
+        return <ThemeScreen />
+      case 'platform':
+        return <PlatformScreen />
       case 'player':
         return <Player />
       case 'lyric_desktop':

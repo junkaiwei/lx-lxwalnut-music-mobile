@@ -5,6 +5,14 @@ import android.content.pm.ShortcutInfo;
 import android.content.pm.ShortcutManager;
 import android.graphics.drawable.Icon;
 import android.os.Build;
+import android.os.Bundle;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
@@ -14,6 +22,12 @@ import com.reactnativenavigation.NavigationActivity;
 import java.util.Arrays;
 
 public class MainActivity extends NavigationActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setupEdgeToEdge();
+    }
 
     @Override
     protected void onStart() {
@@ -26,6 +40,70 @@ public class MainActivity extends NavigationActivity {
         super.onNewIntent(intent);
         setIntent(intent);
         forwardIntentToReactNative(intent);
+    }
+
+    private void setupEdgeToEdge() {
+        Window window = getWindow();
+        String tag = "LX_CUTOUT";
+
+        // Allow content to extend into cutout area (notch) on short edges
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            WindowManager.LayoutParams lp = window.getAttributes();
+            lp.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+            window.setAttributes(lp);
+            android.util.Log.i(tag, "CutoutMode set to SHORT_EDGES (API " + Build.VERSION.SDK_INT + ")");
+        }
+
+        // Enable edge-to-edge: content draws behind system bars
+        WindowCompat.setDecorFitsSystemWindows(window, false);
+        android.util.Log.i(tag, "setDecorFitsSystemWindows(false)");
+
+        // Make status bar and navigation bar transparent
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(0x00000000);
+        window.setNavigationBarColor(0x00000000);
+        android.util.Log.i(tag, "Status/nav bar set to transparent");
+
+        // Log window dimensions
+        android.util.DisplayMetrics dm = new android.util.DisplayMetrics();
+        window.getWindowManager().getDefaultDisplay().getMetrics(dm);
+        android.util.Log.i(tag, "Window size: " + dm.widthPixels + "x" + dm.heightPixels + " density=" + dm.density);
+
+        // Log cutout info
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            android.graphics.Rect cutoutBounds = window.getDecorView().getRootWindowInsets() != null
+                ? window.getDecorView().getRootWindowInsets().getDisplayCutout() != null
+                    ? null : null : null;
+            // Use reflection-free approach
+            android.view.DisplayCutout cutout = null;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                android.view.WindowInsets insets = window.getDecorView().getRootWindowInsets();
+                if (insets != null) {
+                    cutout = insets.getDisplayCutout();
+                }
+            }
+            if (cutout != null) {
+                android.util.Log.i(tag, "Cutout safe insets: top=" + cutout.getSafeInsetTop()
+                    + " left=" + cutout.getSafeInsetLeft()
+                    + " right=" + cutout.getSafeInsetRight()
+                    + " bottom=" + cutout.getSafeInsetBottom());
+            } else {
+                android.util.Log.w(tag, "Cutout is null (API " + Build.VERSION.SDK_INT + ")");
+            }
+        }
+
+        // Intercept window insets on the content frame to prevent react-native-navigation
+        // ComponentLayout (extends CoordinatorLayout) from adding padding for cutout/system bars
+        View contentView = window.findViewById(android.R.id.content);
+        if (contentView != null) {
+            ViewCompat.setOnApplyWindowInsetsListener(contentView, (v, insets) -> {
+                android.util.Log.i(tag, "ContentFrame onApplyWindowInsets - consumed");
+                // Don't apply padding, just consume insets
+                // This prevents ComponentLayout from reading insets and adding padding
+                return WindowInsetsCompat.CONSUMED;
+            });
+            android.util.Log.i(tag, "Insets listener set on contentFrame");
+        }
     }
 
     private void forwardIntentToReactNative(Intent intent) {

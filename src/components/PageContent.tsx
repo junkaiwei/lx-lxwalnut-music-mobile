@@ -1,5 +1,5 @@
 // import { useEffect, useState } from 'react'
-import { View } from 'react-native'
+import { View, Dimensions } from 'react-native'
 import { useTheme } from '@/store/theme/hook'
 import ImageBackground from '@/components/common/ImageBackground'
 import { useWindowSize } from '@/utils/hooks'
@@ -28,6 +28,20 @@ export default ({ children }: Props) => {
   const BLUR_RADIUS = blur
 
   const contentComponent = useMemo(() => {
+    // Use screen dimensions for background to cover cutout/notch area in edge-to-edge mode
+    const screenSize = Dimensions.get('screen');
+    const windowDims = Dimensions.get('window');
+    const bgWidth = Math.max(screenSize.width, windowSize.width);
+    const bgHeight = Math.max(screenSize.height, windowSize.height);
+
+    console.log('[LX_CUTOUT] PageContent render:', {
+      screenW: screenSize.width, screenH: screenSize.height,
+      windowW: windowDims.width, windowH: windowDims.height,
+      hookW: windowSize.width, hookH: windowSize.height,
+      bgW: bgWidth, bgH: bgHeight,
+      pic: pic ? 'yes' : 'no',
+    });
+
     return (
       <View style={{ flex: 1, overflow: 'hidden' }}>
         <ImageBackground
@@ -35,8 +49,8 @@ export default ({ children }: Props) => {
             position: 'absolute',
             left: 0,
             top: 0,
-            height: windowSize.height,
-            width: windowSize.width,
+            height: bgHeight,
+            width: bgWidth,
             backgroundColor: theme['c-content-background'],
           }}
           source={pic ? { uri: pic, headers: defaultHeaders } : theme['bg-image']}

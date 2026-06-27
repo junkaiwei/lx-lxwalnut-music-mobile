@@ -55,6 +55,7 @@ export async function pushHomeScreen() {
   */
 
   const theme = themeState.theme
+  console.log('[LX_CUTOUT] Navigation.setRoot - pushHomeScreen')
   return Navigation.setRoot({
     root: {
       stack: {
@@ -80,6 +81,7 @@ export async function pushHomeScreen() {
         },
                 layout: {
                   componentBackgroundColor: theme['c-content-background'],
+                  fitSystemWindows: false,
                 },
                 gestureEnabled: false,
               },
@@ -148,6 +150,7 @@ export function pushPlayDetailScreen(componentId: string, skipAnimation = false)
           },
           layout: {
             componentBackgroundColor: theme['c-content-background'],
+                  fitSystemWindows: false,
           },
           animations: {
             push: skipAnimation
@@ -237,6 +240,7 @@ export function pushSonglistDetailScreen(componentId: string, info: ListInfoItem
           },
           layout: {
             componentBackgroundColor: theme['c-content-background'],
+                  fitSystemWindows: false,
           },
           animations: {
             push: {
@@ -370,6 +374,7 @@ export function pushCommentScreen(componentId: string) {
           },
           layout: {
             componentBackgroundColor: theme['c-content-background'],
+                  fitSystemWindows: false,
           },
           animations: {
             push: {
@@ -453,6 +458,7 @@ export function pushCommentScreen(componentId: string) {
 //           },
 //           layout: {
 //             componentBackgroundColor: theme['c-content-background'],
+//             fitSystemWindows: false,
 //           },
 //           animations: {
 //             push: {
@@ -619,6 +625,7 @@ export function pushArtistDetailScreen(componentId: string, artistInfo: { id: st
         },
         layout: {
           componentBackgroundColor: theme['c-content-background'],
+                  fitSystemWindows: false,
         },
         animations: {
           push: {
@@ -666,6 +673,7 @@ export function pushAlbumDetailScreen(componentId: string, albumInfo: any) {
         },
         layout: {
           componentBackgroundColor: theme['c-content-background'],
+                  fitSystemWindows: false,
         },
         animations: {
           push: {
@@ -711,6 +719,7 @@ export function pushDownloadManagerScreen(componentId: string) {
         },
         layout: {
           componentBackgroundColor: theme['c-content-background'],
+                  fitSystemWindows: false,
         },
         animations: {
           push: {
@@ -760,6 +769,7 @@ export function pushSimilarSongsScreen(componentId: string, similarSongs: LX.Mus
         },
         layout: {
           componentBackgroundColor: theme['c-content-background'],
+                  fitSystemWindows: false,
         },
         animations: {
           push: {

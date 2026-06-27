@@ -11,9 +11,13 @@ import Backup from './settings/Backup'
 import Other from './settings/Other'
 import Version from './settings/Version'
 import About from './settings/About'
+import ThemeScreen from './settings/ThemeScreen'
+import PlatformScreen from './settings/PlatformScreen'
 
 export const SETTING_SCREENS = [
   'basic',
+  'theme',
+  'platform',
   'player',
   'lyric_desktop',
   'search',
@@ -28,9 +32,6 @@ export const SETTING_SCREENS = [
 
 export type SettingScreenIds = (typeof SETTING_SCREENS)[number]
 
-// interface MainProps {
-//   onUpdateActiveId: (id: string) => void
-// }
 export interface MainType {
   setActiveId: (id: SettingScreenIds) => void
 }
@@ -50,6 +51,10 @@ const Main = forwardRef<MainType, {}>((props, ref) => {
 
   const component = useMemo(() => {
     switch (id) {
+      case 'theme':
+        return <ThemeScreen />
+      case 'platform':
+        return <PlatformScreen />
       case 'player':
         return <Player />
       case 'lyric_desktop':

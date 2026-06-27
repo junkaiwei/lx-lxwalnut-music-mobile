@@ -156,6 +156,11 @@ declare global {
       'theme.mylistDynamicBg': boolean
 
       /**
+       * 横屏界面拉伸（侧边栏延伸到刘海区域）
+       */
+      'theme.isLandscapeStretch': boolean
+
+      /**
        * 启动时自动播放歌曲
        */
       'player.startupAutoPlay': boolean

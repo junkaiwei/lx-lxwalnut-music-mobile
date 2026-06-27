@@ -1,5 +1,5 @@
 import { memo, useEffect } from 'react'
-import { View, AppState } from 'react-native'
+import { View, AppState, Dimensions } from 'react-native'
 import { screenkeepAwake, screenUnkeepAwake } from '@/utils/nativeModules/utils'
 import StatusBar from '@/components/common/StatusBar'
 import MoreBtn from './MoreBtn'
@@ -16,10 +16,19 @@ import Player from './Player'
 import { createStyle } from '@/utils/tools'
 import { marginLeftRaw } from './constant'
 import { useStatusbarHeight } from '@/store/common/hook'
+import { useSettingValue } from '@/store/setting/hook'
 // import MoreBtn from './MoreBtn2'
+
+const getCutoutLeft = () => {
+  const screen = Dimensions.get('screen')
+  const win = Dimensions.get('window')
+  return Math.max(0, screen.width - win.width)
+}
 
 export default memo(({ componentId }: { componentId: string }) => {
   const statusBarHeight = useStatusbarHeight()
+  const isLandscapeStretch = useSettingValue('theme.isLandscapeStretch')
+  const cutoutLeft = isLandscapeStretch ? 0 : getCutoutLeft()
 
   useEffect(() => {
     setComponentId(COMPONENT_IDS.playDetail, componentId)
@@ -53,7 +62,7 @@ export default memo(({ componentId }: { componentId: string }) => {
     <PageContent>
       <StatusBar />
       <View style={{ ...styles.container, paddingTop: statusBarHeight }}>
-        <View style={styles.left}>
+        <View style={{ ...styles.left, marginLeft: cutoutLeft }}>
           <Header />
           <View style={styles.leftContent}>
             <MoreBtn />

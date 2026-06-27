@@ -1,5 +1,5 @@
 import { memo, useMemo } from 'react'
-import { ScrollView, TouchableOpacity, View } from 'react-native'
+import { ScrollView, TouchableOpacity, View, Dimensions } from 'react-native'
 import { useNavActiveId, useStatusbarHeight, useBgPic } from '@/store/common/hook'
 import { useTheme } from '@/store/theme/hook'
 import { Icon } from '@/components/common/Icon'
@@ -15,6 +15,12 @@ import ImageBackground from '@/components/common/ImageBackground'
 import { defaultHeaders } from '@/components/common/Image'
 
 const NAV_WIDTH = 68
+
+const getCutoutLeft = () => {
+  const screen = Dimensions.get('screen')
+  const win = Dimensions.get('window')
+  return Math.max(0, screen.width - win.width)
+}
 
 const styles = createStyle({
   container: {
@@ -174,16 +180,20 @@ export default memo(() => {
       .map(id => NAV_MENUS.find(menu => menu.id === id))
       .filter((menu): menu is typeof NAV_MENUS[number] => menu !== undefined && (menu.id === 'nav_setting' || (navStatus[menu.id] ?? true)));
   }, [navStatus, navOrder]);
+
+  const isLandscapeStretch = useSettingValue('theme.isLandscapeStretch')
+  const cutoutLeft = isLandscapeStretch ? 0 : getCutoutLeft()
+
   return (
-    <View style={{ ...styles.container, borderRightColor: theme['c-border-background'], backgroundColor: showSidebarBg ? 'transparent' : undefined }}>
+    <View style={{ ...styles.container, marginLeft: cutoutLeft, borderRightColor: theme['c-border-background'], backgroundColor: showSidebarBg ? 'transparent' : undefined }}>
       {showSidebarBg ? (
         <ImageBackground
           style={{
             position: 'absolute',
-            left: 0,
+            left: -cutoutLeft,
             top: 0,
             bottom: 0,
-            right: 0,
+            width: NAV_WIDTH + cutoutLeft,
           }}
           source={{ uri: pic, headers: defaultHeaders }}
           resizeMode="cover"

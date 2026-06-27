@@ -20,72 +20,34 @@ import DrawerLayoutPosition from './DrawerLayoutPosition'
 import IsShowMyListSubMenu from './IsShowMyListSubMenu'
 import IsNewListUI from './IsNewListUI'
 import { useI18n } from '@/lang/i18n'
-import WyCookie from './WyCookie'
-import TxCookie from './TxCookie'
-import KgCookie from './KgCookie'
-import SerpApiKey from './SerpApiKey'
-import WebLoginBtn from './WebLoginBtn'
 import NavMenu from "@/screens/Home/Views/Setting/settings/Basic/NavMenu.tsx";
-import Theme from "../Theme/Theme";
-import IsAutoTheme from "../Theme/IsAutoTheme";
-import IsDynamicBg from "../Theme/IsDynamicBg";
-import IsSidebarDynamicBg from "../Theme/IsSidebarDynamicBg";
-import IsMylistDynamicBg from "../Theme/IsMylistDynamicBg";
-import IsFontShadow from "../Theme/IsFontShadow";
-import Blur from "../Theme/Blur";
-import CustomBg from "../Theme/CustomBg";
-import PicOpacity from "../Theme/PicOpacity";
-import SectionOpacity from "../Theme/SectionOpacity";
-import SubContainerOpacity from "../Theme/SubContainerOpacity";
+
 export default memo(() => {
   const t = useI18n()
 
   return (
-    <>
-      <Section title={t('setting_basic')} sectionId="setting_basic">
-        <IsStartupAutoPlay />
-        <IsEnableSlideSwitchSong />
-        <IsPlayDetailNewUI />
-        <IsNewListUI />
-        {/*<IsStartupPushPlayDetailScreen />*/}
-        {global.lx.isCarMode ? (
-          <>
-            <IsShowBackBtn />
-            <IsShowExitBtn />
-          </>
-        ) : null}
-        <IsShowMyListSubMenu />
-        <IsHomePageScroll />
-        <IsUseSystemFileSelector />
-        <IsAlwaysKeepStatusbarHeight />
-        <DrawerLayoutPosition />
-        <NavMenu />
-        <Language />
-        <FontSize />
-        <ShareType />
-        <Source />
-        <SourceName />
-      </Section>
-      <Section title={t('setting_theme')} sectionId="setting_theme">
-        <Theme />
-        <IsAutoTheme />
-        <IsDynamicBg />
-        <IsSidebarDynamicBg />
-        <IsMylistDynamicBg />
-        <CustomBg />
-        <PicOpacity />
-        <Blur />
-        <SectionOpacity />
-        <SubContainerOpacity />
-        <IsFontShadow />
-      </Section>
-      <Section title={t('setting_platform')} sectionId="setting_platform">
-        <WyCookie />
-        <TxCookie />
-        <KgCookie />
-        <SerpApiKey />
-        <WebLoginBtn />
-      </Section>
-    </>
+    <Section title={t('setting_basic')} sectionId="setting_basic">
+      <IsStartupAutoPlay />
+      <IsEnableSlideSwitchSong />
+      <IsPlayDetailNewUI />
+      <IsNewListUI />
+      {global.lx.isCarMode ? (
+        <>
+          <IsShowBackBtn />
+          <IsShowExitBtn />
+        </>
+      ) : null}
+      <IsShowMyListSubMenu />
+      <IsHomePageScroll />
+      <IsUseSystemFileSelector />
+      <IsAlwaysKeepStatusbarHeight />
+      <DrawerLayoutPosition />
+      <NavMenu />
+      <Language />
+      <FontSize />
+      <ShareType />
+      <Source />
+      <SourceName />
+    </Section>
   )
 })
