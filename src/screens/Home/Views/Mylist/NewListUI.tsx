@@ -21,7 +21,7 @@ import { scaleSizeH } from '@/utils/pixelRatio'
 import Loading from '@/components/common/Loading'
 import { Navigation } from 'react-native-navigation'
 
-const CARD_HEIGHT = 90
+const CARD_HEIGHT = scaleSizeH(90)
 const LONG_PRESS_MS = 350
 const DRAG_CANCEL_THRESHOLD = 6
 
@@ -682,12 +682,12 @@ const styles = createStyle({
     flex: 1,
   },
   cardContainer: {
-    height: CARD_HEIGHT,
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 15,
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(0,0,0,0.05)',
+    overflow: 'hidden',
   },
   cardContent: {
     flex: 1,
