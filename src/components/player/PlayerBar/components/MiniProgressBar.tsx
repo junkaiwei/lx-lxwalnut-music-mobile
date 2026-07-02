@@ -38,13 +38,15 @@ const MiniProgressBar = () => {
 const styles = createStyle({
   track: {
     position: 'absolute',
-    top: 0,
+    bottom: 0,
     left: 0,
     right: 0,
-    height: 2,
+    height: 3,
   },
   progress: {
     height: '100%',
+    borderTopLeftRadius: 2,
+    borderTopRightRadius: 2,
   },
 })
 

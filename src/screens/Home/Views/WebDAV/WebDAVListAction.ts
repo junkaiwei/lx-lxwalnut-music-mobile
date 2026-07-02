@@ -5,9 +5,13 @@ import { toast, clipboardWriteText, requestStoragePermission } from '@/utils/too
 import settingState from '@/store/setting/state'
 import playerState from '@/store/player/state'
 import { btoa } from 'react-native-quick-base64'
-import { updateListMusics } from '@/core/list'
+import { updateListMusics, addListMusics } from '@/core/list'
 import { webDAVLog } from '@/core/webdavMusic/logger'
 import { readPic, readMetadata } from '@/utils/localMediaMetadata'
+import { getPicPath, handleGetOnlinePicUrl } from '@/core/music'
+import { LIST_IDS } from '@/config/constant'
+import { toOldMusicInfo } from '@/utils'
+import musicSdk from '@/utils/musicSdk'
 
 export const handleWebDAVBatchDownload = async (
   songs: LX.WebDAV.MusicInfo[],
@@ -254,4 +258,185 @@ export const handleWebDAVDownloadAndImport = async (
     toast(`导入失败：${error.message}`, 'long')
     setLoadingText('')
   }
+}
+
+const getDefaultDownloadDir = () => {
+  const settings = settingState.setting
+  const webdavPath = settings['sync.webdav.downloadPath']
+  if (webdavPath && typeof webdavPath === 'string' && webdavPath.trim()) {
+    return webdavPath.trim()
+  }
+  return getWebDAVPrivateDirectory()
+}
+
+const buildLocalMusicInfo = (
+  filePath: string,
+  metadata: Awaited<ReturnType<typeof readMetadata>>,
+  picPath: string | null
+): LX.Music.MusicInfoLocal => {
+  const ext = filePath.split('.').pop()?.toLowerCase() || ''
+  const nameWithoutExt = filePath.substring(0, filePath.lastIndexOf('.'))
+  return {
+    id: `local_${filePath}`,
+    name: metadata.name || nameWithoutExt,
+    singer: metadata.singer || '',
+    albumName: metadata.albumName || '',
+    interval: metadata.duration ? `${metadata.duration}s` : '',
+    source: 'local' as const,
+    meta: {
+      picUrl: picPath ? (picPath.startsWith('/') ? `file://${picPath}` : picPath) : '',
+      filePath,
+      fileName: filePath.split('/').pop() || '',
+    },
+  } as LX.Music.MusicInfoLocal
+}
+
+const buildLocalMusicInfoByFilePath = (filePath: string): LX.Music.MusicInfoLocal => {
+  const ext = filePath.split('.').pop()?.toLowerCase() || ''
+  const nameWithoutExt = filePath.substring(0, filePath.lastIndexOf('.'))
+  return {
+    id: `local_${filePath}`,
+    name: nameWithoutExt,
+    singer: '',
+    albumName: '',
+    interval: '',
+    source: 'local' as const,
+    meta: {
+      picUrl: '',
+      fileName: filePath.split('/').pop() || '',
+    },
+  } as LX.Music.MusicInfoLocal
+}
+
+/**
+ * 下载单首 WebDAV 歌曲，返回封面 URL
+ */
+export const handleWebDAVDownload = async (
+  musicInfo: LX.WebDAV.MusicInfo
+): Promise<string | undefined> => {
+  const downloadDir = getDefaultDownloadDir()
+  const fileName = musicInfo.meta.fileName
+  
+  if (!fileName) {
+    toast('无法获取文件名')
+    return undefined
+  }
+
+  const filePath = `${downloadDir}/${fileName}`
+  const exists = await existsFile(filePath).catch(() => false)
+  
+  if (!exists) {
+    try {
+      const headers: Record<string, string> = {
+        'User-Agent': 'Mozilla/5.0 (Linux; Android 10; Pixel 3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.79 Mobile Safari/537.36',
+      }
+      const username = settingState.setting['sync.webdav.username']
+      const password = settingState.setting['sync.webdav.password']
+      if (username && password) {
+        headers['Authorization'] = 'Basic ' + btoa(`${username}:${password}`)
+      }
+      
+      const downloadUrl = getWebDAVDownloadUrl(musicInfo)
+      await mkdir(downloadDir)
+      await downloadFile(downloadUrl, filePath, { headers }).promise
+      
+      const fileMetadata = await readMetadata(filePath).catch(() => null)
+      const updates: Record<string, any> = { filePath }
+      if (fileMetadata) {
+        if (fileMetadata.albumName) updates.albumName = fileMetadata.albumName
+        if (fileMetadata.name && !musicInfo.name) updates.name = fileMetadata.name
+        if (fileMetadata.singer && !musicInfo.singer) updates.singer = fileMetadata.singer
+      }
+      await updateWebDAVMusicMeta(musicInfo.id, updates)
+    } catch (error: any) {
+      webDAVLog.error('handleWebDAVDownload: download failed', { fileName, error: error.message })
+      toast(`下载失败：${error.message}`, 'long')
+      return undefined
+    }
+  }
+
+  try {
+    const picPath = await readPic(filePath).catch(() => null)
+    if (picPath) {
+      const newPicUrl = picPath.startsWith('/') ? `file://${picPath}` : picPath
+      await updateWebDAVMusicMeta(musicInfo.id, { picUrl: newPicUrl })
+      return newPicUrl
+    }
+  } catch {
+    // ignore
+  }
+
+  return undefined
+}
+
+/**
+ * 从在线音乐源获取封面
+ */
+export const handleFetchWebDAVPicFromOnline = async (
+  musicInfo: LX.WebDAV.MusicInfo
+): Promise<string | undefined> => {
+  try {
+    const searchResult = await findMusic({
+      name: musicInfo.name || '',
+      singer: musicInfo.singer || '',
+      albumName: musicInfo.meta.albumName || '',
+      interval: musicInfo.interval || '',
+      source: 'kw',
+    })
+
+    if (searchResult.length === 0) {
+      toast('未找到匹配的在线歌曲')
+      return undefined
+    }
+
+    const matched = searchResult[0] as LX.Music.MusicInfoOnline
+    const result = await handleGetOnlinePicUrl({
+      musicInfo: matched,
+      isRefresh: true,
+      onToggleSource: () => {},
+      allowToggleSource: false,
+    })
+
+    if (result.url) {
+      await updateWebDAVMusicMeta(musicInfo.id, { picUrl: result.url })
+      return result.url
+    }
+  } catch (error: any) {
+    webDAVLog.error('handleFetchWebDAVPicFromOnline: failed', { error: error.message })
+    toast(`获取封面失败：${error.message}`, 'long')
+  }
+
+  return undefined
+}
+
+/**
+ * 从 WebDAV 列表中移除歌曲
+ */
+export const handleWebDAVRemove = async (
+  musicInfo: LX.WebDAV.MusicInfo
+): Promise<void> => {
+  try {
+    const config = await getWebDAVConfig()
+    const songs = (config.songs || []).filter(s => s.id !== musicInfo.id)
+    await saveWebDAVConfig({ ...config, songs })
+    toast('已移除')
+  } catch (error: any) {
+    webDAVLog.error('handleWebDAVRemove: failed', { error: error.message })
+    toast(`移除失败：${error.message}`, 'long')
+  }
+}
+
+/**
+ * 复制歌曲名称到剪贴板
+ */
+export const handleWebDAVCopyName = (
+  musicInfo: LX.WebDAV.MusicInfo
+): void => {
+  const text = musicInfo.name || musicInfo.meta.fileName || ''
+  if (!text) {
+    toast('没有可复制的内容')
+    return
+  }
+  clipboardWriteText(text)
+  toast('已复制到剪贴板')
 }

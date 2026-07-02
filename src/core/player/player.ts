@@ -94,6 +94,7 @@ const delayRetry = async (
       getMusicPlayUrl(musicInfo, isRefresh, true)
         .then((result) => {
           cancelDelayRetry = null
+          setStatusText('')
           resolve(result)
         })
         .catch(async (err: any) => {
@@ -176,6 +177,7 @@ const executeFailureStrategy = async (
             ])
             if (result.url) {
               console.log('[播放策略] [切换平台] 成功! 平台:', (result.musicInfo as any)?.source)
+              setStatusText('')
               return result.url
             }
             console.log('[播放策略] [切换平台] 所有平台均失败，继续下一个策略')
@@ -227,6 +229,7 @@ const executeFailureStrategy = async (
               if (url) {
                 console.log(`[播放策略] [降低音质] 成功! 降级到: ${quality}`)
                 lowerQualitySuccess = true
+                setStatusText('')
                 return url
               }
             } catch {
@@ -267,6 +270,7 @@ const executeFailureStrategy = async (
           })
           if (result.url) {
             console.log('[播放策略] [切换音源] 成功! 插件:', (result.musicInfo as any)?.source)
+            setStatusText('')
             return result.url
           }
           console.log('[播放策略] [切换音源] 所有插件均失败，继续下一个策略')
@@ -397,6 +401,8 @@ export const setMusicUrl = (
         
         preloadLog.info(`Current song URL ready, triggering preload`)
         startPreload()
+      } else {
+        setStatusText('')
       }
     })
     .catch((err: any) => {
@@ -875,11 +881,21 @@ export const playPrev = async (isAutoToggle = false): Promise<void> => {
  */
 export const play = () => {
   if (playerState.playMusicInfo.musicInfo == null) return
-  if (isEmpty()) {
-    if (createGettingUrlId(playerState.playMusicInfo.musicInfo) != global.lx.gettingUrlId)
-      setMusicUrl(playerState.playMusicInfo.musicInfo)
+  
+  const currentMusicInfo = playerState.playMusicInfo.musicInfo
+  const currentId = 'progress' in currentMusicInfo 
+    ? currentMusicInfo.metadata.musicInfo.id 
+    : currentMusicInfo.id
+  
+  const loadedTrackId = global.lx.playerTrackId || ''
+  const isTrackMismatch = !isEmpty() && !loadedTrackId.startsWith(currentId)
+  
+  if (isEmpty() || isTrackMismatch) {
+    if (createGettingUrlId(currentMusicInfo) != global.lx.gettingUrlId)
+      setMusicUrl(currentMusicInfo)
     return
   }
+  setStatusText('')
   void setPlay()
 }
 
@@ -951,4 +967,16 @@ export const dislikeMusic = async () => {
       : playerState.playMusicInfo.musicInfo
   await addDislikeInfo([{ name: minfo.name, singer: minfo.singer }])
   await playNext(true)
+}
+
+/**
+ * Headless playlist switch - state update only, no TrackPlayer calls
+ * Used by WebViewSyncManager to switch tracks without triggering native audio chain
+ */
+export const playListHeadlessServer = (listId: string, index: number) => {
+  setPlayListId(listId)
+  setPlayMusicInfo(listId, getList(listId)[index])
+  if (settingState.setting['player.isAutoCleanPlayedList'])
+    clearPlayedList()
+  clearTempPlayeList()
 }

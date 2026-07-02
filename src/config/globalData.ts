@@ -39,6 +39,8 @@ global.lx = {
   apiInitPromise: [Promise.resolve(false), true, () => { }],
 
   jumpMyListPosition: false,
+  jumpTxPlaylistPosition: false,
+  jumpKgPlaylistPosition: false,
 
   settingActiveId: 'basic',
 

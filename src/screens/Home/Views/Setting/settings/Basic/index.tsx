@@ -16,6 +16,7 @@ import IsShowBackBtn from './IsShowBackBtn'
 import IsShowExitBtn from './IsShowExitBtn'
 import IsUseSystemFileSelector from './IsUseSystemFileSelector'
 import IsAlwaysKeepStatusbarHeight from './IsAlwaysKeepStatusbarHeight'
+import LockLandscape from './LockLandscape'
 import DrawerLayoutPosition from './DrawerLayoutPosition'
 import IsShowMyListSubMenu from './IsShowMyListSubMenu'
 import IsNewListUI from './IsNewListUI'
@@ -38,6 +39,7 @@ export default memo(() => {
         </>
       ) : null}
       <IsShowMyListSubMenu />
+      <LockLandscape />
       <IsHomePageScroll />
       <IsUseSystemFileSelector />
       <IsAlwaysKeepStatusbarHeight />

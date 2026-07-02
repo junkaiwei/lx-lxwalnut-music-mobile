@@ -10,6 +10,9 @@ import settingState from '@/store/setting/state'
 export default async (setting: LX.AppSetting) => {
   const setPlayStatus = () => {
     setIsPlay(true)
+    if (playerState.statusText === global.i18n.t('player__getting_url')) {
+      setStatusText('')
+    }
   }
   const setPauseStatus = () => {
     setIsPlay(false)

@@ -16,6 +16,9 @@ import { useSettingValue } from '@/store/setting/hook'
 import Menu, { type MenuType, type Position } from '@/components/common/Menu'
 import ConfirmAlert, { type ConfirmAlertType } from '@/components/common/ConfirmAlert'
 import Input from '@/components/common/Input'
+import playerState from '@/store/player/state'
+import listState from '@/store/list/state'
+import { LIST_IDS } from '@/config/constant'
 
 interface PlaylistInfo {
   id: string
@@ -88,23 +91,35 @@ export default memo(() => {
     fetchPlaylists()
   }, [fetchPlaylists])
 
+  const handleJumpPosition = useCallback(() => {
+    let listId = playerState.playMusicInfo.listId
+    // 当 listId 为 temp 时，从临时列表元数据中获取真实 listId
+    if (listId === LIST_IDS.TEMP) {
+      listId = listState.tempListMeta.id
+    }
+    if (!listId || !listId.startsWith('kg__')) return
+
+    const kgPlaylistId = listId.replace('kg__', '')
+    const allPlaylists = [...createdPlaylists, ...collectedPlaylists]
+    const targetPlaylist = allPlaylists.find(p => String(p.id) === kgPlaylistId || String(p.listid) === kgPlaylistId)
+    if (targetPlaylist) {
+      requestAnimationFrame(() => {
+        handleItemPress(targetPlaylist)
+      })
+    }
+  }, [createdPlaylists, collectedPlaylists, handleItemPress])
+
   useEffect(() => {
-    const handlePlaylistUpdate = ({ source, listId, newCover }: { source: string, listId?: string, newCover?: string }) => {
-      if (source === 'kg') {
-        console.log('[KgPlaylist] 收到歌单更新事件')
-        if (newCover && listId) {
-          setCreatedPlaylists(prev => prev.map(p =>
-            p.id === listId ? { ...p, cover: newCover } : p
-          ))
-        }
-        fetchPlaylists(true)
-      }
+    if (global.lx.jumpKgPlaylistPosition) {
+      global.lx.jumpKgPlaylistPosition = false
+      handleJumpPosition()
     }
-    global.app_event.on('playlist_updated', handlePlaylistUpdate)
+
+    global.app_event.on('jumpListPosition', handleJumpPosition)
     return () => {
-      global.app_event.off('playlist_updated', handlePlaylistUpdate)
+      global.app_event.off('jumpListPosition', handleJumpPosition)
     }
-  }, [fetchPlaylists])
+  }, [handleJumpPosition])
 
   const onRefresh = useCallback(() => {
     fetchPlaylists(true)

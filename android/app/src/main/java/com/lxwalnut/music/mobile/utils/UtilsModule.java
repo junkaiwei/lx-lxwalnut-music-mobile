@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.pm.ActivityInfo;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -450,6 +451,26 @@ public class UtilsModule extends ReactContextBaseJavaModule {
       AudioManager.FLAG_SHOW_UI
     );
     promise.resolve(null);
+  }
+
+  @ReactMethod
+  public void setScreenOrientation(String orientation) {
+    Activity currentActivity = reactContext.getCurrentActivity();
+    if (currentActivity == null) return;
+
+    currentActivity.runOnUiThread(() -> {
+      switch (orientation) {
+        case "landscape":
+          currentActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+          break;
+        case "portrait":
+          currentActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+          break;
+        case "auto":
+          currentActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+          break;
+      }
+    });
   }
 }
 

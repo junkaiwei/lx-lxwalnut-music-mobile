@@ -236,12 +236,32 @@ export class AppEvent extends Event {
       }
     } else if (listId.includes('__')) {
       const [source, sourceId] = listId.split('__')
-      const isSubscribed = userState.wy_subscribed_playlists.some(p => String(p.id) === sourceId)
-      const targetNavId: NAV_ID_Type = isSubscribed ? 'nav_my_playlist' : 'nav_songlist'
+      let targetNavId: NAV_ID_Type = 'nav_songlist'
 
-      if (commonState.navActiveId !== targetNavId) {
-        global.lx.jumpMyListPosition = true
-        setNavActiveId(targetNavId)
+      if (source === 'tx') {
+        targetNavId = 'nav_tx_playlist'
+        if (commonState.navActiveId !== targetNavId) {
+          global.lx.jumpTxPlaylistPosition = true
+          setNavActiveId(targetNavId)
+        }
+      } else if (source === 'kg') {
+        targetNavId = 'nav_kg_playlist'
+        if (commonState.navActiveId !== targetNavId) {
+          global.lx.jumpKgPlaylistPosition = true
+          setNavActiveId(targetNavId)
+        }
+      } else if (source === 'wy') {
+        const isSubscribed = userState.wy_subscribed_playlists.some(p => String(p.id) === sourceId)
+        targetNavId = isSubscribed ? 'nav_my_playlist' : 'nav_songlist'
+        if (commonState.navActiveId !== targetNavId) {
+          global.lx.jumpMyListPosition = true
+          setNavActiveId(targetNavId)
+        }
+      } else {
+        if (commonState.navActiveId !== targetNavId) {
+          global.lx.jumpMyListPosition = true
+          setNavActiveId(targetNavId)
+        }
       }
     } else if (listId.startsWith('dailyrec_wy')) {
       setNavActiveId('nav_daily_rec')
@@ -266,6 +286,7 @@ export class AppEvent extends Event {
     }
 
     setTimeout(() => {
+      console.log('[appEvent] emitting jumpListPosition')
       this.emit('jumpListPosition')
     }, navigatedToDetail ? 500 : 200)
   }

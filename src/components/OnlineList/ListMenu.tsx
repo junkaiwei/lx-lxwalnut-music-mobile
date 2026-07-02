@@ -4,6 +4,12 @@ import settingState from '@/store/setting/state'
 import Menu, { type MenuType, type Position } from '@/components/common/Menu'
 import { hasDislike } from '@/core/dislikeList'
 import {useSettingValue} from "@/store/setting/hook.ts";
+import { toast } from '@/utils/tools'
+
+const isTxCookieExpired = (): boolean => {
+  const cookie = settingState.setting['common.tx_cookie']
+  return !cookie || cookie.trim() === ''
+}
 
 export interface SelectInfo {
   musicInfo: LX.Music.MusicInfoOnline
@@ -74,9 +80,7 @@ export default forwardRef<ListMenuType, ListMenuProps>((props: ListMenuProps, re
     menu.push({ action: 'download', label: t('download') });
     // if (menuSetting.addTo) menu.push({ action: 'add', label: t('add_to') });
     menu.push({ action: 'add', label: t('add_to') });
-    if (props.isCreator) {
-      menu.push({ action: 'move', label: t('move_to') });
-    }
+    menu.push({ action: 'move', label: t('move_to') });
     if (menuSetting.share) menu.push({ action: 'copyName', label: t('copy_name') });
 
     const wyMenuItems = [];
@@ -118,14 +122,17 @@ export default forwardRef<ListMenuType, ListMenuProps>((props: ListMenuProps, re
       remainingMenu.push({ action: 'dislike', label: t('dislike'), disabled: isDislikeMusic })
     remainingMenu.push({ action: 'clearCache', label: t('clear_music_cache') })
 
-    if (props.isCreator) {
-      remainingMenu.push({ action: 'remove', label: t('delete') });
-    }
+    remainingMenu.push({ action: 'remove', label: t('delete') });
 
     return [...menu, ...wyMenuItems, ...remainingMenu];
   }, [t, isDislikeMusic, selectInfo, menuSetting, props.isCreator]);
 
   const handleMenuPress = ({ action }: (typeof menus)[number]) => {
+    if ((action === 'move' || action === 'remove') && selectInfo.musicInfo?.source === 'tx' && isTxCookieExpired()) {
+      toast('QQ音乐Cookie已过期，请重新获取')
+      return
+    }
+
     switch (action) {
       case 'play':
         props.onPlay(selectInfo)

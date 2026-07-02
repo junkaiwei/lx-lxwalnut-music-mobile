@@ -193,6 +193,15 @@ const MusicRecognitionIcon = ({ size, color }: { size: number; color: string }) 
   </Svg>
 )
 
+const WebVisualizerIcon = ({ size, color }: { size: number; color: string }) => (
+  <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+    <Rect x="2" y="3" width="20" height="14" rx="2" stroke={color} strokeWidth="1.6" />
+    <Line x1="8" y1="21" x2="16" y2="21" stroke={color} strokeWidth="1.6" strokeLinecap="round" />
+    <Line x1="12" y1="17" x2="12" y2="21" stroke={color} strokeWidth="1.6" strokeLinecap="round" />
+    <Path d="M6 10 L9 7 L12 10 L15 7 L18 10" stroke={color} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+  </Svg>
+)
+
 export const SvgIcon = memo(({ name, size = 15, rawSize, color = '#000', style }: SvgIconProps) => {
   const finalSize = rawSize ?? scaleSizeW(size)
 
@@ -224,6 +233,8 @@ export const SvgIcon = memo(({ name, size = 15, rawSize, color = '#000', style }
         return <LyricIcon size={finalSize} color={color} />
       case 'music-recognition':
         return <MusicRecognitionIcon size={finalSize} color={color} />
+      case 'web-visualizer':
+        return <WebVisualizerIcon size={finalSize} color={color} />
       case 'fuzzy-search':
         return <FuzzySearchIcon size={finalSize} color={color} />
       default:

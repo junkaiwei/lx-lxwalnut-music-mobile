@@ -19,6 +19,7 @@ export const LIST_IDS = {
 export enum COMPONENT_IDS {
   home = 'home',
   playDetail = 'playDetail',
+  visualizer = 'visualizer',
   songlistDetail = 'songlistDetail',
   comment = 'comment',
   ARTIST_DETAIL = 'ARTIST_DETAIL',

@@ -89,8 +89,8 @@ export default forwardRef<PlayerPlaylistType, {}>((props, ref) => {
         setTimeout(() => {
           flatListRef.current?.scrollToIndex({
             index: activeIndex,
-            viewPosition: 0,
-            animated: true,
+            viewPosition: 0.5,
+            animated: false,
           });
         }, 100);
       }

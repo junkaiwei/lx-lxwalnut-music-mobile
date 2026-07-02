@@ -106,6 +106,7 @@ export default memo(() => {
   const popupRef = useRef<SettingPopupType>(null)
   const playMusicInfo = usePlayMusicInfo()
   const isOneDrive = isOneDriveMusicInfo(playMusicInfo.musicInfo)
+  const theme = useTheme()
   const back = () => {
     void pop(commonState.componentIds[commonState.componentIds.length - 1]?.id!)
   }

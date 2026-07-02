@@ -86,6 +86,11 @@ declare global {
        */
       'common.alwaysKeepStatusbarHeight': boolean
 
+      /**
+       * 锁定横屏模式
+       */
+      'common.lockLandscape': boolean
+
       'common.isShowStartupGreeting': boolean
       'common.hideNavigationBar': boolean
       'common.isEnableLog': boolean

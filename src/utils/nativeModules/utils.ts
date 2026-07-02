@@ -111,3 +111,6 @@ export const getUiMode = UtilsModule.getUiMode as () => Promise<number>
 
 export const adjustSystemMediaVolume = (direction: 'up' | 'down'): Promise<void> =>
   UtilsModule.adjustSystemMediaVolume(direction)
+
+export const setScreenOrientation = (orientation: 'landscape' | 'portrait' | 'auto'): void =>
+  UtilsModule.setScreenOrientation(orientation)

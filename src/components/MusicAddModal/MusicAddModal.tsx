@@ -211,28 +211,58 @@ export default forwardRef<MusicAddModalType, MusicAddModalProps>(({ onAdded }, r
         toListId,
         songMid,
         musicSource: musicInfo.source,
+        isMove,
       })
       
-      txApi.addSongToPlaylist(toListId, [String(songMid)]).then(() => {
-        if (listInfo.dirid === 201) {
-          const txSongId = (musicInfo.meta as any).id
-          const isNumericId = txSongId && /^\d+$/.test(String(txSongId))
-          const likeKey = isNumericId ? String(txSongId) : songMid
-          addTxLikedSong(likeKey)
-        }
-        onAdded?.()
-        toast(t('list_edit_action_tip_add_success'))
-        global.app_event.playlist_updated({ source: 'tx', listId: toListId })
-        log.info('[MusicAddModal] QQ歌单添加成功', { toListId, songMid, dirid: listInfo.dirid })
-      }).catch((err) => {
-        log.error('[MusicAddModal] QQ歌单添加失败', {
-          error: err.message || err,
-          toListId,
-          songMid,
-          musicSource: musicInfo.source,
-        })
-        toast(err.message || t('list_edit_action_tip_add_failed'));
-      });
+      if (isMove) {
+        const sourcePlaylistId = fromListId.replace('tx__', '')
+        txApi.addSongToPlaylist(toListId, [String(songMid)]).then(() => {
+          if (listInfo.dirid === 201) {
+            const txSongId = (musicInfo.meta as any).id
+            const isNumericId = txSongId && /^\d+$/.test(String(txSongId))
+            const likeKey = isNumericId ? String(txSongId) : songMid
+            addTxLikedSong(likeKey)
+          }
+          clearListDetailCache('tx', toListId)
+          global.app_event.playlist_updated({ source: 'tx', listId: toListId })
+          return txApi.removeSongFromPlaylist(sourcePlaylistId, [String(songMid)])
+        }).then(() => {
+          onAdded?.()
+          toast(t('list_edit_action_tip_move_success'))
+          clearListDetailCache('tx', sourcePlaylistId)
+          global.app_event.playlist_updated({ source: 'tx', listId: sourcePlaylistId })
+          log.info('[MusicAddModal] QQ歌单移动成功', { toListId, songMid, sourcePlaylistId })
+        }).catch((err) => {
+          log.error('[MusicAddModal] QQ歌单移动失败', {
+            error: err.message || err,
+            toListId,
+            songMid,
+            sourcePlaylistId,
+          })
+          toast(err.message || t('list_edit_action_tip_move_failed'));
+        });
+      } else {
+        txApi.addSongToPlaylist(toListId, [String(songMid)]).then(() => {
+          if (listInfo.dirid === 201) {
+            const txSongId = (musicInfo.meta as any).id
+            const isNumericId = txSongId && /^\d+$/.test(String(txSongId))
+            const likeKey = isNumericId ? String(txSongId) : songMid
+            addTxLikedSong(likeKey)
+          }
+          onAdded?.()
+          toast(t('list_edit_action_tip_add_success'))
+          global.app_event.playlist_updated({ source: 'tx', listId: toListId })
+          log.info('[MusicAddModal] QQ歌单添加成功', { toListId, songMid, dirid: listInfo.dirid })
+        }).catch((err) => {
+          log.error('[MusicAddModal] QQ歌单添加失败', {
+            error: err.message || err,
+            toListId,
+            songMid,
+            musicSource: musicInfo.source,
+          })
+          toast(err.message || t('list_edit_action_tip_add_failed'));
+        });
+      }
       return;
     }
 
@@ -263,6 +293,7 @@ export default forwardRef<MusicAddModalType, MusicAddModalProps>(({ onAdded }, r
       const mixsongid = Number((musicInfo.meta as any)?.mixSongId) || Number(musicInfo.meta?.songId) || 0;
 
       if (isMove) {
+        const sourcePlaylistId = fromListId.replace('kg__', '')
         addKgSongToPlaylist(kgCookie, toListId, {
           name: songName,
           hash: songHash,
@@ -270,12 +301,24 @@ export default forwardRef<MusicAddModalType, MusicAddModalProps>(({ onAdded }, r
           mixsongid,
         }).then((result) => {
           if (result.success) {
+            clearListDetailCache('kg', toListId)
+            global.app_event.playlist_updated({ source: 'kg', listId: toListId })
+            return removeKgSongsFromPlaylist(kgCookie, Number(sourcePlaylistId), [songHash])
+          } else {
+            throw new Error(result.message || t('list_edit_action_tip_move_failed'))
+          }
+        }).then((result) => {
+          if (result?.success) {
             onAdded?.()
             toast(t('list_edit_action_tip_move_success'))
+            clearListDetailCache('kg', sourcePlaylistId)
+            global.app_event.playlist_updated({ source: 'kg', listId: sourcePlaylistId })
+            log.info('[MusicAddModal] 酷狗歌单移动成功', { toListId, songName, sourcePlaylistId })
           } else {
-            toast(result.message || t('list_edit_action_tip_move_failed'))
+            toast(result?.message || t('list_edit_action_tip_move_failed'))
           }
         }).catch((err) => {
+          log.error('[MusicAddModal] 酷狗歌单移动失败', { error: err.message })
           toast(err.message || t('list_edit_action_tip_move_failed'))
         })
       } else {

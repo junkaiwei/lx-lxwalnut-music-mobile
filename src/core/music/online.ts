@@ -103,6 +103,7 @@ export const getMusicUrl = async ({
         allowToggleSource,
       });
       console.log('Custom API request succeeded', result);
+      console.log("### [WHITEBOX_API_URL] 异步 URL 真正就绪 ###", { title: currentMusicInfo.name, songId: currentMusicInfo.id, url: result.url });
       void saveMusicUrl(currentMusicInfo, result.quality, result.url);
       return result.url;
     } catch (apiError) {

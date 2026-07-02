@@ -98,27 +98,24 @@ export default memo(({ componentId, isHome = false }: { isHome?: boolean }) => {
 
   const playerComponent = useMemo(
     () => {
-      const containerStyle = {
-        ...styles.container,
-        backgroundColor: 'transparent',
-      }
-
       return (
-        <View style={containerStyle} {...panResponder.panHandlers}>
-          <MiniProgressBar />
+        <View style={styles.wrapper}>
+          <View style={styles.container} {...panResponder.panHandlers}>
+            <MiniProgressBar />
 
-          <TouchableOpacity style={styles.left} onPress={handleNavigate} onLongPress={handleLongPress} activeOpacity={0.8}>
-            <Pic isHome={isHome} />
-            <View style={styles.center}>
-              <Title isHome={isHome} />
-              <PlayInfo isHome={isHome} />
-            </View>
-          </TouchableOpacity>
-          <View style={styles.right}>
-            <ControlBtn />
-            <TouchableOpacity style={styles.menuBtn} onPress={handleShowPlaylist}>
-              <Icon name="menu" color={theme['c-button-font']} size={22} />
+            <TouchableOpacity style={styles.left} onPress={handleNavigate} onLongPress={handleLongPress} activeOpacity={0.8}>
+              <Pic isHome={isHome} />
+              <View style={styles.center}>
+                <Title isHome={isHome} />
+                <PlayInfo isHome={isHome} />
+              </View>
             </TouchableOpacity>
+            <View style={styles.right}>
+              <ControlBtn />
+              <TouchableOpacity style={styles.menuBtn} onPress={handleShowPlaylist}>
+                <Icon name="menu" color={theme['c-button-font']} size={22} />
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       )
@@ -135,21 +132,31 @@ export default memo(({ componentId, isHome = false }: { isHome?: boolean }) => {
 })
 
 const styles = createStyle({
+  wrapper: {
+    paddingHorizontal: 10,
+    paddingBottom: 12,
+    paddingTop: 4,
+  },
   container: {
     width: '100%',
-    // height: 100,
-    // paddingTop: progressContentPadding,
-    // marginTop: -progressContentPadding,
-    // backgroundColor: 'rgba(0, 0, 0, .1)',
-    // borderTopWidth: BorderWidths.normal2,
-    paddingVertical: 5,
-    paddingLeft: 5,
-    // backgroundColor: AppColors.primary,
-    // backgroundColor: 'red',
-    borderTopLeftRadius: 6,
-    borderTopRightRadius: 6,
+    paddingVertical: 10,
+    paddingLeft: 12,
+    paddingRight: 12,
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
+    borderBottomLeftRadius: 16,
+    borderBottomRightRadius: 16,
     flexDirection: 'row',
     alignItems: 'center',
+    backgroundColor: 'rgba(255, 255, 255, 0.35)',
+    borderWidth: 0.5,
+    borderColor: 'rgba(255, 255, 255, 0.6)',
+    shadowColor: 'rgba(0, 0, 0, 0.15)',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 6,
+    elevation: 4,
+    overflow: 'hidden',
   },
   left: {
     flexGrow: 1,

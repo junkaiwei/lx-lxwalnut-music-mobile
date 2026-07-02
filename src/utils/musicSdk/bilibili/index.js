@@ -265,6 +265,31 @@ async function getBilibiliMusicUrl(musicInfo, type) {
     
     url = findBestUrl(selectedAudios) || findBestUrl(audios)
     log.info('[Bilibili] 选择的URL是否为空: ' + (!url) + ', URL长度: ' + (url ? url.length : 0))
+
+    const isMcdn = url && url.includes('mcdn.bilivideo')
+    if (!isMcdn && url) {
+      log.info('[Bilibili] 非mcdn URL，尝试重试获取mcdn节点')
+      for (let retry = 0; retry < 2; retry++) {
+        try {
+          const retryReq = await httpFetch("https://api.bilibili.com/x/player/playurl", {
+            headers,
+            params: { ...(bvid ? { bvid } : { aid }), cid, fnval: 16 },
+          })
+          const retryData = typeof retryReq.body === 'string' ? JSON.parse(retryReq.body) : retryReq.body
+          const retryAudios = retryData?.data?.dash?.audio
+          if (retryAudios && retryAudios.length > 0) {
+            const retryUrl = findBestUrl(retryAudios)
+            if (retryUrl && retryUrl.includes('mcdn.bilivideo')) {
+              log.info('[Bilibili] 重试成功获得mcdn URL: ' + retryUrl.substring(0, 100))
+              url = retryUrl
+              break
+            }
+          }
+        } catch (e) {
+          log.error('[Bilibili] 重试失败: ' + (e?.message || e))
+        }
+      }
+    }
     if (url) {
       log.info('[Bilibili] URL前100字符: ' + url.substring(0, 100))
     }
