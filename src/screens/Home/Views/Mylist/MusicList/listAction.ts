@@ -1,6 +1,7 @@
 import musicSdk from '@/utils/musicSdk'
 import RNFetchBlob from 'rn-fetch-blob'
 import playerState from '@/store/player/state'
+import playerActions from '@/store/player/action'
 import settingState from '@/store/setting/state'
 import { setMusicUrl, stop } from '@/core/player/player'
 import { log } from '@/utils/log'
@@ -391,6 +392,13 @@ export const handleClearMusicCache = async (musicInfo: LX.Music.MusicInfo) => {
       
       toast('已清除缓存，正在重新加载...')
       
+      const lyricPrefix = storageDataPrefix.lyric
+      const lyricKeys = allKeys.filter(key => key.startsWith(`${lyricPrefix}${musicId}`))
+      if (lyricKeys.length > 0) {
+        await removeDataMultiple(lyricKeys)
+        log.info(`[清除缓存] 歌词缓存清除成功 - 歌曲名: ${musicName}, 数量: ${lyricKeys.length}`)
+      }
+      
       try {
         await stop()
         log.info(`[清除缓存] 已停止当前播放`)
@@ -398,8 +406,23 @@ export const handleClearMusicCache = async (musicInfo: LX.Music.MusicInfo) => {
         setMusicUrl(musicInfo, true)
         log.info(`[清除缓存] 已触发重新获取URL - 歌曲名: ${musicName}`)
         
+        void getLyricInfo({ musicInfo: musicInfo as any, isRefresh: true }).then((lyricInfo) => {
+          if (playerState.playMusicInfo.musicInfo?.id !== musicId) return
+          playerActions.setMusicInfo({
+            lrc: lyricInfo.lyric,
+            tlrc: lyricInfo.tlyric,
+            lxlrc: lyricInfo.lxlyric,
+            rlrc: lyricInfo.rlyric,
+            rawlrc: lyricInfo.rawlrcInfo.lyric,
+          })
+          global.app_event.lyricUpdated()
+          log.info(`[清除缓存] 歌词重新加载成功 - 歌曲名: ${musicName}`)
+        }).catch((err: any) => {
+          log.error(`[清除缓存] 歌词重新加载失败 - 歌曲名: ${musicName}`, err)
+        })
+        
       } catch (reloadError) {
-        log.error(`[清除缓存] 重新加载失败 - 歌曲名: ${musicName}, 错误:`, reloadError)
+        log.error(`[清除缓存] 重新加载失败 - 歌曲名: ${musicName}`, reloadError)
         toast('清除缓存成功，但重新加载失败')
       }
       
