@@ -190,24 +190,6 @@ export default {
 
       const data = body.req.data
       const songList = data.songList || data.list || []
-      txLog.info('=== txApi.getAlbum 获取成功 ===', {
-        albumMid,
-        songCount: songList.length,
-        totalNum: data.totalNum || data.total_num,
-        dataKeys: data ? Object.keys(data) : [],
-        songListField: data.songList ? 'songList' : (data.list ? 'list' : 'none'),
-        firstSongItem: songList[0] ? {
-          id: songList[0].id,
-          mid: songList[0].mid,
-          title: songList[0].title,
-          hasFile: !!songList[0].file,
-          mediaMid: songList[0].file?.media_mid,
-          singerLength: songList[0].singer?.length,
-          allKeys: Object.keys(songList[0]),
-          isArray: Array.isArray(songList),
-          songListType: typeof songList,
-        } : null,
-      })
 
       const list = this.handleResult(songList)
       
@@ -280,6 +262,11 @@ export default {
         index,
         itemId: item.id,
         itemMid: item.mid,
+        itemIndex: item.index,
+        itemSort: item.sort,
+        itemOrder: item.order,
+        itemSeq: item.seq,
+        songInfoIndex: songInfo.index,
         hasSongInfo: !!item.songInfo,
         songInfoId: songInfo.id,
         songInfoMid: songInfo.mid,

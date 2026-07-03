@@ -52,6 +52,14 @@ const albumApi = {
 
     const info = await this.getAlbumInfo(id)
 
+    if (result && info.image) {
+      const albumImg = info.image
+      result.forEach(song => {
+        song.img = albumImg
+        if (song.meta) song.meta.picUrl = albumImg
+      })
+    }
+
     return {
       list: result || [],
       page,
