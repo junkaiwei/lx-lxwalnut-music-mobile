@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState, useCallback } from 'react'
+import { useRef, useEffect, useState, useCallback, useMemo } from 'react'
 import { InteractionManager } from 'react-native'
 import { type LayoutChangeEvent, View, BackHandler } from 'react-native'
 import HeaderBar, { type HeaderBarProps, type HeaderBarType } from './HeaderBar'
@@ -14,6 +14,7 @@ import List, { type ListType } from './List'
 import { addHistoryWord, setSearchText as setSearchState } from '@/core/search/search'
 import SonglistDetail from '../../../SonglistDetail'
 import {COMPONENT_IDS} from "@/config/constant.ts"
+import { useSettingValue } from '@/store/setting/hook'
 
 interface SearchInfo {
   temp_source: LX.OnlineSource
@@ -31,6 +32,28 @@ export default () => {
   const [selectedList, setSelectedList] = useState<ListInfoItem | null>(null)
   const selectedListRef = useRef(selectedList)
   selectedListRef.current = selectedList
+
+  const enabledSources = useSettingValue('search.enabledSources')
+  const filteredMusicSources = useMemo(
+    () => searchMusicState.sources.filter(s => enabledSources[s] !== false),
+    [enabledSources],
+  )
+  const filteredSonglistSources = useMemo(
+    () => searchSonglistState.sources.filter(s => enabledSources[s] !== false),
+    [enabledSources],
+  )
+
+  const filteredMusicSourcesRef = useRef(filteredMusicSources)
+  filteredMusicSourcesRef.current = filteredMusicSources
+  const filteredSonglistSourcesRef = useRef(filteredSonglistSources)
+  filteredSonglistSourcesRef.current = filteredSonglistSources
+
+  useEffect(() => {
+    const sources = searchInfo.current.searchType === 'songlist' ? filteredSonglistSourcesRef.current : filteredMusicSourcesRef.current
+    if (sources.length > 0 && searchInfo.current.source) {
+      headerBarRef.current?.setSourceList(sources, searchInfo.current.source)
+    }
+  }, [filteredMusicSources, filteredSonglistSources])
 
   const [headerKey, setHeaderKey] = useState(Date.now())
 
@@ -87,10 +110,10 @@ export default () => {
         case 'music':
         case 'singer':
         case 'album':
-          headerBarRef.current?.setSourceList(searchMusicState.sources, info.source)
+          headerBarRef.current?.setSourceList(filteredMusicSources, info.source)
           break
         case 'songlist':
-          headerBarRef.current?.setSourceList(searchSonglistState.sources, info.source)
+          headerBarRef.current?.setSourceList(filteredSonglistSources, info.source)
           break
       }
       headerBarRef.current?.setText(searchState.searchText)
@@ -123,10 +146,10 @@ export default () => {
           case 'music':
           case 'singer':
           case 'album':
-            headerBarRef.current?.setSourceList(searchMusicState.sources, searchInfo.current.source)
+            headerBarRef.current?.setSourceList(filteredMusicSources, searchInfo.current.source)
             break
           case 'songlist':
-            headerBarRef.current?.setSourceList(searchSonglistState.sources, searchInfo.current.source)
+            headerBarRef.current?.setSourceList(filteredSonglistSources, searchInfo.current.source)
             break
         }
       }
@@ -154,10 +177,8 @@ export default () => {
         searchInfo.current.source = info.source
         searchInfo.current.searchType = info.type
         headerBarRef.current?.setText(searchState.searchText)
-        headerBarRef.current?.setSourceList(
-          info.type === 'songlist' ? searchSonglistState.sources : searchMusicState.sources,
-          info.source,
-        )
+        const sources = info.type === 'songlist' ? filteredSonglistSourcesRef.current : filteredMusicSourcesRef.current
+        headerBarRef.current?.setSourceList(sources, info.source)
         if (searchState.searchText) {
           listRef.current?.loadList(searchState.searchText, info.source, info.type)
         }

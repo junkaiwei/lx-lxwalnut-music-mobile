@@ -34,14 +34,6 @@ export default ({ children }: Props) => {
     const bgWidth = Math.max(screenSize.width, windowSize.width);
     const bgHeight = Math.max(screenSize.height, windowSize.height);
 
-    console.log('[LX_CUTOUT] PageContent render:', {
-      screenW: screenSize.width, screenH: screenSize.height,
-      windowW: windowDims.width, windowH: windowDims.height,
-      hookW: windowSize.width, hookH: windowSize.height,
-      bgW: bgWidth, bgH: bgHeight,
-      pic: pic ? 'yes' : 'no',
-    });
-
     return (
       <View style={{ flex: 1, overflow: 'hidden' }}>
         <ImageBackground

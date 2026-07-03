@@ -11,8 +11,6 @@ export const getBatchMusicQualityInfo = (hashList) => {
     hash,
   }))
 
-  console.log(resources)
-
   const requestObj = httpFetch(
     `https://gateway.kugou.com/goodsmstore/v1/get_res_privilege?appid=1005&clientver=20049&clienttime=${Date.now()}&mid=NeZha`,
     {
@@ -54,54 +52,16 @@ export const getBatchMusicQualityInfo = (hashList) => {
 
       if (!songData || !songData.relate_goods) return
 
+      const QUALITY_MAP = {
+        '128': '128k', '320': '320k', 'flac': 'flac',
+        'high': 'hires', 'viper_clear': 'master', 'viper_atmos': 'atmos',
+      }
       for (const quality_data of songData.relate_goods) {
-        if (quality_data.quality === '128') {
+        const label = QUALITY_MAP[quality_data.quality]
+        if (label && quality_data.info.filesize !== 0) {
           let size = sizeFormate(quality_data.info.filesize)
-          types.push({ type: '128k', size, hash: quality_data.hash })
-          _types['128k'] = {
-            size,
-            hash: quality_data.hash,
-          }
-        }
-        if (quality_data.quality === '320') {
-          let size = sizeFormate(quality_data.info.filesize)
-          types.push({ type: '320k', size, hash: quality_data.hash })
-          _types['320k'] = {
-            size,
-            hash: quality_data.hash,
-          }
-        }
-        if (quality_data.quality === 'flac') {
-          let size = sizeFormate(quality_data.info.filesize)
-          types.push({ type: 'flac', size, hash: quality_data.hash })
-          _types.flac = {
-            size,
-            hash: quality_data.hash,
-          }
-        }
-        if (quality_data.quality === 'high') {
-          let size = sizeFormate(quality_data.info.filesize)
-          types.push({ type: 'hires', size, hash: quality_data.hash })
-          _types.hires = {
-            size,
-            hash: quality_data.hash,
-          }
-        }
-        if (quality_data.quality === 'viper_clear') {
-          let size = sizeFormate(quality_data.info.filesize)
-          types.push({ type: 'master', size, hash: quality_data.hash })
-          _types.master = {
-            size,
-            hash: quality_data.hash,
-          }
-        }
-        if (quality_data.quality === 'viper_atmos') {
-          let size = sizeFormate(quality_data.info.filesize)
-          types.push({ type: 'atmos', size, hash: quality_data.hash })
-          _types.atmos = {
-            size,
-            hash: quality_data.hash,
-          }
+          types.push({ type: label, size, hash: quality_data.hash })
+          _types[label] = { size, hash: quality_data.hash }
         }
       }
 
@@ -143,7 +103,7 @@ export const filterData = async (rawList, options = {}) => {
   try {
     qualityInfoMap = await qualityInfoRequest.promise
   } catch (error) {
-    console.error('Failed to fetch quality info:', error)
+    // ignored
   }
 
   return processedList.map((item) => {

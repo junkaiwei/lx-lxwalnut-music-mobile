@@ -115,7 +115,7 @@ const handleRequestData = async (
     headers.cookie = settingState.setting['common.wy_cookie']
   } else if (url.includes('y.qq.com')) {
     headers.cookie = settingState.setting['common.tx_cookie']
-    console.log('[TX] cookie:', !!headers.cookie, 'len:', headers.cookie?.length || 0)
+    console.log('[TX] req:', options.method || 'get', url.substring(0, 80))
   }
   options.cache = cache
   
@@ -204,7 +204,6 @@ const blobToBuffer = (blob) => {
 }
 
 const fetchData = (url, { timeout = 15000, ...options }) => {
-  console.log('---start---', url.replace(/([?&](?:api_key|key|token)=)[^&]+/gi, '$1***'))
 
   const controller = new global.AbortController()
   let id = BackgroundTimer.setTimeout(() => {

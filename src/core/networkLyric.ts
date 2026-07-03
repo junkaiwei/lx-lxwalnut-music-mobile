@@ -23,9 +23,7 @@ let isLyricListenerActive = false;
 let unsubscribeLyricListener: (() => void) | null = null;
 
 const adjustMediaVolume = (direction: 'up' | 'down') => {
-  void adjustSystemMediaVolume(direction).catch((error) => {
-    console.error(`>>>>> [网络命令] 调整媒体音量失败(${direction}):`, error);
-  });
+  void adjustSystemMediaVolume(direction).catch(() => {});
 };
 
 const startLyricSocket = () => {
@@ -34,15 +32,17 @@ const startLyricSocket = () => {
     lyricSocket = dgram.createSocket('udp4');
     lyricSocket.on('message', (msg, rinfo) => {
       if (msg.toString() === 'LX_LYRIC_CLIENT_HERE') {
-        console.log(`>>>>> [网络歌词] 发现接收端: ${rinfo.address}`);
         targetIp = rinfo.address;
         if (ipClearTimeout) clearTimeout(ipClearTimeout);
-        ipClearTimeout = setTimeout(() => {
-          console.log('>>>>> [网络歌词] 接收端超时，已清除 IP');
-          targetIp = null;
-        }, 90 * 1000);
+        ipClearTimeout = setTimeout(() => { targetIp = null; }, 90 * 1000);
       }
     });
+
+    lyricSocket.bind(BROADCAST_PORT, () => {
+      try { lyricSocket?.setBroadcast(true); } catch {}
+    });
+
+    lyricSocket.on('error', () => { destroyLyricSocket(); });
 
     lyricSocket.bind(BROADCAST_PORT, () => {
       try {
@@ -57,9 +57,7 @@ const startLyricSocket = () => {
       console.error('>>>>> [网络歌词] UDP 歌词广播 Socket 错误:', err);
       destroyLyricSocket();
     });
-  } catch (error) {
-    console.error('>>>>> [网络歌词] 创建 UDP 歌词广播 Socket 失败:', error);
-  }
+  } catch {}
 };
 
 const startCommandListener = () => {
@@ -67,9 +65,7 @@ const startCommandListener = () => {
   try {
     commandSocket = dgram.createSocket('udp4');
     commandSocket.on('message', (msg) => {
-      const command = msg.toString();
-      console.log(`>>>>> [网络命令] 收到命令: ${command}`);
-      switch (command) {
+      switch (msg.toString()) {
         case COMMAND_NEXT:
           void playNext();
           break;
@@ -88,17 +84,10 @@ const startCommandListener = () => {
       }
     });
 
-    commandSocket.bind(COMMAND_PORT, () => {
-      console.log(`>>>>> [网络命令] UDP 命令监听器已在端口 ${COMMAND_PORT} 启动`);
-    });
+    commandSocket.bind(COMMAND_PORT, () => {});
 
-    commandSocket.on('error', (err) => {
-      console.error('>>>>> [网络命令] UDP 命令监听器错误:', err);
-      stopCommandListener();
-    });
-  } catch (e) {
-    console.error('>>>>> [网络命令] 启动命令监听失败:', e);
-  }
+    commandSocket.on('error', () => { stopCommandListener(); });
+  } catch {}
 };
 
 const sendUdpPacket = (lineInfo: { text: string; extendedLyrics: string[] }) => {
@@ -113,9 +102,7 @@ const sendUdpPacket = (lineInfo: { text: string; extendedLyrics: string[] }) => 
   };
 
   const message = Buffer.from(JSON.stringify(payload));
-  lyricSocket.send(message, 0, message.length, BROADCAST_PORT, targetIp, (err) => {
-    if (err) console.error('>>>>> [网络歌词] 发送失败:', err);
-  });
+  lyricSocket.send(message, 0, message.length, BROADCAST_PORT, targetIp, () => {});
 };
 
 const destroyLyricSocket = () => {
@@ -132,7 +119,6 @@ const stopCommandListener = () => {
 
 const startLyricListener = () => {
   if (isLyricListenerActive) return;
-  console.log('>>>>> [网络歌词] 启动原生歌词事件监听');
   setSendLyricTextEvent(true);
   unsubscribeLyricListener = onLyricLinePlay((lineInfo) => {
     if (targetIp) sendUdpPacket(lineInfo);

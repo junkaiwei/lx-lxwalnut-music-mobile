@@ -63,51 +63,7 @@ export default {
     // https://www.kugou.com/yy/special/single/1067062.html
     listDetailLink: /^.+\/(\d+)\.html(?:\?.*|&.*$|#.*$|$)/,
   },
-  // async getGlobalSpecialId(specialId) {
-  //   return httpFetch(`http://mobilecdnbj.kugou.com/api/v5/special/info?specialid=${specialId}`, {
-  //     headers: {
-  //       'User-Agent': 'Mozilla/5.0 (Linux; Android 10; HLK-AL00) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Mobile Safari/537.36 EdgA/104.0.1293.70',
-  //     },
-  //   }).promise.then(({ body }) => {
-  //     // console.log(body)
-  //     if (!body.data.global_specialid) Promise.reject(new Error('Failed to get global collection id.'))
-  //     return body.data.global_specialid
-  //   })
-  // },
-  // async getListInfoBySpecialId(special_id, retry = 0) {
-  //   if (++retry > 2) throw new Error('failed')
-  //   return httpFetch(`https://m.kugou.com/plist/list/${special_id}/?json=true`, {
-  //     headers: {
-  //       'User-Agent': 'Mozilla/5.0 (Linux; Android 10; HLK-AL00) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Mobile Safari/537.36 EdgA/104.0.1293.70',
-  //     },
-  //     follow_max: 2,
-  //   }).promise.then(({ body }) => {
-  //     // console.log(body)
-  //     if (!body.info.list) return this.getListInfoBySpecialId(special_id, retry)
-  //     let listinfo = body.info.list
-  //     return {
-  //       listInfo: {
-  //         name: listinfo.specialname,
-  //         image: listinfo.imgurl.replace('{size}', '150'),
-  //         intro: listinfo.intro,
-  //         author: listinfo.nickname,
-  //         playcount: listinfo.playcount,
-  //         total: listinfo.songcount,
-  //       },
-  //       globalSpecialId: listinfo.global_specialid,
-  //     }
-  //   })
-  // },
-  // async getSongListDetailByGlobalSpecialId(id, page, limit = 100, retry = 0) {
-  //   if (++retry > 2) throw new Error('failed')
-  //   console.log(id)
-  //   const params = `specialid=0&need_sort=1&module=CloudMusic&clientver=11409&pagesize=${limit}&global_collection_id=${id}&userid=0&page=${page}&type=1&area_code=1&appid=1005`
-  //   return httpFetch(`http://pubsongscdn.tx.kugou.com/v2/get_other_list_file?${params}&signature=${signatureParams(params)}`).promise.then(({ body }) => {
-  //     // console.log(body)
-  //     if (body.data?.info == null) return this.getSongListDetailByGlobalSpecialId(id, page, limit, retry)
-  //     return body.data.info
-  //   })
-  // },
+
   parseHtmlDesc(html) {
     const prefix = '<div class="pc_specail_text pc_singer_tab_content" id="specailIntroduceWrap">'
     let index = html.indexOf(prefix)
@@ -248,10 +204,8 @@ export default {
     try {
       result = await httpFetch(url, options).promise
     } catch (err) {
-      if (global.lx.isEnableLog) console.log(err)
       return this.createHttp(url, options, ++retryNum)
     }
-    // console.log(result.statusCode, result.body)
     if (
       result.statusCode !== 200 ||
       (result.body.error_code !== undefined
@@ -329,7 +283,6 @@ export default {
         data: id,
       },
     })
-    // console.log(songInfo)
     let songList
     let info = songInfo.info
     switch (info.type) {
@@ -365,7 +318,6 @@ export default {
           },
         },
       })
-      // console.log(songList)
     }
     let list = await this.getMusicInfos(songList || songInfo.list)
     return {
@@ -403,7 +355,6 @@ export default {
         )
     }
     let list = await this.getMusicInfos(songInfo.list)
-    // console.log(info, songInfo)
     return {
       list,
       page: 1,
@@ -483,7 +434,6 @@ export default {
     }
     let result = await Promise.all(tasks).then(([...datas]) => datas.flat())
     result = await this.getMusicInfos(result)
-    // console.log(result)
     return {
       list: result,
       page,
@@ -516,7 +466,6 @@ export default {
         limit +
         '&srcappid=2919&clientver=20000&clienttime=' + now + '&mid=' + now + '&uuid=' + now + '&dfid=-'
       const songUrl = `https://mobiles.kugou.com/api/v5/special/song_v2?${params}&signature=${signatureParams(params, 'web')}`
-      if (global.lx.isEnableLog) console.log('[KuGou] [SDK] 获取歌曲列表 URL:', songUrl)
       tasks.push(
         this.createHttp(
           songUrl,
@@ -544,7 +493,6 @@ export default {
       id +
       '&format=jsonp&srcappid=2919&clientver=20000&clienttime=' + now + '&mid=' + now + '&uuid=' + now + '&dfid=-'
     const infoUrl = `https://mobiles.kugou.com/api/v5/special/info_v2?${params}&signature=${signatureParams(params, 'web')}`
-    if (global.lx.isEnableLog) console.log('[KuGou] [SDK] 获取歌单信息 URL:', infoUrl)
     let info = await this.createHttp(
       infoUrl,
       {
@@ -558,16 +506,12 @@ export default {
         },
       }
     )
-    if (global.lx.isEnableLog) console.log('[KuGou] [SDK] 歌单信息响应:', JSON.stringify(info).substring(0, 300))
-    if (global.lx.isEnableLog) console.log('[KuGou] [SDK] 歌曲数量:', info.songcount)
-
     let songInfo
     const totalSongs = info.songcount || 0
     try {
       const allSongs = []
       let beginIdx = 0
       const pageSize = 300
-      if (global.lx.isEnableLog) console.log('[KuGou] [SDK] 使用网关端点获取歌曲, 总数:', totalSongs)
       while (beginIdx < totalSongs || allSongs.length < totalSongs) {
         const clienttime = Math.floor(Date.now() / 1000)
         const gwParams = `area_code=1&appid=1005&begin_idx=${beginIdx}&clienttime=${clienttime}&clientver=20489&extend_fields=abtags,hot_cmt,popularization&global_collection_id=${id}&mode=1&pagesize=${pageSize}&personal_switch=1&plat=1&type=1&uuid=-`
@@ -581,23 +525,17 @@ export default {
           },
         })
         const batch = gwResult?.songs || gwResult?.data?.songs || []
-        if (global.lx.isEnableLog) console.log('[KuGou] [SDK] 网关批次返回:', batch.length, '首, beginIdx:', beginIdx)
         if (batch.length === 0) break
         allSongs.push(...batch)
         beginIdx += batch.length
         if (batch.length < pageSize) break
       }
       songInfo = allSongs
-      if (global.lx.isEnableLog) console.log('[KuGou] [SDK] 网关总计:', songInfo.length, '首')
     } catch (e) {
-      if (global.lx.isEnableLog) console.log('[KuGou] [SDK] 网关失败，回退 mobiles:', e.message)
       songInfo = await this.createGetListDetail2Task(id, totalSongs)
     }
 
-    if (global.lx.isEnableLog) console.log('[KuGou] [SDK] 歌曲列表详情:', songInfo.map((s, i) => `${i + 1}. ${s.songname || s.filename || s.name} | hash=${s.hash}`).join('\n'))
     let list = await this.getMusicInfos(songInfo)
-    if (global.lx.isEnableLog) console.log('[KuGou] [SDK] 最终歌曲数:', list.length)
-    if (global.lx.isEnableLog) console.log('[KuGou] [SDK] 最终歌曲列表:', list.map((s, i) => `${i + 1}. ${s.name} | songmid=${s.songmid}`).join('\n'))
     return {
       list,
       page: 1,
@@ -741,10 +679,8 @@ export default {
       },
     })
     const { url: location, statusCode, body } = await requestObj_listDetailLink.promise
-    // console.log(body, location)
     if (statusCode > 400) return this.getUserListDetail(link, page, ++retryNum)
     if (location.split('?')[0] != link.split('?')[0]) {
-      // console.log(location)
       if (location.includes('global_collection_id'))
         return this.getUserListDetail2(
           location.replace(/^.*?global_collection_id=(\w+)(?:&.*$|#.*$|$)/, '$1')
@@ -778,8 +714,6 @@ export default {
             page
           )
       }
-      // console.log('location', location)
-      // return this.getUserListDetail(link, page, ++retryNum)
     }
     if (typeof body == 'string')
       return this.getUserListDetail2(
@@ -895,7 +829,3 @@ export default {
     })
   },
 }
-
-// getList
-// getTags
-// getListDetail

@@ -2,6 +2,7 @@ import { formatPlayTime, sizeFormate } from '../../index'
 import { formatSingerName } from '../utils'
 import { signRequest } from './utils'
 import { txLog } from '@/utils/txLog'
+import { getComm } from './utils/common'
 
 const SEARCH_TYPE_MAP = {
   0: '歌曲',
@@ -36,35 +37,7 @@ export default {
       timestamp: new Date().toISOString(),
     })
     const searchRequest = signRequest({
-      comm: {
-        ct: '11',
-        cv: '14090508',
-        v: '14090508',
-        tmeAppID: 'qqmusic',
-        phonetype: 'EBG-AN10',
-        deviceScore: '553.47',
-        devicelevel: '50',
-        newdevicelevel: '20',
-        rom: 'HuaWei/EMOTION/EmotionUI_14.2.0',
-        os_ver: '12',
-        OpenUDID: '0',
-        OpenUDID2: '0',
-        QIMEI36: '0',
-        udid: '0',
-        chid: '0',
-        aid: '0',
-        oaid: '0',
-        taid: '0',
-        tid: '0',
-        wid: '0',
-        uid: '0',
-        sid: '0',
-        modeSwitch: '6',
-        teenMode: '0',
-        ui_mode: '2',
-        nettype: '1020',
-        v4ip: '',
-      },
+      comm: getComm(),
       req: {
         module: 'music.search.SearchCgiService',
         method: 'DoSearchForQQMusicMobile',
@@ -343,22 +316,16 @@ export default {
       })
 
       if (list.length > 0) {
-        txLog.info('=== searchAlbum 获取歌曲数量 ===', {
-          albumCount: list.length,
-          albums: list.map(item => ({ mid: item.mid, name: item.name })),
-        })
-        const sizeResults = await Promise.all(
-          list.map(item => this.getAlbumSongCount(item.mid).catch(() => 0))
-        )
-        list = list.map((item, index) => ({
-          ...item,
-          size: sizeResults[index] || 0,
-        }))
-        txLog.info('=== searchAlbum 歌曲数量获取完成 ===', {
+        const missingSizeAlbums = list.filter(a => !a.size)
+        if (missingSizeAlbums.length > 0) {
+          const sizeResults = await Promise.all(
+            missingSizeAlbums.map(item => this.getAlbumSongCount(item.mid).catch(() => 0))
+          )
+          missingSizeAlbums.forEach((item, i) => { if (sizeResults[i]) item.size = sizeResults[i] })
+        }
+        txLog.info('=== searchAlbum 获取成功 ===', {
           query: str,
-          totalAlbums: list.length,
-          songCounts: sizeResults,
-          sample: list.slice(0, 3).map(item => ({ name: item.name, size: item.size })),
+          albumCount: list.length,
         })
       }
 
@@ -388,35 +355,7 @@ export default {
     }
     txLog.info('=== getAlbumSongCount 开始 ===', { albumMid, retryNum })
     const request = signRequest({
-      comm: {
-        ct: '11',
-        cv: '14090508',
-        v: '14090508',
-        tmeAppID: 'qqmusic',
-        phonetype: 'EBG-AN10',
-        deviceScore: '553.47',
-        devicelevel: '50',
-        newdevicelevel: '20',
-        rom: 'HuaWei/EMOTION/EmotionUI_14.2.0',
-        os_ver: '12',
-        OpenUDID: '0',
-        OpenUDID2: '0',
-        QIMEI36: '0',
-        udid: '0',
-        chid: '0',
-        aid: '0',
-        oaid: '0',
-        taid: '0',
-        tid: '0',
-        wid: '0',
-        uid: '0',
-        sid: '0',
-        modeSwitch: '6',
-        teenMode: '0',
-        ui_mode: '2',
-        nettype: '1020',
-        v4ip: '',
-      },
+      comm: getComm(),
       req: {
         module: 'music.musichallAlbum.AlbumSongList',
         method: 'GetAlbumSongList',

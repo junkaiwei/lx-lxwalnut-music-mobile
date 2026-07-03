@@ -3,53 +3,11 @@
  * Includes: song recommendations, daily recommendations, new songs
  */
 import { httpFetch } from '../../request'
-import settingState from '@/store/setting/state'
 import { log } from '@/utils/log'
 import { stringMd5 } from 'react-native-quick-md5'
 import { formatPlayTime } from '../../index'
 import { getBatchMusicQualityInfo } from './quality_detail'
-
-const SIGN_SALT = 'OIlwieks28dk2k092lksi2UIkp'
-
-// Signing function
-function signAndroidParams(params, data = '') {
-  const sortedKeys = Object.keys(params).sort()
-  const paramsString = sortedKeys.map(key => {
-    const value = typeof params[key] === 'object' ? JSON.stringify(params[key]) : params[key]
-    return `${key}=${value}`
-  }).join('')
-  const signStr = `${SIGN_SALT}${paramsString}${data}${SIGN_SALT}`
-  return stringMd5(signStr)
-}
-
-// Common request headers
-const buildHeaders = () => ({
-  'User-Agent': 'Android15-1070-11083-46-0-DiscoveryDRADProtocol-wifi',
-  'kg-rc': '1',
-  'kg-thash': '5d816a0',
-  'kg-rec': '1',
-  'kg-rf': 'B9EDA08A64250DEFFBCADDEE00F8F25F',
-})
-
-// Get device info from authentication Cookie
-const getDeviceInfo = () => {
-  const cookie = settingState.setting['common.kg_cookie'] || ''
-  log.info('[KG DailyRec] Cookie状态:', cookie ? `已设置 (长度:${cookie.length})` : '未设置')
-  const cookieObj = {}
-  cookie.split(';').forEach(pair => {
-    const [k, ...v] = pair.trim().split('=')
-    if (k) cookieObj[k.trim()] = v.join('=').trim()
-  })
-  const device = {
-    dfid: cookieObj.dfid || '',
-    mid: cookieObj.mid || '',
-    userid: cookieObj.userid || '',
-    token: cookieObj.token || '',
-    cookieStr: cookie,
-  }
-  log.info('[KG DailyRec] 设备信息:', { dfid: device.dfid ? '已设置' : '空', mid: device.mid ? '已设置' : '空', userid: device.userid || '空' })
-  return device
-}
+import { signAndroidParams, getDeviceInfo, buildHeaders } from './utils/shared'
 
 // Transform song to app format
 const transformSong = (item, index) => {

@@ -57,7 +57,6 @@ export async function pushHomeScreen() {
 
   const theme = themeState.theme
   const lockLandscape = settingState.setting['common.lockLandscape']
-  console.log('[LX_CUTOUT] Navigation.setRoot - pushHomeScreen, lockLandscape:', lockLandscape)
 
   if (lockLandscape) {
     setTimeout(() => {

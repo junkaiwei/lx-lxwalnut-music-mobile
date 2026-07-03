@@ -2,6 +2,7 @@ import { httpFetch } from '../../request'
 import { formatPlayTime, sizeFormate } from '../../index'
 import { formatSingerName } from '../utils'
 import { signRequest } from './utils'
+import { getComm } from './utils/common'
 import { txLog } from '@/utils/txLog'
 import settingState from '@/store/setting/state'
 
@@ -54,35 +55,7 @@ const artistApi = {
     txLog.info('=== txApi.getDetail 开始 ===', { artistMid, retryNum, uin })
 
     const requestData = {
-      comm: {
-        ct: '11',
-        cv: '14090508',
-        v: '14090508',
-        tmeAppID: 'qqmusic',
-        phonetype: 'EBG-AN10',
-        deviceScore: '553.47',
-        devicelevel: '50',
-        newdevicelevel: '20',
-        rom: 'HuaWei/EMOTION/EmotionUI_14.2.0',
-        os_ver: '12',
-        OpenUDID: '0',
-        OpenUDID2: '0',
-        QIMEI36: '0',
-        udid: '0',
-        chid: '0',
-        aid: '0',
-        oaid: '0',
-        taid: '0',
-        tid: '0',
-        wid: '0',
-        uid: '0',
-        sid: '0',
-        modeSwitch: '6',
-        teenMode: '0',
-        ui_mode: '2',
-        nettype: '1020',
-        v4ip: '',
-      },
+      comm: getComm(),
       req: {
         module: 'music.UnifiedHomepage.UnifiedHomepageSrv',
         method: 'GetHomepageHeader',
@@ -214,35 +187,7 @@ const artistApi = {
     txLog.info('=== txApi.getSongs 开始 ===', { artistMid, order, limit, offset, retryNum, uin })
 
     const requestData = {
-      comm: {
-        ct: '11',
-        cv: '14090508',
-        v: '14090508',
-        tmeAppID: 'qqmusic',
-        phonetype: 'EBG-AN10',
-        deviceScore: '553.47',
-        devicelevel: '50',
-        newdevicelevel: '20',
-        rom: 'HuaWei/EMOTION/EmotionUI_14.2.0',
-        os_ver: '12',
-        OpenUDID: '0',
-        OpenUDID2: '0',
-        QIMEI36: '0',
-        udid: '0',
-        chid: '0',
-        aid: '0',
-        oaid: '0',
-        taid: '0',
-        tid: '0',
-        wid: '0',
-        uid: '0',
-        sid: '0',
-        modeSwitch: '6',
-        teenMode: '0',
-        ui_mode: '2',
-        nettype: '1020',
-        v4ip: '',
-      },
+      comm: getComm(),
       req: {
         module: 'musichall.song_list_server',
         method: 'GetSingerSongList',
@@ -338,35 +283,7 @@ const artistApi = {
     txLog.info('=== txApi.getAlbums 开始 ===', { artistMid, limit, offset, retryNum, uin })
 
     const requestData = {
-      comm: {
-        ct: '11',
-        cv: '14090508',
-        v: '14090508',
-        tmeAppID: 'qqmusic',
-        phonetype: 'EBG-AN10',
-        deviceScore: '553.47',
-        devicelevel: '50',
-        newdevicelevel: '20',
-        rom: 'HuaWei/EMOTION/EmotionUI_14.2.0',
-        os_ver: '12',
-        OpenUDID: '0',
-        OpenUDID2: '0',
-        QIMEI36: '0',
-        udid: '0',
-        chid: '0',
-        aid: '0',
-        oaid: '0',
-        taid: '0',
-        tid: '0',
-        wid: '0',
-        uid: '0',
-        sid: '0',
-        modeSwitch: '6',
-        teenMode: '0',
-        ui_mode: '2',
-        nettype: '1020',
-        v4ip: '',
-      },
+      comm: getComm(),
       req: {
         module: 'music.musichallAlbum.AlbumListServer',
         method: 'GetAlbumList',
@@ -421,17 +338,15 @@ const artistApi = {
 
       const data = body.req.data
       const albumList = data.albumList || data.list || []
-      let hotAlbums = this.handleAlbumResult(albumList)
+      const hotAlbums = this.handleAlbumResult(albumList)
       const total = data.total || data.totalNum || data.total_num || albumList.length
 
-      if (hotAlbums.length > 0) {
+      const missingSizeAlbums = hotAlbums.filter(a => !a.size)
+      if (missingSizeAlbums.length > 0) {
         const sizeResults = await Promise.all(
-          hotAlbums.map(item => this.getAlbumSongCount(item.mid).catch(() => item.size || 0))
+          missingSizeAlbums.map(item => this.getAlbumSongCount(item.mid).catch(() => 0))
         )
-        hotAlbums = hotAlbums.map((item, index) => ({
-          ...item,
-          size: sizeResults[index] || item.size || 0,
-        }))
+        missingSizeAlbums.forEach((item, i) => { if (sizeResults[i]) item.size = sizeResults[i] })
       }
 
       txLog.info('=== txApi.getAlbums 获取成功 ===', {
@@ -473,38 +388,7 @@ const artistApi = {
 
     const uin = getUinFromCookie()
     const requestData = {
-      comm: {
-        ct: '11',
-        cv: '14090508',
-        v: '14090508',
-        tmeAppID: 'qqmusic',
-        phonetype: 'EBG-AN10',
-        deviceScore: '553.47',
-        devicelevel: '50',
-        newdevicelevel: '20',
-        rom: '',
-        resolution: '1080x2340',
-        IMEI: '',
-        IMEI2: '',
-        AndroidID: '',
-        OpenUDID: '',
-        OpenUDID2: '0',
-        QIMEI36: '0',
-        udid: '0',
-        chid: '0',
-        aid: '0',
-        oaid: '0',
-        taid: '0',
-        tid: '0',
-        wid: '0',
-        uid: uin,
-        sid: '0',
-        modeSwitch: '6',
-        teenMode: '0',
-        ui_mode: '2',
-        nettype: '1020',
-        v4ip: '',
-      },
+      comm: getComm({ uid: uin, rom: '', resolution: '1080x2340', IMEI: '', IMEI2: '', AndroidID: '', OpenUDID: '' }),
       req: {
         module: 'music.SimilarSingerSvr',
         method: 'GetSimilarSingerList',
@@ -727,35 +611,7 @@ const artistApi = {
     }
     txLog.info('=== getSingerDesc 开始 ===', { artistMid, retryNum })
     const request = signRequest({
-      comm: {
-        ct: '11',
-        cv: '14090508',
-        v: '14090508',
-        tmeAppID: 'qqmusic',
-        phonetype: 'EBG-AN10',
-        deviceScore: '553.47',
-        devicelevel: '50',
-        newdevicelevel: '20',
-        rom: 'HuaWei/EMOTION/EmotionUI_14.2.0',
-        os_ver: '12',
-        OpenUDID: '0',
-        OpenUDID2: '0',
-        QIMEI36: '0',
-        udid: '0',
-        chid: '0',
-        aid: '0',
-        oaid: '0',
-        taid: '0',
-        tid: '0',
-        wid: '0',
-        uid: '0',
-        sid: '0',
-        modeSwitch: '6',
-        teenMode: '0',
-        ui_mode: '2',
-        nettype: '1020',
-        v4ip: '',
-      },
+      comm: getComm(),
       req: {
         module: 'music.musichallSinger.SingerInfoInter',
         method: 'GetSingerDetail',
@@ -809,35 +665,7 @@ const artistApi = {
     }
     txLog.info('=== getAlbumSongCount 开始 ===', { albumMid, retryNum })
     const request = signRequest({
-      comm: {
-        ct: '11',
-        cv: '14090508',
-        v: '14090508',
-        tmeAppID: 'qqmusic',
-        phonetype: 'EBG-AN10',
-        deviceScore: '553.47',
-        devicelevel: '50',
-        newdevicelevel: '20',
-        rom: 'HuaWei/EMOTION/EmotionUI_14.2.0',
-        os_ver: '12',
-        OpenUDID: '0',
-        OpenUDID2: '0',
-        QIMEI36: '0',
-        udid: '0',
-        chid: '0',
-        aid: '0',
-        oaid: '0',
-        taid: '0',
-        tid: '0',
-        wid: '0',
-        uid: '0',
-        sid: '0',
-        modeSwitch: '6',
-        teenMode: '0',
-        ui_mode: '2',
-        nettype: '1020',
-        v4ip: '',
-      },
+      comm: getComm(),
       req: {
         module: 'music.musichallAlbum.AlbumSongList',
         method: 'GetAlbumSongList',

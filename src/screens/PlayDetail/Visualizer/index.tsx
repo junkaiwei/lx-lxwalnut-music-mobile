@@ -17,7 +17,6 @@ export default memo(({ componentId }: { componentId: string }) => {
   const [jsReady, setJsReady] = useState(false)
   const playMusicInfo = usePlayMusicInfo()
   const lastTrackRef = useRef('')
-  const lastBackPressRef = useRef(0)
 
   useEffect(() => {
     setComponentId(COMPONENT_IDS.visualizer, componentId)

@@ -3,6 +3,7 @@ import { formatPlayTime, sizeFormate } from '../../index'
 import { formatSingerName } from '../utils'
 import { signRequest } from './utils'
 import { txLog } from '@/utils/txLog'
+import { getComm, parseTxQualityTypes } from './utils/common'
 
 export default {
   successCode: 0,
@@ -16,35 +17,7 @@ export default {
     txLog.info('=== txApi.getAlbumDetail 开始 ===', { albumMid, retryNum })
 
     const requestData = {
-      comm: {
-        ct: '11',
-        cv: '14090508',
-        v: '14090508',
-        tmeAppID: 'qqmusic',
-        phonetype: 'EBG-AN10',
-        deviceScore: '553.47',
-        devicelevel: '50',
-        newdevicelevel: '20',
-        rom: 'HuaWei/EMOTION/EmotionUI_14.2.0',
-        os_ver: '12',
-        OpenUDID: '0',
-        OpenUDID2: '0',
-        QIMEI36: '0',
-        udid: '0',
-        chid: '0',
-        aid: '0',
-        oaid: '0',
-        taid: '0',
-        tid: '0',
-        wid: '0',
-        uid: '0',
-        sid: '0',
-        modeSwitch: '6',
-        teenMode: '0',
-        ui_mode: '2',
-        nettype: '1020',
-        v4ip: '',
-      },
+      comm: getComm(),
       req: {
         module: 'music.musichallAlbum.AlbumInfoServer',
         method: 'GetAlbumDetail',
@@ -109,35 +82,7 @@ export default {
     txLog.info('=== txApi.getAlbum 开始 ===', { albumMid, retryNum })
 
     const requestData = {
-      comm: {
-        ct: '11',
-        cv: '14090508',
-        v: '14090508',
-        tmeAppID: 'qqmusic',
-        phonetype: 'EBG-AN10',
-        deviceScore: '553.47',
-        devicelevel: '50',
-        newdevicelevel: '20',
-        rom: 'HuaWei/EMOTION/EmotionUI_14.2.0',
-        os_ver: '12',
-        OpenUDID: '0',
-        OpenUDID2: '0',
-        QIMEI36: '0',
-        udid: '0',
-        chid: '0',
-        aid: '0',
-        oaid: '0',
-        taid: '0',
-        tid: '0',
-        wid: '0',
-        uid: '0',
-        sid: '0',
-        modeSwitch: '6',
-        teenMode: '0',
-        ui_mode: '2',
-        nettype: '1020',
-        v4ip: '',
-      },
+      comm: getComm(),
       req: {
         module: 'music.musichallAlbum.AlbumSongList',
         method: 'GetAlbumSongList',
@@ -190,6 +135,11 @@ export default {
 
       const data = body.req.data
       const songList = data.songList || data.list || []
+      songList.sort((a, b) => {
+        const ai = (a.songInfo ?? a).index_album ?? (a.songInfo ?? a).index_cd ?? (a.songInfo ?? a).id ?? Infinity
+        const bi = (b.songInfo ?? b).index_album ?? (b.songInfo ?? b).index_cd ?? (b.songInfo ?? b).id ?? Infinity
+        return ai - bi
+      })
 
       const list = this.handleResult(songList)
       

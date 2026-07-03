@@ -4,10 +4,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import playerState from '@/store/player/state'
 import { lxmHeadlessServer } from '@/core/visualizer/LxmHeadlessServer'
 
-const wb = (tag: string, msg: string, data?: any) => {
-  console.log(`###RN_DEBUG_START###{"type":"log","payload":["[Sync][${tag}] ${msg}",${JSON.stringify(data ?? '')}]}###RN_DEBUG_END###`)
-}
-
 export type PlayMode = 'listLoop' | 'singleLoop' | 'random' | 'list' | 'none'
 type SyncCallback = (type: string, data: any) => void
 
@@ -57,8 +53,7 @@ export class WebViewSyncManager {
       const { playListHeadlessServer } = await import('@/core/player/player')
       await playListHeadlessServer(listId, newIndex)
       this.pollDataReady(item.id)
-    } catch (e: any) {
-      wb('Control', 'switchToTrack 失败', e?.message)
+    } catch {
       this.markSwitchEnd()
     }
   }
@@ -110,19 +105,17 @@ export class WebViewSyncManager {
     try {
       const data = JSON.parse(event.nativeEvent.data)
       switch (data.type) {
-        case 'ready': wb('Msg', 'WebView ready'); this.setReady(true); break
-        case 'log': wb('WebView', data.message, data.data); break
+        case 'ready': this.setReady(true); break
         case 'playbackState': if (!this.isSwitchingTrack && data.ended) this.handleEnded(); break
         case 'prev': { if (this.canSwitchTrack()) { const i = this.getNextIndex('prev'); if (i >= 0) this.switchToTrack(i) } break }
         case 'next': { if (this.canSwitchTrack()) { const i = this.getNextIndex('next'); if (i >= 0) this.switchToTrack(i) } break }
         case 'playFromList': if (data.index != null && this.canSwitchTrack()) this.switchToTrack(data.index); break
         case 'playMode': this.setPlayMode(data.mode || 'listLoop'); break
-        case 'needTrackData': wb('Msg', 'WebView needTrackData'); if (!this.isSwitchingTrack) this.dispatch(); break
+        case 'needTrackData': if (!this.isSwitchingTrack) this.dispatch(); break
         case 'exitSync': this.deactivate(); break
-        default: wb('Msg', '未知消息', { type: data.type })
       }
       this.syncCallbacks.forEach(cb => cb(data.type, data))
-    } catch (e: any) { wb('Msg', '解析消息失败', e?.message) }
+    } catch {}
   }
 
   private handleEnded() {
@@ -132,28 +125,25 @@ export class WebViewSyncManager {
   }
 
   private async dispatch() {
-    if (this.dispatchLock) { wb('Dispatch', '被锁，跳过'); return }
+    if (this.dispatchLock) return
     this.dispatchLock = true
     try {
       const pMusicInfo = (playerState.playMusicInfo as any)?.musicInfo
-      if (!pMusicInfo) { wb('Dispatch', 'pMusicInfo 为空，跳过'); return }
+      if (!pMusicInfo) return
       const uiId = pMusicInfo.id || ''
-      if (this.expectedSongId && uiId !== this.expectedSongId) { wb('Dispatch', 'songId 不匹配', { expected: this.expectedSongId, actual: uiId }); return }
+      if (this.expectedSongId && uiId !== this.expectedSongId) return
 
-      wb('Dispatch', '获取数据', { id: uiId, name: pMusicInfo.name })
       const [url, lrc] = await Promise.all([
         lxmHeadlessServer.getSongUrl(),
         lxmHeadlessServer.getLrc(),
       ])
-      wb('Dispatch', '数据获取完成', { urlLen: url?.length || 0, lrcLen: lrc?.length || 0, isReady: (lxmHeadlessServer as any).isReady })
-      if (!url) { wb('Dispatch', 'URL 为空，跳过'); return }
+      if (!url) return
 
       const list = await lxmHeadlessServer.getPlaylist()
       this.playlist = list
       this.currentIndex = list.findIndex(i => i.title === (pMusicInfo.name || ''))
       if (this.currentIndex < 0) this.currentIndex = 0
 
-      wb('Dispatch', '发送 loadAndPlay', { title: pMusicInfo.name, urlLen: url.length })
       lxmHeadlessServer.send('loadAndPlay', {
         id: uiId, title: pMusicInfo.name || '', singer: pMusicInfo.singer || '',
         url, pic: pMusicInfo.meta?.picUrl || '',
@@ -161,11 +151,9 @@ export class WebViewSyncManager {
         lrc: lrc || '',
       })
       if (list.length > 0) {
-        wb('Dispatch', '发送 loadPlaylist', { len: list.length, currentIndex: this.currentIndex })
         lxmHeadlessServer.send('loadPlaylist', { list, currentIndex: this.currentIndex })
       }
       lxmHeadlessServer.send('playMode', { mode: this.playMode })
-      wb('Dispatch', '所有消息已发送')
     } finally {
       this.dispatchLock = false
     }

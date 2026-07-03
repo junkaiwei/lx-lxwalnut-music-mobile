@@ -2,6 +2,8 @@ import { httpFetch } from '../../request'
 import { decodeName, formatPlayTime } from '../../index'
 import { formatSingerName } from '../utils'
 import { getBatchMusicQualityInfo } from './quality_detail'
+import artist from './artist'
+import albumApi from './album'
 
 export default {
   limit: 30,
@@ -104,25 +106,6 @@ export default {
       })
     })
   },
-  async getSingerDetail(singerid) {
-    try {
-      const requestObj = httpFetch(`http://mobiles.kugou.com/api/v5/singer/info?singerid=${singerid}`)
-      const { body, statusCode } = await requestObj.promise
-      if (statusCode !== 200 || !body || !body.data) return null
-      
-      return {
-        id: singerid,
-        name: body.data.singername || '',
-        picUrl: body.data.imgurl ? body.data.imgurl.replace('{size}', '480') : '',
-        albumSize: body.data.albumcount || body.data.album_count || 0,
-        songNum: body.data.songcount || body.data.song_count || 0,
-        source: 'kg',
-      }
-    } catch (err) {
-      return null
-    }
-  },
-  
   async searchSinger(keyword, page = 1, limit = 10) {
     try {
       const requestObj = httpFetch(
@@ -144,9 +127,9 @@ export default {
       }
 
       const idsToFetch = [...singerIds].slice(0, limit)
-      const detailPromises = idsToFetch.map(id => this.getSingerDetail(id))
+      const detailPromises = idsToFetch.map(id => artist.getDetail(id).then(r => r.artist).catch(() => null))
       const results = await Promise.all(detailPromises)
-      
+
       const list = results.filter(item => item !== null && item.name)
       
       return { list }
@@ -155,59 +138,14 @@ export default {
       return { list: [] }
     }
   },
-  async getAlbumDetail(albumid) {
-    try {
-      const requestObj = httpFetch(
-        `http://mobiles.kugou.com/api/v3/album/song?version=9108&albumid=${albumid}&plat=0&pagesize=1&area_code=0&page=1&with_res_tag=0`
-      )
-      const { body } = await requestObj.promise
-      
-      if (!body) return null
-      
-      console.log('[KuGou] getAlbumDetail albumID:', albumid, 'body keys:', Object.keys(body), 'has total:', 'total' in body, 'has data:', 'data' in body)
-      
-      if (body.total !== undefined) {
-        return { id: albumid, size: body.total }
-      }
-      
-      const data = body.data
-      if (!data) return null
-      
-      if (Array.isArray(data)) {
-        return { id: albumid, size: body.total || data.length || 0 }
-      }
-      
-      if (data.info && Array.isArray(data.info)) {
-        return { id: albumid, size: data.total || data.info.length || 0 }
-      }
-      if (data.songs && Array.isArray(data.songs)) {
-        return { id: albumid, size: data.total || data.songs.length || 0 }
-      }
-      
-      console.log('[KuGou] getAlbumDetail albumID:', albumid, 'data keys:', Object.keys(data))
-      
-      return null
-    } catch (err) {
-      console.error('[KuGou] getAlbumDetail 错误:', err.message)
-      return null
-    }
-  },
-  
   async searchAlbum(keyword, page = 1, limit = 30) {
     try {
-      console.log('[KuGou] searchAlbum 开始搜索:', keyword)
       const requestObj = httpFetch(
         `https://songsearch.kugou.com/song_search_v2?keyword=${encodeURIComponent(keyword)}&page=${page}&pagesize=${limit}&userid=0&platform=WebFilter&filter=4&iscorrection=1&area_code=1`
       )
       const { body } = await requestObj.promise
-      console.log('[KuGou] searchAlbum 搜索响应:', { errorCode: body?.error_code, hasData: !!body?.data, listLength: body?.data?.lists?.length })
-
       if (!body || body.error_code !== 0 || !body.data || !body.data.lists) {
         return { list: [], total: 0, allPage: 0 }
-      }
-
-      if (body.data.lists.length > 0) {
-        console.log('[KuGou] searchAlbum 第一条数据字段:', Object.keys(body.data.lists[0]))
       }
 
       const albumMap = new Map()
@@ -228,14 +166,10 @@ export default {
         })
       }
       const albums = [...albumMap.values()].filter(item => item.name)
-      
-      console.log('[KuGou] searchAlbum 专辑数量:', albums.length)
 
       const albumsToFetch = albums.slice(0, 30)
-      console.log('[KuGou] searchAlbum 获取详情的专辑:', albumsToFetch.map(a => a.id))
-      const detailPromises = albumsToFetch.map(album => this.getAlbumDetail(album.id))
+      const detailPromises = albumsToFetch.map(a => albumApi.getAlbumDetail(a.id, 1, 1).then(r => ({ id: a.id, size: r.total })).catch(() => null))
       const details = await Promise.all(detailPromises)
-      console.log('[KuGou] searchAlbum 详情结果:', details)
       
       const detailMap = new Map()
       for (const detail of details) {
@@ -247,8 +181,6 @@ export default {
         }
       }
       
-      console.log('[KuGou] searchAlbum 最终结果前3个:', albums.slice(0, 3).map(a => ({ id: a.id, name: a.name, size: a.size })))
-
       return {
         list: albums,
         total: body.data.total || albums.length,

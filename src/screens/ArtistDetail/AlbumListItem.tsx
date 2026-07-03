@@ -73,7 +73,7 @@ export default memo(({ componentId, item, width, viewMode }: { componentId: stri
             {item.size} 首
           </Text>
         </View>
-        {item.source !== 'kg' && (
+        {item.source === 'wy' && (
           <TouchableOpacity style={listStyles.likeButton} onPress={toggleSubscribe}>
             <Icon name={isSubscribed ? 'love-filled' : 'love'} color={isSubscribed ? theme['c-liked'] : theme['c-font-label']} size={18} />
           </TouchableOpacity>
@@ -92,7 +92,7 @@ export default memo(({ componentId, item, width, viewMode }: { componentId: stri
             {item.size} 首
           </Text>
         </View>
-        {item.source !== 'kg' && (
+        {item.source === 'wy' && (
           <TouchableOpacity style={gridStyles.likeButton} onPress={toggleSubscribe}>
             <Icon name={isSubscribed ? 'love-filled' : 'love'} color={isSubscribed ? theme['c-liked'] : theme['c-font-label']} size={18} />
           </TouchableOpacity>
