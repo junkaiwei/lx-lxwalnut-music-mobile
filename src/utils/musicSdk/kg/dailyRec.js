@@ -7,6 +7,7 @@ import settingState from '@/store/setting/state'
 import { log } from '@/utils/log'
 import { stringMd5 } from 'react-native-quick-md5'
 import { formatPlayTime } from '../../index'
+import { getBatchMusicQualityInfo } from './quality_detail'
 
 const SIGN_SALT = 'OIlwieks28dk2k092lksi2UIkp'
 
@@ -101,10 +102,35 @@ const transformSong = (item, index) => {
   }
 }
 
-const transformSongList = (rawList, sourceName = 'unknown') => {
+const transformSongList = async (rawList, sourceName = 'unknown') => {
   if (!rawList || !Array.isArray(rawList)) return []
   log.info(`[KG DailyRec] transformSongList ${sourceName}`, { count: rawList.length })
-  return rawList.map((item, i) => transformSong(item, i)).filter(Boolean)
+
+  const songList = rawList.map((item, i) => transformSong(item, i)).filter(Boolean)
+
+  const hashList = songList.map(song => song.hash).filter(Boolean)
+  let qualityInfoMap = {}
+  try {
+    qualityInfoMap = await getBatchMusicQualityInfo(hashList).promise
+  } catch (error) {
+    log.error(`[KG DailyRec] getBatchMusicQualityInfo 失败:`, error.message)
+  }
+
+  return songList.map(song => {
+    const qualityInfo = qualityInfoMap[song.hash]
+    if (!qualityInfo) return song
+
+    return {
+      ...song,
+      types: qualityInfo.types,
+      _types: qualityInfo._types,
+      meta: {
+        ...song.meta,
+        qualitys: qualityInfo.types,
+        _qualitys: qualityInfo._types,
+      },
+    }
+  })
 }
 
 export default {

@@ -102,15 +102,6 @@ const Progress = ({
   // console.log(progress)
   const progressStr: `${number}%` = `${progress * 100}%`
 
-  const progressDotStyle = useMemo(() => {
-    return {
-      width: progressDotSize,
-      position: 'absolute',
-      right: -progressDotSize / 2,
-      top: -(progressDotSize - progressHeightSize) / 2,
-    } as const
-  }, [])
-
   const durationRef = useRef(duration)
   useEffect(() => {
     durationRef.current = duration
@@ -145,14 +136,7 @@ const Progress = ({
                 left: 0,
                 top: 0,
               }}
-            >
-              <Icon
-                name="full_stop"
-                color={activeColor}
-                rawSize={progressDotSize}
-                style={progressDotStyle}
-              />
-            </View>
+            />
           </>
         ) : (
           <View
@@ -164,14 +148,7 @@ const Progress = ({
               left: 0,
               top: 0,
             }}
-          >
-            <Icon
-              name="full_stop"
-              color={activeColor}
-              rawSize={progressDotSize}
-              style={progressDotStyle}
-            />
-          </View>
+          />
         )}
       </View>
       <PreassBar
@@ -179,13 +156,12 @@ const Progress = ({
         setDragProgress={setDragProgress}
         onSetProgress={onSetProgress}
       />
-      {/* <View style={{ ...styles.progressBar, height: '100%', width: progressStr }}><Pressable style={styles.progressDot}></Pressable></View> */}
     </View>
   )
 }
 
-const progressContentPadding = 10
-const progressHeight = 3.6
+const progressContentPadding = 6
+const progressHeight = 7
 const progressContentHeight = progressContentPadding * 2 + progressHeight
 const progressHeightSize = scaleSizeH(progressHeight)
 let progressDotSize = scaleSizeW(progressContentHeight * 0.8)
@@ -200,7 +176,7 @@ const styles = createStyle({
   },
   progressBar: {
     height: progressHeight,
-    borderRadius: 4,
+    borderRadius: progressHeight / 2,
   },
   pressBar: {
     position: 'absolute',

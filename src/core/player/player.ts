@@ -675,7 +675,9 @@ const handlePlayNext = async (playMusicInfo: LX.Player.PlayMusicInfo) => {
 export const playNext = async (isAutoToggle = false): Promise<void> => {
   if (playerState.tempPlayList.length) {
     const playMusicInfo = playerState.tempPlayList[0]
-    return playMusicInfo
+    removeTempPlayList(0)
+    await handlePlayNext(playMusicInfo)
+    return
   }
 
   if (playerState.playMusicInfo.musicInfo == null) return null

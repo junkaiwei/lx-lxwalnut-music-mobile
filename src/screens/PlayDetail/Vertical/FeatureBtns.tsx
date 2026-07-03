@@ -27,11 +27,11 @@ import { getMvUrl as getTxMvUrl } from '@/utils/musicSdk/tx/mv.js'
 import { getMvUrl as getKgMvUrl } from '@/utils/musicSdk/kg/mv.js'
 import { useWindowSize } from '@/utils/hooks'
 
-const BTN_SIZE = scaleSizeW(50)
+const BTN_SIZE = scaleSizeW(42)
 
 export default memo(({ componentId }: { componentId: string }) => {
   const theme = useTheme()
-  const iconColor = theme.isDark ? theme['c-font'] : theme['c-primary']
+  const iconColor = theme.isDark ? theme['c-400'] : theme['c-450']
   const { height: winHeight } = useWindowSize()
   const isSmallWindow = winHeight < 700
   const menuRef = useRef<PlayDetailMenuType>(null)
@@ -200,19 +200,19 @@ export default memo(({ componentId }: { componentId: string }) => {
   return (
     <View style={[styles.container, isSmallWindow && { paddingVertical: 6 }]}>
       <TouchableOpacity style={styles.btnItem} onPress={handleLyricPress} activeOpacity={0.6}>
-        <SvgIcon name="lyric" color={enabledLyric ? theme['c-primary'] : iconColor} rawSize={enabledLyric ? BTN_SIZE * 0.9 : BTN_SIZE * 0.8} />
+        <SvgIcon name="lyric" color={enabledLyric ? theme['c-primary'] : iconColor} rawSize={BTN_SIZE * 0.55} />
       </TouchableOpacity>
       <TouchableOpacity style={styles.btnItem} onPress={handleAddPress} activeOpacity={0.6}>
-        <Icon name="add-music" color={iconColor} rawSize={BTN_SIZE * 0.55} />
+        <Icon name="add-music" color={iconColor} rawSize={BTN_SIZE * 0.6} />
       </TouchableOpacity>
       <TouchableOpacity style={styles.btnItem} onPress={handleDownloadPress} activeOpacity={0.6}>
         <Icon name="download-2" color={iconColor} rawSize={BTN_SIZE * 0.55} />
       </TouchableOpacity>
       <TouchableOpacity style={styles.btnItem} onPress={handleCommentPress} activeOpacity={0.6}>
-        <Icon name="comment" color={iconColor} rawSize={BTN_SIZE * 0.55} />
+        <Icon name="comment" color={iconColor} rawSize={BTN_SIZE * 0.6} />
       </TouchableOpacity>
       <TouchableOpacity ref={moreBtnRef} style={styles.btnItem} onPress={handleShowMenu} activeOpacity={0.6}>
-        <Icon name="dots-vertical" color={iconColor} rawSize={BTN_SIZE * 0.55} />
+        <Icon name="dots-vertical" color={iconColor} rawSize={BTN_SIZE * 0.6} />
       </TouchableOpacity>
       <PlayDetailMenu
         ref={menuRef}

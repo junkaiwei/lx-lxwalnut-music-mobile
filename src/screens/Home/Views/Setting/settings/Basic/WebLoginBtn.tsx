@@ -30,6 +30,7 @@ const styles = createStyle({
     marginBottom: 5,
     paddingLeft: 20,
     flexDirection: 'row',
+    flexWrap: 'wrap',
     gap: 10,
   },
 });

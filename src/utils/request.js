@@ -115,13 +115,7 @@ const handleRequestData = async (
     headers.cookie = settingState.setting['common.wy_cookie']
   } else if (url.includes('y.qq.com')) {
     headers.cookie = settingState.setting['common.tx_cookie']
-    console.log('=== QQ音乐Cookie设置 ===', {
-      url: url.slice(0, 50),
-      hasCookie: !!headers.cookie,
-      cookieLength: headers.cookie?.length || 0,
-      cookiePreview: headers.cookie ? headers.cookie.slice(0, 100) : '',
-      cookieFull: headers.cookie || '',
-    })
+    console.log('[TX] cookie:', !!headers.cookie, 'len:', headers.cookie?.length || 0)
   }
   options.cache = cache
   
@@ -190,16 +184,7 @@ const handleRequestData = async (
   }
 
   if (url.includes('y.qq.com')) {
-    console.log('=== QQ音乐请求发送 ===', {
-      url: finalOptions.url,
-      method: finalOptions.method,
-      headers: {
-        ...finalOptions.headers,
-        cookie: finalOptions.headers.cookie ? `有Cookie(${finalOptions.headers.cookie.length}字符)` : '无Cookie',
-      },
-      bodyType: typeof finalOptions.body,
-      bodyPreview: finalOptions.body ? JSON.stringify(finalOptions.body).slice(0, 200) : '无body',
-    })
+    console.log('[TX] req:', finalOptions.method, finalOptions.url.slice(0, 60))
   }
 
   return finalOptions

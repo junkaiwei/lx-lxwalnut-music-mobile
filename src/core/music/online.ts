@@ -177,20 +177,38 @@ export const getLyricInfo = async ({
   allowToggleSource?: boolean
   onToggleSource?: (musicInfo?: LX.Music.MusicInfoOnline) => void
 }): Promise<LX.Player.LyricInfo> => {
+  let cachedLyricInfo: LX.Music.LyricInfo | null = null
   if (!isRefresh) {
-    const lyricInfo = await getCachedLyricInfo(musicInfo)
-    if (lyricInfo) return buildLyricInfo(lyricInfo)
+    cachedLyricInfo = await getCachedLyricInfo(musicInfo)
+    if (cachedLyricInfo) {
+      const hasTranslation = !!(cachedLyricInfo.tlyric && cachedLyricInfo.tlyric.trim().length > 0)
+      if (hasTranslation || musicInfo.source !== 'tx') {
+        return buildLyricInfo(cachedLyricInfo)
+      }
+    }
   }
-
   // lrcRequest = music[musicInfo.source].getLyric(musicInfo)
   return handleGetOnlineLyricInfo({ musicInfo, onToggleSource, isRefresh, allowToggleSource }).then(
     async ({ lyricInfo, musicInfo: targetMusicInfo, isFromCache }) => {
-      // lrcRequest = null
       if (isFromCache) return buildLyricInfo(lyricInfo)
+
+      const apiHasTranslation = !!(lyricInfo.tlyric && lyricInfo.tlyric.trim().length > 0)
+      if (!apiHasTranslation && cachedLyricInfo?.lyric) {
+        const merged = { ...lyricInfo, lyric: lyricInfo.lyric || cachedLyricInfo.lyric }
+        if (targetMusicInfo.id == musicInfo.id) void saveLyric(musicInfo, merged)
+        else void saveLyric(targetMusicInfo, merged)
+        return buildLyricInfo(merged)
+      }
+
       if (targetMusicInfo.id == musicInfo.id) void saveLyric(musicInfo, lyricInfo)
       else void saveLyric(targetMusicInfo, lyricInfo)
 
       return buildLyricInfo(lyricInfo)
     }
-  )
+  ).catch(async (err) => {
+    if (cachedLyricInfo?.lyric) {
+      return buildLyricInfo(cachedLyricInfo)
+    }
+    throw err
+  })
 }
