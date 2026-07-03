@@ -1,19 +1,8 @@
 import { stringMd5 } from 'react-native-quick-md5'
 import { decodeName } from '../index'
 import settingState from '@/store/setting/state';
-import {logPlugin} from "@babel/preset-env/lib/debug";
 
 export const QUALITYS = ['master', 'atmos_plus', 'atmos', 'hires', 'flac', '320k', '192k', '128k']
-export const getMusicType = (info, type) => {
-  const list = global.lx.qualityList[info.source]
-  if (!list) return '128k'
-  if (!list.includes(type)) type = list[list.length - 1]
-  const rangeType = QUALITYS.slice(QUALITYS.indexOf(type))
-  for (const type of rangeType) {
-    if (info._types[type]) return type
-  }
-  return '128k'
-}
 
 export const toMD5 = (str) => stringMd5(str)
 

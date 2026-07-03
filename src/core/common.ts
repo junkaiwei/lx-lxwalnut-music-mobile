@@ -10,14 +10,11 @@ import commonActions from '@/store/common/action'
 import commonState, { type InitState as CommonStateType } from '@/store/common/state'
 
 import {
-  getSelectedManagedFolder,
   saveFontSize,
   saveViewPrevState,
-  setSelectedManagedFolder,
 } from '@/utils/data'
 import { showPactModal as handleShowPactModal } from '@/navigation'
 import { hideDesktopLyricView } from '@/utils/nativeModules/lyricDesktop'
-import { getPersistedUriList, selectManagedFolder } from '@/utils/fs'
 
 /**
  * 初始化设置
@@ -87,23 +84,6 @@ export const setNavActiveId = (id: Parameters<typeof commonActions.setNavActiveI
 
 export const showPactModal = () => {
   handleShowPactModal()
-}
-
-export const checkStoragePermissions = async () => {
-  const selectedManagedFolder = await getSelectedManagedFolder()
-  if (selectedManagedFolder)
-    return (await getPersistedUriList()).some((uri) => selectedManagedFolder.startsWith(uri))
-  return false
-}
-
-export const requestStoragePermission = async () => {
-  const isGranted = await checkStoragePermissions()
-  if (isGranted) return isGranted
-
-  const uri = await selectManagedFolder()
-  if (!uri.isDirectory) return false
-  await setSelectedManagedFolder(uri.path)
-  return true
 }
 
 export const setBgPic = (pic: string | null) => {
