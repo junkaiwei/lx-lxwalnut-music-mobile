@@ -14,14 +14,14 @@ import { useWindowSize } from '@/utils/hooks'
 
 const HEADER_HEIGHT = scaleSizeH(_HEADER_HEIGHT)
 const ICON_SIZE = 22
-const DOT_ACTIVE_WIDTH = scaleSizeW(16)
-const DOT_INACTIVE_WIDTH = scaleSizeW(6)
-const DOT_HEIGHT = scaleSizeW(6)
+const DOT_ACTIVE_WIDTH = scaleSizeW(18)
+const DOT_INACTIVE_WIDTH = scaleSizeW(8)
+const DOT_HEIGHT = scaleSizeW(8)
 const DOT_BORDER_RADIUS = DOT_HEIGHT / 2
 
 const AnimatedIndicatorDot = ({ isActive }: { isActive: boolean }) => {
   const animatedWidth = useRef(new Animated.Value(isActive ? DOT_ACTIVE_WIDTH : DOT_INACTIVE_WIDTH)).current
-  const animatedOpacity = useRef(new Animated.Value(isActive ? 1 : 0.5)).current
+  const animatedOpacity = useRef(new Animated.Value(isActive ? 1 : 0.7)).current
 
   useEffect(() => {
     Animated.parallel([
@@ -32,7 +32,7 @@ const AnimatedIndicatorDot = ({ isActive }: { isActive: boolean }) => {
         friction: 7,
       }),
       Animated.spring(animatedOpacity, {
-        toValue: isActive ? 1 : 0.5,
+        toValue: isActive ? 1 : 0.7,
         useNativeDriver: false,
         tension: 50,
         friction: 7,

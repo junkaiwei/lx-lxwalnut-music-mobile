@@ -112,7 +112,7 @@ const Progress = ({
   const activeColor = theme.isDark ? theme['c-font'] : theme['c-primary'];
   return (
     <View style={styles.progress}>
-      <View>
+      <View style={styles.progressInner}>
         <DefaultBar />
         <BufferedBar progress={buffered} />
         {draging ? (
@@ -169,10 +169,15 @@ const styles = createStyle({
   progress: {
     width: '100%',
     height: progressContentHeight,
-    // backgroundColor: 'rgba(0,0,0,0.5)',
     paddingTop: progressContentPadding,
     paddingBottom: progressContentPadding,
     zIndex: 1,
+  },
+  progressInner: {
+    width: '100%',
+    height: progressHeight,
+    borderRadius: progressHeight / 2,
+    overflow: 'hidden',
   },
   progressBar: {
     height: progressHeight,

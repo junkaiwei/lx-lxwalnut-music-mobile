@@ -31,7 +31,7 @@ const BTN_SIZE = scaleSizeW(42)
 
 export default memo(({ componentId }: { componentId: string }) => {
   const theme = useTheme()
-  const iconColor = theme.isDark ? theme['c-400'] : theme['c-450']
+  const iconOpacity = 0.7
   const { height: winHeight } = useWindowSize()
   const isSmallWindow = winHeight < 700
   const menuRef = useRef<PlayDetailMenuType>(null)
@@ -200,19 +200,19 @@ export default memo(({ componentId }: { componentId: string }) => {
   return (
     <View style={[styles.container, isSmallWindow && { paddingVertical: 6 }]}>
       <TouchableOpacity style={styles.btnItem} onPress={handleLyricPress} activeOpacity={0.6}>
-        <SvgIcon name="lyric" color={enabledLyric ? theme['c-primary'] : iconColor} rawSize={BTN_SIZE * 0.55} />
+        <SvgIcon name="lyric" color={enabledLyric ? theme['c-primary'] : theme['c-font']} style={{ opacity: enabledLyric ? 1 : iconOpacity }} rawSize={BTN_SIZE * 0.55} />
       </TouchableOpacity>
       <TouchableOpacity style={styles.btnItem} onPress={handleAddPress} activeOpacity={0.6}>
-        <Icon name="add-music" color={iconColor} rawSize={BTN_SIZE * 0.6} />
+        <View style={{ opacity: iconOpacity }}><Icon name="add-music" color={theme['c-font']} rawSize={BTN_SIZE * 0.6} /></View>
       </TouchableOpacity>
       <TouchableOpacity style={styles.btnItem} onPress={handleDownloadPress} activeOpacity={0.6}>
-        <Icon name="download-2" color={iconColor} rawSize={BTN_SIZE * 0.55} />
+        <View style={{ opacity: iconOpacity }}><Icon name="download-2" color={theme['c-font']} rawSize={BTN_SIZE * 0.55} /></View>
       </TouchableOpacity>
       <TouchableOpacity style={styles.btnItem} onPress={handleCommentPress} activeOpacity={0.6}>
-        <Icon name="comment" color={iconColor} rawSize={BTN_SIZE * 0.6} />
+        <View style={{ opacity: iconOpacity }}><Icon name="comment" color={theme['c-font']} rawSize={BTN_SIZE * 0.6} /></View>
       </TouchableOpacity>
       <TouchableOpacity ref={moreBtnRef} style={styles.btnItem} onPress={handleShowMenu} activeOpacity={0.6}>
-        <Icon name="dots-vertical" color={iconColor} rawSize={BTN_SIZE * 0.6} />
+        <View style={{ opacity: iconOpacity }}><Icon name="dots-vertical" color={theme['c-font']} rawSize={BTN_SIZE * 0.6} /></View>
       </TouchableOpacity>
       <PlayDetailMenu
         ref={menuRef}
