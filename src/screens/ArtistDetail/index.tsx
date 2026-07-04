@@ -35,7 +35,7 @@ const getArtistParam = (artistInfo) => {
   return artistInfo.id
 }
 
-export default memo(({ componentId, artistInfo }: { componentId: string, artistInfo: { id: string, mid?: string, name: string, source?: string, picUrl?: string } }) => {
+export default memo(({ componentId, artistInfo }: { componentId: string, artistInfo: { id: string, mid?: string, name: string, source?: string } }) => {
   const [artistDetail, setArtistDetail] = useState(null);
   const [songs, setSongs] = useState({ list: [], hasMore: true, page: 1, loading: false, sort: 'hot' });
   const [albums, setAlbums] = useState({ list: [], hasMore: true, page: 1, loading: false });
@@ -340,7 +340,8 @@ export default memo(({ componentId, artistInfo }: { componentId: string, artistI
     updateSetting({ 'artistDetail.albumViewMode': mode })
   }, [])
 
-  const displayArtist = artistDetail?.artist && (artistDetail.artist.avatar || artistDetail.artist.cover || artistDetail.artist.picUrl || artistDetail.artist.singerPic) ? artistDetail.artist : artistInfo
+  const apiHasPic = artistDetail?.artist && (artistDetail.artist.avatar || artistDetail.artist.cover || artistDetail.artist.picUrl || artistDetail.artist.singerPic)
+  const displayArtist = apiHasPic ? artistDetail.artist : artistInfo
 
   log.info('[ArtistDetail] === 界面渲染诊断 ===', {
     artistId: artistInfo.id,
@@ -353,8 +354,7 @@ export default memo(({ componentId, artistInfo }: { componentId: string, artistI
     songsLoading: songs.loading,
     albumsListLength: albums.list.length,
     albumsHasMore: albums.hasMore,
-    albumsLoading: albums.loading,
-    activeTab,
+
   })
 
   return (
