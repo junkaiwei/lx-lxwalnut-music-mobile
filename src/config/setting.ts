@@ -17,6 +17,8 @@ const arraysEqual = (a: any[], b: any[]): boolean => {
   return true
 }
 
+const DEEP_KEYS = ['common.navStatus', 'common.navOrder', 'common.sectionExpandedStatus', 'player.failureStrategy', 'search.enabledSources', 'common.navGroupExpanded', 'common.navGroupOrder', 'common.navFlatOrder', 'common.navGroupVisible']
+
 const mergeSetting = (
   originSetting: LX.AppSetting,
   targetSetting?: Partial<LX.AppSetting> | null
@@ -38,25 +40,17 @@ const mergeSetting = (
       const isPrimitive = checkPrimitiveType(targetValue)
       let shouldSkip = false
       
-      if (!isPrimitive && key !== 'common.navStatus' && key !== 'common.navOrder' && key !== 'common.sectionExpandedStatus' && key !== 'player.failureStrategy' && key !== 'search.enabledSources') {
+      if (!isPrimitive && !DEEP_KEYS.includes(key as string)) {
         shouldSkip = true
-      } 
-      else if (key === 'common.navStatus' || key === 'common.navOrder' || key === 'common.sectionExpandedStatus' || key === 'player.failureStrategy' || key === 'search.enabledSources') {
+      } else if (DEEP_KEYS.includes(key as string)) {
         if (Array.isArray(targetValue) && Array.isArray(originSettingCopy[key])) {
-          if (arraysEqual(targetValue, originSettingCopy[key])) {
-            shouldSkip = true
-          }
-        } 
-        else if (typeof targetValue === 'object' && typeof originSettingCopy[key] === 'object' && targetValue !== null && originSettingCopy[key] !== null) {
-          if (JSON.stringify(targetValue) === JSON.stringify(originSettingCopy[key])) {
-            shouldSkip = true
-          }
-        }
-        else if (targetValue == originSettingCopy[key]) {
+          if (arraysEqual(targetValue, originSettingCopy[key])) shouldSkip = true
+        } else if (typeof targetValue === 'object' && typeof originSettingCopy[key] === 'object' && targetValue !== null && originSettingCopy[key] !== null) {
+          if (JSON.stringify(targetValue) === JSON.stringify(originSettingCopy[key])) shouldSkip = true
+        } else if (targetValue == originSettingCopy[key]) {
           shouldSkip = true
         }
-      } 
-      else if (targetValue == originSettingCopy[key]) {
+      } else if (targetValue == originSettingCopy[key]) {
         shouldSkip = true
       }
 

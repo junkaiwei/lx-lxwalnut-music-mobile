@@ -13,6 +13,32 @@ import { LIST_IDS } from '@/config/constant'
 import { toOldMusicInfo } from '@/utils'
 import musicSdk from '@/utils/musicSdk'
 
+const getAuthHeaders = (): Record<string, string> => {
+  const headers: Record<string, string> = {
+    'User-Agent': 'Mozilla/5.0 (Linux; Android 10; Pixel 3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.79 Mobile Safari/537.36',
+  }
+  const username = settingState.setting['sync.webdav.username']
+  const password = settingState.setting['sync.webdav.password']
+  if (username && password) {
+    headers['Authorization'] = 'Basic ' + btoa(`${username}:${password}`)
+  }
+  return headers
+}
+
+const parsePathForName = (filePath: string) => ({
+  ext: filePath.split('.').pop()?.toLowerCase() || '',
+  nameWithoutExt: filePath.substring(0, filePath.lastIndexOf('.')),
+  fileName: filePath.split('/').pop() || '',
+})
+
+const chunk = <T>(arr: T[], size: number): T[][] => {
+  const result: T[][] = []
+  for (let i = 0; i < arr.length; i += size) {
+    result.push(arr.slice(i, i + size))
+  }
+  return result
+}
+
 export const handleWebDAVBatchDownload = async (
   songs: LX.WebDAV.MusicInfo[],
   onProgress?: (current: number, total: number, currentSong: string) => void
@@ -31,14 +57,7 @@ export const handleWebDAVBatchDownload = async (
   try {
     await mkdir(downloadDir)
     
-    const username = settingState.setting['sync.webdav.username']
-    const password = settingState.setting['sync.webdav.password']
-    const headers: Record<string, string> = {
-      'User-Agent': 'Mozilla/5.0 (Linux; Android 10; Pixel 3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.79 Mobile Safari/537.36',
-    }
-    if (username && password) {
-      headers['Authorization'] = 'Basic ' + btoa(`${username}:${password}`)
-    }
+    const headers = getAuthHeaders()
     
     let currentIndex = 0
     for (const musicInfo of songs) {
@@ -149,32 +168,21 @@ export const handleWebDAVDownloadAndImport = async (
       errorPath: string[]
     ): Promise<LX.Music.MusicInfoLocal[]> => {
       const list: LX.Music.MusicInfoLocal[] = []
-      filePaths = [...filePaths]
-      while (filePaths.length) {
-        const tasks = [
-          filePaths.shift(),
-          filePaths.shift(),
-          filePaths.shift(),
-          filePaths.shift(),
-          filePaths.shift(),
-        ].filter(Boolean) as string[]
-
-        await Promise.all(
-          tasks.map(async (path) => {
+      for (const batch of chunk(filePaths, 5)) {
+        const results = await Promise.all(
+          batch.map(async (path) => {
             const info = await readMetadata(path)
             const picPath = await readPic(path).catch(() => null)
             return { path, info, picPath }
           }),
-        ).then((res) => {
-          for (const { path, info, picPath } of res) {
-            if (!info) {
-              errorPath.push(path)
-              continue
-            }
-            const musicInfo = buildLocalMusicInfo(path, info, picPath)
-            list.push(musicInfo)
+        )
+        for (const { path, info, picPath } of results) {
+          if (!info) {
+            errorPath.push(path)
+            continue
           }
-        })
+          list.push(buildLocalMusicInfo(path, info, picPath))
+        }
       }
       return list
     }
@@ -184,18 +192,18 @@ export const handleWebDAVDownloadAndImport = async (
       remove: (listId: string, errorPath: string[]) => Promise<void>,
       listId: string
     ) => {
-      let timer: number | null = null
+      let timer: ReturnType<typeof setTimeout> | null = null
       let _musicInfos: LX.Music.MusicInfoLocal[] = []
       let _errorPath: string[] = []
       return (musicInfos: LX.Music.MusicInfoLocal[], errorPath?: string[]) => {
-        if (musicInfos.length) _musicInfos = [..._musicInfos, ...musicInfos]
-        if (errorPath) _errorPath = [..._errorPath, ...errorPath]
+        if (musicInfos.length) _musicInfos.push(...musicInfos)
+        if (errorPath) _errorPath.push(...errorPath)
         if (timer) return
-        timer = BackgroundTimer.setTimeout(async () => {
+        timer = setTimeout(async () => {
           timer = null
-          let musicInfos = _musicInfos
+          const musicInfos = _musicInfos
+          const errorPath = _errorPath
           _musicInfos = []
-          let errorPath = _errorPath
           _errorPath = []
           if (musicInfos.length) await add(listId, musicInfos)
           if (errorPath.length) await remove(listId, errorPath)
@@ -274,8 +282,7 @@ const buildLocalMusicInfo = (
   metadata: Awaited<ReturnType<typeof readMetadata>>,
   picPath: string | null
 ): LX.Music.MusicInfoLocal => {
-  const ext = filePath.split('.').pop()?.toLowerCase() || ''
-  const nameWithoutExt = filePath.substring(0, filePath.lastIndexOf('.'))
+  const { nameWithoutExt, fileName } = parsePathForName(filePath)
   return {
     id: `local_${filePath}`,
     name: metadata.name || nameWithoutExt,
@@ -286,14 +293,13 @@ const buildLocalMusicInfo = (
     meta: {
       picUrl: picPath ? (picPath.startsWith('/') ? `file://${picPath}` : picPath) : '',
       filePath,
-      fileName: filePath.split('/').pop() || '',
+      fileName,
     },
   } as LX.Music.MusicInfoLocal
 }
 
 const buildLocalMusicInfoByFilePath = (filePath: string): LX.Music.MusicInfoLocal => {
-  const ext = filePath.split('.').pop()?.toLowerCase() || ''
-  const nameWithoutExt = filePath.substring(0, filePath.lastIndexOf('.'))
+  const { nameWithoutExt, fileName } = parsePathForName(filePath)
   return {
     id: `local_${filePath}`,
     name: nameWithoutExt,
@@ -303,7 +309,7 @@ const buildLocalMusicInfoByFilePath = (filePath: string): LX.Music.MusicInfoLoca
     source: 'local' as const,
     meta: {
       picUrl: '',
-      fileName: filePath.split('/').pop() || '',
+      fileName,
     },
   } as LX.Music.MusicInfoLocal
 }
@@ -327,14 +333,7 @@ export const handleWebDAVDownload = async (
   
   if (!exists) {
     try {
-      const headers: Record<string, string> = {
-        'User-Agent': 'Mozilla/5.0 (Linux; Android 10; Pixel 3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.79 Mobile Safari/537.36',
-      }
-      const username = settingState.setting['sync.webdav.username']
-      const password = settingState.setting['sync.webdav.password']
-      if (username && password) {
-        headers['Authorization'] = 'Basic ' + btoa(`${username}:${password}`)
-      }
+      const headers = getAuthHeaders()
       
       const downloadUrl = getWebDAVDownloadUrl(musicInfo)
       await mkdir(downloadDir)

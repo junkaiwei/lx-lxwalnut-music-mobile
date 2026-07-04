@@ -4,6 +4,8 @@ import { signRequest } from './utils'
 import { txLog } from '@/utils/txLog'
 import { getComm } from './utils/common'
 
+const stripHtml = (str) => (str || '').replace(/<\/?em>/g, '')
+
 const SEARCH_TYPE_MAP = {
   0: '歌曲',
   1: '歌手',
@@ -151,14 +153,14 @@ export default {
       let albumId = ''
       let albumName = ''
       if (item.album) {
-        albumName = item.album.name
+        albumName = stripHtml(item.album.name)
         albumId = item.album.mid
       }
       list.push({
         id: String(item.id),
-        singer: formatSingerName(item.singer, 'name'),
-        artists: item.singer?.map(s => ({ id: s.id || s.mid, mid: s.mid, name: s.name })) || [],
-        name: item.title,
+        singer: formatSingerName(item.singer?.map(s => ({ ...s, name: stripHtml(s.name) })), 'name'),
+        artists: item.singer?.map(s => ({ id: s.id || s.mid, mid: s.mid, name: stripHtml(s.name) })) || [],
+        name: stripHtml(item.title),
         albumName,
         albumId,
         source: 'tx',
@@ -435,7 +437,7 @@ export default {
       return {
         id: mid,
         mid: mid,
-        name: item.name || item.singer_name || item.singerName || '',
+        name: stripHtml(item.name || item.singer_name || item.singerName),
         picUrl,
         alias: [],
         albumSize: item.albumNum || item.album_size || 0,
@@ -471,10 +473,11 @@ export default {
     })
     const result = rawList.map(item => {
       const mid = item.mid || item.albummid || ''
+      const cleanName = stripHtml(item.name)
       return {
         id: item.id,
         mid,
-        name: item.name,
+        name: cleanName,
         picUrl: item.pic || '',
         artistName: item.singer_list?.[0]?.name || '',
         artistId: item.singer_list?.[0]?.id || 0,

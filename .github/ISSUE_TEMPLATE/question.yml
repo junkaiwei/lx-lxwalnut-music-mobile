@@ -24,7 +24,7 @@ body:
     attributes:
       label: LX-X Music 版本
       description: 你使用什么版本的 LX-X Music？（如果与你的问题有关）
-      placeholder: 例如 26.06.11 arm64-v8a
+      placeholder: 例如 26.07.02 arm64-v8a
     validations:
       required: true
   - type: input

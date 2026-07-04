@@ -49,6 +49,28 @@ import { readMetadata, readPic } from '@/utils/localMediaMetadata'
 type ActiveTab = 'config' | 'list' | 'folders'
 const ITEM_HEIGHT = scaleSizeH(LIST_ITEM_HEIGHT)
 
+const TabButton = ({ label, tab, activeTab, onPress }: {
+  label: string
+  tab: ActiveTab
+  activeTab: ActiveTab
+  onPress: () => void
+}) => {
+  const theme = useTheme()
+  return (
+    <TouchableOpacity style={styles.tab} onPress={onPress}>
+      <Text
+        style={{
+          ...styles.tabText,
+          borderBottomColor: activeTab === tab ? theme['c-primary-font-active'] : 'transparent',
+        }}
+        color={activeTab === tab ? theme['c-primary-font'] : theme['c-font']}
+      >
+        {label}
+      </Text>
+    </TouchableOpacity>
+  )
+}
+
 const formatTime = (time?: number) => {
   if (!time) return ''
   return new Date(time).toLocaleString()
@@ -856,51 +878,9 @@ export default memo(() => {
   return (
     <View style={styles.container}>
       <View style={{ ...styles.tabs, borderBottomColor: theme['c-border-background'] }}>
-        <TouchableOpacity
-          style={styles.tab}
-          onPress={() => setActiveTab('list')}
-        >
-          <Text
-            style={{
-              ...styles.tabText,
-              borderBottomColor:
-                activeTab === 'list' ? theme['c-primary-font-active'] : 'transparent',
-            }}
-            color={activeTab === 'list' ? theme['c-primary-font'] : theme['c-font']}
-          >
-            列表
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.tab}
-          onPress={() => setActiveTab('folders')}
-        >
-          <Text
-            style={{
-              ...styles.tabText,
-              borderBottomColor:
-                activeTab === 'folders' ? theme['c-primary-font-active'] : 'transparent',
-            }}
-            color={activeTab === 'folders' ? theme['c-primary-font'] : theme['c-font']}
-          >
-            文件列表
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.tab}
-          onPress={() => setActiveTab('config')}
-        >
-          <Text
-            style={{
-              ...styles.tabText,
-              borderBottomColor:
-                activeTab === 'config' ? theme['c-primary-font-active'] : 'transparent',
-            }}
-            color={activeTab === 'config' ? theme['c-primary-font'] : theme['c-font']}
-          >
-            配置
-          </Text>
-        </TouchableOpacity>
+        <TabButton label="列表" tab="list" activeTab={activeTab} onPress={() => setActiveTab('list')} />
+        <TabButton label="文件列表" tab="folders" activeTab={activeTab} onPress={() => setActiveTab('folders')} />
+        <TabButton label="配置" tab="config" activeTab={activeTab} onPress={() => setActiveTab('config')} />
       </View>
       {activeTab === 'config' ? renderConfig() : activeTab === 'folders' ? renderFolders() : renderList()}
       <WebDAVListMenu

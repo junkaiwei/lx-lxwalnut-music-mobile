@@ -223,15 +223,21 @@ export class AppEvent extends Event {
 
     if (listId.startsWith('artist_detail_')) {
       const artistId = listId.replace('artist_detail_', '')
-      console.log(currentComponent?.name)
       if (currentComponent?.name !== COMPONENT_IDS.ARTIST_DETAIL) {
-        navigations.pushArtistDetailScreen(currentComponentId, { id: artistId, name: musicInfo.singer })
+        navigations.pushArtistDetailScreen(currentComponentId, {
+          id: artistId,
+          mid: artistId,
+          name: musicInfo.singer,
+          source: musicInfo.source as string,
+          picUrl: (musicInfo as any)?.meta?.artistPic || (musicInfo as any)?.picUrl || (musicInfo.source === 'tx' && (musicInfo as any)?.artists?.[0]?.mid ? `https://y.gtimg.cn/music/photo_new/T001R500x500M000${(musicInfo as any).artists[0].mid}.jpg` : ''),
+        })
         navigatedToDetail = true
       }
     } else if (listId.startsWith('album_')) {
       const albumId = listId.replace('album_', '')
       if (currentComponent?.name !== COMPONENT_IDS.ALBUM_DETAIL_SCREEN) {
-        navigations.pushAlbumDetailScreen(currentComponentId, { id: albumId, name: musicInfo.meta.albumName, source: musicInfo.source as LX.OnlineSource })
+        const albumMid = (musicInfo as any)?.meta?.albumMid || (musicInfo as any)?.albumMid || albumId
+        navigations.pushAlbumDetailScreen(currentComponentId, { id: albumId, mid: albumMid, name: musicInfo.meta?.albumName || '', source: musicInfo.source as LX.OnlineSource })
         navigatedToDetail = true
       }
     } else if (listId.includes('__')) {

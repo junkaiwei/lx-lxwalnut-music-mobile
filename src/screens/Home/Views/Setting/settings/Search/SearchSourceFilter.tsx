@@ -4,16 +4,17 @@ import SubTitle from '../../components/SubTitle'
 import CheckBox from '@/components/common/CheckBox'
 import { useSettingValue } from '@/store/setting/hook'
 import { updateSetting } from '@/core/common'
+import { useI18n } from '@/lang'
 
 const SOURCE_LIST = [
-  { id: 'kw', name: '酷我' },
-  { id: 'kg', name: '酷狗' },
-  { id: 'tx', name: 'QQ' },
-  { id: 'wy', name: '网易' },
-  { id: 'mg', name: '咪咕' },
-  { id: 'bilibili', name: '哔哩' },
-  { id: 'git', name: 'Git' },
-  { id: 'all', name: '聚合' },
+  { id: 'kw', i18nKey: 'source_kw' },
+  { id: 'kg', i18nKey: 'source_kg' },
+  { id: 'tx', i18nKey: 'source_tx' },
+  { id: 'wy', i18nKey: 'source_wy' },
+  { id: 'mg', i18nKey: 'source_mg' },
+  { id: 'bilibili', i18nKey: 'source_bilibili' },
+  { id: 'git', i18nKey: 'source_git' },
+  { id: 'all', i18nKey: 'source_all' },
 ]
 
 const Item = ({ id, name }: { id: string; name: string }) => {
@@ -35,21 +36,22 @@ const Item = ({ id, name }: { id: string; name: string }) => {
 }
 
 export default memo(() => {
+  const t = useI18n()
   const mid = Math.ceil(SOURCE_LIST.length / 2)
   const leftCol = SOURCE_LIST.slice(0, mid)
   const rightCol = SOURCE_LIST.slice(mid)
 
   return (
-    <SubTitle title="启用搜索平台">
+    <SubTitle title={t('setting_search_source_toggle')}>
       <View style={styles.grid}>
         <View style={styles.column}>
           {leftCol.map((s) => (
-            <Item id={s.id} name={s.name} key={s.id} />
+            <Item id={s.id} name={t(s.i18nKey as any)} key={s.id} />
           ))}
         </View>
         <View style={styles.column}>
           {rightCol.map((s) => (
-            <Item id={s.id} name={s.name} key={s.id} />
+            <Item id={s.id} name={t(s.i18nKey as any)} key={s.id} />
           ))}
         </View>
       </View>

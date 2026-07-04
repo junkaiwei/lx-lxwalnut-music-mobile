@@ -1,7 +1,7 @@
 import { getData, saveData } from '@/plugins/storage'
 import { createClient, FileStat } from 'webdav'
 import settingState from '@/store/setting/state'
-import { webDAVLog, initWebDAVLog } from './logger'
+import { webDAVLog } from './logger'
 
 const CONFIG_KEY = '@webdav_music_config'
 const audioExts = new Set([
@@ -131,14 +131,9 @@ const toMusicInfo = (item: FileStat, path: string): LX.WebDAV.MusicInfo => {
 
 export const normalizeWebDAVMusicInfo = (musicInfo: LX.WebDAV.MusicInfo) => {
   const title = parseFileName(musicInfo.meta.fileName || musicInfo.name)
-  return {
-    ...musicInfo,
-    name: title.name,
-    singer: title.singer,
-    meta: {
-      ...musicInfo.meta,
-    },
-  }
+  musicInfo.name = title.name
+  musicInfo.singer = title.singer
+  return musicInfo
 }
 
 const scanFolder = async (
@@ -199,16 +194,8 @@ export const scanWebDAVSongs = async (
   }
   
   const mergedSongs = songs.map(newSong => {
-    const existingSong = existingSongsMap.get(newSong.id)
-    if (existingSong) {
-      return {
-        ...newSong,
-        meta: {
-          ...newSong.meta,
-          ...existingSong.meta,
-        },
-      }
-    }
+    const existing = existingSongsMap.get(newSong.id)
+    if (existing) Object.assign(newSong.meta, existing.meta)
     return newSong
   })
   

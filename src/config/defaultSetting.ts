@@ -61,6 +61,12 @@ const defaultSetting: LX.AppSetting = {
     'nav_setting',
   ],
 
+  'common.navGroupExpanded': {},
+  'common.navGroupEnabled': false,
+  'common.navGroupOrder': {},
+  'common.navFlatOrder': [],
+  'common.navGroupVisible': {},
+
   'common.sectionExpandedStatus': {
     setting_player: true,
     setting_lyricDesktop: true,

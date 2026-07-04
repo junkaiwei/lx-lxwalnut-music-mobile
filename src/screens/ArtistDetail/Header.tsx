@@ -31,7 +31,7 @@ export default memo(({ artist, onFollow, componentId }: Props) => {
   const artistName = artist?.name || ''
   const artistAlias = artist?.alias?.length ? ` ${artist.alias[0]}` : ''
   const description = artist?.briefDesc || ''
-  const artistPic = artist?.avatar || artist?.cover || artist?.picUrl
+  const artistPic = artist?.avatar || artist?.cover || artist?.picUrl || artist?.singerPic || (artist?.mid ? `https://y.gtimg.cn/music/photo_new/T001R500x500M000${artist.mid}.jpg` : '')
 
   const toggleFollow = () => {
     if (!artist.name) {
@@ -68,7 +68,7 @@ export default memo(({ artist, onFollow, componentId }: Props) => {
 
   return (
     <View style={{ paddingTop: statusBarHeight }}>
-      <ImageBackground source={artist?.cover || artist?.picUrl ? { uri: artist.cover || artist?.picUrl } : null} style={styles.headerContainer} blurRadius={10}>
+      <ImageBackground source={(artist?.cover || artist?.picUrl || artistPic) ? { uri: artist.cover || artist?.picUrl || artistPic } : null} style={styles.headerContainer} blurRadius={10}>
         <View style={styles.overlay}>
           <TouchableOpacity activeOpacity={0.85} disabled={!artistPic} onPress={() => setPreviewVisible(true)}>
             <Image url={artistPic} style={styles.avatar} />

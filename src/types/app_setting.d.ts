@@ -103,6 +103,11 @@ declare global {
       'common.navStatus': Partial<Record<NAV_ID_Type, boolean>>;
 
       'common.navOrder': NAV_ID_Type[];
+      'common.navGroupExpanded': Record<string, boolean>;
+      'common.navGroupEnabled': boolean;
+      'common.navGroupOrder': Record<string, string[]>;
+      'common.navFlatOrder': NAV_ID_Type[];
+      'common.navGroupVisible': Record<string, boolean>;
 
       /**
        * 主题id

@@ -35,13 +35,7 @@ const getArtistParam = (artistInfo) => {
   return artistInfo.id
 }
 
-export default memo(({ componentId, artistInfo }: { componentId: string, artistInfo: { id: string, mid?: string, name: string, source?: string } }) => {
-  log.info('[ArtistDetail] === 歌手详情页初始化 ===', {
-    componentId,
-    artistInfo,
-    artistSource: artistInfo.source,
-    timestamp: new Date().toISOString(),
-  })
+export default memo(({ componentId, artistInfo }: { componentId: string, artistInfo: { id: string, mid?: string, name: string, source?: string, picUrl?: string } }) => {
   const [artistDetail, setArtistDetail] = useState(null);
   const [songs, setSongs] = useState({ list: [], hasMore: true, page: 1, loading: false, sort: 'hot' });
   const [albums, setAlbums] = useState({ list: [], hasMore: true, page: 1, loading: false });
@@ -346,7 +340,7 @@ export default memo(({ componentId, artistInfo }: { componentId: string, artistI
     updateSetting({ 'artistDetail.albumViewMode': mode })
   }, [])
 
-  const displayArtist = artistDetail?.artist && artistDetail.artist.name ? artistDetail.artist : artistInfo
+  const displayArtist = artistDetail?.artist && (artistDetail.artist.avatar || artistDetail.artist.cover || artistDetail.artist.picUrl || artistDetail.artist.singerPic) ? artistDetail.artist : artistInfo
 
   log.info('[ArtistDetail] === 界面渲染诊断 ===', {
     artistId: artistInfo.id,

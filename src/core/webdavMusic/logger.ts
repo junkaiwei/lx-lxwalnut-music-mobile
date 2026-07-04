@@ -18,9 +18,3 @@ export const webDAVLog = {
     log.error(`[WebDAV] ${msgs.map(m => typeof m === 'string' ? m : JSON.stringify(m)).join(' ')}`)
   },
 }
-
-export const initWebDAVLog = async () => {
-}
-
-export const clearWebDAVLogs = async () => {
-}

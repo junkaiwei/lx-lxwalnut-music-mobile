@@ -113,13 +113,26 @@ export const NAV_MENUS = [
   { id: 'nav_top', icon: 'leaderboard' },
   { id: 'nav_followed_artists', icon: 'svg:artist' },
   { id: 'nav_subscribed_albums', icon: 'svg:album-disc' },
-  { id: 'nav_webdav', icon: 'svg:webdav' },
+  { id: 'nav_webdav', icon: 'svg:onedrive' },
   { id: 'nav_onedrive', icon: 'svg:onedrive' },
   { id: 'nav_play_history', icon: 'music_time' },
   { id: 'nav_setting', icon: 'setting' },
 ] as const
 
 export type NAV_ID_Type = (typeof NAV_MENUS)[number]['id']
+
+export interface NavGroup {
+  id: string
+  label: string
+  icon: string
+  children: NAV_ID_Type[]
+}
+
+export const NAV_GROUPS: NavGroup[] = [
+  { id: 'group_online', label: 'group_online', icon: 'album', children: ['nav_tx_playlist', 'nav_my_playlist', 'nav_kg_playlist', 'nav_followed_artists', 'nav_subscribed_albums'] },
+  { id: 'group_daily', label: 'group_daily', icon: 'svg:calendar', children: ['nav_tx_daily_rec', 'nav_daily_rec', 'nav_kg_daily_rec'] },
+  { id: 'group_cloud', label: 'group_cloud', icon: 'svg:onedrive', children: ['nav_webdav', 'nav_onedrive'] },
+]
 
 export const LXM_FILE_EXT_RXP = ['json', 'lxmc', 'bin']
 export const USER_API_SOURCE_FILE_EXT_RXP = ['js']

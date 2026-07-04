@@ -42,7 +42,7 @@ export default memo(({ componentId, albumInfo }: { componentId: string; albumInf
     const handleJumpPosition = () => {
       let listId = playerState.playMusicInfo.listId
       if (listId === LIST_IDS.TEMP) listId = listState.tempListMeta.id
-      if (listId !== `album_${albumInfo.id}`) return
+      if (listId !== `album_${albumInfo.mid || albumInfo.id}`) return
 
       const musicInfo = playerState.playMusicInfo.musicInfo
       if (musicInfo) {
@@ -69,21 +69,12 @@ export default memo(({ componentId, albumInfo }: { componentId: string; albumInf
     const api = getApi(albumInfo.source)
     const albumParam = albumInfo.source === 'tx' ? albumInfo.mid : albumInfo.id
     
-    log.info('[AlbumDetail] === 调用API获取专辑详情 ===', {
-      albumId: albumInfo.id,
-      albumMid: albumInfo.mid,
-      albumSource: albumInfo.source,
-      api: albumInfo.source,
-      albumParam,
-    })
-    
     api.getAlbum(albumParam).then(data => {
       log.info('[AlbumDetail] 专辑加载成功', { albumId: albumInfo.id, listLength: data.list?.length || 0 })
       setAlbumDetail(data);
       listRef.current?.setList(data.list);
       listRef.current?.setStatus('idle');
     }).catch((err) => {
-      log.error('[AlbumDetail] 专辑加载失败', { albumId: albumInfo.id, error: err.message })
       toast('获取专辑信息失败');
       listRef.current?.setStatus('error');
     });
@@ -131,7 +122,7 @@ export default memo(({ componentId, albumInfo }: { componentId: string; albumInf
       })
       return;
     }
-    const listId = `album_${albumInfo.id}`;
+    const listId = `album_${albumInfo.mid || albumInfo.id}`;
     log.info('[AlbumDetail] === 调用playOnlineList ===', {
       listId,
       playIndex: index,
