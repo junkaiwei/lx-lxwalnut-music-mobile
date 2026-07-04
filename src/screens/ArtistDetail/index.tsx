@@ -105,11 +105,6 @@ export default memo(({ componentId, artistInfo }: { componentId: string, artistI
 
     const cachedDetail = getArtistDetailCache(artistParam);
     if (cachedDetail) {
-      log.info('[ArtistDetail] === 使用缓存的歌手详情 ===', {
-        artistId: artistInfo.id,
-        artistParam,
-        cached: true,
-      })
       setArtistDetail(cachedDetail);
     } else {
       log.info('[ArtistDetail] === 从API获取歌手详情 ===', {
@@ -119,11 +114,9 @@ export default memo(({ componentId, artistInfo }: { componentId: string, artistI
         api: artistInfo.source === 'tx' ? 'txApi' : 'wyApi',
       })
       api.getDetail(artistParam).then(data => {
-        log.info('[ArtistDetail] 获取歌手详情成功', { artistId: artistInfo.id, hasArtist: !!data?.artist })
         setArtistDetailCache(artistInfo.id, data);
         setArtistDetail(data);
       }).catch((err) => {
-        log.error('[ArtistDetail] 获取歌手详情失败', { artistId: artistInfo.id, error: err.message })
         toast('获取歌手信息失败');
       });
     }
@@ -132,28 +125,10 @@ export default memo(({ componentId, artistInfo }: { componentId: string, artistI
   const loadSongs = useCallback((sort, page, isRefresh = false) => {
     const currentApi = getApi(artistInfo.source)
     const currentArtistParam = getArtistParam(artistInfo)
-
-    log.info('[ArtistDetail] === loadSongs 被调用 ===', {
-      artistId: artistInfo.id,
-      artistMid: artistInfo.mid,
-      artistParam: currentArtistParam,
-      artistSource: artistInfo.source,
-      sort,
-      page,
-      isRefresh,
-      timestamp: new Date().toISOString(),
-    })
     const cacheKey = `${currentArtistParam}_songs_${sort}_${page}`;
 
     const cachedData = getArtistCache(cacheKey);
     if (!isRefresh && cachedData) {
-      log.info('[ArtistDetail] === 使用缓存的歌曲列表 ===', {
-        artistId: artistInfo.id,
-        artistParam: currentArtistParam,
-        cacheKey,
-        songCount: cachedData.list.length,
-        hasMore: cachedData.hasMore,
-      })
       setSongs(p => ({
         ...p,
         list: page === 1 ? cachedData.list : [...p.list, ...cachedData.list],
@@ -167,25 +142,10 @@ export default memo(({ componentId, artistInfo }: { componentId: string, artistI
 
     setSongs(prev => {
       if (!isRefresh && (prev.loading || !prev.hasMore)) {
-        log.info('[ArtistDetail] === 跳过歌曲加载 ===', {
-          reason: prev.loading ? '正在加载' : '没有更多数据',
-          loading: prev.loading,
-          hasMore: prev.hasMore,
-        })
         return prev;
       }
       const offset = (page - 1) * SONG_LIMIT;
-      log.info('[ArtistDetail] === 请求歌手歌曲列表 ===', {
-        artistId: artistInfo.id,
-        artistParam: currentArtistParam,
-        artistSource: artistInfo.source,
-        sort,
-        page,
-        offset,
-        limit: SONG_LIMIT,
-      })
       currentApi.getSongs(currentArtistParam, sort, SONG_LIMIT, offset).then(data => {
-        log.info('[ArtistDetail] 歌手歌曲加载成功', { artistId: artistInfo.id, songCount: data.list.length, hasMore: data.hasMore })
         setArtistCache(cacheKey, { list: data.list, hasMore: data.hasMore });
 
         setSongs(p => ({
@@ -197,7 +157,6 @@ export default memo(({ componentId, artistInfo }: { componentId: string, artistI
           sort,
         }));
       }).catch((err) => {
-        log.error('[ArtistDetail] 歌手歌曲加载失败', { artistId: artistInfo.id, error: err.message })
         toast('获取歌曲失败');
         setSongs(p => ({ ...p, loading: false }));
       });
