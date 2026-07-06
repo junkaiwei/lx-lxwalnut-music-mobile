@@ -4,6 +4,7 @@ import Section from '../../components/Section'
 import IsShowHotSearch from './IsShowHotSearch'
 import IsShowHistorySearch from './IsShowHistorySearch'
 import BilibiliMultiPage from './BilibiliMultiPage'
+import QualityShowHighest from './QualityShowHighest'
 import SearchSourceFilter from './SearchSourceFilter'
 
 import { useI18n } from '@/lang'
@@ -16,6 +17,7 @@ export default memo(() => {
       <IsShowHotSearch />
       <IsShowHistorySearch />
       <BilibiliMultiPage />
+      <QualityShowHighest />
       <SearchSourceFilter />
     </Section>
   )

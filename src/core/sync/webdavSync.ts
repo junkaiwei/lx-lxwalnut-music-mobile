@@ -85,13 +85,17 @@ async function uploadLists(path: string, listsData: LX.List.ListDataFull): Promi
   const timestamp = Date.now();
   const { playHistory, downloadTasks } = nextListsUploadExtraData ?? await getAllDataForSync();
   nextListsUploadExtraData = null;
-  const dataObject = {
+  const dataObject: Record<string, any> = {
     version: '2',
     lastModified: timestamp,
     data: listsData,
-    playHistory,
-    downloadTasks,
   };
+  if (settingState.setting['sync.webdav.syncPlayHistory']) {
+    dataObject.playHistory = playHistory;
+  }
+  if (settingState.setting['sync.webdav.syncDownloadTasks']) {
+    dataObject.downloadTasks = downloadTasks;
+  }
   await webdav.uploadFile(path, JSON.stringify(dataObject));
   updateSetting({ 'sync.webdav.lastSyncTimeLists': timestamp });
   return timestamp;
@@ -156,33 +160,32 @@ const getRemoteDownloadTasksForLocal = (remoteTasks: LX.Download.DownloadTask[])
 };
 
 const getMergedExtraData = async (remoteData: ListsSyncFile): Promise<ListsSyncExtraData> => {
-  const localHistory = await getPlayHistory();
+  const localHistory = settingState.setting['sync.webdav.syncPlayHistory'] ? await getPlayHistory() : [];
   return {
-    playHistory: mergePlayHistory(localHistory, remoteData.playHistory),
-    downloadTasks: mergeDownloadTasks(downloadState.tasks, remoteData.downloadTasks),
+    playHistory: settingState.setting['sync.webdav.syncPlayHistory'] ? mergePlayHistory(localHistory, remoteData.playHistory) : [],
+    downloadTasks: settingState.setting['sync.webdav.syncDownloadTasks'] ? mergeDownloadTasks(downloadState.tasks, remoteData.downloadTasks) : [],
   };
 };
 
 const getLocalExtraDataForSync = async (): Promise<ListsSyncExtraData> => ({
-  playHistory: await getPlayHistory(),
-  downloadTasks: normalizeDownloadTasksForSync(downloadState.tasks),
+  playHistory: settingState.setting['sync.webdav.syncPlayHistory'] ? await getPlayHistory() : [],
+  downloadTasks: settingState.setting['sync.webdav.syncDownloadTasks'] ? normalizeDownloadTasksForSync(downloadState.tasks) : [],
 });
 
 const hasLocalExtraDataChanges = async (remoteData: ListsSyncFile) => {
-  const localExtraData = await getLocalExtraDataForSync();
-  const remoteExtraData: ListsSyncExtraData = {
-    playHistory: remoteData.playHistory ?? [],
-    downloadTasks: normalizeDownloadTasksForSync(remoteData.downloadTasks ?? []),
-  };
-  return JSON.stringify(localExtraData) !== JSON.stringify(remoteExtraData);
+  const localHistory = settingState.setting['sync.webdav.syncPlayHistory'] ? await getPlayHistory() : [];
+  const localDownloads = settingState.setting['sync.webdav.syncDownloadTasks'] ? normalizeDownloadTasksForSync(downloadState.tasks) : [];
+  const remoteHistory = settingState.setting['sync.webdav.syncPlayHistory'] ? (remoteData.playHistory ?? []) : [];
+  const remoteDownloads = settingState.setting['sync.webdav.syncDownloadTasks'] ? normalizeDownloadTasksForSync(remoteData.downloadTasks ?? []) : [];
+  return JSON.stringify({ playHistory: localHistory, downloadTasks: localDownloads }) !== JSON.stringify({ playHistory: remoteHistory, downloadTasks: remoteDownloads });
 };
 
 async function applySyncedExtraData(remoteData: ListsSyncFile) {
-  if (Array.isArray(remoteData.playHistory)) {
+  if (settingState.setting['sync.webdav.syncPlayHistory'] && Array.isArray(remoteData.playHistory)) {
     await savePlayHistory(remoteData.playHistory);
     global.app_event.playHistoryUpdated();
   }
-  if (Array.isArray(remoteData.downloadTasks)) {
+  if (settingState.setting['sync.webdav.syncDownloadTasks'] && Array.isArray(remoteData.downloadTasks)) {
     const tasks = getRemoteDownloadTasksForLocal(remoteData.downloadTasks);
     downloadState.tasks = tasks;
     await saveDownloadTasks(tasks);
@@ -191,14 +194,18 @@ async function applySyncedExtraData(remoteData: ListsSyncFile) {
 }
 
 async function applyMergedExtraData(remoteData: ListsSyncFile) {
-  const localHistory = await getPlayHistory();
-  await savePlayHistory(mergePlayHistory(localHistory, remoteData.playHistory));
-  global.app_event.playHistoryUpdated();
+  if (settingState.setting['sync.webdav.syncPlayHistory']) {
+    const localHistory = await getPlayHistory();
+    await savePlayHistory(mergePlayHistory(localHistory, remoteData.playHistory));
+    global.app_event.playHistoryUpdated();
+  }
 
-  const tasks = mergeDownloadTasksForLocal(downloadState.tasks, remoteData.downloadTasks);
-  downloadState.tasks = tasks;
-  await saveDownloadTasks(tasks);
-  global.app_event.download_list_changed();
+  if (settingState.setting['sync.webdav.syncDownloadTasks']) {
+    const tasks = mergeDownloadTasksForLocal(downloadState.tasks, remoteData.downloadTasks);
+    downloadState.tasks = tasks;
+    await saveDownloadTasks(tasks);
+    global.app_event.download_list_changed();
+  }
 }
 
 async function uploadSettings(path: string): Promise<number> {

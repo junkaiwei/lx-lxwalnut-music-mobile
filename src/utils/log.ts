@@ -129,6 +129,7 @@ export const sourceTestLog = {
       .join(' ')
     if (msg.startsWith('%c')) return
     const time = new Date().toLocaleString()
+    console.log(`[源测试] ${msg}`)
     void appendFile(sourceTestLogPath, `\n----lx source test log----\n${time} LOG ${msg}`)
   },
 }

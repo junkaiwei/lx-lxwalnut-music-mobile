@@ -803,10 +803,8 @@ export const handleGetOnlineMusicUrl = async ({
     }
 
     const currentQuality = qualities[0]
-    userApiLog.info(`[在线播放]   尝试音质: ${currentQuality}`)
 
     const oldMusicInfo = toOldMusicInfo(musicInfo)
-    userApiLog.info(`[在线播放]   转换后的旧格式数据: songmid=${oldMusicInfo.songmid}, strMediaMid=${oldMusicInfo.strMediaMid}, vid=${oldMusicInfo.vid || '(空)'}`)
 
     let reqPromise
     try {
@@ -815,17 +813,11 @@ export const handleGetOnlineMusicUrl = async ({
         currentQuality
       ).promise
     } catch (err: any) {
-      userApiLog.error(`[在线播放]   API调用失败: ${err?.message || err}`)
       reqPromise = Promise.reject(err)
     }
 
     return reqPromise
       .then((result: { url: string; type: LX.Quality }) => {
-        userApiLog.info(`[在线播放]   请求成功，获取到播放地址`)
-        userApiLog.info(`[在线播放]   播放地址长度: ${result.url.length} 字符`)
-        userApiLog.info(`[在线播放]   播放地址: ${result.url}`)
-        userApiLog.info(`[在线播放]   实际音质: ${result.type}`)
-        
         if (!result.url || result.url.length < 10) {
           userApiLog.warn(`[在线播放]   警告: 播放地址可能无效`)
         }
@@ -833,7 +825,6 @@ export const handleGetOnlineMusicUrl = async ({
       })
       .catch((err: any) => {
         if (err.message == requestMsg.tooManyRequests) {
-          userApiLog.error(`[在线播放]   请求失败 - 请求过于频繁`)
           throw err
         }
         userApiLog.error(`[在线播放]   音质 ${currentQuality} 请求失败: ${err?.message || err}`)
@@ -857,25 +848,16 @@ export const handleGetOnlineMusicUrl = async ({
     ? sortedQualities.slice(startIndex) 
     : sortedQualities
 
-  userApiLog.info(`[在线播放] 未命中缓存或需要刷新，发起网络请求`)
-
   return tryGetMusicUrlWithFallback(fallbackQualities)
     .then(({ url, type }) => {
-      userApiLog.info(`[在线播放] ========== 获取成功 ==========`)
       return { musicInfo, url, quality: type, isFromCache: false }
     })
     .catch(async (err: any) => {
-      userApiLog.error(`[在线播放] 当前音源所有音质均尝试失败`)
-
       if (!allowToggleSource) {
-        userApiLog.error(`[在线播放] ========== 获取失败 ==========`)
-        userApiLog.error(`[在线播放] 不允许换源，直接抛出错误`)
         throw err
       }
 
       if (err.message == requestMsg.tooManyRequests) {
-        userApiLog.error(`[在线播放] ========== 获取失败 ==========`)
-        userApiLog.error(`[在线播放] 请求过于频繁，无法继续`)
         throw err
       }
 

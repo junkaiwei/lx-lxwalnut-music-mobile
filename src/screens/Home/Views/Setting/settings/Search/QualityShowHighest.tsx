@@ -1,25 +1,26 @@
 import { updateSetting } from '@/core/common'
 import { useI18n } from '@/lang'
-import { createStyle } from '@/utils/tools'
 import { memo } from 'react'
 import { View } from 'react-native'
 import { useSettingValue } from '@/store/setting/hook'
+import { createStyle } from '@/utils/tools'
 
 import CheckBoxItem from '../../components/CheckBoxItem'
 
 export default memo(() => {
   const t = useI18n()
-  const bilibiliMultiPage = useSettingValue('common.bilibili_multi_page')
-  const handleUpdate = (bilibiliMultiPage: boolean) => {
-    updateSetting({ 'common.bilibili_multi_page': bilibiliMultiPage })
+  const qualityShowHighest = useSettingValue('common.quality_show_highest')
+  const handleUpdate = (qualityShowHighest: boolean) => {
+    updateSetting({ 'common.quality_show_highest': qualityShowHighest })
   }
 
   return (
     <View style={styles.content}>
       <CheckBoxItem
-        check={bilibiliMultiPage}
+        check={qualityShowHighest}
         onChange={handleUpdate}
-        label={t('setting_common_bilibili_multi_page')}
+        label={t('setting_common_quality_show_highest')}
+        helpDesc={t('setting_common_quality_show_highest_tip')}
       />
     </View>
   )
@@ -27,6 +28,6 @@ export default memo(() => {
 
 const styles = createStyle({
   content: {
-    marginTop: 5,
+    marginBottom: 15,
   },
 })

@@ -1,4 +1,4 @@
-import { saveLyric, saveMusicUrl, getMusicUrl as getStoreMusicUrl } from '@/utils/data'
+import { saveLyric, saveMusicUrl, clearMusicUrl, getMusicUrl as getStoreMusicUrl, storageDataPrefix } from '@/utils/data'
 import { updateListMusics } from '@/core/list'
 import settingState from '@/store/setting/state'
 
@@ -44,12 +44,14 @@ export const getMusicUrl = async ({
   isRefresh,
   allowToggleSource = true,
   onToggleSource = () => {},
+  silent = false,
 }: {
   musicInfo: LX.Music.MusicInfoOnline
   quality?: LX.Quality
   isRefresh: boolean
   allowToggleSource?: boolean
   onToggleSource?: (musicInfo?: LX.Music.MusicInfoOnline) => void
+  silent?: boolean
 }): Promise<string> => {
   // if (!musicInfo._types[type]) {
   //   if (!(musicInfo.source == 'kw' && type == '128k')) throw new Error('该歌曲没有可播放的音频')
@@ -62,7 +64,7 @@ export const getMusicUrl = async ({
 
   const isWySource = currentMusicInfo.source === 'wy';
   const hasFullDetails = currentMusicInfo.meta._full;
-  console.log("播放：currentMusicInfo:", currentMusicInfo);
+  if (!silent) console.log("播放：currentMusicInfo:", currentMusicInfo);
 
   if (isWySource && !hasFullDetails) {
     const availableQualities = Object.keys(currentMusicInfo.meta._qualitys);
@@ -70,18 +72,21 @@ export const getMusicUrl = async ({
     const maxAvailableQualityIndex = Math.min(...availableQualities.map(q => QUALITY_RANK.indexOf(q)));
 
     if (preferredQualityIndex < maxAvailableQualityIndex) {
-      console.log('用户想要的音质比当前已知的最好音质还要高，获取音质详情');
-      currentMusicInfo = await fetchAndApplyDetailedQuality(currentMusicInfo);
+      if (!silent) console.log('用户想要的音质比当前已知的最好音质还要高，获取音质详情');
+      currentMusicInfo = await fetchAndApplyDetailedQuality(currentMusicInfo, 0, silent);
     } else {
-      console.log('用户想要的音质比当前已知的最好音质还要低，无需获取音质详情');
-      void fetchAndApplyDetailedQuality(currentMusicInfo);
+      if (!silent) console.log('用户想要的音质比当前已知的最好音质还要低，无需获取音质详情');
+      void fetchAndApplyDetailedQuality(currentMusicInfo, 0, silent);
     }
   }
 
   const targetQuality = quality ?? getPlayQuality(preferredQuality, currentMusicInfo);
 
-  const cachedUrl = await getStoreMusicUrl(currentMusicInfo, targetQuality)
-  if (cachedUrl && !isRefresh) return cachedUrl
+  // 如果不是刷新请求，先检查缓存
+  if (!isRefresh) {
+    const cachedUrl = await getStoreMusicUrl(currentMusicInfo, targetQuality)
+    if (cachedUrl) return cachedUrl
+  }
 
   const highQualityLevels: LX.Quality[] = ['flac', 'hires', 'master', 'atmos', 'atmos_plus'];
 
@@ -91,10 +96,10 @@ export const getMusicUrl = async ({
 
   const preferApi = !isWySource || (!isVipUser && (isVipSong || isHighQuality))
 
-  console.log("vip:" + userState.wy_vip_type)
+  if (!silent) console.log("vip:" + userState.wy_vip_type)
   if (preferApi) {
     try {
-      console.log('Attempting to get music URL via custom API');
+      if (!silent) console.log('Attempting to get music URL via custom API');
       const result = await handleGetOnlineMusicUrl({
         musicInfo: currentMusicInfo,
         quality: targetQuality,
@@ -102,12 +107,12 @@ export const getMusicUrl = async ({
         isRefresh,
         allowToggleSource,
       });
-      console.log('Custom API request succeeded', result);
-      console.log("### [WHITEBOX_API_URL] 异步 URL 真正就绪 ###", { title: currentMusicInfo.name, songId: currentMusicInfo.id, url: result.url });
+      if (!silent) console.log('Custom API request succeeded', result);
+      if (!silent) console.log("### [WHITEBOX_API_URL] 异步 URL 真正就绪 ###", { title: currentMusicInfo.name, songId: currentMusicInfo.id, url: result.url });
       void saveMusicUrl(currentMusicInfo, result.quality, result.url);
       return result.url;
     } catch (apiError) {
-      console.log('Custom API request failed', apiError);
+      if (!silent) console.log('Custom API request failed', apiError);
       throw apiError;
     }
   }
@@ -121,7 +126,7 @@ export const getMusicUrl = async ({
         return url;
       }
     } catch (error) {
-      console.log('Get music url with cookie failed, fallback to custom api', error);
+      if (!silent) console.log('Get music url with cookie failed, fallback to custom api', error);
     }
   }
 

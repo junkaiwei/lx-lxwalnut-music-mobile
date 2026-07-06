@@ -29,6 +29,8 @@ export default memo(() => {
   const theme = useTheme();
   const isEnableWebdav = useSettingValue('sync.webdav.enable');
   const isSyncLists = useSettingValue('sync.webdav.syncLists');
+  const isSyncPlayHistory = useSettingValue('sync.webdav.syncPlayHistory');
+  const isSyncDownloadTasks = useSettingValue('sync.webdav.syncDownloadTasks');
   const webdavUrl = useSettingValue('sync.webdav.url');
   const webdavUsername = useSettingValue('sync.webdav.username');
   const webdavPassword = useSettingValue('sync.webdav.password');
@@ -60,6 +62,14 @@ export default memo(() => {
 
   const handleEnableListSync = (enable: boolean) => {
     updateSetting({ 'sync.webdav.syncLists': enable });
+  };
+
+  const handleEnablePlayHistorySync = (enable: boolean) => {
+    updateSetting({ 'sync.webdav.syncPlayHistory': enable });
+  };
+
+  const handleEnableDownloadTasksSync = (enable: boolean) => {
+    updateSetting({ 'sync.webdav.syncDownloadTasks': enable });
   };
 
   const handleTestConnection = useCallback(async () => {
@@ -133,9 +143,24 @@ export default memo(() => {
           <CheckBoxItem
             check={isSyncLists}
             label="自动同步歌单"
+            helpDesc="自动同步歌单会同步歌单、播放历史及下载任务，如果有不需要的可以自行关闭"
             onChange={handleEnableListSync}
             disabled={!isEnableWebdav}
           />
+          <View style={styles.btnRow}>
+            <CheckBoxItem
+              check={isSyncPlayHistory}
+              label="播放历史"
+              onChange={handleEnablePlayHistorySync}
+              disabled={!isEnableWebdav}
+            />
+            <CheckBoxItem
+              check={isSyncDownloadTasks}
+              label="下载任务"
+              onChange={handleEnableDownloadTasksSync}
+              disabled={!isEnableWebdav}
+            />
+          </View>
         </View>
 
         <View style={{ opacity: isEnableWebdav ? 1 : 0.5 }}>

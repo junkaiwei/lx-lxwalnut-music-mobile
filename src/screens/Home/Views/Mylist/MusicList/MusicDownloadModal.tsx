@@ -126,9 +126,8 @@ export default forwardRef<MusicDownloadModalType, MusicDownloadModalProps>(
           setVisible(true)
         }
 
-        console.log("MusicDownloadModal show info:", info);
         if (info.source === 'wy' && !info.meta._full) {
-          const detailedInfo = await fetchAndApplyDetailedQuality(info as LX.Music.MusicInfoOnline);
+          const detailedInfo = await fetchAndApplyDetailedQuality(info as LX.Music.MusicInfoOnline, 0, true);
 
           if (detailedInfo.meta._full) {
             selectedInfo.current = detailedInfo;

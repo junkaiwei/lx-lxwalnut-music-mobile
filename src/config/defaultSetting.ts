@@ -29,6 +29,7 @@ const defaultSetting: LX.AppSetting = {
   'common.isEnableSearchLog': false,
   'common.isEnablePlayerLog': false,
   'common.bilibili_multi_page': false,
+  'common.quality_show_highest': false,
 
   'common.navStatus': {
     nav_songlist: true,
@@ -107,6 +108,7 @@ const defaultSetting: LX.AppSetting = {
   'player.isEnableSlideSwitchSong': false,
   'player.enableAutoToggleSource': true,
   'player.toggleSourceMaxRetry': 5,
+  'player.enableFailureStrategy': false,
   'player.failureStrategy': ['lowerQuality', 'togglePlatform', 'playNext', 'toggleSource'],
 
   'playDetail.isCoverSpin': true,
@@ -174,6 +176,8 @@ const defaultSetting: LX.AppSetting = {
   'sync.enable': false,
   'sync.webdav.enable': false,
   'sync.webdav.syncLists': false,
+  'sync.webdav.syncPlayHistory': true,
+  'sync.webdav.syncDownloadTasks': true,
   'sync.webdav.url': '',
   'sync.webdav.username': '',
   'sync.webdav.password': '',

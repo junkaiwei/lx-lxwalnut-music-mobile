@@ -5,6 +5,7 @@ import Badge, { type BadgeType } from '@/components/common/Badge'
 import { Icon } from '@/components/common/Icon'
 import { useI18n } from '@/lang'
 import { useTheme } from '@/store/theme/hook'
+import settingState from '@/store/setting/state'
 import { scaleSizeH } from '@/utils/pixelRatio'
 import { LIST_ITEM_HEIGHT } from '@/config/constant'
 import { createStyle, type RowInfo } from '@/utils/tools'
@@ -19,26 +20,39 @@ const useQualityTag = (musicInfo: LX.Music.MusicInfoOnline) => {
   const t = useI18n()
   let info: { type: BadgeType | null; text: string } = { type: null, text: '' }
   const qualitys = (musicInfo.meta as LX.Music.MusicInfoMeta_online)?._qualitys ?? {}
-  // if (musicInfo.meta._qualitys.master) {
-  //   info.type = 'secondary'
-  //   info.text = t('quality_lossless_master')
-  // } else if (musicInfo.meta._qualitys.atmos_plus) {
-  //   info.type = 'secondary'
-  //   info.text = t('quality_lossless_atmos_plus')
-  // } else if (musicInfo.meta._qualitys.atmos) {
-  //   info.type = 'secondary'
-  //   info.text = t('quality_lossless_atmos')
-  // } else
-  if (qualitys.hires) {
-    info.type = 'secondary'
-    info.text = t('quality_lossless_24bit')
-  } else if (qualitys.flac) {
-    // info.type = 'secondary'
-    info.type = 'sq'
-    info.text = t('quality_lossless')
-  } else if (qualitys['320k']) {
-    info.type = 'hq'
-    info.text = t('quality_high_quality')
+  const showHighest = settingState.setting['common.quality_show_highest']
+
+  if (showHighest) {
+    if (qualitys.master) {
+      info.type = 'secondary'
+      info.text = t('quality_lossless_master')
+    } else if (qualitys.atmos_plus) {
+      info.type = 'secondary'
+      info.text = t('quality_lossless_atmos_plus')
+    } else if (qualitys.atmos) {
+      info.type = 'secondary'
+      info.text = t('quality_lossless_atmos')
+    } else if (qualitys.hires) {
+      info.type = 'secondary'
+      info.text = t('quality_lossless_24bit')
+    } else if (qualitys.flac) {
+      info.type = 'sq'
+      info.text = t('quality_lossless')
+    } else if (qualitys['320k']) {
+      info.type = 'hq'
+      info.text = t('quality_high_quality')
+    }
+  } else {
+    if (qualitys.hires) {
+      info.type = 'secondary'
+      info.text = t('quality_lossless_24bit')
+    } else if (qualitys.flac) {
+      info.type = 'sq'
+      info.text = t('quality_lossless')
+    } else if (qualitys['320k']) {
+      info.type = 'hq'
+      info.text = t('quality_high_quality')
+    }
   }
 
   return info

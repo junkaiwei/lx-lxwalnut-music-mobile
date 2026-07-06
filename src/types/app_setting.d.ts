@@ -291,6 +291,11 @@ declare global {
       'player.failureStrategy': string[]
 
       /**
+       * 是否启用播放失败策略
+       */
+      'player.enableFailureStrategy': boolean
+
+      /**
        * 播放详情页-歌词对齐方式
        */
       'playDetail.style.align': 'center' | 'left' | 'right'
@@ -502,6 +507,8 @@ declare global {
       'sync.enable': boolean
       'sync.webdav.enable': boolean;
       'sync.webdav.syncLists': boolean;
+      'sync.webdav.syncPlayHistory': boolean;
+      'sync.webdav.syncDownloadTasks': boolean;
       'sync.webdav.url': string;
       'sync.webdav.username': string;
       'sync.webdav.password': string;

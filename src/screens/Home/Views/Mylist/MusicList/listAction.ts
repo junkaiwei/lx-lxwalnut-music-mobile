@@ -400,12 +400,22 @@ export const handleClearMusicCache = async (musicInfo: LX.Music.MusicInfo) => {
       }
       
       try {
-        await stop()
-        log.info(`[清除缓存] 已停止当前播放`)
-        
+        log.info(`[清除缓存] 步骤0: 重置播放器重试状态`)
+        global.app_event.musicToggled()
+
+        log.info(`[清除缓存] 步骤1: 触发URL重新获取`)
         setMusicUrl(musicInfo, true)
-        log.info(`[清除缓存] 已触发重新获取URL - 歌曲名: ${musicName}`)
+        log.info(`[清除缓存] 步骤1完成: 已触发重新获取URL - 歌曲名: ${musicName}`)
+
+        log.info(`[清除缓存] 步骤2: 停止播放`)
+        try {
+          await stop()
+          log.info(`[清除缓存] 步骤2完成: 已停止当前播放`)
+        } catch (stopErr) {
+          log.error(`[清除缓存] 步骤2失败: stop() 报错`, stopErr)
+        }
         
+        log.info(`[清除缓存] 步骤3: 重新加载歌词`)
         void getLyricInfo({ musicInfo: musicInfo as any, isRefresh: true }).then((lyricInfo) => {
           if (playerState.playMusicInfo.musicInfo?.id !== musicId) return
           playerActions.setMusicInfo({
@@ -422,7 +432,8 @@ export const handleClearMusicCache = async (musicInfo: LX.Music.MusicInfo) => {
         })
         
       } catch (reloadError) {
-        log.error(`[清除缓存] 重新加载失败 - 歌曲名: ${musicName}`, reloadError)
+        log.error(`[清除缓存] 步骤3失败: 重新加载异常 - 歌曲名: ${musicName}`, reloadError)
+        log.error(`[清除缓存] 错误类型: ${typeof reloadError}, 消息: ${reloadError?.message}, 堆栈: ${reloadError?.stack}`)
         toast('清除缓存成功，但重新加载失败')
       }
       

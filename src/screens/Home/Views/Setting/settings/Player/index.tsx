@@ -16,6 +16,7 @@ import IsS2T from './IsS2T'
 import MaxCache from './MaxCache'
 import IsEnableAutoToggleSource from './IsEnableAutoToggleSource'
 import ToggleSourceMaxRetry from './ToggleSourceMaxRetry'
+import IsEnableFailureStrategy from './IsEnableFailureStrategy'
 import FailureStrategy from './FailureStrategy'
 import { useI18n } from '@/lang'
 
@@ -37,6 +38,7 @@ export default memo(() => {
       <MaxCache />
       <IsEnableAutoToggleSource />
       <ToggleSourceMaxRetry />
+      <IsEnableFailureStrategy />
       <FailureStrategy />
       <PlayHighQuality />
     </Section>

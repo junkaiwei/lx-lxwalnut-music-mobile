@@ -215,6 +215,13 @@ const fetchData = (url, { timeout = 15000, ...options }) => {
     request: handleRequestData(url, options).then((processedOptions) => {
       const finalUrl = processedOptions.url || url
       delete processedOptions.url
+      console.log(`[HTTP] ${processedOptions.method || 'GET'} ${finalUrl}`)
+      if (processedOptions.body) {
+        const bodyPreview = typeof processedOptions.body === 'string' 
+          ? processedOptions.body.substring(0, 200) 
+          : JSON.stringify(processedOptions.body).substring(0, 200)
+        console.log(`[HTTP] Body: ${bodyPreview}`)
+      }
       return global
         .fetch(finalUrl, {
           ...processedOptions,

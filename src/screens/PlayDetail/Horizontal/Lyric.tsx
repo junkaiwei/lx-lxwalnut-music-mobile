@@ -182,7 +182,7 @@ export default () => {
             flatListRef.current,
             scrollInfoRef.current,
             offset - scrollInfoRef.current.layoutMeasurement.height * 0.42,
-            600,
+            300,
             () => {
               scrollCancelRef.current = null
             }
@@ -291,10 +291,7 @@ export default () => {
       return
     }
 
-    delayScrollTimeout.current = setTimeout(() => {
-      delayScrollTimeout.current = null
-      handleScrollToActive()
-    }, 600)
+    handleScrollToActive()
   }, [line])
 
   useEffect(() => {

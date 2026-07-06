@@ -91,6 +91,7 @@ export default {
     if (!rawList) return [];
 
     return rawList.map(item => {
+      // console.log('[网易云原始数据]', JSON.stringify(item, null, 2))
       item = item.baseInfo.simpleSongData
 
       const types = [];

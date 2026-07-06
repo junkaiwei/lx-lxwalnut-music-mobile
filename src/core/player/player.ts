@@ -14,7 +14,7 @@ import { getList, setPlayMusicInfo, setMusicInfo, setPlayListId } from '@/core/p
 import { clearPlayedList, addPlayedList, removePlayedList } from '@/core/player/playedList'
 import { clearTempPlayeList, removeTempPlayList } from '@/core/player/tempPlayList'
 import { getMusicUrl, getPicPath, getLyricInfo } from '@/core/music'
-import { getOtherSource, getOnlineOtherSourceMusicUrl, getPlayQuality, QUALITY_RANK, tryUserDefinedSourceToggle } from '@/core/music/utils'
+import { getOtherSource, getPlayQuality, QUALITY_RANK, tryUserDefinedSourceToggle } from '@/core/music/utils'
 import { requestMsg } from '@/utils/message'
 import { getRandom } from '@/utils/common'
 import { filterList } from './utils'
@@ -26,41 +26,6 @@ import {
   checkNotificationPermission,
   debounceBackgroundTimer,
 } from '@/utils/tools'
-import { LIST_IDS } from '@/config/constant'
-import { addListMusics, removeListMusics } from '@/core/list'
-import { addDislikeInfo } from '@/core/dislikeList'
-import { webDAVLog } from '@/core/webdavMusic/logger'
-
-// import { checkMusicFileAvailable } from '@renderer/utils/music'
-
-const createDelayNextTimeout = (delay: number) => {
-  let timeout: number | null
-  const clearDelayNextTimeout = () => {
-    // console.log(this.timeout)
-    if (timeout) {
-      BackgroundTimer.clearTimeout(timeout)
-      timeout = null
-    }
-  }
-
-  const addDelayNextTimeout = () => {
-    clearDelayNextTimeout()
-    timeout = BackgroundTimer.setTimeout(() => {
-      timeout = null
-      if (global.lx.isPlayedStop) return
-      console.log('delay next timeout timeout', delay)
-      void playNext(true)
-    }, delay)
-  }
-
-  return {
-    clearDelayNextTimeout,
-    addDelayNextTimeout,
-  }
-}
-const { addDelayNextTimeout, clearDelayNextTimeout } = createDelayNextTimeout(5000)
-const { addDelayNextTimeout: addLoadTimeout, clearDelayNextTimeout: clearLoadTimeout } =
-  createDelayNextTimeout(30000)
 
 const createGettingUrlId = (musicInfo: LX.Music.MusicInfo | LX.Download.ListItem) => {
   const tInfo =
@@ -69,11 +34,8 @@ const createGettingUrlId = (musicInfo: LX.Music.MusicInfo | LX.Download.ListItem
       : musicInfo.meta.toggleMusicInfo
   return `${musicInfo.id}_${tInfo?.id ?? ''}`
 }
-/**
- * Check if music info has changed
- */
+
 const diffCurrentMusicInfo = (curMusicInfo: LX.Music.MusicInfo | LX.Download.ListItem): boolean => {
-  // return curMusicInfo !== playerState.playMusicInfo.musicInfo || playerState.isPlay
   return (
     createGettingUrlId(curMusicInfo) != global.lx.gettingUrlId ||
     curMusicInfo.id != playerState.playMusicInfo.musicInfo?.id ||
@@ -81,41 +43,58 @@ const diffCurrentMusicInfo = (curMusicInfo: LX.Music.MusicInfo | LX.Download.Lis
   )
 }
 
-let cancelDelayRetry: (() => void) | null = null
-const delayRetry = async (
-  musicInfo: LX.Music.MusicInfo | LX.Download.ListItem,
-  isRefresh = false
-): Promise<string | null> => {
-  // if (cancelDelayRetry) cancelDelayRetry()
-  return new Promise<string | null>((resolve, reject) => {
-    const time = getRandom(2, 6)
-    setStatusText(global.i18n.t('player__getting_url_delay_retry', { time }))
-    const tiemout = setTimeout(() => {
-      getMusicPlayUrl(musicInfo, isRefresh, true)
-        .then((result) => {
-          cancelDelayRetry = null
-          setStatusText('')
-          resolve(result)
-        })
-        .catch(async (err: any) => {
-          cancelDelayRetry = null
-          reject(err)
-        })
-    }, time * 1000)
-    cancelDelayRetry = () => {
-      clearTimeout(tiemout)
-      cancelDelayRetry = null
-      resolve(null)
-    }
-  })
+const AUDIO_CONTENT_TYPES: Record<string, string> = {
+  'audio/mpeg': 'mp3',
+  'audio/mp3': 'mp3',
+  'audio/flac': 'flac',
+  'audio/x-flac': 'flac',
+  'audio/ogg': 'ogg',
+  'audio/aac': 'aac',
+  'audio/mp4': 'm4a',
+  'audio/x-m4a': 'm4a',
+  'audio/wav': 'wav',
+  'audio/opus': 'opus',
+  'audio/x-mpeg': 'mp3',
+  'audio/x-ogg': 'ogg',
 }
+
+const ENCRYPTED_EXTENSIONS = new Set([
+  'mflac', 'mflac0', 'mgg', 'mgg0', 'mgg1', 'ncm',
+  'kgm', 'kgma', 'kgg', 'vpr', 'kwm', 'kwl', 'kwb',
+  'kwmv', 'kwac', 'kwring', 'kwshort',
+])
+
+const validateAudioUrl = async (url: string): Promise<boolean> => {
+  try {
+    const resp = await fetch(url, { method: 'HEAD', headers: { 'User-Agent': 'Mozilla/5.0' } })
+    if (!resp.ok) return false
+    const cl = resp.headers.get('content-length')
+    if (cl && parseInt(cl) === 0) return false
+    const ct = (resp.headers.get('content-type') || '').toLowerCase()
+    if (ct) {
+      const format = Object.keys(AUDIO_CONTENT_TYPES).find(t => ct.includes(t))
+      if (!format) return false
+      return true
+    }
+    const pathname = new URL(url).pathname.toLowerCase()
+    const ext = pathname.split('.').pop() || ''
+    if (ENCRYPTED_EXTENSIONS.has(ext)) return false
+    return true
+  } catch {
+    return true
+  }
+}
+
 type FailureStrategy = 'togglePlatform' | 'lowerQuality' | 'toggleSource' | 'playNext'
 
-const executeFailureStrategy = async (
+export const executeFailureStrategy = async (
   musicInfo: LX.Music.MusicInfo | LX.Download.ListItem,
   isRefresh: boolean,
-  error: any
-): Promise<string | null> => {
+  error: any,
+  triedUrls?: Set<string>,
+  startIndex = 0
+): Promise<{ url: string; index: number } | null> => {
+  if (!triedUrls) triedUrls = new Set()
   const strategies = (settingState.setting['player.failureStrategy'] ?? []) as FailureStrategy[]
   const currentMusicInfo = 'progress' in musicInfo ? musicInfo.metadata.musicInfo : musicInfo
   const isOnline =
@@ -138,9 +117,9 @@ const executeFailureStrategy = async (
   console.log('[播放策略] 歌曲:', (currentMusicInfo as any)?.name, '| 当前音源:', (currentMusicInfo as any)?.source, '| 是否在线:', isOnline ? '是' : '否')
   console.log('[播放策略] 错误信息:', error?.message ?? error)
 
-  for (let i = 0; i < strategies.length; i++) {
+  for (let i = startIndex; i < strategies.length; i++) {
     const strategy = strategies[i]
-    if (global.lx.isPlayedStop || diffCurrentMusicInfo(musicInfo)) {
+    if (global.lx.isPlayedStop || currentMusicInfo?.id != playerState.playMusicInfo.musicInfo?.id) {
       console.log('[播放策略] 播放已停止或歌曲已切换，终止策略执行')
       return null
     }
@@ -154,36 +133,42 @@ const executeFailureStrategy = async (
           break
         }
         try {
-          setStatusText(global.i18n.t('toggle_source_try'))
+          setStatusText('尝试切换平台...')
           const otherSources = await getOtherSource(musicInfo)
           console.log('[播放策略] [切换平台] 可用其他平台:', otherSources.map((s: any) => s.source))
-          if (otherSources.length > 0) {
-            const PLATFORM_TIMEOUT_MS = 15000
-            const platformTimeout = new Promise<never>((_, reject) =>
-              setTimeout(() => reject(new Error('切换平台超时')), PLATFORM_TIMEOUT_MS)
-            )
-            const result = await Promise.race([
-              getOnlineOtherSourceMusicUrl({
-                musicInfos: [...otherSources],
-                onToggleSource: (mInfo) => {
-                  if (diffCurrentMusicInfo(musicInfo)) return
-                  console.log('[播放策略] [切换平台] >>> 正在尝试平台:', mInfo?.source, '| 歌曲:', mInfo?.name, '| 歌手:', mInfo?.singer)
-                  setStatusText(global.i18n.t('toggle_source_try'))
-                },
-                isRefresh,
-                retryedSource: [(currentMusicInfo as LX.Music.MusicInfoOnline).source],
-              }),
-              platformTimeout,
-            ])
-            if (result.url) {
-              console.log('[播放策略] [切换平台] 成功! 平台:', (result.musicInfo as any)?.source)
-              setStatusText('')
-              return result.url
+          for (const source of otherSources) {
+            if (global.lx.isPlayedStop || currentMusicInfo?.id != playerState.playMusicInfo.musicInfo?.id) {
+              console.log('[播放策略] [切换平台] 播放已停止或歌曲已切换，终止')
+              return null
             }
-            console.log('[播放策略] [切换平台] 所有平台均失败，继续下一个策略')
-          } else {
-            console.log('[播放策略] [切换平台] 无可用平台')
+            try {
+              setStatusText(`尝试切换平台 ${source.source}`)
+              console.log('[播放策略] [切换平台] >>> 正在尝试平台:', source.source, '| 歌曲:', source.name, '| 歌手:', source.singer)
+              const url = await getMusicUrl({
+                musicInfo: source,
+                isRefresh,
+                allowToggleSource: false,
+              })
+              if (url && !triedUrls!.has(url)) {
+                const isValid = await validateAudioUrl(url)
+                if (!isValid) {
+                  console.log('[播放策略] [切换平台]', source.source, 'URL不可播放，跳过')
+                  triedUrls!.add(url)
+                  continue
+                }
+                triedUrls!.add(url)
+                console.log('[播放策略] [切换平台] 成功! 平台:', source.source)
+                setStatusText(`切换到 ${source.source} 成功`)
+                return { url, index: i }
+              }
+              if (url) {
+                console.log('[播放策略] [切换平台]', source.source, '返回已尝试URL，跳过')
+              }
+            } catch (e: any) {
+              console.log('[播放策略] [切换平台]', source.source, '失败:', e?.message)
+            }
           }
+          console.log('[播放策略] [切换平台] 所有平台均失败，继续下一个策略')
         } catch (e: any) {
           console.log('[播放策略] [切换平台] 失败:', e?.message)
         }
@@ -197,13 +182,10 @@ const executeFailureStrategy = async (
         try {
           const onlineInfo = currentMusicInfo as LX.Music.MusicInfoOnline
           const preferredQuality = settingState.setting['player.playQuality']
-          const availableQualities = Object.keys(
-            onlineInfo.meta._qualitys ?? {}
-          ) as LX.Quality[]
+          const availableQualities = Object.keys(onlineInfo.meta._qualitys ?? {}) as LX.Quality[]
           const sortedQualities = availableQualities
             .filter((q) => QUALITY_RANK.includes(q))
             .sort((a, b) => QUALITY_RANK.indexOf(a) - QUALITY_RANK.indexOf(b))
-
           const preferredIndex = QUALITY_RANK.indexOf(preferredQuality)
           const lowerQualities = sortedQualities.filter((q) => {
             const idx = QUALITY_RANK.indexOf(q)
@@ -212,34 +194,40 @@ const executeFailureStrategy = async (
 
           console.log('[播放策略] [降低音质] 当前音质:', preferredQuality, '| 可降级:', lowerQualities)
 
-          let lowerQualitySuccess = false
           for (const quality of lowerQualities) {
-            if (global.lx.isPlayedStop || diffCurrentMusicInfo(musicInfo)) {
+            if (global.lx.isPlayedStop || currentMusicInfo?.id != playerState.playMusicInfo.musicInfo?.id) {
               console.log('[播放策略] [降低音质] 播放已停止，终止')
               return null
             }
             try {
-              setStatusText(global.i18n.t('player__getting_url'))
+              setStatusText(`尝试降级音质 ${quality}`)
               const url = await getMusicUrl({
                 musicInfo,
                 quality,
                 isRefresh,
                 allowToggleSource: false,
               })
-              if (url) {
+              if (url && !triedUrls!.has(url)) {
+                const isValid = await validateAudioUrl(url)
+                if (!isValid) {
+                  console.log(`[播放策略] [降低音质] ${quality} URL不可播放，跳过`)
+                  triedUrls!.add(url)
+                  continue
+                }
+                triedUrls!.add(url)
                 console.log(`[播放策略] [降低音质] 成功! 降级到: ${quality}`)
-                lowerQualitySuccess = true
-                setStatusText('')
-                return url
+                setStatusText(`降级到 ${quality} 成功`)
+                return { url, index: i }
+              }
+              if (url) {
+                console.log(`[播放策略] [降低音质] ${quality} 返回已尝试URL，跳过`)
               }
             } catch {
               console.log(`[播放策略] [降低音质] ${quality} 失败，尝试下一个`)
               continue
             }
           }
-          if (!lowerQualitySuccess) {
-            console.log('[播放策略] [降低音质] 所有可降级音质均失败')
-          }
+          console.log('[播放策略] [降低音质] 所有可降级音质均失败')
         } catch (e: any) {
           console.log('[播放策略] [降低音质] 异常:', e?.message)
         }
@@ -255,7 +243,7 @@ const executeFailureStrategy = async (
           break
         }
         try {
-          setStatusText(global.i18n.t('toggle_source_try'))
+          setStatusText('尝试切换音源...')
           const maxRetry = settingState.setting['player.toggleSourceMaxRetry'] ?? 5
           console.log('[播放策略] [切换音源] 最大尝试次数:', maxRetry)
           const result = await tryUserDefinedSourceToggle({
@@ -263,15 +251,16 @@ const executeFailureStrategy = async (
             isRefresh,
             maxRetry,
             onToggleSource: (mInfo) => {
-              if (diffCurrentMusicInfo(musicInfo)) return
+              if (currentMusicInfo?.id != playerState.playMusicInfo.musicInfo?.id) return
               console.log('[播放策略] [切换音源] >>> 正在尝试插件:', mInfo?.source, '| 歌曲:', mInfo?.name)
-              setStatusText(global.i18n.t('toggle_source_try'))
+              setStatusText(`尝试切换音源 ${mInfo?.source || ''}`)
             },
           })
           if (result.url) {
+            triedUrls!.add(result.url)
             console.log('[播放策略] [切换音源] 成功! 插件:', (result.musicInfo as any)?.source)
-            setStatusText('')
-            return result.url
+            setStatusText(`切换音源成功`)
+            return { url: result.url, index: i }
           }
           console.log('[播放策略] [切换音源] 所有插件均失败，继续下一个策略')
         } catch (e: any) {
@@ -281,6 +270,7 @@ const executeFailureStrategy = async (
       }
       case 'playNext': {
         console.log('[播放策略] [播放下一首] 执行播放下一首')
+        setStatusText('播放下一首...')
         void playNext(true)
         return null
       }
@@ -289,6 +279,61 @@ const executeFailureStrategy = async (
 
   console.log('[播放策略] ====== 所有策略执行完毕，均未成功 ======')
   throw error
+}
+
+const createDelayNextTimeout = (delay: number) => {
+  let timeout: number | null
+  const clearDelayNextTimeout = () => {
+    if (timeout) {
+      BackgroundTimer.clearTimeout(timeout)
+      timeout = null
+    }
+  }
+
+  const addDelayNextTimeout = () => {
+    clearDelayNextTimeout()
+    timeout = BackgroundTimer.setTimeout(() => {
+      timeout = null
+      if (global.lx.isPlayedStop) return
+      void playNext(true)
+    }, delay)
+  }
+
+  return {
+    clearDelayNextTimeout,
+    addDelayNextTimeout,
+  }
+}
+const { addDelayNextTimeout, clearDelayNextTimeout } = createDelayNextTimeout(5000)
+const { addDelayNextTimeout: addLoadTimeout, clearDelayNextTimeout: clearLoadTimeout } =
+  createDelayNextTimeout(30000)
+
+let cancelDelayRetry: (() => void) | null = null
+const delayRetry = async (
+  musicInfo: LX.Music.MusicInfo | LX.Download.ListItem,
+  isRefresh = false
+): Promise<string | null> => {
+  return new Promise<string | null>((resolve, reject) => {
+    const time = getRandom(2, 6)
+    setStatusText(global.i18n.t('player__getting_url_delay_retry', { time }))
+    const tiemout = setTimeout(() => {
+      getMusicPlayUrl(musicInfo, isRefresh, true)
+        .then((result) => {
+          cancelDelayRetry = null
+          setStatusText('')
+          resolve(result)
+        })
+        .catch(async (err: any) => {
+          cancelDelayRetry = null
+          reject(err)
+        })
+    }, time * 1000)
+    cancelDelayRetry = () => {
+      clearTimeout(tiemout)
+      cancelDelayRetry = null
+      resolve(null)
+    }
+  })
 }
 
 const getMusicPlayUrl = async (

@@ -22,18 +22,18 @@ const getAlias = item => {
 /**
  * Fetch detailed quality info for a single song on demand and merge it into existing info
  */
-export const fetchAndApplyDetailedQuality = async(musicInfo, retryNum = 0) => {
+export const fetchAndApplyDetailedQuality = async(musicInfo, retryNum = 0, silent = false) => {
   let latestMusicInfo = null
   for (const list of allMusicList.values()) {
     const found = list.find(item => item.id === musicInfo.id)
     if (found) {
-      console.log("found", found)
+      if (!silent) console.log("found", found)
       latestMusicInfo = found
       break
     }
   }
   const currentMusicInfo = latestMusicInfo || musicInfo
-  console.log("found -> currentMusicInfo", currentMusicInfo)
+  if (!silent) console.log("found -> currentMusicInfo", currentMusicInfo)
   if (currentMusicInfo.meta._full) return currentMusicInfo
 
   const songId = currentMusicInfo.meta.songId
@@ -88,15 +88,15 @@ export const fetchAndApplyDetailedQuality = async(musicInfo, retryNum = 0) => {
     }
 
     if (listIdsToUpdate.length) {
-      console.log('updateListMusics');
+      if (!silent) console.log('updateListMusics');
       void updateListMusics(listIdsToUpdate.map(id => ({ id, musicInfo: updatedMusicInfo })));
     } else {
-      console.log('global.app_event.musicInfoUpdate');
+      if (!silent) console.log('global.app_event.musicInfoUpdate');
       global.app_event.musicInfoUpdate(updatedMusicInfo);
     }
 
     if (playerState.playMusicInfo.musicInfo?.id === musicInfo.id) {
-      console.log('updatePlayMusicInfo');
+      if (!silent) console.log('updatePlayMusicInfo');
       playerState.playMusicInfo.musicInfo.meta = updatedMusicInfo.meta;
     }
 
@@ -111,10 +111,10 @@ export const fetchAndApplyDetailedQuality = async(musicInfo, retryNum = 0) => {
     }
 
     const delay = 200
-    console.log(`Retrying fetch details for ${musicInfo.name} in ${delay}ms... (Attempt ${retryNum})`)
+    if (!silent) console.log(`Retrying fetch details for ${musicInfo.name} in ${delay}ms... (Attempt ${retryNum})`)
     await new Promise(resolve => setTimeout(resolve, delay))
 
-    return fetchAndApplyDetailedQuality(musicInfo, retryNum)
+    return fetchAndApplyDetailedQuality(musicInfo, retryNum, silent)
   }
 }
 
