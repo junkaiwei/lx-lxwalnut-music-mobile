@@ -70,7 +70,7 @@ buck-out/
 # User specified
 Walnut.jks
 android/app/Walnut.jks
-lx-netease-music-mobile.zip
+lx-lxwalnut-music-mobile.zip
 publish/*
 !publish/announcement.json
 !publish/images/
