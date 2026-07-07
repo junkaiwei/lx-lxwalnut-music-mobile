@@ -13,6 +13,7 @@ import { setApiSource } from '@/core/apiSource'
 import commonActions from '@/store/common/action'
 import settingState from '@/store/setting/state'
 import { checkUpdate } from '@/core/version'
+import { checkAnnouncement } from '@/core/announcement'
 import { bootLog } from '@/utils/bootLog'
 import { cheatTip } from '@/utils/tools'
 import * as networkLyric from '@/core/networkLyric'
@@ -41,6 +42,15 @@ const handlePushedHomeScreen = async () => {
   } else {
     void checkUpdate(true)
   }
+  // 延迟检查公告，确保导航已就绪
+  setTimeout(() => {
+    console.log('[Announcement] Timer fired, calling checkAnnouncement')
+    try {
+      void checkAnnouncement(false)
+    } catch (err) {
+      console.error('[Announcement] Error calling checkAnnouncement:', err)
+    }
+  }, 2000)
   networkLyric.init()
 }
 

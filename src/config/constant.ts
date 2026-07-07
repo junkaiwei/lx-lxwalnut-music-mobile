@@ -84,6 +84,7 @@ export const storageDataPrefix = {
   downloadList: '@download_list',
   wyUidCache: '@wy_uid_cache__',
   similarSongsCache: '@similar_songs_cache',
+  localAnnouncementId: '@local_announcement_id',
 } as const
 
 export const storageDataPrefixOld = {

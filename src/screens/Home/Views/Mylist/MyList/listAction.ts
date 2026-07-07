@@ -163,13 +163,19 @@ const createLocalMusicInfos = async (
 
     await Promise.all(
       tasks.map(async (path) => {
-        const info = await readMetadata(path)
-        const picPath = await readPic(path).catch(() => null)
-        return { path, info, picPath }
+        try {
+          const info = await readMetadata(path)
+          const picPath = await readPic(path).catch(() => null)
+          return { path, info, picPath, error: null }
+        } catch (err) {
+          console.error(`[本地导入] 读取元数据失败: ${path}`, err)
+          return { path, info: null, picPath: null, error: err.message || '未知错误' }
+        }
       }),
     ).then((res) => {
-      for (const { path, info, picPath } of res) {
+      for (const { path, info, picPath, error } of res) {
         if (!info) {
+          console.log(`[本地导入] 读取失败: ${path.split('/').at(-1)} - ${error || 'readMetadata返回null'}`)
           errorPath.push(path)
           continue
         }
@@ -212,16 +218,25 @@ const handleUpdateMusics = async (
   total: number = 0,
   errorPath: string[] = []
 ) => {
-  // console.log(index + 1, index + 201)
+  console.log(`[本地导入] 开始读取元数据，共 ${filePaths.length} 个文件`)
   if (!total) total = filePaths.length
   const paths = filePaths.slice(index + 1, index + 11)
+  console.log(`[本地导入] 当前批次: ${paths.length} 个文件`)
+  
   const musicInfos = await createLocalMusicInfos(paths, errorPath)
+  console.log(`[本地导入] 本批次成功: ${musicInfos.length} 个，失败: ${paths.length - musicInfos.length} 个`)
+  
   if (musicInfos.length) throttleUpdateMusics(musicInfos)
   index += 10
   if (filePaths.length - 1 > index)
     await handleUpdateMusics(filePaths, throttleUpdateMusics, index, total, errorPath)
   else {
     if (errorPath.length) {
+      console.log(`[本地导入] 有 ${errorPath.length} 个文件读取元数据失败`)
+      console.log(`[本地导入] 失败的文件:`)
+      errorPath.forEach((p, i) => {
+        console.log(`[本地导入]   ${i + 1}. ${p.split('/').at(-1)}`)
+      })
       log.warn('Parse metadata failed:\n' + errorPath.map((p) => p.split('/').at(-1)).join('\n'))
       toast(
         global.i18n.t('list_select_local_file_result_failed_tip', {
@@ -238,28 +253,65 @@ const handleUpdateMusics = async (
   }
 }
 export const handleImportMediaFile = async (listInfo: LX.List.MyListInfo, path: string) => {
+  console.log(`[本地导入] ========== 开始导入 ==========`)
+  console.log(`[本地导入] 歌单: ${listInfo.name}`)
+  console.log(`[本地导入] 路径: ${path}`)
+  
   setFetchingListStatus(listInfo.id, true)
-  const files = await scanAudioFiles(path)
-  if (files.length) {
-    const throttleUpdateMusics = createThrottleAddMusics(
-      async (listId, musicInfos) => {
-        return updateListMusics(musicInfos.map((info) => ({ id: listId, musicInfo: info })))
-      },
-      async (listId, errorPath) => {
-        return removeListMusics(listId, errorPath)
-      },
-      listInfo.id
-    )
-    await addListMusics(
-      listInfo.id,
-      files.map(buildLocalMusicInfoByFilePath),
-      settingState.setting['list.addMusicLocationType']
-    )
-    toast(global.i18n.t('list_select_local_file_temp_add_tip', { total: files.length }), 'long')
-    await handleUpdateMusics(
-      files.map((f) => f.path),
-      throttleUpdateMusics
-    )
-  } else toast(global.i18n.t('list_select_local_file_empty_tip'), 'long')
-  setFetchingListStatus(listInfo.id, false)
+  let importSuccess = false
+  let importError = ''
+  let importedCount = 0
+  
+  try {
+    console.log(`[本地导入] 扫描音频文件...`)
+    const files = await scanAudioFiles(path)
+    console.log(`[本地导入] 找到 ${files.length} 个音频文件`)
+    
+    if (files.length) {
+      console.log(`[本地导入] 音频文件列表:`)
+      files.forEach((f, i) => {
+        console.log(`[本地导入]   ${i + 1}. ${f.name} (${f.mimeType || '未知类型'})`)
+      })
+      
+      const throttleUpdateMusics = createThrottleAddMusics(
+        async (listId, musicInfos) => {
+          return updateListMusics(musicInfos.map((info) => ({ id: listId, musicInfo: info })))
+        },
+        async (listId, errorPath) => {
+          return removeListMusics(listId, errorPath)
+        },
+        listInfo.id
+      )
+      await addListMusics(
+        listInfo.id,
+        files.map(buildLocalMusicInfoByFilePath),
+        settingState.setting['list.addMusicLocationType']
+      )
+      importedCount = files.length
+      console.log(`[本地导入] 成功添加 ${files.length} 首歌曲到歌单`)
+      toast(global.i18n.t('list_select_local_file_temp_add_tip', { total: files.length }), 'long')
+      await handleUpdateMusics(
+        files.map((f) => f.path),
+        throttleUpdateMusics
+      )
+      importSuccess = true
+    } else {
+      console.log(`[本地导入] 未找到音频文件`)
+      toast(global.i18n.t('list_select_local_file_empty_tip'), 'long')
+      importError = '未找到音频文件'
+    }
+  } catch (error) {
+    console.error(`[本地导入] 导入失败:`, error)
+    importError = error.message || '未知错误'
+    toast(`导入失败: ${error.message}`, 'long')
+  } finally {
+    setFetchingListStatus(listInfo.id, false)
+    console.log(`[本地导入] ========== 导入完成 ==========`)
+    if (importSuccess) {
+      console.log(`[本地导入] 最终结果: 成功导入 ${importedCount} 首歌曲`)
+    } else {
+      console.log(`[本地导入] 最终结果: 失败`)
+      console.log(`[本地导入] 失败原因: ${importError}`)
+    }
+  }
 }

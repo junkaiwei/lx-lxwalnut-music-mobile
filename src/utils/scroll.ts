@@ -58,7 +58,7 @@ const handleScrollY = (
     return noop
   }
   let change = to - start
-  const increment = 10
+  const increment = 5
   if (!change) {
     fn()
     return noop

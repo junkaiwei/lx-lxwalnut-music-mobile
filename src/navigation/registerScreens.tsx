@@ -26,11 +26,13 @@ import {
   SYNC_MODE_MODAL,
   ALBUM_DETAIL_SCREEN, DOWNLOAD_MANAGER_SCREEN,
   SIMILAR_SONGS_SCREEN,
+  ANNOUNCEMENT_MODAL,
   // SETTING_SCREEN,
 } from './screenNames'
 import VersionModal from './components/VersionModal'
 import PactModal from './components/PactModal'
 import SyncModeModal from './components/SyncModeModal'
+import AnnouncementModal from './components/AnnouncementModal'
 import DownloadManager from "@/screens/DownloadManager";
 function WrappedComponent(Component: any) {
   return function inject(props: Record<string, any>) {
@@ -57,6 +59,7 @@ export default () => {
   Navigation.registerComponent(SYNC_MODE_MODAL, () => WrappedComponent(SyncModeModal))
   Navigation.registerComponent(DOWNLOAD_MANAGER_SCREEN, () => WrappedComponent(DownloadManager))
   Navigation.registerComponent(SIMILAR_SONGS_SCREEN, () => WrappedComponent(SimilarSongs))
+  Navigation.registerComponent(ANNOUNCEMENT_MODAL, () => WrappedComponent(AnnouncementModal))
   // Navigation.registerComponent(SETTING_SCREEN, () => WrappedComponent(Setting))
 
   console.info('All screens have been registered...')

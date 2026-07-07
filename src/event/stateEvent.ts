@@ -3,6 +3,7 @@ import type { InitState as CommonState } from '@/store/common/state'
 import type { InitState as ListState } from '@/store/list/state'
 import type { InitState as PlayerState } from '@/store/player/state'
 import type { InitState as VersionState } from '@/store/version/state'
+import type { InitState as AnnouncementState } from '@/store/announcement/state'
 import { type I18n } from '@/lang'
 
 // {
@@ -145,6 +146,10 @@ export class StateEvent extends Event {
 
   sourceNamesUpdated(names: CommonState['sourceNames']) {
     this.emit('sourceNamesUpdated', names)
+  }
+
+  announcementUpdated(info: AnnouncementState) {
+    this.emit('announcementUpdated', info)
   }
 }
 

@@ -68,6 +68,7 @@ interface TestResult {
   encryptedWarnings?: string[]
   pluginBugIssues?: string[]
   typeDowngradeWarnings?: string[]
+  permissionWarnings?: string[]
   progress?: string
 }
 
@@ -191,7 +192,7 @@ export default memo(() => {
   const [testTimeoutSeconds, setTestTimeoutSeconds] = useState('20')
   const [qualityTimeoutSeconds, setQualityTimeoutSeconds] = useState('5')
   const [showErrors, setShowErrors] = useState(true)
-  const [showDowngrades, setShowDowngrades] = useState(false)
+  const [showDowngrades, setShowDowngrades] = useState(true)
   const [isStopRequested, setIsStopRequested] = useState(false)
   const [logText, setLogText] = useState('')
   const [testingSourceId, setTestingSourceId] = useState<string | null>(null)
@@ -476,6 +477,8 @@ export default memo(() => {
       let maxQuality: string | null = null
       const qualityResults: Record<string, { success: boolean; url?: string; error?: string; time: number; actualFormat?: string }> = {}
       const detectedQualities: Record<string, { url: string; time: number }> = {}
+      const encryptedWarnings: string[] = []
+      const permissionWarnings: string[] = []
 
       for (let i = 0; i < qualityLevels.length; i++) {
         if (abortController?.signal.aborted) {
@@ -552,6 +555,7 @@ export default memo(() => {
           }
           
           let contentTypeExt = ''
+          let realFileName = ''
           if (Object.keys(qualitySizesNum).length > 0) {
             try {
               const headResponse = await fetch(url, { method: 'HEAD' })
@@ -559,6 +563,15 @@ export default memo(() => {
               const contentType = headResponse.headers.get('content-type')
               
               console.log(`[源测试] [${source.name}]   HEAD请求: status=${headResponse.status}, content-length=${contentLength}, content-type=${contentType}`)
+              
+              // 从Content-Disposition获取真实文件名（最准确）
+              const contentDisposition = headResponse.headers.get('content-disposition')
+              if (contentDisposition) {
+                const filenameMatch = contentDisposition.match(/filename[*]?=(?:UTF-8''|")?([^";\s]+)/i)
+                if (filenameMatch) {
+                  realFileName = decodeURIComponent(filenameMatch[1].replace(/"/g, ''))
+                }
+              }
               
               // 从Content-Type获取文件类型
               const contentTypeMap: Record<string, string> = {
@@ -578,11 +591,21 @@ export default memo(() => {
               }
               contentTypeExt = contentTypeMap[contentType || ''] || ''
               
+              console.log(`[源测试] [${source.name}]   Content-Disposition: ${contentDisposition || '无'}`)
+              
               if (!contentLength || contentLength === '0') {
                 // HEAD请求失败，可能URL过期，清除缓存并重试
                 sourceTestLog.info(`[${source.name}]   [INFO] ${quality}: HEAD请求无法获取文件大小(status=${headResponse.status})`)
                 sourceTestLog.info(`[${source.name}]   [URL] ${url}`)
-                sourceTestLog.info(`[${source.name}]   [INFO] 可能URL过期，清除缓存重试...`)
+                
+                // 检测403权限错误
+                if (headResponse.status === 403) {
+                  permissionWarnings.push(`${getEncryptedQualityLabel(quality)} --> 403`)
+                  sourceTestLog.info(`[${source.name}]   [WARN] ${quality}: 403 Forbidden - 无访问权限`)
+                } else {
+                  sourceTestLog.info(`[${source.name}]   [INFO] 可能URL过期，清除缓存重试...`)
+                }
+                
                 await clearMusicUrl([`${storageDataPrefix.musicUrl}${musicInfoForApi.id}_${quality}`])
                 
                 // 重新请求URL
@@ -627,11 +650,15 @@ export default memo(() => {
                   }
                 }
                 
+                // 更新实际音质
+                if (matchedQuality) {
+                  actualQualityFromUrl = matchedQuality
+                }
+                
                 if (!matchedQuality) {
                   const urlExtTemp = contentTypeExt || (url ? url.split('?')[0].split('.').pop() : '未知')
-                  const isPlayable = PLAYABLE_EXTENSIONS.has(urlExtTemp.toLowerCase())
 
-                  if (isPlayable && Object.keys(qualitySizesNum).length > 0) {
+                  if (Object.keys(qualitySizesNum).length > 0) {
                     let closestQuality: string | null = null
                     let smallestRatio = Infinity
 
@@ -652,10 +679,11 @@ export default memo(() => {
                       const expectedSizeMB = qualitySizesNum[closestQuality] ? qualitySizesNum[closestQuality].toFixed(2) : '未知'
                       sourceTestLog.info(`[${source.name}]   [URL] ${url}`)
                       sourceTestLog.info(`[${source.name}]   长度: ${url?.length || 0} | 音质: 疑似${getEncryptedQualityLabel(closestQuality)} | 类型: ${urlExtTemp} | 大小: ${actualSizeRounded.toFixed(2)}MB | 预期: ${expectedSizeMB}MB`)
-                      sourceTestLog.info(`[${source.name}]   [SUSPECT] ${quality}: 格式可播放，大小最接近${getEncryptedQualityLabel(closestQuality)}(偏差${(smallestRatio * 100).toFixed(1)}%)`)
+                      sourceTestLog.info(`[${source.name}]   [SUSPECT] ${quality}: 格式可播放，大小最接近疑似${getEncryptedQualityLabel(closestQuality)}(偏差${(smallestRatio * 100).toFixed(1)}%)`)
+                      
                       qualityResults[quality] = {
                         success: false,
-                        error: `疑似${closestQuality}，实际=${closestQuality}`,
+                        error: `疑似${closestQuality}，实际=疑似${closestQuality}`,
                         time: qualityTime,
                         suspected: closestQuality,
                         url,
@@ -663,24 +691,32 @@ export default memo(() => {
                         expectedSize: qualitySizesNum[closestQuality],
                         actualFormat: urlExtTemp,
                       }
+                      
                       if (!detectedQualities[`suspected_${closestQuality}`]) {
                         detectedQualities[`suspected_${closestQuality}`] = { url, time: qualityTime }
                       }
+                      
+                      // 检测加密格式并添加到警告列表
+                      if (isEncryptedFormat(urlExtTemp)) {
+                        encryptedWarnings.push(`${getEncryptedQualityLabel(quality)} --> ${urlExtTemp}`)
+                      }
+                      
                       continue
                     }
                   }
 
-                  qualityResults[quality] = { success: false, error: `大小不匹配(${actualSizeRounded.toFixed(2)}MB)`, time: qualityTime }
+                  qualityResults[quality] = { success: false, error: `不匹配，实际=${actualQualityFromUrl}`, time: qualityTime }
                   const expectedSizeMB = qualitySizesNum[quality] ? qualitySizesNum[quality].toFixed(2) : '无'
                   sourceTestLog.info(`[${source.name}]   [URL] ${url}`)
                   sourceTestLog.info(`[${source.name}]   长度: ${url?.length || 0} | 音质: ${actualQualityFromUrl} | 类型: ${urlExtTemp} | 大小: ${actualSizeRounded.toFixed(2)}MB | 预期: ${expectedSizeMB}MB`)
-                  sourceTestLog.info(`[${source.name}]   [FAIL] ${quality}: 大小不匹配(实际: ${actualSizeRounded.toFixed(2)}MB, 预期: ${expectedSizeMB}MB)`)
+                  sourceTestLog.info(`[${source.name}]   [FAIL] ${quality}: 不匹配(请求: ${quality}, 实际: ${actualQualityFromUrl}, 大小: ${actualSizeRounded.toFixed(2)}MB, 预期: ${expectedSizeMB}MB)`)
                   continue
                 }
                 
                 actualQualityFromUrl = matchedQuality
               }
-            } catch {
+            } catch (err) {
+              console.error(`[源测试] [${source.name}]   [ERROR] ${quality}:`, err)
               qualityResults[quality] = { success: false, error: '获取文件信息失败', time: qualityTime }
               sourceTestLog.info(`[${source.name}]   [FAIL] ${quality}: 获取文件信息失败`)
               sourceTestLog.info(`[${source.name}]   [URL] ${url}`)
@@ -691,17 +727,38 @@ export default memo(() => {
           sourceTestLog.info(`[${source.name}]   URL: ${url}`)
           const expectedSize = qualitySizes[quality] || '未知'
           
-          // 优先从Content-Type获取类型，否则从URL解析
-          let urlExt = contentTypeExt
+          // 已知的音频格式列表
+          const knownAudioFormats = ['mp3', 'flac', 'aac', 'm4a', 'ogg', 'wav', 'opus', 'mflac', 'mgg']
+          
+          // 判断类型的优先级：Content-Disposition > URL扩展名 > Content-Type
+          let urlExt = ''
+          
+          // 1. 优先使用Content-Disposition中的文件名扩展名（最准确）
+          if (realFileName) {
+            const realFileExt = realFileName.split('.').pop()?.toLowerCase() || ''
+            if (realFileExt && knownAudioFormats.includes(realFileExt)) {
+              urlExt = realFileExt
+            }
+          }
+          
+          // 2. 如果Content-Disposition没有有效扩展名，使用URL扩展名
           if (!urlExt && url) {
-            // 先去掉查询参数，再提取扩展名
             const urlWithoutQuery = url.split('?')[0]
             const urlParts = urlWithoutQuery.split('.')
-            urlExt = urlParts.length > 1 ? urlParts[urlParts.length - 1] : '未知'
+            const urlExtCandidate = urlParts.length > 1 ? urlParts[urlParts.length - 1] : ''
+            if (urlExtCandidate && knownAudioFormats.includes(urlExtCandidate.toLowerCase())) {
+              urlExt = urlExtCandidate
+            }
           }
+          
+          // 3. 最后使用Content-Type
+          if (!urlExt && contentTypeExt) {
+            urlExt = contentTypeExt
+          }
+          
           urlExt = urlExt || '未知'
           
-          sourceTestLog.info(`[${source.name}]   长度: ${url?.length || 0} | 音质: ${actualQualityFromUrl} | 类型: ${urlExt} | 大小: ${actualSizeRounded?.toFixed(2) || '未知'}MB | 预期: ${expectedSize}`)
+          sourceTestLog.info(`[${source.name}]   长度: ${url?.length || 0} | 音质: ${actualQualityFromUrl} | 类型: ${urlExt} (文件名: ${realFileName || '无'}, URL: ${url?.split('?')[0]?.split('.').pop() || '无'}, Content-Type: ${contentTypeExt || '未知'}) | 大小: ${actualSizeRounded?.toFixed(2) || '未知'}MB | 预期: ${expectedSize}`)
           
           // 检测加密格式
           if (isEncryptedFormat(urlExt)) {
@@ -716,6 +773,8 @@ export default memo(() => {
               actualQuality: actualQualityFromUrl,
               actualFormat: urlExt,
             }
+            // 添加到加密格式警告列表
+            encryptedWarnings.push(`${getEncryptedQualityLabel(quality)} --> ${urlExt}`)
             continue
           }
           
@@ -761,73 +820,98 @@ export default memo(() => {
       }
 
       const totalDelay = Date.now() - totalStartTime
-      
-      // 检测音质降级问题
-      const downgradeIssues: string[] = []
-      for (const [requestedQuality, result] of Object.entries(qualityResults)) {
-        if (result.success) continue
-        const actualQuality = result.error?.match(/实际[=:]\s*(\w+)/)?.[1]
-        if (actualQuality && actualQuality !== requestedQuality) {
-          downgradeIssues.push(`${getEncryptedQualityLabel(requestedQuality)} --> ${getEncryptedQualityLabel(actualQuality)}`)
-        }
-      }
-      
-      // 检测插件行为不一致问题
-      const pluginBugIssues: string[] = []
-      for (const [requestedQuality, result] of Object.entries(qualityResults)) {
-        if (result.success) continue
-        const actualQuality = result.error?.match(/实际[=:]\s*(\w+)/)?.[1]
-        if (actualQuality && actualQuality !== requestedQuality) {
-          const actualResult = qualityResults[actualQuality]
-          if (actualResult && !actualResult.success) {
-            const actualActualQuality = actualResult.error?.match(/实际[=:]\s*(\w+)/)?.[1]
-            if (actualActualQuality && qualityPriority[actualActualQuality] < qualityPriority[actualQuality]) {
-              pluginBugIssues.push(`检测到请求${getEncryptedQualityLabel(requestedQuality)}返回${getEncryptedQualityLabel(actualQuality)}，但请求${getEncryptedQualityLabel(actualQuality)}返回${getEncryptedQualityLabel(actualActualQuality)}`)
+
+      // 统一检测管理器
+      const detectionRules = {
+        // 音质降级检测
+        downgrade: {
+          enabled: true,
+          check: (requestedQuality: string, result: any) => {
+            if (result.success) return null
+            const actualQuality = result.error?.match(/实际[=:：]\s*疑似(\w+)/)?.[1] || 
+                                  result.error?.match(/实际[=:：]\s*(\w+)/)?.[1] || 
+                                  result.error?.match(/实际[:：]\s*(\w+)/)?.[1]
+            const isSuspected = result.error?.includes('疑似') || false
+            if (actualQuality && actualQuality !== requestedQuality) {
+              const label = isSuspected ? `疑似${getEncryptedQualityLabel(actualQuality)}` : getEncryptedQualityLabel(actualQuality)
+              return `${getEncryptedQualityLabel(requestedQuality)} --> ${label}`
             }
+            return null
+          }
+        },
+        // 插件bug检测
+        pluginBug: {
+          enabled: true,
+          check: (requestedQuality: string, result: any, qualityResults: Record<string, any>) => {
+            if (result.success) return null
+            const actualQuality = result.error?.match(/实际[=:]\s*(\w+)/)?.[1]
+            if (actualQuality && actualQuality !== requestedQuality) {
+              const actualResult = qualityResults[actualQuality]
+              if (actualResult && !actualResult.success) {
+                const actualActualQuality = actualResult.error?.match(/实际[=:]\s*(\w+)/)?.[1]
+                if (actualActualQuality && qualityPriority[actualActualQuality] < qualityPriority[actualQuality]) {
+                  return `检测到请求${getEncryptedQualityLabel(requestedQuality)}返回${getEncryptedQualityLabel(actualQuality)}，但请求${getEncryptedQualityLabel(actualQuality)}返回${getEncryptedQualityLabel(actualActualQuality)}`
+                }
+              }
+            }
+            return null
+          }
+        },
+        // 类型降级检测
+        typeDowngrade: {
+          enabled: true,
+          standardFormats: {
+            master: 'flac',
+            atmos_plus: 'flac',
+            atmos: 'flac',
+            hires: 'flac',
+            flac: 'flac',
+            '320k': 'mp3',
+            '128k': 'mp3',
+          } as Record<string, string>,
+          check: (requestedQuality: string, result: any) => {
+            if (!result.actualFormat) return null
+            const expectedFormat = detectionRules.typeDowngrade.standardFormats[requestedQuality]
+            if (!expectedFormat) return null
+            const formatLower = result.actualFormat.toLowerCase()
+            if (formatLower !== expectedFormat) {
+              return `${getEncryptedQualityLabel(requestedQuality)} --> ${result.actualFormat.toLowerCase()}`
+            }
+            return null
           }
         }
-      }
-      
-      // 检测加密格式问题 - 只显示最高音质的加密格式
-      const encryptedWarnings: string[] = []
-      let highestEncryptedQuality: string | null = null
-      let highestEncryptedPriority = -1
-      for (const [requestedQuality, result] of Object.entries(qualityResults)) {
-        if (result.success) continue
-        if ((result as any).encrypted) {
-          const actualQuality = (result as any).actualQuality || requestedQuality
-          const priority = qualityPriority[actualQuality] || 0
-          if (priority > highestEncryptedPriority) {
-            highestEncryptedPriority = priority
-            highestEncryptedQuality = actualQuality
-          }
-        }
-      }
-      if (highestEncryptedQuality) {
-        const ext = (qualityResults[Object.keys(qualityResults).find(k => (qualityResults[k] as any)?.actualQuality === highestEncryptedQuality) || ''] as any)?.encryptedExt
-        encryptedWarnings.push(`检测到最高音质为${getEncryptedQualityLabel(highestEncryptedQuality)}，但由于返回了加密格式(${ext})，判为无效`)
       }
 
-      // 检测类型降级问题：返回格式与标准格式不符
-      const typeDowngradeWarnings: string[] = []
-      const STANDARD_FORMATS: Record<string, string> = {
-        master: 'flac',
-        atmos_plus: 'flac',
-        atmos: 'flac',
-        hires: 'flac',
-        flac: 'flac',
-        '320k': 'mp3',
-        '128k': 'mp3',
-      }
-      for (const [requestedQuality, result] of Object.entries(qualityResults)) {
-        if (!result.actualFormat) continue
-        const expectedFormat = STANDARD_FORMATS[requestedQuality]
-        if (!expectedFormat) continue
-        const formatLower = result.actualFormat.toLowerCase()
-        if (formatLower !== expectedFormat) {
-          typeDowngradeWarnings.push(`${getEncryptedQualityLabel(requestedQuality)} --> ${result.actualFormat.toLowerCase()}`)
+      // 执行所有检测
+      const runDetections = (qualityResults: Record<string, any>) => {
+        const results = {
+          downgradeIssues: [] as string[],
+          pluginBugIssues: [] as string[],
+          typeDowngradeWarnings: [] as string[],
         }
+
+        for (const [requestedQuality, result] of Object.entries(qualityResults)) {
+          if (detectionRules.downgrade.enabled) {
+            const issue = detectionRules.downgrade.check(requestedQuality, result)
+            if (issue) results.downgradeIssues.push(issue)
+          }
+          if (detectionRules.pluginBug.enabled) {
+            const issue = detectionRules.pluginBug.check(requestedQuality, result, qualityResults)
+            if (issue) results.pluginBugIssues.push(issue)
+          }
+          if (detectionRules.typeDowngrade.enabled) {
+            const issue = detectionRules.typeDowngrade.check(requestedQuality, result)
+            if (issue) results.typeDowngradeWarnings.push(issue)
+          }
+        }
+
+        return results
       }
+
+      const detectionResults = runDetections(qualityResults)
+      const downgradeIssues = detectionResults.downgradeIssues
+      const pluginBugIssues = detectionResults.pluginBugIssues
+      const typeDowngradeWarnings = detectionResults.typeDowngradeWarnings
       
       if (!maxQuality && Object.keys(detectedQualities).length > 0) {
         let highestDetectedQuality: string | null = null
@@ -860,16 +944,30 @@ export default memo(() => {
       }
       
       if (downgradeIssues.length > 0) {
-        sourceTestLog.info(`[${source.name}] ========== 测试完成: 最高音质 ${qualityLabel} (${maxQuality || '无'}) ==========`)
         downgradeIssues.forEach(issue => {
-          sourceTestLog.info(`[${source.name}] [WARN] 测试过程中${issue}`)
+          sourceTestLog.info(`[${source.name}] [WARN] ${issue}`)
         })
-      } else {
-        sourceTestLog.info(`[${source.name}] ========== 测试完成: 最高音质 ${qualityLabel} (${maxQuality || '无'}) ==========`)
       }
       if (typeDowngradeWarnings.length > 0) {
         typeDowngradeWarnings.forEach(warning => {
           sourceTestLog.info(`[${source.name}] [WARN] 类型降级: ${warning}`)
+        })
+      }
+      if (encryptedWarnings.length > 0) {
+        // 优先输出"检测到最高音质"的警告
+        const highestWarning = encryptedWarnings.find(w => w.includes('检测到最高音质'))
+        if (highestWarning) {
+          sourceTestLog.info(`[${source.name}] [WARN] ${highestWarning}`)
+        }
+        // 再输出其他加密格式警告
+        encryptedWarnings.filter(w => !w.includes('检测到最高音质')).forEach(warning => {
+          sourceTestLog.info(`[${source.name}] [WARN] ${warning}`)
+        })
+      }
+      if (permissionWarnings.length > 0) {
+        sourceTestLog.info(`[${source.name}] [WARN] 权限警告`)
+        permissionWarnings.forEach(warning => {
+          sourceTestLog.info(`[${source.name}] [WARN] ${warning}`)
         })
       }
 
@@ -891,10 +989,18 @@ export default memo(() => {
           e.includes('of undefined') ||
           e === 'source init failed'
         )
+        const hasAllForbidden = allErrors.some(e => 
+          e.includes('403') || 
+          e.includes('Forbidden') ||
+          e.includes('获取文件信息失败')
+        )
         
         let errorMessage = '实际最高音质: 未知'
         if (hasNotSupported) errorMessage = '不支持该平台'
         else if (hasApiDown) errorMessage = '接口挂了'
+        else if (hasAllForbidden) errorMessage = '接口返回全部数据不可用'
+        
+        sourceTestLog.info(`[${source.name}] ========== 测试完成: ${errorMessage} ==========`)
         
         return {
           delay: totalDelay,
@@ -906,8 +1012,11 @@ export default memo(() => {
           encryptedWarnings: encryptedWarnings.length > 0 ? encryptedWarnings : undefined,
           pluginBugIssues: pluginBugIssues.length > 0 ? pluginBugIssues : undefined,
           typeDowngradeWarnings: typeDowngradeWarnings.length > 0 ? typeDowngradeWarnings : undefined,
+          permissionWarnings: permissionWarnings.length > 0 ? permissionWarnings : undefined,
         }
       }
+
+      sourceTestLog.info(`[${source.name}] ========== 测试完成: 实际最高音质 ${qualityLabel} (${maxQuality || '无'}) ==========`)
 
       return {
         delay: totalDelay,
@@ -919,6 +1028,7 @@ export default memo(() => {
         encryptedWarnings: encryptedWarnings.length > 0 ? encryptedWarnings : undefined,
         pluginBugIssues: pluginBugIssues.length > 0 ? pluginBugIssues : undefined,
         typeDowngradeWarnings: typeDowngradeWarnings.length > 0 ? typeDowngradeWarnings : undefined,
+        permissionWarnings: permissionWarnings.length > 0 ? permissionWarnings : undefined,
       }
     } catch (error: any) {
       const totalDelay = Date.now() - totalStartTime
@@ -998,10 +1108,8 @@ export default memo(() => {
             encryptedWarnings: undefined,
             pluginBugIssues: undefined,
             typeDowngradeWarnings: undefined,
+            permissionWarnings: undefined,
             maxQuality: null,
-            warnings: undefined,
-            encryptedWarnings: undefined,
-            pluginBugIssues: undefined,
             progress: `正在测试 ${source.name}...`,
           } : r
         ))
@@ -1055,6 +1163,7 @@ export default memo(() => {
               encryptedWarnings: result.encryptedWarnings,
               pluginBugIssues: result.pluginBugIssues,
               typeDowngradeWarnings: result.typeDowngradeWarnings,
+              permissionWarnings: result.permissionWarnings,
               progress: undefined,
             } : r
           ))
@@ -1118,6 +1227,7 @@ export default memo(() => {
             encryptedWarnings: undefined,
             pluginBugIssues: undefined,
             typeDowngradeWarnings: undefined,
+            permissionWarnings: undefined,
             progress: `正在测试：${source.name}...`,
           }
         }
@@ -1174,6 +1284,7 @@ export default memo(() => {
           encryptedWarnings: result.encryptedWarnings,
           pluginBugIssues: result.pluginBugIssues,
           typeDowngradeWarnings: result.typeDowngradeWarnings,
+          permissionWarnings: result.permissionWarnings,
           progress: undefined,
         } : r
       ))
@@ -1255,13 +1366,6 @@ export default memo(() => {
 
       {expanded && (
         <>
-          <Text style={[styles.desc, { color: theme['c-font-label'] }]}>
-            {t('setting_basic_source_test_desc')}
-          </Text>
-          <Text style={[styles.desc, { color: theme['c-font-label'], fontSize: 12 }]}>
-            当前支持: {supportedSourcesText}
-          </Text>
-
       <View style={styles.keywordsSection}>
         <Text style={[styles.sectionTitle, { color: theme['c-font-label'] }]}>
           各平台搜索关键词
@@ -1314,13 +1418,17 @@ export default memo(() => {
           终止测试
         </Button>
         <Button
-          onPress={openLogModal}
+          onPress={() => faqModalRef.current?.setVisible(true)}
           ripple={{ borderless: true, radius: 18 }}
           style={styles.logBtn}
         >
-          测试日志
+          常见问题
         </Button>
       </View>
+
+      <Text style={[styles.desc, { color: theme['c-font-label'], fontSize: 12 }]}>
+        当前音源支持平台: {supportedSourcesText}
+      </Text>
 
       <View style={styles.settingsRow}>
         <Text style={styles.settingsLabel}>
@@ -1390,7 +1498,7 @@ export default memo(() => {
         <CheckBox
           check={showErrors}
           onChange={setShowErrors}
-          label="显示错误"
+          label="显示警告"
           disabled={isTesting}
           size={0.8}
         />
@@ -1402,11 +1510,11 @@ export default memo(() => {
           size={0.8}
         />
         <Button
-          onPress={() => faqModalRef.current?.setVisible(true)}
+          onPress={openLogModal}
           ripple={{ borderless: true, radius: 18 }}
           style={styles.logBtn}
         >
-          常见问题
+          测试日志
         </Button>
       </View>
 
@@ -1475,18 +1583,30 @@ export default memo(() => {
                 })()}
                 {showErrors && result.encryptedWarnings && result.encryptedWarnings.length > 0 && (
                   <View style={styles.errorContainer}>
-                    {result.encryptedWarnings.map((warning, index) => (
-                      <Text key={`enc-${index}`} style={styles.errorText}>
-                        [ERROR] {warning}
-                      </Text>
-                    ))}
+                    <Text style={styles.errorText}>[WARN] 加密警告</Text>
+                    {(() => {
+                      const highestWarning = result.encryptedWarnings.find((w: string) => w.includes('检测到最高音质'))
+                      const otherWarnings = result.encryptedWarnings.filter((w: string) => !w.includes('检测到最高音质'))
+                      return (
+                        <>
+                          {highestWarning && (
+                            <Text style={styles.errorText}>[WARN] {highestWarning}</Text>
+                          )}
+                          {otherWarnings.map((warning: string, index: number) => (
+                            <Text key={`enc-${index}`} style={styles.errorText}>
+                              [WARN] {warning}
+                            </Text>
+                          ))}
+                        </>
+                      )
+                    })()}
                   </View>
                 )}
                 {showErrors && result.pluginBugIssues && result.pluginBugIssues.length > 0 && (
                   <View style={styles.errorContainer}>
                     {result.pluginBugIssues.map((warning, index) => (
                       <Text key={`bug-${index}`} style={styles.errorText}>
-                        [ERROR] {warning}
+                        [WARN] {warning}
                       </Text>
                     ))}
                   </View>
@@ -1506,6 +1626,16 @@ export default memo(() => {
                     <Text style={styles.warningText}>[WARN] 类型降级</Text>
                     {result.typeDowngradeWarnings.map((warning, index) => (
                       <Text key={index} style={styles.warningText}>
+                        [WARN] {warning}
+                      </Text>
+                    ))}
+                  </View>
+                )}
+                {showErrors && result.permissionWarnings && result.permissionWarnings.length > 0 && (
+                  <View style={styles.errorContainer}>
+                    <Text style={styles.errorText}>[WARN] 权限警告</Text>
+                    {result.permissionWarnings.map((warning, index) => (
+                      <Text key={`perm-${index}`} style={styles.errorText}>
                         [WARN] {warning}
                       </Text>
                     ))}

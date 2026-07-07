@@ -34,15 +34,16 @@ const LrcLine = memo(
     const theme = useTheme()
     const lrcFontSize = useSettingValue('playDetail.horizontal.style.lrcFontSize')
     const textAlign = useSettingValue('playDetail.style.align')
+    const isActive = activeLine == lineNum
+    const isPlayed = lineNum < activeLine
     const size = lrcFontSize / 10
     const lineHeight = setSpText(size) * 1.3
 
     const colors = useMemo(() => {
-      const active = activeLine == lineNum
-      return active
+      return isActive
         ? ([theme['c-primary'], theme['c-primary-alpha-200'], 1] as const)
         : ([theme['c-350'], theme['c-300'], 0.8] as const)
-    }, [activeLine, lineNum, theme])
+    }, [isActive, theme])
 
     const handleLayout = ({ nativeEvent }: LayoutChangeEvent) => {
       onLayout(lineNum, nativeEvent.layout.height, nativeEvent.layout.width)
@@ -58,6 +59,7 @@ const LrcLine = memo(
               ...styles.lineText,
               textAlign,
               lineHeight,
+              fontWeight: isPlayed || isActive ? 'bold' : 'normal',
             }}
             textBreakStrategy="simple"
             color={colors[0]}
@@ -170,19 +172,22 @@ export default () => {
   const handleScrollToActive = (index = lineRef.current.line) => {
     if (index < 0) return
     if (flatListRef.current) {
-      // console.log('handleScrollToActive', index)
       if (scrollInfoRef.current && lineRef.current.line - lineRef.current.prevLine == 1) {
         let offset = listLayoutInfoRef.current.spaceHeight
         for (let line = 0; line < index; line++) {
           offset += listLayoutInfoRef.current.lineHeights[line]
         }
         offset += (listLayoutInfoRef.current.lineHeights[line] ?? 0) / 2
+        const targetOffset = offset - scrollInfoRef.current.layoutMeasurement.height * 0.42
+        // 根据滚动距离动态计算动画时长：距离越远时间越长
+        const distance = Math.abs(targetOffset - scrollInfoRef.current.contentOffset.y)
+        const duration = Math.min(Math.max(distance * 0.5, 120), 300)
         try {
           scrollCancelRef.current = scrollTo(
             flatListRef.current,
             scrollInfoRef.current,
-            offset - scrollInfoRef.current.layoutMeasurement.height * 0.42,
-            300,
+            targetOffset,
+            duration,
             () => {
               scrollCancelRef.current = null
             }

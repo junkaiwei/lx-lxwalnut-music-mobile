@@ -429,10 +429,12 @@ export const getPlayQuality = (
   for (let i = searchIndex; i < QUALITY_RANK.length; i++) {
     const quality = QUALITY_RANK[i];
     if (availableQualities[quality]) {
+      console.log(`[音质选择] 偏好: ${preferredQuality} -> 实际: ${quality}`);
       return quality;
     }
   }
 
+  console.log(`[音质选择] 偏好: ${preferredQuality} -> 兜底: 128k`);
   return '128k';
 }
 

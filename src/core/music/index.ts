@@ -18,7 +18,10 @@ import {
   getPicUrl as getOneDrivePicUrl,
   getLyricInfo as getOneDriveLyricInfo,
 } from '@/core/oneDrive/music'
+import { handleGetOnlinePicUrl } from './utils'
 import { webDAVLog } from '@/core/webdavMusic/logger'
+
+export { handleGetOnlinePicUrl }
 
 export const getMusicUrl = async ({
   musicInfo,

@@ -31,7 +31,7 @@ const styles = createStyle({
   },
   modalView: {
     maxWidth: '90%',
-    minWidth: '60%',
+    minWidth: 320,
     maxHeight: '78%',
     // backgroundColor: 'white',
     borderRadius: 4,

@@ -2,7 +2,7 @@
   "announcementId": "1234",
   "title": "LX-X Music 更新公告",
   "content": "## 版本 v26.07.08\n\n### 新增功能\n\n- 支持 **Markdown** 渲染\n- 支持 `行内代码`\n- 支持 <color=#FF6600>彩色文字</color>\n- 支持图片和视频插入\n- 支持代码块一键复制\n- 支持可点击链接\n\n---\n\n### 更新日志\n\n1. 新增公告功能\n2. 优化播放器体验\n3. 修复已知问题\n\n---\n\n### 相关链接\n\n访问 [GitHub 仓库](https://gh.llkk.cc/https://github.com/WalnutBai/lx-lxwalnut-music-mobile) 获取更多信息。\n\n> 感谢您的使用！",
-  "image": "https://reactnative.dev/img/header_logo.svg",
+  "image": "",
   "buttons": [
     {
       "text": "网盘下载",

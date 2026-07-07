@@ -40,6 +40,7 @@ const openStoragePathPrefix = storageDataPrefix.openStoragePath
 const selectedManagedFolderPrefix = storageDataPrefix.selectedManagedFolder
 const lastSelectQualityKey = storageDataPrefix.lastSelectQuality
 const wyUidCachePrefix = storageDataPrefix.wyUidCache
+const localAnnouncementIdKey = storageDataPrefix.localAnnouncementId
 
 // const defaultListKey = listPrefix + 'default'
 // const loveListKey = listPrefix + 'love'
@@ -200,6 +201,21 @@ export const getIgnoreVersionFailTipTime = async () => {
   if (ignoreVersionFailTipTime === undefined)
     ignoreVersionFailTipTime = await getData<number | null>(ignoreVersionFailTipTimeKey)
   return ignoreVersionFailTipTime ?? 0
+}
+
+let localAnnouncementId: string | null | undefined
+export const saveLocalAnnouncementId = (id: string | null) => {
+  localAnnouncementId = id
+  if (id == null) {
+    void removeData(localAnnouncementIdKey)
+  } else {
+    void saveData(localAnnouncementIdKey, id)
+  }
+}
+export const getLocalAnnouncementId = async () => {
+  if (localAnnouncementId === undefined)
+    localAnnouncementId = (await getData<string | null>(localAnnouncementIdKey)) ?? null
+  return localAnnouncementId
 }
 
 let openStoragePath: string | null = ''

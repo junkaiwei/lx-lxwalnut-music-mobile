@@ -322,7 +322,6 @@
   "setting_basic_source_user_api_title": "用户自定义源",
   "setting_basic_source_user_api_reorder_tip": "长按拖拽调整顺序",
   "setting_basic_source_test_title": "源测试",
-  "setting_basic_source_test_desc": "测试当前自定义源连接各音乐平台的延迟和支持的音质级别",
   "setting_basic_source_test_song_settings": "测试歌曲设置（每个源可指定不同歌曲）",
   "setting_basic_source_test_btn": "开始测试",
   "setting_basic_source_test_running": "测试中...",

@@ -73,6 +73,8 @@ android/app/Walnut.jks
 lx-netease-music-mobile.zip
 publish/*
 !publish/announcement.json
+!publish/images/
+!publish/images/**
 
 # Local development configuration (should not be committed)
 android/gradle-local.properties
