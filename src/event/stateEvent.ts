@@ -68,6 +68,10 @@ export class StateEvent extends Event {
     this.emit('bgPicUpdated', bgPic)
   }
 
+  isLandscapeImmersionUpdated(isLandscapeImmersion: boolean) {
+    this.emit('isLandscapeImmersionUpdated', isLandscapeImmersion)
+  }
+
   playerMusicInfoChanged(musicInfo: PlayerState['musicInfo']) {
     this.emit('playerMusicInfoChanged', musicInfo)
   }
