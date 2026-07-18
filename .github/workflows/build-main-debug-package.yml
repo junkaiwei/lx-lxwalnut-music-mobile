@@ -107,10 +107,10 @@ jobs:
             -PAPP_PROVIDER_AUTHORITY='${{ steps.identity.outputs.provider }}' \
             -PAPP_WIDGET_ACTION_PREFIX='${{ steps.identity.outputs.widget }}' \
             -PAPP_DEEP_LINK_SCHEME='${{ inputs.app_deep_link_scheme }}' \
-            -Pandroid.injected.signing.store.file="$RUNNER_TEMP/app-release.keystore" \
-            -Pandroid.injected.signing.store.password="$SIGN_STORE_PASSWORD" \
-            -Pandroid.injected.signing.key.alias="$SIGN_KEY_ALIAS" \
-            -Pandroid.injected.signing.key.password="$SIGN_KEY_PASSWORD"
+            -PMYAPP_UPLOAD_STORE_FILE="$RUNNER_TEMP/app-release.keystore" \
+            -PMYAPP_UPLOAD_STORE_PASSWORD="$SIGN_STORE_PASSWORD" \
+            -PMYAPP_UPLOAD_KEY_ALIAS="$SIGN_KEY_ALIAS" \
+            -PMYAPP_UPLOAD_KEY_PASSWORD="$SIGN_KEY_PASSWORD"
 
       - name: List generated APKs
         if: always()
