@@ -3,6 +3,7 @@ apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "com.facebook.react"
 
 import com.android.build.OutputFile
+import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 
 react {
@@ -22,18 +23,20 @@ def verCode = packageJson["versionCode"]
 def verName = packageJson["version"]
 def applicationName = packageJson["name"]
 
-def appSourceNamespace = project.findProperty("APP_SOURCE_NAMESPACE") ?: "com.lxwalnut.music.mobile"
-def appPackageName = project.findProperty("APP_PACKAGE_NAME") ?: appSourceNamespace
+// Java/Kotlin source packages remain fixed. Only the installed application ID is configurable.
+def appPackageName = project.findProperty("APP_PACKAGE_NAME") ?: "com.lxwalnut.music.mobile"
 def appProviderAuthority = project.findProperty("APP_PROVIDER_AUTHORITY") ?: "${appPackageName}.provider"
 def appWidgetActionPrefix = project.findProperty("APP_WIDGET_ACTION_PREFIX") ?: "${appPackageName}.widget"
 def appDeepLinkScheme = project.findProperty("APP_DEEP_LINK_SCHEME") ?: "lxmusic"
+
+def escapeBuildConfigString = { String value -> value.replace('\\', '\\\\').replace('"', '\\"') }
 
 android {
     ndkVersion rootProject.ext.ndkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace appSourceNamespace
+    namespace "com.lxwalnut.music.mobile"
     defaultConfig {
         applicationId appPackageName
         minSdkVersion rootProject.ext.minSdkVersion
@@ -45,9 +48,11 @@ android {
             appWidgetActionPrefix: appWidgetActionPrefix,
             appDeepLinkScheme: appDeepLinkScheme,
         ]
-        buildConfigField "String", "APP_PROVIDER_AUTHORITY", "\"${appProviderAuthority}\""
-        buildConfigField "String", "APP_WIDGET_ACTION_PREFIX", "\"${appWidgetActionPrefix}\""
-        buildConfigField "String", "APP_DEEP_LINK_SCHEME", "\"${appDeepLinkScheme}\""
+        buildConfigField "String", "APP_PROVIDER_AUTHORITY", "\"${escapeBuildConfigString(appProviderAuthority)}\""
+        buildConfigField "String", "APP_WIDGET_ACTION_PREFIX", "\"${escapeBuildConfigString(appWidgetActionPrefix)}\""
+        buildConfigField "String", "APP_DEEP_LINK_SCHEME", "\"${escapeBuildConfigString(appDeepLinkScheme)}\""
+        resValue "string", "shortcut_recognition_uri", "${appDeepLinkScheme}://recognition"
+        resValue "string", "shortcut_setting_uri", "${appDeepLinkScheme}://nav?target=setting"
     }
 
     splits {
@@ -92,39 +97,14 @@ android {
         debug {
             signingConfig signingConfigs.debug
             applicationIdSuffix ".dev"
+            manifestPlaceholders = [
+                appProviderAuthority: "${appPackageName}.dev.provider",
+                appWidgetActionPrefix: "${appPackageName}.dev.widget",
+                appDeepLinkScheme: appDeepLinkScheme,
+            ]
+            buildConfigField "String", "APP_PROVIDER_AUTHORITY", "\"${escapeBuildConfigString("${appPackageName}.dev.provider")}\""
+            buildConfigField "String", "APP_WIDGET_ACTION_PREFIX", "\"${escapeBuildConfigString("${appPackageName}.dev.widget")}\""
         }
         release {
             minifyEnabled enableProguardInReleaseBuilds
-            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-            signingConfig signingConfigs.release
-        }
-    }
-
-    applicationVariants.all { variant ->
-        variant.outputs.each { output ->
-            def versionCodes = ["armeabi-v7a": 1, "x86": 2, "arm64-v8a": 3, "x86_64": 4]
-            def abi = output.getFilter(OutputFile.ABI)
-            if (abi == null) {
-                output.outputFileName = "${applicationName}-v${defaultConfig.versionName}-universal.apk"
-            } else {
-                output.versionCodeOverride = defaultConfig.versionCode * 1000 + versionCodes.get(abi)
-                output.outputFileName = "${applicationName}-v${defaultConfig.versionName}-${abi}.apk"
-            }
-        }
-    }
-}
-
-dependencies {
-    implementation("com.facebook.react:react-android")
-    if (System.getenv("NO_FLIPPER") != "1") {
-        implementation("com.facebook.react:flipper-integration")
-    }
-    implementation 'wang.harlon.quickjs:wrapper-android:2.4.0'
-    if (hermesEnabled.toBoolean()) {
-        implementation("com.facebook.react:hermes-android")
-    } else {
-        implementation jscFlavor
-    }
-}
-
-apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "
