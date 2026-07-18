@@ -14,6 +14,7 @@ import android.os.Looper;
 import android.util.Log;
 import android.widget.RemoteViews;
 
+import com.lxwalnut.music.mobile.BuildConfig;
 import com.lxwalnut.music.mobile.R;
 
 import java.io.InputStream;
@@ -25,15 +26,13 @@ import java.util.concurrent.Executors;
 public class MusicWidgetProvider extends AppWidgetProvider {
 
     private static final String TAG = "MusicWidget";
-    public static final String ACTION_PLAY_PAUSE = "com.lxwalnut.music.mobile.widget.PLAY_PAUSE";
-    public static final String ACTION_PREV = "com.lxwalnut.music.mobile.widget.PREV";
-    public static final String ACTION_NEXT = "com.lxwalnut.music.mobile.widget.NEXT";
-    public static final String ACTION_UPDATE_WIDGET = "com.lxwalnut.music.mobile.widget.UPDATE";
-
-    // Internal actions to forward to JS to avoid loop
-    public static final String INTERNAL_ACTION_PLAY_PAUSE = "com.lxwalnut.music.mobile.widget.INTERNAL_PLAY_PAUSE";
-    public static final String INTERNAL_ACTION_PREV = "com.lxwalnut.music.mobile.widget.INTERNAL_PREV";
-    public static final String INTERNAL_ACTION_NEXT = "com.lxwalnut.music.mobile.widget.INTERNAL_NEXT";
+    private static final String SUFFIX_PLAY_PAUSE = ".PLAY_PAUSE";
+    private static final String SUFFIX_PREV = ".PREV";
+    private static final String SUFFIX_NEXT = ".NEXT";
+    private static final String SUFFIX_UPDATE = ".UPDATE";
+    private static final String SUFFIX_INTERNAL_PLAY_PAUSE = ".INTERNAL_PLAY_PAUSE";
+    private static final String SUFFIX_INTERNAL_PREV = ".INTERNAL_PREV";
+    private static final String SUFFIX_INTERNAL_NEXT = ".INTERNAL_NEXT";
 
     private static final String PREFS_NAME = "MusicWidgetPrefs";
     private static final String KEY_TITLE = "widget_title";
@@ -44,11 +43,17 @@ public class MusicWidgetProvider extends AppWidgetProvider {
     private static final ExecutorService executor = Executors.newSingleThreadExecutor();
     private static final Handler mainHandler = new Handler(Looper.getMainLooper());
 
+    public static String actionPlayPause() { return BuildConfig.APP_WIDGET_ACTION_PREFIX + SUFFIX_PLAY_PAUSE; }
+    public static String actionPrev() { return BuildConfig.APP_WIDGET_ACTION_PREFIX + SUFFIX_PREV; }
+    public static String actionNext() { return BuildConfig.APP_WIDGET_ACTION_PREFIX + SUFFIX_NEXT; }
+    public static String actionUpdateWidget() { return BuildConfig.APP_WIDGET_ACTION_PREFIX + SUFFIX_UPDATE; }
+    public static String internalActionPlayPause() { return BuildConfig.APP_WIDGET_ACTION_PREFIX + SUFFIX_INTERNAL_PLAY_PAUSE; }
+    public static String internalActionPrev() { return BuildConfig.APP_WIDGET_ACTION_PREFIX + SUFFIX_INTERNAL_PREV; }
+    public static String internalActionNext() { return BuildConfig.APP_WIDGET_ACTION_PREFIX + SUFFIX_INTERNAL_NEXT; }
+
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        for (int appWidgetId : appWidgetIds) {
-            updateWidget(context, appWidgetManager, appWidgetId);
-        }
+        for (int appWidgetId : appWidgetIds) updateWidget(context, appWidgetManager, appWidgetId);
     }
 
     @Override
@@ -57,66 +62,52 @@ public class MusicWidgetProvider extends AppWidgetProvider {
         String action = intent.getAction();
         if (action == null) return;
 
-        switch (action) {
-            case ACTION_PLAY_PAUSE:
-            case ACTION_PREV:
-            case ACTION_NEXT:
-                // Forward the action to the music service via INTERNAL broadcast
-                String internalAction = action.replace("widget.", "widget.INTERNAL_");
-                Intent serviceIntent = new Intent(internalAction);
-                serviceIntent.setPackage(context.getPackageName());
-                context.sendBroadcast(serviceIntent);
-                break;
-            case ACTION_UPDATE_WIDGET:
-                String title = intent.getStringExtra("title");
-                String artist = intent.getStringExtra("artist");
-                boolean isPlaying = intent.getBooleanExtra("isPlaying", false);
-                String artworkUrl = intent.getStringExtra("artworkUrl");
+        if (actionPlayPause().equals(action) || actionPrev().equals(action) || actionNext().equals(action)) {
+            String internalAction = actionPlayPause().equals(action)
+                    ? internalActionPlayPause()
+                    : actionPrev().equals(action) ? internalActionPrev() : internalActionNext();
+            Intent serviceIntent = new Intent(internalAction);
+            serviceIntent.setPackage(context.getPackageName());
+            context.sendBroadcast(serviceIntent);
+            return;
+        }
 
-                // Save to prefs for when widget is recreated
-                SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = prefs.edit();
-                if (title != null) editor.putString(KEY_TITLE, title);
-                if (artist != null) editor.putString(KEY_ARTIST, artist);
-                editor.putBoolean(KEY_IS_PLAYING, isPlaying);
-                if (artworkUrl != null) editor.putString(KEY_ARTWORK_URL, artworkUrl);
-                editor.apply();
+        if (actionUpdateWidget().equals(action)) {
+            String title = intent.getStringExtra("title");
+            String artist = intent.getStringExtra("artist");
+            boolean isPlaying = intent.getBooleanExtra("isPlaying", false);
+            String artworkUrl = intent.getStringExtra("artworkUrl");
 
-                // Update all widget instances
-                AppWidgetManager manager = AppWidgetManager.getInstance(context);
-                ComponentName widget = new ComponentName(context, MusicWidgetProvider.class);
-                int[] ids = manager.getAppWidgetIds(widget);
-                for (int id : ids) {
-                    updateWidget(context, manager, id);
-                }
-                break;
+            SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefs.edit();
+            if (title != null) editor.putString(KEY_TITLE, title);
+            if (artist != null) editor.putString(KEY_ARTIST, artist);
+            editor.putBoolean(KEY_IS_PLAYING, isPlaying);
+            if (artworkUrl != null) editor.putString(KEY_ARTWORK_URL, artworkUrl);
+            editor.apply();
+
+            AppWidgetManager manager = AppWidgetManager.getInstance(context);
+            ComponentName widget = new ComponentName(context, MusicWidgetProvider.class);
+            for (int id : manager.getAppWidgetIds(widget)) updateWidget(context, manager, id);
         }
     }
 
     private void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_music_4x1);
-
-        // Read saved state
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         String title = prefs.getString(KEY_TITLE, "LX-X Music");
         String artist = prefs.getString(KEY_ARTIST, "未在播放");
         boolean isPlaying = prefs.getBoolean(KEY_IS_PLAYING, false);
         String artworkUrl = prefs.getString(KEY_ARTWORK_URL, null);
 
-        // Set text
         views.setTextViewText(R.id.widget_song_title, title);
         views.setTextViewText(R.id.widget_song_artist, artist);
-
-        // Set play/pause icon
         views.setImageViewResource(R.id.widget_btn_play,
                 isPlaying ? R.drawable.widget_ic_pause : R.drawable.widget_ic_play);
+        views.setOnClickPendingIntent(R.id.widget_btn_prev, getPendingIntent(context, actionPrev()));
+        views.setOnClickPendingIntent(R.id.widget_btn_play, getPendingIntent(context, actionPlayPause()));
+        views.setOnClickPendingIntent(R.id.widget_btn_next, getPendingIntent(context, actionNext()));
 
-        // Set button click intents
-        views.setOnClickPendingIntent(R.id.widget_btn_prev, getPendingIntent(context, ACTION_PREV));
-        views.setOnClickPendingIntent(R.id.widget_btn_play, getPendingIntent(context, ACTION_PLAY_PAUSE));
-        views.setOnClickPendingIntent(R.id.widget_btn_next, getPendingIntent(context, ACTION_NEXT));
-
-        // Click on widget body to open the app
         Intent launchIntent = context.getPackageManager().getLaunchIntentForPackage(context.getPackageName());
         if (launchIntent != null) {
             PendingIntent launchPending = PendingIntent.getActivity(context, 0, launchIntent,
@@ -125,13 +116,8 @@ public class MusicWidgetProvider extends AppWidgetProvider {
             views.setOnClickPendingIntent(R.id.widget_album_art, launchPending);
         }
 
-        // Update immediately with text first
         appWidgetManager.updateAppWidget(appWidgetId, views);
-
-        // Load artwork asynchronously
-        if (artworkUrl != null && !artworkUrl.isEmpty()) {
-            loadArtworkAsync(context, appWidgetManager, appWidgetId, artworkUrl);
-        }
+        if (artworkUrl != null && !artworkUrl.isEmpty()) loadArtworkAsync(context, appWidgetManager, appWidgetId, artworkUrl);
     }
 
     private void loadArtworkAsync(Context context, AppWidgetManager appWidgetManager, int appWidgetId, String artworkUrl) {
@@ -150,23 +136,18 @@ public class MusicWidgetProvider extends AppWidgetProvider {
                     input.close();
                     conn.disconnect();
                 } else if (artworkUrl.startsWith("file://")) {
-                    String path = artworkUrl.replace("file://", "");
-                    bitmap = BitmapFactory.decodeFile(path);
+                    bitmap = BitmapFactory.decodeFile(artworkUrl.replace("file://", ""));
                 } else {
                     bitmap = BitmapFactory.decodeFile(artworkUrl);
                 }
 
                 if (bitmap != null) {
-                    // Scale down to save memory
-                    int size = 128;
-                    Bitmap scaled = Bitmap.createScaledBitmap(bitmap, size, size, true);
+                    Bitmap scaled = Bitmap.createScaledBitmap(bitmap, 128, 128, true);
                     if (scaled != bitmap) bitmap.recycle();
-
-                    final Bitmap finalBitmap = scaled;
                     mainHandler.post(() -> {
-                        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_music_4x1);
-                        views.setImageViewBitmap(R.id.widget_album_art, finalBitmap);
-                        appWidgetManager.partiallyUpdateAppWidget(appWidgetId, views);
+                        RemoteViews partial = new RemoteViews(context.getPackageName(), R.layout.widget_music_4x1);
+                        partial.setImageViewBitmap(R.id.widget_album_art, scaled);
+                        appWidgetManager.partiallyUpdateAppWidget(appWidgetId, partial);
                     });
                 }
             } catch (Exception e) {
@@ -182,12 +163,9 @@ public class MusicWidgetProvider extends AppWidgetProvider {
                 PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
     }
 
-    /**
-     * Static helper to update all widgets from anywhere in the app
-     */
     public static void updateAllWidgets(Context context, String title, String artist, boolean isPlaying, String artworkUrl) {
         Intent intent = new Intent(context, MusicWidgetProvider.class);
-        intent.setAction(ACTION_UPDATE_WIDGET);
+        intent.setAction(actionUpdateWidget());
         intent.putExtra("title", title);
         intent.putExtra("artist", artist);
         intent.putExtra("isPlaying", isPlaying);
