@@ -4,11 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.Bundle;
 import android.util.Log;
 
-
-import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
@@ -32,10 +29,6 @@ public class MusicWidgetModule extends ReactContextBaseJavaModule {
         return "MusicWidgetModule";
     }
 
-    /**
-     * Update the widget with current playback info.
-     * Called from JS whenever metadata or play state changes.
-     */
     @ReactMethod
     public void updateWidget(String title, String artist, boolean isPlaying, String artworkUrl, Promise promise) {
         try {
@@ -46,22 +39,19 @@ public class MusicWidgetModule extends ReactContextBaseJavaModule {
         }
     }
 
-    /**
-     * Listen for widget button click broadcasts and forward to JS as events
-     */
     private void registerWidgetActionReceiver() {
         widgetActionReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 String action = intent.getAction();
                 if (action == null) return;
-                
+
                 String event = null;
-                if (MusicWidgetProvider.INTERNAL_ACTION_PLAY_PAUSE.equals(action)) {
+                if (MusicWidgetProvider.internalActionPlayPause().equals(action)) {
                     event = "widget-play-pause";
-                } else if (MusicWidgetProvider.INTERNAL_ACTION_PREV.equals(action)) {
+                } else if (MusicWidgetProvider.internalActionPrev().equals(action)) {
                     event = "widget-prev";
-                } else if (MusicWidgetProvider.INTERNAL_ACTION_NEXT.equals(action)) {
+                } else if (MusicWidgetProvider.internalActionNext().equals(action)) {
                     event = "widget-next";
                 }
 
@@ -78,9 +68,9 @@ public class MusicWidgetModule extends ReactContextBaseJavaModule {
         };
 
         IntentFilter filter = new IntentFilter();
-        filter.addAction(MusicWidgetProvider.INTERNAL_ACTION_PLAY_PAUSE);
-        filter.addAction(MusicWidgetProvider.INTERNAL_ACTION_PREV);
-        filter.addAction(MusicWidgetProvider.INTERNAL_ACTION_NEXT);
+        filter.addAction(MusicWidgetProvider.internalActionPlayPause());
+        filter.addAction(MusicWidgetProvider.internalActionPrev());
+        filter.addAction(MusicWidgetProvider.internalActionNext());
         reactContext.registerReceiver(widgetActionReceiver, filter);
     }
 
