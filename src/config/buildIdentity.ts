@@ -1,5 +1,5 @@
 // Default identity for local builds.
-// CI may overwrite this file before bundling.
+// Package name is the single source of truth.
 export const BUILD_IDENTITY = {
   packageName: 'com.lxwalnut.music.mobile',
   providerAuthority: 'com.lxwalnut.music.mobile.provider',
