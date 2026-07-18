@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.util.Log;
 
 import com.facebook.react.bridge.Promise;
@@ -26,61 +27,4 @@ public class MusicWidgetModule extends ReactContextBaseJavaModule {
 
     @Override
     public String getName() {
-        return "MusicWidgetModule";
-    }
-
-    @ReactMethod
-    public void updateWidget(String title, String artist, boolean isPlaying, String artworkUrl, Promise promise) {
-        try {
-            MusicWidgetProvider.updateAllWidgets(reactContext, title, artist, isPlaying, artworkUrl);
-            promise.resolve(null);
-        } catch (Exception e) {
-            promise.reject("ERR", e.getMessage());
-        }
-    }
-
-    private void registerWidgetActionReceiver() {
-        widgetActionReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                String action = intent.getAction();
-                if (action == null) return;
-
-                String event = null;
-                if (MusicWidgetProvider.internalActionPlayPause().equals(action)) {
-                    event = "widget-play-pause";
-                } else if (MusicWidgetProvider.internalActionPrev().equals(action)) {
-                    event = "widget-prev";
-                } else if (MusicWidgetProvider.internalActionNext().equals(action)) {
-                    event = "widget-next";
-                }
-
-                if (event != null) {
-                    try {
-                        reactContext
-                            .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                            .emit(event, null);
-                    } catch (Exception e) {
-                        Log.e(TAG, "Failed to emit event: " + e.getMessage());
-                    }
-                }
-            }
-        };
-
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(MusicWidgetProvider.internalActionPlayPause());
-        filter.addAction(MusicWidgetProvider.internalActionPrev());
-        filter.addAction(MusicWidgetProvider.internalActionNext());
-        reactContext.registerReceiver(widgetActionReceiver, filter);
-    }
-
-    @Override
-    public void onCatalystInstanceDestroy() {
-        super.onCatalystInstanceDestroy();
-        if (widgetActionReceiver != null) {
-            try {
-                reactContext.unregisterReceiver(widgetActionReceiver);
-            } catch (Exception ignored) {}
-        }
-    }
-}
+        return "Music
