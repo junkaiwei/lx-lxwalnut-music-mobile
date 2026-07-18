@@ -1,17 +1,44 @@
 # Agent development guide
 
-This file is the first entry point for coding agents working in this repository.
-Read `DEVELOPMENT.md` and `docs/PROJECT_INDEX.md` before making non-trivial changes.
+This is the first file coding agents should read.
 
-## Branch policy
+Before non-trivial changes read:
+- DEVELOPMENT.md
+- docs/PROJECT_INDEX.md
+- docs/ARCHITECTURE.md
 
-- `main-debug` is the upstream synchronization branch only.
-- `build/packet-name` is the long-lived development and integration branch.
+## Branch rules
+
+- `main-debug`: upstream synchronization only.
+- `build/packet-name`: primary development and integration branch.
 - Never develop features directly on `main-debug`.
-- Before feature work, sync upstream into `main-debug`, merge `main-debug` into `build/packet-name`, then create the feature branch from the latest `build/packet-name`.
-- Merge completed features back into `build/packet-name`.
+- Sync upstream into `main-debug`, merge into `build/packet-name`, then create feature branches.
 
-## Project shape
+## Identity rules
 
-- React Native 0.73 application using React Native Navigation.
-- JavaScript/TypeScript entry: `index.js` -> `src/app
+`APP_PACKAGE_NAME` is the single source of truth for:
+
+- Android applicationId
+- FileProvider authority
+- Widget action prefix
+- JavaScript build identity
+
+Do not hardcode package names in Android or JS communication code.
+
+## Important areas
+
+- `src/core/player`: playback logic
+- `src/plugins/player`: TrackPlayer service
+- `src/utils/nativeModules`: JS/native bridge
+- `android/app/src/main`: Android integration
+- `android/app/src/main/java/.../widget`: desktop widget bridge
+- `.github/workflows`: packet-name CI
+
+## Validation
+
+After Android identity changes verify:
+- final APK package name
+- Provider authority
+- Widget actions
+- signing certificate
+- runtime widget communication
