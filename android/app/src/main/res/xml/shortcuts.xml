@@ -10,7 +10,7 @@
         <intent
             android:action="android.intent.action.VIEW"
             android:category="android.intent.category.DEFAULT"
-            android:data="lxmusic://recognition" />
+            android:data="@string/shortcut_recognition_uri" />
     </shortcut>
 
     <shortcut
@@ -22,7 +22,7 @@
         <intent
             android:action="android.intent.action.VIEW"
             android:category="android.intent.category.DEFAULT"
-            android:data="lxmusic://nav?target=setting" />
+            android:data="@string/shortcut_setting_uri" />
     </shortcut>
 
 </shortcuts>
