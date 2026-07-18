@@ -1,3 +1,5 @@
+import { BUILD_IDENTITY } from './buildIdentity'
+
 export const HEADER_HEIGHT = 42
 export const LIST_ITEM_HEIGHT = 70
 export const LIST_SCROLL_POSITION_KEY = '__LIST_SCROLL_POSITION_KEY__'
@@ -14,7 +16,6 @@ export const LIST_IDS = {
   DOWNLOAD: 'download',
   PLAY_LATER: null,
 } as const
-
 
 export enum COMPONENT_IDS {
   home = 'home',
@@ -40,27 +41,22 @@ export const storageDataPrefix = {
   setting: '@setting_v1',
   userList: '@user_list',
   viewPrevState: '@view_prev_state',
-
   list: '@list__',
   listScrollPosition: '@list_scroll_position',
   listPrevSelectId: '@list_prev_select_id',
   playHistory: '@play_history',
-
   lyric: '@lyric__',
   musicUrl: '@music_url__',
   musicOtherSource: '@music_other_source__',
   playInfo: '@play_info',
-
   sync: '@sync_',
   syncAuthKey: '@sync_auth_key',
   syncHost: '@sync_host',
   syncHostHistory: '@sync_host_history',
-
   openStoragePath: '@open_storage_path',
   selectedManagedFolder: '@selected_managed_folder',
   notificationTipEnable: '@notification_tip_enable',
   ignoringBatteryOptimizationTipEnable: '@ignoring_battery_optimization_tip_enable',
-
   searchHistoryList: '@search_history_list',
   listUpdateInfo: '@list_update_info',
   ignoreVersion: '@ignore_version',
@@ -69,17 +65,12 @@ export const storageDataPrefix = {
   songListSetting: '@songist_setting',
   searchSetting: '@search_setting',
   lastSelectQuality: '@last_select_quality',
-
   fontSize: '@font_size',
-
   theme: '@theme',
-
   cheatTip: '@cheat_tip',
   remoteLyricTip: '@remote_lyric_tip',
-
   dislikeList: '@dislike_list',
   playlistType: '@playlist_type',
-
   userApi: '@user_api__',
   downloadList: '@download_list',
   wyUidCache: '@wy_uid_cache__',
@@ -99,7 +90,7 @@ export const storageDataPrefixOld = {
   notificationTipEnable: '@notification_tip_enable',
 } as const
 
-export const APP_PROVIDER_NAME = 'com.lxwalnut.music.mobile.provider'
+export const APP_PROVIDER_NAME = BUILD_IDENTITY.providerAuthority
 
 export const NAV_MENUS = [
   { id: 'nav_search', icon: 'search-2' },
@@ -160,20 +151,17 @@ export const DEFAULT_SETTING = {
     source: 'kw' as LX.OnlineSource,
     boardId: 'kw__16',
   },
-
   songList: {
     source: 'kw' as LX.OnlineSource,
     sortId: 'new',
     tagName: '',
     tagId: '',
   },
-
   search: {
     temp_source: 'wy' as LX.OnlineSource,
     source: 'wy' as LX.OnlineSource | 'wy',
     type: 'music' as 'music' | 'songlist' | 'singer' | 'album',
   },
-
   viewPrevState: {
     id: 'nav_search' as NAV_ID_Type,
   },
