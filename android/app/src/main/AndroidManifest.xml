@@ -1,7 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- 获取读写外置存储权限 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -33,20 +32,19 @@
         android:windowSoftInputMode="adjustResize"
         android:exported="true">
         <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
+          <action android:name="android.intent.action.MAIN" />
+          <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
         <intent-filter>
           <action android:name="android.intent.action.VIEW" />
           <category android:name="android.intent.category.DEFAULT" />
           <category android:name="android.intent.category.BROWSABLE" />
-          <data android:scheme="lxmusic" android:host="*" />
+          <data android:scheme="${appDeepLinkScheme}" android:host="*" />
         </intent-filter>
         <intent-filter android:priority="80">
           <action android:name="android.intent.action.VIEW" />
           <category android:name="android.intent.category.DEFAULT"/>
           <category android:name="android.intent.category.OPENABLE"/>
-
           <data android:scheme="file"/>
           <data android:scheme="content" />
           <data android:mimeType="audio/*" />
@@ -62,55 +60,43 @@
           <action android:name="com.cyanogenmod.eleven.AUDIO_PLAYER"/>
           <category android:name="android.intent.category.DEFAULT"/>
         </intent-filter>
-
         <intent-filter android:priority="80">
-          <!-- <action android:name="android.intent.action.PICK"/> -->
           <action android:name="android.intent.action.VIEW" />
           <category android:name="android.intent.category.DEFAULT"/>
           <category android:name="android.intent.category.OPENABLE"/>
-
           <data android:scheme="file"/>
           <data android:scheme="content" />
           <data android:host="*"/>
           <data android:mimeType="application/octet-stream"/>
-
           <data android:mimeType="text/javascript"/>
           <data android:mimeType="application/x-javascript"/>
           <data android:mimeType="application/javascript"/>
-          <!-- https://stackoverflow.com/a/66402243 -->
-          <data android:pathPattern=".*\\.js" />
-          <data android:pathPattern=".*\\..*\\.js" />
-          <data android:pathPattern=".*\\..*\\..*\\.js" />
+          <data android:pathPattern=".*\.js" />
+          <data android:pathPattern=".*\..*\.js" />
+          <data android:pathPattern=".*\..*\..*\.js" />
           <data android:pathSuffix=".js" tools:targetApi="s" />
-
           <data android:mimeType="application/json"/>
-          <data android:pathPattern=".*\\.json" />
-          <data android:pathPattern=".*\\..*\\.json" />
-          <data android:pathPattern=".*\\..*\\..*\\.json" />
+          <data android:pathPattern=".*\.json" />
+          <data android:pathPattern=".*\..*\.json" />
+          <data android:pathPattern=".*\..*\..*\.json" />
           <data android:pathSuffix=".json" tools:targetApi="s" />
-
-          <data android:pathPattern=".*\\.lxmc" />
-          <data android:pathPattern=".*\\..*\\.lxmc" />
-          <data android:pathPattern=".*\\..*\\..*\\.lxmc" />
+          <data android:pathPattern=".*\.lxmc" />
+          <data android:pathPattern=".*\..*\.lxmc" />
+          <data android:pathPattern=".*\..*\..*\.lxmc" />
           <data android:pathSuffix=".lxmc" tools:targetApi="s" />
         </intent-filter>
       </activity>
 
-      <!-- Define a FileProvider for API24+ -->
-      <!-- note this is the authority name used by other modules like rn-fetch-blob, easy to have conflicts -->
       <provider
         android:name="androidx.core.content.FileProvider"
-        android:authorities="${applicationId}.provider"
+        android:authorities="${appProviderAuthority}"
         android:exported="false"
         android:grantUriPermissions="true">
-        <!-- you might need the tools:replace thing to workaround rn-fetch-blob or other definitions of provider -->
-        <!-- just make sure if you "replace" here that you include all the paths you are replacing *plus* the cache path we use -->
         <meta-data tools:replace="android:resource"
           android:name="android.support.FILE_PROVIDER_PATHS"
           android:resource="@xml/file_paths" />
       </provider>
 
-      <!-- Music Widget -->
       <receiver
         android:name=".widget.MusicWidgetProvider"
         android:exported="true">
@@ -118,10 +104,10 @@
           <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
         </intent-filter>
         <intent-filter>
-          <action android:name="com.lxwalnut.music.mobile.widget.PLAY_PAUSE" />
-          <action android:name="com.lxwalnut.music.mobile.widget.PREV" />
-          <action android:name="com.lxwalnut.music.mobile.widget.NEXT" />
-          <action android:name="com.lxwalnut.music.mobile.widget.UPDATE" />
+          <action android:name="${appWidgetActionPrefix}.PLAY_PAUSE" />
+          <action android:name="${appWidgetActionPrefix}.PREV" />
+          <action android:name="${appWidgetActionPrefix}.NEXT" />
+          <action android:name="${appWidgetActionPrefix}.UPDATE" />
         </intent-filter>
         <meta-data
           android:name="android.appwidget.provider"
