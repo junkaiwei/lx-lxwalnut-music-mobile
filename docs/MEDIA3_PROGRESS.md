@@ -56,7 +56,7 @@ Phase 0 必须输出：
 
 - 阶段：Phase 0 - 基线与依赖审计
 - 状态：执行中；用户批准将 `minSdkVersion` 从 `21` 提升至 `23`，以满足 Media3 `1.9.4` 的最低 API 要求
-- 改动范围：`android/build.gradle`、`docs/MEDIA3_DESIGN.md` 和本文件；没有新增 Media3 播放实现、Service、Bridge 或依赖
+- 改动范围：`android/build.gradle`、`docs/MEDIA3_DESIGN.md`、`.github/workflows/media3-phase0-audit.yml` 和本文件；新增的工作流仅手动生成依赖图、merged manifest、Debug APK 与单元测试证据，不发布、不改依赖
 - 影响：应用停止支持 API 21/22；RN、AGP、Gradle、Kotlin、compileSdk、targetSdk 和当前 Media3 声明均未改动
 - 硬约束：设计规范明确 `minSdk 23` 为 Media3 1.9.4 的兼容性边界；恢复 API 21/22 支持必须先修订目标 Media3 版本并重跑 Phase 0
 - 验证计划：在本地安装 JDK 后运行依赖树、`dependencyInsight`、merged manifest、Debug、Release/R8、相关测试与授权设备检查
