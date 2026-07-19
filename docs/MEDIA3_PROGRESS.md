@@ -60,6 +60,7 @@ Phase 0 必须输出：
 - 影响：应用停止支持 API 21/22；RN、AGP、Gradle、Kotlin、compileSdk、targetSdk 和当前 Media3 声明均未改动
 - 硬约束：设计规范明确 `minSdk 23` 为 Media3 1.9.4 的兼容性边界；恢复 API 21/22 支持必须先修订目标 Media3 版本并重跑 Phase 0
 - 验证计划：在本地安装 JDK 后运行依赖树、`dependencyInsight`、merged manifest、Debug、Release/R8、相关测试与授权设备检查
+- 审计流水线：run `29688411387` 已成功完成依赖图、merged manifest、Debug 和单元测试 Gradle 任务；失败仅发生在上传前收集不存在的测试报告目录，现已改为条件收集并重跑，不能作为产品构建失败结论
 - 阻塞：等待本地 JDK/SDK 就绪以及完整 Gradle 结果；此前 minSdk 冲突已由用户决策解除
 - 下一步：配置 JDK、确认 Android SDK，执行 Gradle 解析与构建取证
 

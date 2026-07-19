@@ -48,7 +48,9 @@ jobs:
           mkdir -p phase0-audit/manifest phase0-audit/apk phase0-audit/tests
           find android/app/build/intermediates/merged_manifests/debug -name AndroidManifest.xml -exec cp {} phase0-audit/manifest/merged-debug-AndroidManifest.xml \;
           find android/app/build/outputs/apk/debug -name '*.apk' -exec cp {} phase0-audit/apk/ \;
-          find android/app/build/reports/tests -type f -exec cp --parents {} phase0-audit/tests/ \;
+          if [ -d android/app/build/reports/tests ]; then
+            find android/app/build/reports/tests -type f -exec cp --parents {} phase0-audit/tests/ \;
+          fi
 
       - name: Upload Phase 0 audit evidence
         uses: actions/upload-artifact@v4
