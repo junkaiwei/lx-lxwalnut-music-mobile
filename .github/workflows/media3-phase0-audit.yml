@@ -1,6 +1,11 @@
 name: Media3 Phase 0 Android audit
 
 on:
+  # GitHub only discovers workflow_dispatch files from the default branch.
+  # Keep the workaround scoped to this audit branch so no other branch runs it.
+  push:
+    branches:
+      - feat/media3-cold-resume
   workflow_dispatch:
 
 permissions:
