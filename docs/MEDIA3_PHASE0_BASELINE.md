@@ -1,165 +1,127 @@
 # Media3 Phase 0 基线与依赖审计
 
-审计日期：2026-07-19  
-分支与提交：`feat/media3-cold-resume` / `99019f4`  
-范围：仅调查、验证和记录；没有新增或修改任何播放器、Service、Bridge 或依赖。
+审计日期：2026-07-19
+分支与当前提交：`feat/media3-cold-resume` / `4933075`
+范围：仅调查、验证和记录；没有新增或修改播放器、Service、Bridge 或 Media3 依赖。
 
 ## 结论和停止条件
 
-**Phase 0 被阻塞，不能开始 Phase 1。** 发现两个独立的硬门槛：
+`minSdk 23` 已于 2026-07-19 获产品批准并已提交（`3c06995`），因此 Media3 1.9.4 的 API 21/22 最低 SDK 冲突已解除，应用不再支持 API 21/22。当前旧引擎可以在 CI 的 Debug 与签名 minified Release/R8 变体上构建，且 CI 已保存完整依赖图和 merged Debug Manifest。
 
-1. `androidx.media3:1.9.4` 不兼容当前应用的 `minSdkVersion 21`。[Android 官方 Media3 1.9.0 发布说明](https://developer.android.com/jetpack/androidx/releases/media3#1.9.0)明确将最低 API 提升为 23；`1.9.4` 属于该系列。项目的 `android/build.gradle` 第 6 行固定 `minSdkVersion = 21`。这会使 API 21/22 设备无法安装升级后的应用。
-2. 当前**本地**构建会话没有可用 JDK 或 Android SDK 环境：`JAVA_HOME` 未设置，`java` 不在 `PATH`，`ANDROID_HOME` 和 `ANDROID_SDK_ROOT` 未设置，常用本机 JDK/SDK 路径也不存在。因此本地 Gradle 无法启动，无法生成本地 merged manifest、最终解析依赖图、Debug APK 或执行 Gradle 测试。远端流水线已验证旧引擎签名 Release，但不提供缺失的依赖图或 merged manifest 证据。
+**Phase 0 仍不能开始 Phase 1。** 已发现两个必须先处理或明确处置的阻塞项：
 
-此外，现有原生模块在源码中请求了三个 Media3 版本（`1.4.1`、`1.5.1` 和 `1.8.0`）。未能运行 `dependencyInsight` 前，不能把 Gradle 的通常“选择最高版本”行为当作此分支的最终解析证据，也不能声称所有模块已统一到一个版本。
+1. 当前最终 Media3 图统一解析为 `1.8.0`，不是迁移目标 `1.9.4`。这是 Gradle 正常冲突解析的结果，不是为迁移强制版本：TrackPlayer 请求 `1.8.0`、本地媒体元数据请求 `1.5.1`、react-native-video 请求 `1.4.1`。尚未有 `1.9.4` 的完整依赖图、编译或运行证据；不得将 1.9.4 表述为已兼容，也不得在本阶段用强制版本绕过 fork 的兼容性审查。
+2. merged Debug Manifest 中有两个不同的 `FileProvider` owner 使用同一 authority `com.lxwalnut.music.mobile.provider`：应用的 `androidx.core.content.FileProvider` 和 `rn-fetch-blob` 的 `com.RNFetchBlob.Utils.FileProvider`。这违反了唯一 owner 要求；在修复所有权并完成可安装性验证前，不能推进 Manifest/原生 Service 变更。
 
-受影响模块是 `react-native-track-player`、`react-native-video`、`react-native-local-media-metadata`、应用播放功能，以及 API 21/22 用户。用户可见影响分别是：若直接采用 `1.9.4` 并提高 minSdk，旧设备无法安装；若强制覆盖版本，旧模块可能发生二进制/API 行为回归；在没有可重复构建的情况下，不能验证通知、锁屏、蓝牙、Widget、外部文件或 Deep Link。
-
-可行选项：
-
-1. 产品批准将应用最低 API 提升到 23，再以 JDK 17 和 Android SDK 35 重跑完整 Phase 0；这会停止支持 API 21/22。
-2. 保持 `minSdkVersion 21`，先修订 `docs/MEDIA3_DESIGN.md` 的目标版本为仍支持 API 21 的 Media3 系列（需重新确认安全与功能要求），再重新审计。
-3. 不采用“强制版本”“排除传递依赖”或同 APK 双播放器的绕过方案；这些做法违反 `MEDIA3_DESIGN.md` 的统一版本和唯一 owner 约束。
-
-建议：**保持现有旧引擎，先由产品决定 API 21/22 支持策略；若继续 1.9.4，批准 minSdk 23 后再配置 JDK 17/SDK 35 并从 Phase 0 重新开始。**
+设备验证亦未完成：`adb connect localhost:5555` 返回连接被拒绝，`adb devices` 没有设备。该项是外部测试环境未启动，不是构建失败；没有执行 APK 覆盖安装。
 
 ## 1. 构建依赖链
 
 | 链路项 | 版本/状态 | 定义或证据 |
 | --- | --- | --- |
 | React Native | `0.73.11` | `package.json`、`node_modules/react-native/package.json` |
-| React Native Gradle Plugin | `0.73.5` | `node_modules/@react-native/gradle-plugin/package.json`；由 `android/settings.gradle` 第 4 行 `includeBuild` 提供，根构建第 24 行引用 |
-| Android Gradle Plugin | `8.6.1` | `android/build.gradle` 第 23 行 |
-| Gradle | `8.8` | `android/gradle/wrapper/gradle-wrapper.properties` 第 3 行 |
-| Kotlin | `1.9.24` | `android/build.gradle` 第 11、25 行 |
-| JDK | 本地 **未检测到**；远端流水线为 Microsoft JDK `21.0.11` | 本地 `java -version` 不可执行；远端 [run 29683410711](https://github.com/junkaiwei/lx-lxwalnut-music-mobile/actions/runs/29683410711) 的 `actions/setup-java` 日志 |
-| Android SDK | `compileSdk 35`（配置值），本机 SDK **未检测到**；远端 Release APK 以 API 35 构建 | `android/build.gradle` 第 7 行；本地没有 `ANDROID_HOME`/`ANDROID_SDK_ROOT`；远端 `aapt dump badging` 输出 `compileSdkVersion='35'` |
-| target SDK | `29` | `android/build.gradle` 第 8 行 |
-| min SDK | `21` | `android/build.gradle` 第 6 行 |
+| React Native Gradle Plugin | `0.73.5` | `node_modules/@react-native/gradle-plugin/package.json`；`android/settings.gradle` 的 `includeBuild` |
+| Android Gradle Plugin | `8.6.1` | `android/build.gradle` |
+| Gradle | `8.8` | `android/gradle/wrapper/gradle-wrapper.properties` |
+| Kotlin | `1.9.24` | `android/build.gradle` |
+| JDK | 本机 Microsoft OpenJDK `17.0.19.10`；远端 Microsoft JDK `21.0.11` | 本机 `java -version` 和 `gradlew.bat -version` 已通过；远端 Actions 日志 |
+| Android SDK | `compileSdk 35`；本机 Command-line Tools 22.0 已安装，但 API 35/Build Tools 安装等待 Android SDK 许可证确认；远端 API 35 构建已通过 | `android/build.gradle`；审计 CI；本机 `sdkmanager --licenses` |
+| target SDK | `29` | `android/build.gradle` |
+| min SDK | `23` | `android/build.gradle`；已明确停止支持 API 21/22 |
 
-应用没有直接声明 `androidx.media3:*` 依赖；直接应用原生依赖为 `com.facebook.react:react-android`、Hermes/JSC（条件选择）和 `wang.harlon.quickjs:wrapper-android:2.4.0`，见 `android/app/build.gradle` 第 118–123 行。
+应用没有直接声明 `androidx.media3:*`。直接应用原生依赖为 React Android、Hermes/JSC（条件选择）和 `wang.harlon.quickjs:wrapper-android:2.4.0`。
 
 ## 2. Media3 依赖链和最终解析状态
 
 ### 源码声明
 
-| 来源 | Media3 声明 | 说明 |
+| 来源 | 请求版本 | 说明 |
 | --- | --- | --- |
-| `react-native-track-player` fork（package 固定至 `d4a062f`，安装包显示 `2.1.2`） | `media3-exoplayer:1.8.0`；Dash/HLS/SmoothStreaming 为 `1.8.0` compileOnly（默认功能开关均为 false） | `node_modules/react-native-track-player/android/build.gradle` 第 64–87 行 |
-| `react-native-video 6.17.0` | `media3-exoplayer`、`session`、`common`、`datasource`、`datasource-okhttp`、`ui` 和启用的 Dash/HLS/SmoothStreaming 均取 `RNVideo_media3Version=1.4.1` | `node_modules/react-native-video/android/gradle.properties` 第 7–15 行及 `android/build.gradle` 第 237–317 行；`buildFromMedia3Source=false` |
-| `react-native-local-media-metadata` fork（package 固定至 `f2d0399`） | `media3-exoplayer:1.5.1` | `node_modules/react-native-local-media-metadata/android/build.gradle` 第 89 行 |
-| 直接应用依赖 | 无 | `android/app/build.gradle` 依赖块 |
+| `react-native-track-player` fork（安装包 `2.1.2`） | `media3-exoplayer:1.8.0`；Dash/HLS/SmoothStreaming `1.8.0` compileOnly | `node_modules/react-native-track-player/android/build.gradle` |
+| `react-native-video 6.17.0` | `exoplayer`、`session`、`common`、`datasource`、`datasource-okhttp`、`ui` 和启用的 Dash/HLS/SmoothStreaming 都是 `1.4.1` | `node_modules/react-native-video/android/gradle.properties`、`android/build.gradle` |
+| `react-native-local-media-metadata` fork | `media3-exoplayer:1.5.1` | `node_modules/react-native-local-media-metadata/android/build.gradle` |
+| 应用模块 | 无 | `android/app/build.gradle` |
 
-因此当前源码请求的全部 Media3 模块至少包括：`common`、`container`、`database`、`datasource`、`datasource-okhttp`、`decoder`、`exoplayer`、`exoplayer-dash`、`exoplayer-hls`、`exoplayer-smoothstreaming`、`extractor`、`session` 和 `ui`。前三个请求版本不同，不能在未运行解析任务前声称最终为单版本。
+### CI 最终解析证据
 
-### 要求但未能执行的 Gradle 证据
+[GitHub Actions audit run 29688646006](https://github.com/junkaiwei/lx-lxwalnut-music-mobile/actions/runs/29688646006) 在提交 `4933075f89a6180962e1f441145a749521d9161f` 的 `debugRuntimeClasspath` 运行完整依赖树和以下 `dependencyInsight`：`common`、`exoplayer`、`session`、`datasource`、`datasource-okhttp`、`ui`、`exoplayer-dash`、`exoplayer-hls`、`exoplayer-smoothstreaming`。结果均解析为 **`1.8.0`**，并包含 `container`、`database`、`decoder` 和 `extractor` 等传递模块，未发现同一图中的第二个最终 Media3 版本。
 
-下列命令是本阶段的必需取证命令；由于 JDK 缺失，均没有有效 Gradle 结果：
+关键选择路径：
 
-```powershell
-cd android
-.\gradlew.bat :app:dependencies --configuration debugRuntimeClasspath
-.\gradlew.bat :app:dependencyInsight --configuration debugRuntimeClasspath --dependency androidx.media3:media3-common
-.\gradlew.bat :app:dependencyInsight --configuration debugRuntimeClasspath --dependency androidx.media3:media3-exoplayer
-.\gradlew.bat :app:dependencyInsight --configuration debugRuntimeClasspath --dependency androidx.media3:media3-session
+```text
+react-native-track-player -> media3-exoplayer:1.8.0
+react-native-local-media-metadata -> media3-exoplayer:1.5.1 -> 1.8.0
+react-native-video -> media3-{common,exoplayer,session,datasource,...}:1.4.1 -> 1.8.0
 ```
 
-实际执行的预检命令是 `& .\gradlew.bat -version`（工作目录 `android`），输出为：`ERROR: JAVA_HOME is not set and no 'java' command could be found in your PATH.` 因此不能可靠保存本分支的最终解析版本或路径。
+所有 `dependencyInsight` 的选择理由都是约束和/或 `1.8.0` 与 `1.4.1` 的冲突解析。该证据只证明旧引擎当前图的单版本结果；它不验证目标 `1.9.4` 与三个原生模块、Kotlin 或运行时 API 的兼容性。
 
-`node_modules/react-native-video/android/buildOutput_*` 中存在旧的 `1.4.1` lint 构件记录，但它不是本次分支执行的 Gradle 解析输出，不能作为当前最终依赖图证据。
+审计产物名为 `media3-phase0-4933075f89a6180962e1f441145a749521d9161f`，保存了完整 `debugRuntimeClasspath.txt`、每个 insight 输出、merged Manifest 和 Debug APK。
 
 ## 3. Media3 1.9.4 工具链兼容性
 
-对 Google Maven 下载到内存（未写入工作区）的 `1.9.4` AAR 检查了下列模块：`media3-common`、`media3-exoplayer`、`media3-session`、`media3-datasource`、`media3-datasource-okhttp`、`media3-ui`、`media3-exoplayer-dash`、`media3-exoplayer-hls` 和 `media3-exoplayer-smoothstreaming`。
-
-每个 AAR 的 `META-INF/com/android/build/gradle/aar-metadata.properties` 均为：
+对 Google Maven 的 `1.9.4` AAR 检查了 `common`、`exoplayer`、`session`、`datasource`、`datasource-okhttp`、`ui`、Dash、HLS 和 SmoothStreaming。各 AAR 的 metadata 均要求：
 
 ```text
-aarFormatVersion=1.0
-aarMetadataVersion=1.0
 minCompileSdk=35
-minCompileSdkExtension=0
 minAndroidGradlePluginVersion=1.0.0
 coreLibraryDesugaringEnabled=false
 ```
 
-这说明 `compileSdk 35` 和 AGP `8.6.1` 不构成 AAR metadata 冲突。所检查 AAR 没有 `*.kotlin_module` 条目，所以没有来自这些 Media3 AAR 的 Kotlin metadata 版本冲突证据；但项目的最终 Kotlin metadata 验证仍未执行，因为 Gradle 不能启动。`react-native-video` 自身最低 Kotlin 要求是 `1.8.0`，项目 Kotlin 为 `1.9.24`，静态版本比较满足其构建脚本检查。
+因此 `compileSdk 35` 和 AGP `8.6.1` 没有 AAR metadata 冲突；检查的 AAR 没有 Kotlin module metadata，亦未发现 AAR 层 Kotlin metadata 冲突。官方 [Media3 1.9.0 发布说明](https://developer.android.com/jetpack/androidx/releases/media3#1.9.0)将最低 SDK 升至 23，现已与项目 `minSdk 23` 对齐。此结论不替代 1.9.4 图解析、编译和运行验证。
 
-[Android 官方 Media3 1.9.0 发布说明](https://developer.android.com/jetpack/androidx/releases/media3#1.9.0)记录“Update minSdk to 23”，而项目固定 minSdk 为 21。这是 `1.9.4` 的明确最低 SDK 冲突，不能靠依赖强制或 R8 解决。
+## 4. Manifest 所有权和 merged Manifest 结果
 
-## 4. Manifest 所有权（静态；merged manifest 未生成）
+CI 通过 `:app:processDebugMainManifest` 生成并检查 merged Debug Manifest；产物中有 2 个 service、3 个 receiver、4 个 provider 和 3 个 activity。
 
-| 项目 | 声明 owner 和当前静态注册 | 状态 |
+| 项目 | 最终 owner/结果 | 状态 |
 | --- | --- | --- |
-| Playback Service | `react-native-track-player` 的 `com.guichaguri.trackplayer.service.MusicService`，`enabled=true`、`exported=true`，处理 `android.intent.action.MEDIA_BUTTON` | 源码中唯一已知播放 Service；未生成 merged manifest，不能确认最终唯一性 |
-| MediaSession | TrackPlayer `MetadataManager`/`MusicBinder` 使用 legacy `android.support.v4.media.session.MediaSessionCompat`，不是 Media3 `MediaSession` | 当前唯一已知 session owner；最终合并/运行时未验证 |
-| MEDIA_BUTTON receiver | TrackPlayer 的 `androidx.media.session.MediaButtonReceiver`，`exported=true` | 源码中唯一已知 receiver；最终合并未验证 |
-| 前台服务权限 | 应用声明 `FOREGROUND_SERVICE` 与 `FOREGROUND_SERVICE_MICROPHONE`；TrackPlayer 再声明 `FOREGROUND_SERVICE` 与 `WAKE_LOCK` | 未见 `FOREGROUND_SERVICE_MEDIA_PLAYBACK`；targetSdk 29 下的实际系统行为未验证 |
-| 媒体通知 | TrackPlayer `MusicService.onCreate()` 先以空通知前台启动，`MetadataManager` 负责媒体元数据/通知；应用 Manifest 无通知 owner | 最终通知渠道/组件未验证 |
-| Widget | 应用 `MusicWidgetProvider`，动态 action 由 `BuildConfig.APP_WIDGET_ACTION_PREFIX` 生成；`MusicWidgetModule` 动态注册内部广播并发给 RN `NativeEventEmitter` | 无第二个 Widget receiver 的静态证据；Widget 冷启动是否能控制播放器未验证 |
-| 外部文件和 Deep Link | `MainActivity` 接受动态 `${appDeepLinkScheme}`、`file`/`content` 音频、脚本与 JSON/LXMC；`FileProvider` 使用 `${appProviderAuthority}` | `onNewIntent` 仅在现有 ReactContext 时发出 `url`；冷启动由 JS `getInitialURL` 的覆盖路径尚未运行验证 |
+| Playback Service | `com.guichaguri.trackplayer.service.MusicService`，`enabled=true`、`exported=true`，处理 `MEDIA_BUTTON` | 当前唯一播放 Service |
+| MediaSession | TrackPlayer `MetadataManager`/`MusicBinder` 的 legacy `MediaSessionCompat` | 当前唯一已知 Session owner；非 Media3 Session |
+| MEDIA_BUTTON receiver | `androidx.media.session.MediaButtonReceiver`，`exported=true` | 当前唯一媒体按键 receiver |
+| Widget | `com.lxwalnut.music.mobile.widget.MusicWidgetProvider`，动态 action 已解析为 `com.lxwalnut.music.mobile.widget.*` | 当前唯一 Widget receiver |
+| 主 FileProvider | `androidx.core.content.FileProvider`，authority `com.lxwalnut.music.mobile.provider` | 与下一行冲突 |
+| RNFetchBlob FileProvider | `com.RNFetchBlob.Utils.FileProvider`，authority `com.lxwalnut.music.mobile.provider` | **重复 authority blocker** |
+| 前台服务权限 | `FOREGROUND_SERVICE` 与 `FOREGROUND_SERVICE_MICROPHONE` | 未见 `FOREGROUND_SERVICE_MEDIA_PLAYBACK`；目标 targetSdk 29 的运行行为仍待设备验证 |
+| 外部文件/Deep Link | `MainActivity` 使用动态 scheme，接收 `file`/`content` 音频、脚本和 JSON/LXMC | 源码路径已追踪，未做设备运行验证 |
 
-应用 Manifest 中没有声明第二个播放 Service、Media3 Session 或 MEDIA_BUTTON receiver；`react-native-video` 的新 Manifest 为空，本地元数据模块只声明外部存储权限。因为 `processDebugMainManifest` 未能运行，以上只能证明静态来源，不能当作 merged manifest 或最终 APK 结论。
+重复 authority 的源码归属明确：`android/app/src/main/AndroidManifest.xml` 的 `${appProviderAuthority}` 和 `node_modules/rn-fetch-blob/android/src/main/AndroidManifest.xml` 的 `${applicationId}.provider` 在默认包名下解析为同一值。不得通过隐藏/禁用任一 owner 作为迁移旁路；需要单独确定 authority 与调用方迁移方案，并验证 APK 安装与文件分享行为。
 
 ## 5. 当前运行时生命周期（源码追踪）
 
 ```text
-src/core/init/index.ts
-  -> registerPlaybackService()
-  -> TrackPlayer.registerPlaybackService(registerPlaybackService)
-src/core/init/player/player.ts
-  -> src/plugins/player/index.ts initial()
-  -> TrackPlayer.setupPlayer(...)
-  -> TrackPlayer Android native bridge
-  -> MusicService / MusicBinder
+src/core/init -> registerPlaybackService()
+  -> TrackPlayer.registerPlaybackService()
+  -> TrackPlayer native bridge -> MusicService / MusicBinder
   -> MusicManager.createLocalPlayback()
-  -> 一个 ExoPlayer + legacy MediaSessionCompat MetadataManager
-  -> MediaStyle notification / media buttons / Bluetooth / lock screen
+  -> 一个 ExoPlayer + legacy MediaSessionCompat + 通知/媒体按键
 
-Widget
-  -> MusicWidgetProvider (package-scoped internal broadcast)
-  -> MusicWidgetModule
-  -> RN NativeEventEmitter
-  -> src/plugins/player/service.ts
-  -> core player play/pause/previous/next
+Widget -> MusicWidgetProvider -> MusicWidgetModule
+  -> React Native NativeEventEmitter -> JS player controls
 ```
 
-- 创建和连接：`MusicService.onCreate()` 启动临时前台通知；`onStartCommand()` 新建 `MusicManager`；`CONNECT_INTENT` 绑定返回 `MusicBinder`。`setupPlayer()` 每次调用会通过 `switchPlayback()` 销毁旧 `ExoPlayback` 后新建 ExoPlayer。
-- 后台与媒体键：Service 和 `MediaButtonReceiver` 都处理 `MEDIA_BUTTON`。如果后台没有 React Activity，服务会短暂以空通知进入前台后 `stopSelf()`。`RemotePlay`、`RemotePause`、`RemoteNext`、`RemotePrevious`、`RemoteSeek` 和 `RemoteStop` 在 JS playback service 映射至既有 core player；`RemoteStop` 会退出应用。
-- 任务移除、清理与进程死亡：`MusicService.onTaskRemoved()` 在 `stopWithApp`（或没有 manager）时停止播放器、销毁并停止 Service。`onDestroy()` 释放 handler、播放器、元数据、wake/wifi lock 和 noisy receiver。Service 返回 `START_NOT_STICKY`，代码中没有版本化队列/位置快照或不启动 RN 的恢复路径；普通进程死亡与设备重启恢复未实现/未运行验证。
-- 耳机和焦点：播放时注册 `ACTION_AUDIO_BECOMING_NOISY` 并向 JS 发暂停事件；ExoPlayer 以 `handleAudioFocus` 设置音频属性。JS `RemoteDuck` 状态处理目前被注释，因此电话/导航打断后的业务状态同步仅能视为未验证。
-- Widget：Provider 将按钮转换为包内广播；Module 仅在 ReactContext 存在时发出 JS event。因此现有实现不具备“RN 未运行仍可通过 MediaController 控制”的能力，Widget 冷启动是迁移前风险项。
+- `MusicService.onCreate()` 先以空通知进入前台；`onStartCommand()` 创建 `MusicManager`，`CONNECT_INTENT` 返回 `MusicBinder`。
+- `MusicManager` 创建一个 ExoPlayer；`MetadataManager` 创建 `MediaSessionCompat` 并拥有通知与回调。
+- Service 和 receiver 都处理媒体按键；Service 返回 `START_NOT_STICKY`，没有版本化队列/位置快照或无 RN 的恢复路径。
+- `onDestroy()` 释放 handler、播放器、元数据、wake/wifi lock 与 noisy receiver。进程死亡/重启恢复没有实现证据。
+- Widget 仅通过 ReactContext 的 event emitter 驱动，RN 未运行时不能证明可控；这是迁移前风险项。
 
-## 6. 既有行为基线（源码证据，未运行验收）
+## 6. 既有行为和测试基线
 
-| 行为 | 当前源码路径 | 运行验证 |
+| 检查 | 证据/命令 | 结果 |
 | --- | --- | --- |
-| 播放、暂停、停止、seek | `src/plugins/player/utils.ts` 调用 `TrackPlayer.play/pause/stop/seekTo` | 未运行 |
-| 队列、上一首、下一首 | `src/plugins/player/playList.ts` 与 `src/core/player/player.ts`；TrackPlayer `add/remove/skip` | 未运行 |
-| 循环、随机 | `utils.ts` 的 `setRepeatMode`；随机由 core playlist 逻辑管理 | 未运行 |
-| 完成与错误 | 临时 default track/track-changed 处理播放结束；`PlaybackError` 清除 URL 缓存并发 app error | 未运行 |
-| 前后台、通知、锁屏、蓝牙 | TrackPlayer Service + `MediaSessionCompat` + Remote* 事件 | 未运行 |
-| 耳机拔出、音频焦点 | native noisy receiver；ExoPlayer audio focus；JS RemoteDuck 已注释 | 未运行 |
-| Widget | Provider -> Module -> JS 事件 | 未运行；冷启动不满足目标架构 |
-| 外部音频、Deep Link | `MainActivity` intent filters 和 `onNewIntent` | 未运行 |
-| 动态包名 | `APP_PACKAGE_NAME` 进入 `applicationId`、Provider authority、Widget action prefix；Java Widget 读取 BuildConfig | 未做默认/QQ 音乐/自定义包 APK 验证 |
+| Gradle/JDK 预检 | `cd android; .\\gradlew.bat -version`，本机 JDK 17 | **通过**：Gradle 8.8，JVM 17.0.19 Microsoft |
+| 依赖树和 insight | audit run 29688646006 | **通过**：当前 Debug 图全部 Media3 最终为 1.8.0 |
+| merged Debug Manifest | `:app:processDebugMainManifest`，audit run 29688646006 | **任务通过**，但发现重复 FileProvider authority |
+| Debug 构建和单元任务 | `:app:assembleDebug :app:testDebugUnitTest`，audit run 29688646006 | **通过**；无可收集的单元测试报告目录，未发现 Android instrumentation 源码 |
+| 签名 minified Release/R8 | [run 29688002586](https://github.com/junkaiwei/lx-lxwalnut-music-mobile/actions/runs/29688002586) | **通过**：提交 `3c06995`，`minifyReleaseWithR8` 完成、`BUILD SUCCESSFUL in 7m 16s`；五个 APK 默认包名和签名校验通过，artifact `8442770896` |
+| 设备连接 | `adb connect localhost:5555`；`adb devices -l` | **未执行运行测试**：端口拒绝连接、设备列表为空；未安装 APK |
+| 运行行为 | 播放、通知、锁屏、蓝牙、Widget 冷启动、外部入口等 | **未验证**：设备未连接，且重复 Provider owner 必须先处置 |
+| 多包名构建 | 默认包名、`com.tencent.qqmusic`、额外自定义包名 | **未完成**：当前 Release 仅验证默认包名；不能因 Debug/Release 通过推断多包名正确 |
 
-## 7. 构建、测试和设备基线
+## 7. 影响、回滚与下一步
 
-| 必需检查 | 命令/环境 | 结果 |
-| --- | --- | --- |
-| Gradle/JDK 预检 | `cd android; .\gradlew.bat -version` | **失败**：`JAVA_HOME is not set and no 'java' command could be found in your PATH.` |
-| JDK 预检 | `java -version` | **失败**：PowerShell 找不到 `java` |
-| Android SDK 预检 | 检查 `ANDROID_HOME`、`ANDROID_SDK_ROOT` 和 `C:\Users\admin\AppData\Local\Android\Sdk` | **失败**：均不存在/未设置 |
-| Debug build | `cd android; .\gradlew.bat :app:assembleDebug` | 未执行：本地 JDK 预检阻断；远端既有工作流不包含 Debug 任务 |
-| 签名/可复现 minified Release 与 R8 | [GitHub Actions run 29683410711](https://github.com/junkaiwei/lx-lxwalnut-music-mobile/actions/runs/29683410711)，远端工作目录 `android` 执行 `./gradlew assembleRelease -PAPP_PACKAGE_NAME=com.lxwalnut.music.mobile -PAPP_DEEP_LINK_SCHEME=lxmusic` 及密钥参数 | **通过**：提交 `99019f4`，Microsoft JDK `21.0.11`；`> Task :app:minifyReleaseWithR8` 后 `BUILD SUCCESSFUL in 7m 38s`。五个 APK 的 `aapt` 包名均为 `com.lxwalnut.music.mobile`，`apksigner` 证书 SHA-256 与 keystore 一致；artifact `packet-name-com.lxwalnut.music.mobile`（ID `8441382627`）已上传 |
-| dependencyInsight 和完整依赖树 | 见第 2 节 | 未执行：被 JDK 预检阻断 |
-| merged manifest | `cd android; .\gradlew.bat :app:processDebugMainManifest` | 未执行：被 JDK 预检阻断 |
-| 单元/Android instrumentation 测试 | Gradle test/connected task | 未执行：被 JDK 预检阻断 |
-| `localhost:5555` 设备测试 | 仅获授权可连接，未操作设备 | 未执行：没有可从此分支构建和安装的 APK |
-
-## 8. Phase 0 下一步和回滚点
-
-不修改现有 TrackPlayer、Manifest 或依赖。当前工作树的回滚点就是提交 `99019f4`（Phase 0 前无实现变更）。
-
-只有在产品选择 minSdk 策略、提供本地 JDK 与 Android SDK 35（或明确指定可复用远端检查）后，才可重新执行本 Phase：先运行依赖树/insight 和 merged manifest，再执行 Debug、签名 minified Release/R8、默认包名/`com.tencent.qqmusic`/自定义包名构建，最后使用授权设备覆盖运行时矩阵。若选择保留 minSdk 21，必须先修订唯一规范中的 Media3 目标版本，再继续。
+- 已确定影响：提高 minSdk 至 23 会使 API 21/22 无法安装；本分支没有更改播放实现、通知、Widget、QuickJS、网络或缓存。
+- 已发现风险：Provider authority 重复会影响 APK 可安装性或 Provider 路由；当前旧引擎依赖图为 1.8.0，目标 1.9.4 尚未证明可兼容。
+- 回滚：若产品撤销 API 23 决策，回滚 `3c06995` 并先修订唯一规范的 Media3 目标版本；不得保留 API 21/22 与 1.9.4 的强制混合图。
+- 下一步：先由负责人选定并实现 Provider authority 的单一 owner 方案，验证安装/文件分享；随后在独立依赖变更审查中解析并验证 1.9.4（无强制混合版本），重跑 dependencyInsight、merged Manifest、Debug、签名 Release/R8、多包名和设备矩阵。若需本机执行，先由有权人员确认 Android SDK 许可证。完成前不得开始 Phase 1。

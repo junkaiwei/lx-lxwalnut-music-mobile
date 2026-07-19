@@ -7,7 +7,7 @@
 - 分支：`feat/media3-cold-resume`
 - 当前方案：方案 A
 - 当前阶段：Phase 0 - 基线与依赖审计
-- 状态：执行中（minSdk 23 已获批准；正在重跑基线）
+- 状态：阻塞（已完成 CI 基线；等待处置重复 Provider owner 与目标 1.9.4 依赖审查）
 - Media3 目标版本：1.9.4
 
 固定约束：
@@ -52,6 +52,18 @@ Phase 0 必须输出：
 
 ## 变更记录
 
+### 2026-07-19 - Phase 0 CI 基线完成并发现 Manifest owner 冲突
+
+- 阶段：Phase 0 - 基线与依赖审计
+- 状态：阻塞；没有引入 Media3 播放实现、Service、Bridge 或 Media3 依赖变更
+- 改动范围：`docs/MEDIA3_PHASE0_BASELINE.md` 收敛 CI 依赖图、merged Manifest、Release/R8、设备预检与生命周期证据；移除一次性 `.github/workflows/media3-phase0-audit.yml`，避免后续文档提交重复触发分支专用重型审计。审计运行和 artifact 保留在 GitHub Actions，不发布 APK、不改播放代码
+- 依赖变化及证据：[run 29688646006](https://github.com/junkaiwei/lx-lxwalnut-music-mobile/actions/runs/29688646006) 在提交 `4933075` 成功运行 `:app:dependencies --configuration debugRuntimeClasspath`、九项 `dependencyInsight`、`:app:processDebugMainManifest`、`:app:assembleDebug` 与 `:app:testDebugUnitTest`。TrackPlayer 请求 `1.8.0`、本地元数据请求 `1.5.1`、react-native-video 请求 `1.4.1`；Gradle 将当前 Debug 图中全部 Media3 模块解析为 `1.8.0`，不是迁移目标 `1.9.4`
+- Manifest/模块影响：merged Debug Manifest 仅有一个 TrackPlayer `MusicService`、一个 `MediaButtonReceiver` 和一个 Widget receiver；但应用 `androidx.core.content.FileProvider` 与 `rn-fetch-blob` 的 `com.RNFetchBlob.Utils.FileProvider` 都解析为 authority `com.lxwalnut.music.mobile.provider`。这是两个 owner 的冲突，可能影响安装或文件分享路由，必须先选择单一 owner 方案；不以禁用/强制合并为迁移旁路
+- 构建与测试：[run 29688002586](https://github.com/junkaiwei/lx-lxwalnut-music-mobile/actions/runs/29688002586) 在提交 `3c06995` 通过签名 `assembleRelease` 与 `minifyReleaseWithR8`（`BUILD SUCCESSFUL in 7m 16s`），五个默认包名 APK 和签名校验通过，artifact `8442770896`。本机已安装 Microsoft OpenJDK `17.0.19.10`，`gradlew.bat -version` 通过；Android SDK Command-line Tools 22.0 已安装，API 35/Build Tools 等待有权人员确认 Google Android SDK 许可证。审计单元任务通过但没有测试报告目录，仓库未发现 Android instrumentation 源码
+- 运行验证：`adb connect localhost:5555` 返回端口拒绝，`adb devices -l` 无设备；未安装或覆盖 APK。通知、锁屏、蓝牙、Widget 冷启动、外部文件/Deep Link 与多包名运行矩阵均仍未验证
+- 阻塞：1) 当前图没有 1.9.4 的解析/编译/运行兼容证据，不能强制覆盖现有 native forks；2) 重复 FileProvider authority 必须处置并验证可安装性；3) 授权设备未启动。此前 minSdk 21 冲突已由 minSdk 23 决策解除
+- 下一步：完成本机 SDK 安装并复跑本地依赖/Debug 检查；由负责人确定 Provider 单一 owner 与 1.9.4 依赖兼容方案后，再执行相应独立变更与完整回归。完成前不得开始 Phase 1
+
 ### 2026-07-19 - Phase 0 继续：minSdk 23 决策
 
 - 阶段：Phase 0 - 基线与依赖审计
@@ -91,4 +103,7 @@ Phase 0 必须输出：
 
 ## 当前阻塞
 
-- 本地 JDK 与 Android SDK 仍未配置，故 dependencyInsight、merged manifest、Debug 和测试尚未执行；用户已授权在当前环境安装 JDK。
+- 当前可解析的 Debug 图是 Media3 `1.8.0`，而不是目标 `1.9.4`；没有 1.9.4 与 TrackPlayer fork、react-native-video、本地媒体元数据和 Kotlin 1.9.24 的完整兼容证据，禁止强制混合版本。
+- merged Debug Manifest 的应用 FileProvider 与 rn-fetch-blob FileProvider 共用 `${applicationId}.provider`，违反单一 owner 边界；需要先确定 authority/调用方迁移方案，并验证安装及文件分享。
+- `localhost:5555` 没有可用 ADB 设备，运行行为与 instrumentation 设备验证待外部环境启动。
+- 本机 API 35 SDK 组件尚未安装：`sdkmanager --licenses` 显示 7 项未接受许可；在有权人员确认前，不代为接受 Google Android SDK 许可证。
