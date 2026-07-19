@@ -7,7 +7,7 @@
 - 分支：`feat/media3-cold-resume`
 - 当前方案：方案 A
 - 当前阶段：Phase 0 - 基线与依赖审计
-- 状态：阻塞（Media3 1.9.4 minSdk 与构建环境）
+- 状态：执行中（minSdk 23 已获批准；正在重跑基线）
 - Media3 目标版本：1.9.4
 
 固定约束：
@@ -16,6 +16,7 @@
 - AGP 8.6.1
 - Gradle 8.8
 - Kotlin 1.9.24
+- minSdk 23（2026-07-19 经用户批准；停止支持 API 21/22）
 - compileSdk 35
 - 不在本分支升级 Android 构建链
 
@@ -51,6 +52,17 @@ Phase 0 必须输出：
 
 ## 变更记录
 
+### 2026-07-19 - Phase 0 继续：minSdk 23 决策
+
+- 阶段：Phase 0 - 基线与依赖审计
+- 状态：执行中；用户批准将 `minSdkVersion` 从 `21` 提升至 `23`，以满足 Media3 `1.9.4` 的最低 API 要求
+- 改动范围：`android/build.gradle`、`docs/MEDIA3_DESIGN.md` 和本文件；没有新增 Media3 播放实现、Service、Bridge 或依赖
+- 影响：应用停止支持 API 21/22；RN、AGP、Gradle、Kotlin、compileSdk、targetSdk 和当前 Media3 声明均未改动
+- 硬约束：设计规范明确 `minSdk 23` 为 Media3 1.9.4 的兼容性边界；恢复 API 21/22 支持必须先修订目标 Media3 版本并重跑 Phase 0
+- 验证计划：在本地安装 JDK 后运行依赖树、`dependencyInsight`、merged manifest、Debug、Release/R8、相关测试与授权设备检查
+- 阻塞：等待本地 JDK/SDK 就绪以及完整 Gradle 结果；此前 minSdk 冲突已由用户决策解除
+- 下一步：配置 JDK、确认 Android SDK，执行 Gradle 解析与构建取证
+
 ### 2026-07-19 - Phase 0 基线与依赖审计（阻塞）
 
 - 阶段：Phase 0 - 基线与依赖审计
@@ -78,5 +90,4 @@ Phase 0 必须输出：
 
 ## 当前阻塞
 
-- **Media3 1.9.4 minSdk 冲突**：Media3 1.9.0+ 最低 API 为 23，而项目 `minSdkVersion` 为 21；直接迁移会停止 API 21/22 安装支持。
-- **本地构建环境缺失**：当前会话没有 `JAVA_HOME`/`java`，也没有可发现的 Android SDK 环境。本地 Gradle 不能启动，故最终依赖图、merged manifest、Debug 和测试均未验证；远端签名 minified Release/R8 已通过，但不替代这些检查。
+- 本地 JDK 与 Android SDK 仍未配置，故 dependencyInsight、merged manifest、Debug 和测试尚未执行；用户已授权在当前环境安装 JDK。

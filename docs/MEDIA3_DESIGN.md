@@ -12,6 +12,7 @@
 - AGP 8.6.1
 - Gradle 8.8
 - Kotlin 1.9.24
+- minSdk 23
 - compileSdk 35
 - targetSdk 29
 - Media3 目标版本 1.9.4
@@ -19,6 +20,8 @@
 Media3 1.9.4 在完成依赖、编译与运行验证前属于迁移目标，不得表述为已验证基线。
 
 不在本次范围：升级 RN/AGP/Gradle/Kotlin、迁移 iOS、重做 UI、重写音源脚本、绕过 Android force-stop、蓝牙连接即自动播放。
+
+`minSdk 23` 是本次 Media3 1.9.4 迁移的硬兼容性边界。不得在同一迁移中保留 API 21/22 支持或通过依赖强制绕过 Media3 的最低 SDK 要求；恢复 API 21/22 支持时必须先修订本规范中的 Media3 目标版本并重新执行 Phase 0。
 
 ## 2. 最终架构与功能边界
 
