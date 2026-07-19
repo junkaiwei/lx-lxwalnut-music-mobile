@@ -52,6 +52,16 @@ Phase 0 必须输出：
 
 ## 变更记录
 
+### 2026-07-20 - Phase 0 本机 SDK 与 API 35 设备复核
+
+- 阶段：Phase 0 - 基线与依赖审计
+- 状态：阻塞；仅增加本机与设备取证，没有修改播放器、Manifest、Provider 或 Media3 依赖
+- 工具链与构建：在用户明确同意 Android SDK 许可证后，安装 Command-line Tools 22.0、Platform Tools 37.0.0、Platform 35 和 Build Tools 35.0.0。本机 JDK `17.0.19` 运行 `:app:dependencies --configuration debugRuntimeClasspath`、`:app:dependencyInsight --dependency androidx.media3:media3-exoplayer`、`:app:processDebugMainManifest`、`:app:assembleDebug`、`:app:testDebugUnitTest`，`BUILD SUCCESSFUL in 3m`（459 tasks）。最终 Media3 仍为 `1.8.0`；TrackPlayer `1.8.0`、本地元数据 `1.5.1 -> 1.8.0`、Video `1.4.1 -> 1.8.0`
+- Manifest/设备证据：merged Manifest 是情况二：`androidx.core.content.FileProvider` 和 `com.RNFetchBlob.Utils.FileProvider` 为不同 class、均使用 `com.lxwalnut.music.mobile.provider`。当前工作区 Debug universal APK 在 `localhost:5555` 的 Samsung SM-S9210（API 35）首次与覆盖安装均成功；`dumpsys package` 同时列出两 class，但 authority 映射只指向项目 Provider。项目 paths 仅 files/cache，rn-fetch-blob 原 paths 包含 external；因此 rn-fetch-blob `actionViewIntent` 的外部文件分享路径存在实际 owner 退化风险
+- 运行验证：MainActivity 冷启动成功（6754 ms）且进程存活；Debug 变体无法连接 Metro `localhost:8081`，故没有把 JS/UI/播放、通知、锁屏、蓝牙、Widget 冷启动或外部入口标记为通过。仓库静态源码未调用 rn-fetch-blob `actionViewIntent`，但该库公开 API 仍不能在未确认调用方前直接删除
+- 阻塞：1) 目标 Media3 `1.9.4` 尚无原生模块兼容证据；2) Provider authority 不满足单一 owner 验收，必须先决定保留 rn-fetch-blob 外部查看能力时的独立 authority 或明确移除该功能；3) 完整运行基线需要可运行 JS bundle。不得通过强制依赖、隐藏依赖声明或保留重复 authority 绕过
+- 下一步：由负责人确认 Provider 策略和 rn-fetch-blob `actionViewIntent` 的产品需求；完成独立 Manifest 变更及文件分享回归后，才重新评估 Phase 1
+
 ### 2026-07-19 - Phase 0 CI 基线完成并发现 Manifest owner 冲突
 
 - 阶段：Phase 0 - 基线与依赖审计
@@ -105,5 +115,5 @@ Phase 0 必须输出：
 
 - 当前可解析的 Debug 图是 Media3 `1.8.0`，而不是目标 `1.9.4`；没有 1.9.4 与 TrackPlayer fork、react-native-video、本地媒体元数据和 Kotlin 1.9.24 的完整兼容证据，禁止强制混合版本。
 - merged Debug Manifest 的应用 FileProvider 与 rn-fetch-blob FileProvider 共用 `${applicationId}.provider`，违反单一 owner 边界；需要先确定 authority/调用方迁移方案，并验证安装及文件分享。
-- `localhost:5555` 没有可用 ADB 设备，运行行为与 instrumentation 设备验证待外部环境启动。
-- 本机 API 35 SDK 组件尚未安装：`sdkmanager --licenses` 显示 7 项未接受许可；在有权人员确认前，不代为接受 Google Android SDK 许可证。
+- Provider authority 在 API 35 的 package dump 中只映射到项目 `androidx.core.content.FileProvider`，而 Manifest 仍保留 rn-fetch-blob 的第二个 Provider class；必须先选择单一 owner 或独立 authority 并验证外部文件分享。
+- Debug APK 已可安装和启动，但当前没有 Metro/内嵌 JS bundle，故播放与 JS 驱动运行行为仍待可运行 bundle 验证。
