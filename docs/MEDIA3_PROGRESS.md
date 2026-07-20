@@ -52,6 +52,16 @@ Phase 0 必须输出：
 
 ## 变更记录
 
+### 2026-07-21 - Phase 0 补证：Release 变体与 API 23 最低边界
+
+- 阶段：Phase 0 - 基线与依赖审计
+- 状态：阻塞；只补充 Release 依赖/Manifest 与最低 API 运行证据，没有修改播放器、Service、Bridge、Provider 或 Media3 依赖
+- Release 依赖与 Manifest：本机 Microsoft OpenJDK `17.0.19.10`、Android SDK 35 下执行 `:app:dependencies --configuration releaseRuntimeClasspath`、`releaseRuntimeClasspath` 的 `media3-common`、`media3-exoplayer`、`media3-session` 三项 `dependencyInsight`，以及 `:app:processReleaseMainManifest`，全部 `BUILD SUCCESSFUL`。Release 与 Debug 一致，最终 Media3 为 `1.8.0`：TrackPlayer 请求 `1.8.0`，本地元数据 `1.5.1 -> 1.8.0`，Video `1.4.1 -> 1.8.0`；没有第二个最终 Media3 版本
+- Release Manifest：最终 Release Manifest 同样有 `androidx.core.content.FileProvider` 和 `com.RNFetchBlob.Utils.FileProvider` 两个不同 class 共用 `com.lxwalnut.music.mobile.provider`；两者均为 `exported=false`、`grantUriPermissions=true`，但 paths 分别是项目的 `@xml/file_paths`（files/cache）和 rn-fetch-blob 的 `@xml/provider_paths`（external/files/cache）。因此 Release 也属于情况二，未满足目标 authority 的 Provider 节点数量为 1
+- API 23 运行证据：创建 x86_64 Google APIs API 23 模拟器 `media3-api23`（`ro.build.version.sdk=23`）。当前工作区 Debug x86_64 APK 通过 `adb push` 后的 `pm install -t` 安装并冷启动，`am start -W` 为 953 ms、进程存活；Debug 未内嵌 JS bundle，未把无 Metro 时的行为标为完整应用通过。随后从 [run 29688002586](https://github.com/junkaiwei/lx-lxwalnut-music-mobile/actions/runs/29688002586) artifact `8442770896` 取得签名 minified Release x86_64 APK，卸载该临时模拟器上的 Debug 测试包后以同一 `pm install -t` 安装成功；强制停止后的 MainActivity 冷启动为 512 ms，进程存活且位于前台，`AndroidRuntime` 无致命异常，UI 自动化层级显示完整内嵌 JS 界面。该结果仅覆盖安装、冷启动和基础 UI 初始化，不覆盖播放、通知、锁屏、蓝牙、Widget 或外部文件分享
+- 阻塞：1) 当前 Release/Debug 最终图仍是 `1.8.0`，目标 `1.9.4` 尚无兼容证据；2) API 23 的 package dump 同样保留重复 Provider class，不能把安装与启动成功误作 authority 单一 owner；3) rn-fetch-blob `actionViewIntent` 的外部文件路径需求尚未由负责人决策。不得强制版本、删除未知调用方或保留重复 authority 作为迁移旁路
+- 下一步：先确认 Provider 策略和 rn-fetch-blob `actionViewIntent` 的产品需求；完成独立 authority/调用链变更与文件分享回归后，才重新评估 Phase 1
+
 ### 2026-07-20 - Phase 0 本机 SDK 与 API 35 设备复核
 
 - 阶段：Phase 0 - 基线与依赖审计
@@ -116,4 +126,4 @@ Phase 0 必须输出：
 - 当前可解析的 Debug 图是 Media3 `1.8.0`，而不是目标 `1.9.4`；没有 1.9.4 与 TrackPlayer fork、react-native-video、本地媒体元数据和 Kotlin 1.9.24 的完整兼容证据，禁止强制混合版本。
 - merged Debug Manifest 的应用 FileProvider 与 rn-fetch-blob FileProvider 共用 `${applicationId}.provider`，违反单一 owner 边界；需要先确定 authority/调用方迁移方案，并验证安装及文件分享。
 - Provider authority 在 API 35 的 package dump 中只映射到项目 `androidx.core.content.FileProvider`，而 Manifest 仍保留 rn-fetch-blob 的第二个 Provider class；必须先选择单一 owner 或独立 authority 并验证外部文件分享。
-- Debug APK 已可安装和启动，但当前没有 Metro/内嵌 JS bundle，故播放与 JS 驱动运行行为仍待可运行 bundle 验证。
+- API 23 已验证 Debug 原生启动和 Release 内嵌 JS 基础 UI 初始化；播放、通知、锁屏、蓝牙、Widget 冷启动、外部文件与多包名运行矩阵仍未验证。
