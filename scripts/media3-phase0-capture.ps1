@@ -92,7 +92,9 @@ function Invoke-Native([string]$WorkingDirectory, [string]$FilePath, [string[]]$
 }
 
 function Invoke-Checked([string]$Name, [string]$WorkingDirectory, [string]$FilePath, [string[]]$Arguments) {
-    Add-Content -LiteralPath $commandsFile -Encoding utf8 "name=$Name`nworking_directory=$WorkingDirectory`ncommand=$FilePath $($Arguments -join ' ')`n"
+    # Add-Content supplies the terminating newline itself; including one in the
+    # record would create a trailing blank line and make the evidence fail diff checks.
+    Add-Content -LiteralPath $commandsFile -Encoding utf8 "name=$Name`nworking_directory=$WorkingDirectory`ncommand=$FilePath $($Arguments -join ' ')"
     Push-Location $WorkingDirectory
     try {
         $result = Invoke-Native $WorkingDirectory $FilePath $Arguments

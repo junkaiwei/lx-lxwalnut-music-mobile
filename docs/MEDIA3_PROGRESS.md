@@ -60,12 +60,20 @@ Phase 0 必须输出：
 - 验证：`releaseRuntimeClasspath` 和三项 insight 仍解析 Media3 `1.8.0`；Release merged Manifest 仍含项目 `androidx.core.content.FileProvider` 与 `com.RNFetchBlob.Utils.FileProvider` 两个 class 共用 `com.lxwalnut.music.mobile.provider`。API 23 `pm install -r` 返回 `Success`，冷启动 `Status: ok`、`TotalTime: 2034`，AndroidRuntime 过滤日志无致命异常；安装/启动结果不解除 Provider 单一 owner 阻塞
 - 下一步：提交本默认 Release evidence 后，从新的干净 HEAD 生成第二个自定义包名 Debug evidence；Provider 与 Media3 1.9.4 继续保持后续独立 PR blocker
 
+### 2026-07-21 - Phase 0 可复现自定义包名 Debug 取证
+
+- 阶段：Phase 0 - 基线与依赖审计
+- 状态：阻塞；从干净 commit `8022664e4e41f0b99117341229e538014d733952` 用同一脚本生成 `com.lxwalnut.music.phase0audit` / `lxphaseaudit` Debug evidence，未修改播放器、Service、Bridge、Provider 或 Media3 依赖
+- 取证与结果：[`docs/evidence/media3-phase0-2026-07-21-repro/debug-custom`](evidence/media3-phase0-2026-07-21-repro/debug-custom) 保存空的起始 status、工具版本、`assembleDebug`/Manifest/aapt 命令、Debug APK SHA-256、badging、manifest tree、merged Manifest 与 merger reports。生成 APK 的 package 为 `com.lxwalnut.music.phase0audit`、`minSdkVersion` 为 23，Deep Link 为 `lxphaseaudit`，Widget action 和 `.provider` authority 都随 package 变化
+- 验证：`assembleDebug :app:processDebugMainManifest` 成功。两个不同 FileProvider class 仍共用 `com.lxwalnut.music.phase0audit.provider`；动态包名验证确认身份单一来源有效，但不构成 Provider owner 冲突已解决
+- 下一步：保留 PR Draft；Provider authority/调用链和 Media3 1.9.4 兼容性只能由各自独立 PR 处理并重新回归
+
 ### 2026-07-21 - Phase 0 取证脚本：绑定干净源码状态
 
 - 阶段：Phase 0 - 基线与依赖审计
 - 状态：阻塞；新增 `scripts/media3-phase0-capture.ps1`，后续本机 Release/Debug/API 23 evidence 必须从该脚本生成，不修改播放器、Service、Bridge、Provider 或 Media3 依赖
 - 硬约束：脚本在创建输出前执行 `git status --porcelain`，非空即失败；只有起始工作树干净时才记录 `head=<git rev-parse HEAD>`、空 `git_status_porcelain`、完整 Gradle/AAPT/ADB 命令、JDK/Gradle/aapt 版本和实际 package/scheme。该约束防止未提交的 Gradle、Manifest 或构建身份变化被误归属到一个 commit
-- 取证范围：`release-default` 生成 Release classpath、三项 insight、merged Manifest 与 merger report；`debug-custom` 生成 Debug APK identity、merged Manifest 与 merger report；可选 Release APK/API 23 参数生成标准安装、冷启动、logcat 和 UI dump。脚本以 exit code 判断原生命令失败，使用 PowerShell 直接等待原生命令完成、将 stdout/stderr 重定向到临时文件后写入 evidence；避免经 `cmd /c` 捕获 Gradle batch 时 wrapper Java 子进程脱离取证生命周期。并用开始前备份恢复 Gradle 自动生成的 `src/config/buildIdentity.ts`，避免把取证副作用混入源码变更
+- 取证范围：`release-default` 生成 Release classpath、三项 insight、merged Manifest 与 merger report；`debug-custom` 生成 Debug APK identity、merged Manifest 与 merger report；可选 Release APK/API 23 参数生成标准安装、冷启动、logcat 和 UI dump。脚本以 exit code 判断原生命令失败，使用 PowerShell 直接等待原生命令完成、将 stdout/stderr 重定向到临时文件后写入 evidence；避免经 `cmd /c` 捕获 Gradle batch 时 wrapper Java 子进程脱离取证生命周期。命令清单仅保留单一结束换行，避免原始证据因尾部空行而无法通过 diff 格式检查。并用开始前备份恢复 Gradle 自动生成的 `src/config/buildIdentity.ts`，避免把取证副作用混入源码变更
 - 下一步：在该脚本提交后的干净 HEAD 重新生成默认 Release 与第二自定义包名 Debug evidence，再以独立文档提交保存输出；Provider 和 1.9.4 继续作为后续独立 PR 的 blocker
 
 ### 2026-07-21 - Phase 0 补证：动态包名矩阵与可复核原始输出

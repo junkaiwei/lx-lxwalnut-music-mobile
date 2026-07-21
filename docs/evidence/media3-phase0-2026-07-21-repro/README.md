@@ -8,4 +8,8 @@ Captured from clean commit `98cedfd8099d18fabd622e81f3a45e47a719745a` for `com.l
 
 The capture confirms Media3 resolves to `1.8.0`, not the Phase 0 target `1.9.4`. Its merged Manifest still contains the project `androidx.core.content.FileProvider` and RNFetchBlob `com.RNFetchBlob.Utils.FileProvider` with the same `.provider` authority. The successful standard install and cold start do not clear that conflict.
 
+## `debug-custom`
+
+Captured from clean commit `8022664e4e41f0b99117341229e538014d733952` for `com.lxwalnut.music.phase0audit` / `lxphaseaudit`. It records the custom-identity Debug assembly, manifest outputs, APK SHA-256, `aapt dump badging`, and manifest tree. The generated APK reports `minSdkVersion: 23`, package `com.lxwalnut.music.phase0audit`, and the expected package-specific Widget actions and `.provider` authority. Both FileProvider classes remain in the merged manifest with that shared authority, so this dynamic-identity build is evidence of the unresolved conflict, not a fix for it.
+
 The directory intentionally contains only textual/XML evidence and hashes. The signed APK remains in its GitHub Actions artifact.
