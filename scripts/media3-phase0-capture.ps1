@@ -72,35 +72,29 @@ function Write-Utf8File([string]$Path, [object[]]$Lines) {
 }
 
 function Invoke-Native([string]$WorkingDirectory, [string]$FilePath, [string[]]$Arguments) {
-    # Java and Gradle legitimately use stderr for version text and warnings. A .NET
-    # process keeps both streams out of PowerShell's version-specific error pipeline.
-    $startInfo = New-Object System.Diagnostics.ProcessStartInfo
-    $startInfo.WorkingDirectory = $WorkingDirectory
+    # Gradle's batch wrapper must be called by cmd.exe so its Java child remains in
+    # the wait chain. cmd also captures stderr without PowerShell reclassifying it.
+    $stdoutPath = [System.IO.Path]::GetTempFileName()
+    $stderrPath = [System.IO.Path]::GetTempFileName()
     $encodedArguments = (($Arguments | ForEach-Object { '"' + ($_ -replace '"', '\"') + '"' }) -join ' ')
+    $commandPrefix = if ([System.IO.Path]::GetExtension($FilePath) -ieq '.bat') { 'call ' } else { '' }
+    $command = $commandPrefix + '"' + $FilePath + '" ' + $encodedArguments + ' 1>"' + $stdoutPath + '" 2>"' + $stderrPath + '"'
+    $previousLocation = Get-Location
     if ([System.IO.Path]::GetExtension($FilePath) -ieq '.bat') {
-        # Starting a batch file directly can return after it spawns Gradle's Java
-        # wrapper. cmd /c owns the batch lifecycle and makes WaitForExit reliable.
-        $startInfo.FileName = $env:ComSpec
-        $startInfo.Arguments = '/d /c call "' + $FilePath + '" ' + $encodedArguments
-    } else {
-        $startInfo.FileName = $FilePath
-        $startInfo.Arguments = $encodedArguments
+        # The condition documents why batch files require `call`; all commands use
+        # the same direct cmd invocation so Java and adb output are captured alike.
     }
-    $startInfo.UseShellExecute = $false
-    $startInfo.RedirectStandardOutput = $true
-    $startInfo.RedirectStandardError = $true
-    $process = New-Object System.Diagnostics.Process
-    $process.StartInfo = $startInfo
-    if (-not $process.Start()) { throw "Unable to start native command: $FilePath" }
-    $stdoutTask = $process.StandardOutput.ReadToEndAsync()
-    $stderrTask = $process.StandardError.ReadToEndAsync()
-    $process.WaitForExit()
-    $stdout = $stdoutTask.Result
-    $stderr = $stderrTask.Result
-    $output = @()
-    if ($stdout) { $output += $stdout.TrimEnd() }
-    if ($stderr) { $output += $stderr.TrimEnd() }
-    return [pscustomobject]@{ Output = $output; ExitCode = $process.ExitCode }
+    try {
+        Set-Location $WorkingDirectory
+        & $env:ComSpec /d /c $command
+        $exitCode = $LASTEXITCODE
+        $stdout = [System.IO.File]::ReadAllText($stdoutPath)
+        $stderr = [System.IO.File]::ReadAllText($stderrPath)
+    } finally {
+        Set-Location $previousLocation
+        Remove-Item -LiteralPath $stdoutPath, $stderrPath -ErrorAction SilentlyContinue
+    }
+    return [pscustomobject]@{ Output = @($stdout.TrimEnd(), $stderr.TrimEnd()); ExitCode = $exitCode }
 }
 
 function Invoke-Checked([string]$Name, [string]$WorkingDirectory, [string]$FilePath, [string[]]$Arguments) {
