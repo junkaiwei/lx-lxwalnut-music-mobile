@@ -101,7 +101,15 @@ function Invoke-Checked([string]$Name, [string]$WorkingDirectory, [string]$FileP
     Add-Content -LiteralPath $commandsFile -Encoding utf8 "name=$Name`nworking_directory=$WorkingDirectory`ncommand=$FilePath $($Arguments -join ' ')`n"
     Push-Location $WorkingDirectory
     try {
-        $result = Invoke-Native $WorkingDirectory $FilePath $Arguments
+        $executionFile = $FilePath
+        $executionArguments = $Arguments
+        if ([System.IO.Path]::GetFileName($FilePath) -ieq 'gradlew.bat') {
+            # Use Gradle's documented wrapper entry point directly. The batch file
+            # can detach its Java child under captured cmd.exe execution on Windows.
+            $executionFile = Join-Path $JavaHome 'bin\java.exe'
+            $executionArguments = @('-classpath', (Join-Path $androidRoot 'gradle\wrapper\gradle-wrapper.jar'), 'org.gradle.wrapper.GradleWrapperMain') + $Arguments
+        }
+        $result = Invoke-Native $WorkingDirectory $executionFile $executionArguments
         Write-Utf8File (Join-Path $outputRoot "$Name.txt") $result.Output
         if ($result.ExitCode -ne 0) { throw "$Name failed with exit code $($result.ExitCode)." }
     } finally {
