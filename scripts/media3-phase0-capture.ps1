@@ -19,9 +19,6 @@ param(
 
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
-# PowerShell 7 reports tools such as `java -version` as errors because they write
-# version text to stderr. Exit codes remain the authoritative failure signal below.
-if ($PSVersionTable.PSVersion.Major -ge 7) { $PSNativeCommandUseErrorActionPreference = $false }
 
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 $androidRoot = Join-Path $repoRoot 'android'
@@ -74,13 +71,28 @@ function Write-Utf8File([string]$Path, [object[]]$Lines) {
     [System.IO.File]::WriteAllText($Path, $text, (New-Object System.Text.UTF8Encoding($false)))
 }
 
+function Invoke-Native([string]$FilePath, [string[]]$Arguments) {
+    # Java and Gradle legitimately use stderr for version text and warnings. Capture
+    # it as evidence, then enforce their process exit code instead of PowerShell's
+    # stderr-to-error conversion, which differs between Windows PowerShell and PS 7.
+    $previousErrorAction = $ErrorActionPreference
+    $ErrorActionPreference = 'Continue'
+    try {
+        $output = & $FilePath @Arguments 2>&1
+        $exitCode = $LASTEXITCODE
+    } finally {
+        $ErrorActionPreference = $previousErrorAction
+    }
+    return [pscustomobject]@{ Output = @($output); ExitCode = $exitCode }
+}
+
 function Invoke-Checked([string]$Name, [string]$WorkingDirectory, [string]$FilePath, [string[]]$Arguments) {
     Add-Content -LiteralPath $commandsFile -Encoding utf8 "name=$Name`nworking_directory=$WorkingDirectory`ncommand=$FilePath $($Arguments -join ' ')`n"
     Push-Location $WorkingDirectory
     try {
-        $result = & $FilePath @Arguments 2>&1
-        Write-Utf8File (Join-Path $outputRoot "$Name.txt") $result
-        if ($LASTEXITCODE -ne 0) { throw "$Name failed with exit code $LASTEXITCODE." }
+        $result = Invoke-Native $FilePath $Arguments
+        Write-Utf8File (Join-Path $outputRoot "$Name.txt") $result.Output
+        if ($result.ExitCode -ne 0) { throw "$Name failed with exit code $($result.ExitCode)." }
     } finally {
         Pop-Location
     }
@@ -88,9 +100,15 @@ function Invoke-Checked([string]$Name, [string]$WorkingDirectory, [string]$FileP
 
 $identityBefore = [System.IO.File]::ReadAllBytes($identityPath)
 try {
-    $javaVersion = & (Join-Path $JavaHome 'bin\java.exe') -version 2>&1
-    $gradleVersion = & $gradle -version 2>&1
-    $aaptVersion = & $aapt version 2>&1
+    $javaCall = Invoke-Native (Join-Path $JavaHome 'bin\java.exe') @('-version')
+    $gradleCall = Invoke-Native $gradle @('-version')
+    $aaptCall = Invoke-Native $aapt @('version')
+    if ($javaCall.ExitCode -ne 0 -or $gradleCall.ExitCode -ne 0 -or $aaptCall.ExitCode -ne 0) {
+        throw 'Failed to obtain Java, Gradle, or aapt version for provenance.'
+    }
+    $javaVersion = $javaCall.Output
+    $gradleVersion = $gradleCall.Output
+    $aaptVersion = $aaptCall.Output
     $provenance = @(
         "head=$head",
         'git_status_porcelain=',
