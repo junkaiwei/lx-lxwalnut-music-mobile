@@ -72,20 +72,26 @@ function Write-Utf8File([string]$Path, [object[]]$Lines) {
 }
 
 function Invoke-Native([string]$FilePath, [string[]]$Arguments) {
-    # Java and Gradle legitimately use stderr for version text and warnings. Capture
-    # it as evidence, then enforce their process exit code instead of PowerShell's
-    # stderr-to-error conversion, which differs between Windows PowerShell and PS 7.
-    $stderrPath = [System.IO.Path]::GetTempFileName()
-    try {
-        $stdout = & $FilePath @Arguments 2> $stderrPath
-        $exitCode = $LASTEXITCODE
-        $stderr = [System.IO.File]::ReadAllText($stderrPath)
-    } finally {
-        Remove-Item -LiteralPath $stderrPath -ErrorAction SilentlyContinue
-    }
-    $output = @($stdout)
+    # Java and Gradle legitimately use stderr for version text and warnings. A .NET
+    # process keeps both streams out of PowerShell's version-specific error pipeline.
+    $startInfo = New-Object System.Diagnostics.ProcessStartInfo
+    $startInfo.FileName = $FilePath
+    $startInfo.Arguments = (($Arguments | ForEach-Object { '"' + ($_ -replace '"', '\"') + '"' }) -join ' ')
+    $startInfo.UseShellExecute = $false
+    $startInfo.RedirectStandardOutput = $true
+    $startInfo.RedirectStandardError = $true
+    $process = New-Object System.Diagnostics.Process
+    $process.StartInfo = $startInfo
+    if (-not $process.Start()) { throw "Unable to start native command: $FilePath" }
+    $stdoutTask = $process.StandardOutput.ReadToEndAsync()
+    $stderrTask = $process.StandardError.ReadToEndAsync()
+    $process.WaitForExit()
+    $stdout = $stdoutTask.Result
+    $stderr = $stderrTask.Result
+    $output = @()
+    if ($stdout) { $output += $stdout.TrimEnd() }
     if ($stderr) { $output += $stderr.TrimEnd() }
-    return [pscustomobject]@{ Output = $output; ExitCode = $exitCode }
+    return [pscustomobject]@{ Output = $output; ExitCode = $process.ExitCode }
 }
 
 function Invoke-Checked([string]$Name, [string]$WorkingDirectory, [string]$FilePath, [string[]]$Arguments) {
