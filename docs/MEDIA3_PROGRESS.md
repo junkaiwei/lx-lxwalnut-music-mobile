@@ -57,7 +57,7 @@ Phase 0 必须输出：
 - 阶段：Phase 0 - 基线与依赖审计
 - 状态：阻塞；新增 `scripts/media3-phase0-capture.ps1`，后续本机 Release/Debug/API 23 evidence 必须从该脚本生成，不修改播放器、Service、Bridge、Provider 或 Media3 依赖
 - 硬约束：脚本在创建输出前执行 `git status --porcelain`，非空即失败；只有起始工作树干净时才记录 `head=<git rev-parse HEAD>`、空 `git_status_porcelain`、完整 Gradle/AAPT/ADB 命令、JDK/Gradle/aapt 版本和实际 package/scheme。该约束防止未提交的 Gradle、Manifest 或构建身份变化被误归属到一个 commit
-- 取证范围：`release-default` 生成 Release classpath、三项 insight、merged Manifest 与 merger report；`debug-custom` 生成 Debug APK identity、merged Manifest 与 merger report；可选 Release APK/API 23 参数生成标准安装、冷启动、logcat 和 UI dump。脚本以 exit code 判断原生命令失败，由 `cmd /d /c call` 同步执行 Gradle batch，并将 stdout/stderr 重定向到临时文件后写入 evidence，避免 wrapper Java 子进程脱离取证生命周期；并用开始前备份恢复 Gradle 自动生成的 `src/config/buildIdentity.ts`，避免把取证副作用混入源码变更
+- 取证范围：`release-default` 生成 Release classpath、三项 insight、merged Manifest 与 merger report；`debug-custom` 生成 Debug APK identity、merged Manifest 与 merger report；可选 Release APK/API 23 参数生成标准安装、冷启动、logcat 和 UI dump。脚本以 exit code 判断原生命令失败，使用 PowerShell 直接等待原生命令完成、将 stdout/stderr 重定向到临时文件后写入 evidence；避免经 `cmd /c` 捕获 Gradle batch 时 wrapper Java 子进程脱离取证生命周期。并用开始前备份恢复 Gradle 自动生成的 `src/config/buildIdentity.ts`，避免把取证副作用混入源码变更
 - 下一步：在该脚本提交后的干净 HEAD 重新生成默认 Release 与第二自定义包名 Debug evidence，再以独立文档提交保存输出；Provider 和 1.9.4 继续作为后续独立 PR 的 blocker
 
 ### 2026-07-21 - Phase 0 补证：动态包名矩阵与可复核原始输出

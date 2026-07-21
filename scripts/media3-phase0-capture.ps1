@@ -72,21 +72,15 @@ function Write-Utf8File([string]$Path, [object[]]$Lines) {
 }
 
 function Invoke-Native([string]$WorkingDirectory, [string]$FilePath, [string[]]$Arguments) {
-    # Gradle's batch wrapper must be called by cmd.exe so its Java child remains in
-    # the wait chain. cmd also captures stderr without PowerShell reclassifying it.
+    # Invoke through PowerShell so a .bat wrapper stays attached until its Java
+    # process finishes. Capturing via cmd.exe can return after the batch wrapper
+    # hands execution to Gradle, leaving partial evidence behind.
     $stdoutPath = [System.IO.Path]::GetTempFileName()
     $stderrPath = [System.IO.Path]::GetTempFileName()
-    $encodedArguments = (($Arguments | ForEach-Object { '"' + ($_ -replace '"', '\"') + '"' }) -join ' ')
-    $commandPrefix = if ([System.IO.Path]::GetExtension($FilePath) -ieq '.bat') { 'call ' } else { '' }
-    $command = $commandPrefix + '"' + $FilePath + '" ' + $encodedArguments + ' 1>"' + $stdoutPath + '" 2>"' + $stderrPath + '"'
     $previousLocation = Get-Location
-    if ([System.IO.Path]::GetExtension($FilePath) -ieq '.bat') {
-        # The condition documents why batch files require `call`; all commands use
-        # the same direct cmd invocation so Java and adb output are captured alike.
-    }
     try {
         Set-Location $WorkingDirectory
-        & $env:ComSpec /d /c $command
+        & $FilePath @Arguments 1> $stdoutPath 2> $stderrPath
         $exitCode = $LASTEXITCODE
         $stdout = [System.IO.File]::ReadAllText($stdoutPath)
         $stderr = [System.IO.File]::ReadAllText($stderrPath)
@@ -101,15 +95,7 @@ function Invoke-Checked([string]$Name, [string]$WorkingDirectory, [string]$FileP
     Add-Content -LiteralPath $commandsFile -Encoding utf8 "name=$Name`nworking_directory=$WorkingDirectory`ncommand=$FilePath $($Arguments -join ' ')`n"
     Push-Location $WorkingDirectory
     try {
-        $executionFile = $FilePath
-        $executionArguments = $Arguments
-        if ([System.IO.Path]::GetFileName($FilePath) -ieq 'gradlew.bat') {
-            # Use Gradle's documented wrapper entry point directly. The batch file
-            # can detach its Java child under captured cmd.exe execution on Windows.
-            $executionFile = Join-Path $JavaHome 'bin\java.exe'
-            $executionArguments = @('-classpath', (Join-Path $androidRoot 'gradle\wrapper\gradle-wrapper.jar'), 'org.gradle.wrapper.GradleWrapperMain') + $Arguments
-        }
-        $result = Invoke-Native $WorkingDirectory $executionFile $executionArguments
+        $result = Invoke-Native $WorkingDirectory $FilePath $Arguments
         Write-Utf8File (Join-Path $outputRoot "$Name.txt") $result.Output
         if ($result.ExitCode -ne 0) { throw "$Name failed with exit code $($result.ExitCode)." }
     } finally {
