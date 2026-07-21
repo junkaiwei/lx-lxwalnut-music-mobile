@@ -97,6 +97,15 @@
           android:resource="@xml/file_paths" />
       </provider>
 
+      <!--
+        RNFetchBlob's provider only backs actionViewIntent(). The project does
+        not call that API, while its duplicate ${applicationId}.provider
+        declaration shadows the project provider's files/cache configuration.
+      -->
+      <provider
+        android:name="com.RNFetchBlob.Utils.FileProvider"
+        tools:node="remove" />
+
       <receiver
         android:name=".widget.MusicWidgetProvider"
         android:exported="true">
