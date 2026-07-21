@@ -19,6 +19,9 @@ param(
 
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
+# PowerShell 7 reports tools such as `java -version` as errors because they write
+# version text to stderr. Exit codes remain the authoritative failure signal below.
+if ($PSVersionTable.PSVersion.Major -ge 7) { $PSNativeCommandUseErrorActionPreference = $false }
 
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 $androidRoot = Join-Path $repoRoot 'android'
