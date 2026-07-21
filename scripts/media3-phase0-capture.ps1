@@ -81,7 +81,7 @@ function Invoke-Native([string]$WorkingDirectory, [string]$FilePath, [string[]]$
         # Starting a batch file directly can return after it spawns Gradle's Java
         # wrapper. cmd /c owns the batch lifecycle and makes WaitForExit reliable.
         $startInfo.FileName = $env:ComSpec
-        $startInfo.Arguments = '/d /c ""' + $FilePath + '" ' + $encodedArguments + '"'
+        $startInfo.Arguments = '/d /c call "' + $FilePath + '" ' + $encodedArguments
     } else {
         $startInfo.FileName = $FilePath
         $startInfo.Arguments = $encodedArguments
