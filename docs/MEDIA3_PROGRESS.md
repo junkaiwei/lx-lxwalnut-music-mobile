@@ -52,6 +52,17 @@ Phase 0 必须输出：
 
 ## 变更记录
 
+### 2026-07-21 - Phase 0 补证：动态包名矩阵与可复核原始输出
+
+- 阶段：Phase 0 - 基线与依赖审计
+- 状态：阻塞；补齐动态包名、签名/覆盖安装和原始 evidence，不修改播放器、Service、Bridge、Provider 或 Media3 依赖
+- 动态包名：`com.tencent.qqmusic` 通过 [run 29795317191](https://github.com/junkaiwei/lx-lxwalnut-music-mobile/actions/runs/29795317191) 的固定签名 Release 构建和证书校验，artifact `8481864959` 的 x86_64 APK 在 API 23 以不带 `-t` 的标准 `pm install` 首次安装、`pm install -r` 覆盖安装并冷启动（514 ms）成功，未见 `AndroidRuntime` 致命异常。最终 APK package 为 `com.tencent.qqmusic`；Release merged Manifest 的项目/RNFetchBlob Provider 均为 `com.tencent.qqmusic.provider`，Widget action 为 `com.tencent.qqmusic.widget.*`，Deep Link scheme 为显式输入 `lxmusic`
+- 第二自定义包名：本机运行 `:app:assembleDebug :app:processDebugMainManifest -PAPP_PACKAGE_NAME=com.lxwalnut.music.phase0audit -PAPP_DEEP_LINK_SCHEME=lxphaseaudit`，`BUILD SUCCESSFUL in 1m 36s`（456 tasks）。x86_64 Debug APK package、两 Provider authority、Widget action 和 Deep Link 分别解析为 `com.lxwalnut.music.phase0audit`、`.provider`、`.widget.*` 和 `lxphaseaudit`。两种非默认包名都保留两个不同 Provider class 共用同一 `<applicationId>.provider`，故动态身份验证没有掩盖冲突
+- 原始 evidence：新增 [`docs/evidence/media3-phase0-2026-07-21`](evidence/media3-phase0-2026-07-21/README.md)，保存默认 Release 的 `releaseRuntimeClasspath`、三项 `dependencyInsight`、merged Manifest 与 merger report；API 23 的设备属性、标准安装、冷启动、logcat、UI dump 和 APK hash/ABI/version/source；以及两个非默认包名的构建/Manifest、签名和覆盖安装输出。APK 二进制仍以 Actions artifact 保存，仓库只保留可复核文本/XML/哈希
+- API 23 安装边界：默认包名签名 Release 也重新使用不带 `-t` 的 `pm install -r` 成功，冷启动为 406 ms；因此 Release 基础安装结论不依赖 test-only 安装路径
+- 阻塞：动态包名构建与基础安装证据已补齐，但 1) Debug/Release 最终 Media3 仍为 `1.8.0`，没有目标 `1.9.4` 兼容证据；2) default 和两个自定义包名都存在重复 FileProvider owner；3) 播放、通知、锁屏、蓝牙、Widget 冷启动、外部文件分享和完整系统/厂商矩阵未验证。PR 必须保持 Draft，不能进入 Phase 1
+- 下一步：先由负责人确认 rn-fetch-blob `actionViewIntent` 的产品需求并选择单一 Provider owner；在独立依赖审查中处理 1.9.4 后，按设计规范完成冲突修复和运行场景回归
+
 ### 2026-07-21 - Phase 0 补证：Release 变体与 API 23 最低边界
 
 - 阶段：Phase 0 - 基线与依赖审计
@@ -126,4 +137,4 @@ Phase 0 必须输出：
 - 当前可解析的 Debug 图是 Media3 `1.8.0`，而不是目标 `1.9.4`；没有 1.9.4 与 TrackPlayer fork、react-native-video、本地媒体元数据和 Kotlin 1.9.24 的完整兼容证据，禁止强制混合版本。
 - merged Debug Manifest 的应用 FileProvider 与 rn-fetch-blob FileProvider 共用 `${applicationId}.provider`，违反单一 owner 边界；需要先确定 authority/调用方迁移方案，并验证安装及文件分享。
 - Provider authority 在 API 35 的 package dump 中只映射到项目 `androidx.core.content.FileProvider`，而 Manifest 仍保留 rn-fetch-blob 的第二个 Provider class；必须先选择单一 owner 或独立 authority 并验证外部文件分享。
-- API 23 已验证 Debug 原生启动和 Release 内嵌 JS 基础 UI 初始化；播放、通知、锁屏、蓝牙、Widget 冷启动、外部文件与多包名运行矩阵仍未验证。
+- API 23 已验证 Debug 原生启动、默认和 `com.tencent.qqmusic` 签名 Release 的标准安装/基础 UI，以及第二自定义包名的 Debug 构建/Manifest；播放、通知、锁屏、蓝牙、Widget 冷启动、外部文件与完整系统/厂商运行矩阵仍未验证。

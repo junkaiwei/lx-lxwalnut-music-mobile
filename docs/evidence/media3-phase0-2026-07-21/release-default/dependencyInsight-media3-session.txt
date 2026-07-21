@@ -1,0 +1,105 @@
+Configuration on demand is an incubating feature.
+> Task :gradle-plugin:compileKotlin UP-TO-DATE
+> Task :gradle-plugin:compileJava NO-SOURCE
+> Task :gradle-plugin:pluginDescriptors UP-TO-DATE
+> Task :gradle-plugin:processResources UP-TO-DATE
+> Task :gradle-plugin:classes UP-TO-DATE
+> Task :gradle-plugin:jar UP-TO-DATE
+> Task :gradle-plugin:inspectClassesForKotlinIC UP-TO-DATE
+
+> Configure project :react-native-quick-md5
+react-native-quick-md5: node_modules/ found at: D:\Program\lx-lxwalnut-music-mobile\node_modules
+
+> Configure project :react-native-video
+Kotlin version is correct: 1.9.24
+AndroidX version is correct: 1.9.3
+useExoplayerIMA: false
+useExoplayerSmoothStreaming: true
+useExoplayerDash: true
+useExoplayerHls: true
+useExoplayerRtsp: false
+buildFromSource: false
+
+> Task :app:dependencyInsight
+androidx.media3:media3-session:1.8.0
+  Variant releaseVariantReleaseRuntimePublication:
+    | Attribute Name                                  | Provided     | Requested    |
+    |-------------------------------------------------|--------------|--------------|
+    | org.gradle.dependency.bundling                  | external     |              |
+    | org.gradle.libraryelements                      | aar          |              |
+    | org.gradle.status                               | release      |              |
+    | org.gradle.category                             | library      | library      |
+    | org.gradle.usage                                | java-runtime | java-runtime |
+    | com.android.build.api.attributes.AgpVersionAttr |              | 8.6.1        |
+    | com.android.build.api.attributes.BuildTypeAttr  |              | release      |
+    | org.gradle.jvm.environment                      |              | android      |
+    | org.jetbrains.kotlin.platform.type              |              | androidJvm   |
+   Selection reasons:
+      - By constraint
+      - By conflict resolution: between versions 1.8.0 and 1.4.1
+
+androidx.media3:media3-session:1.8.0
+\--- androidx.media3:media3-common:1.8.0
+     +--- project :react-native-video (requested androidx.media3:media3-common:1.4.1)
+     |    \--- releaseRuntimeClasspath
+     +--- androidx.media3:media3-exoplayer:1.8.0
+     |    +--- project :react-native-video (requested androidx.media3:media3-exoplayer:1.4.1) (*)
+     |    +--- project :react-native-local-media-metadata (requested androidx.media3:media3-exoplayer:1.5.1)
+     |    |    \--- releaseRuntimeClasspath
+     |    +--- project :react-native-track-player
+     |    |    \--- releaseRuntimeClasspath
+     |    +--- androidx.media3:media3-exoplayer-dash:1.8.0
+     |    |    +--- project :react-native-video (requested androidx.media3:media3-exoplayer-dash:1.4.1) (*)
+     |    |    \--- androidx.media3:media3-common:1.8.0 (*)
+     |    +--- androidx.media3:media3-exoplayer-hls:1.8.0
+     |    |    +--- project :react-native-video (requested androidx.media3:media3-exoplayer-hls:1.4.1) (*)
+     |    |    \--- androidx.media3:media3-common:1.8.0 (*)
+     |    +--- androidx.media3:media3-exoplayer-smoothstreaming:1.8.0
+     |    |    +--- project :react-native-video (requested androidx.media3:media3-exoplayer-smoothstreaming:1.4.1) (*)
+     |    |    \--- androidx.media3:media3-common:1.8.0 (*)
+     |    \--- androidx.media3:media3-common:1.8.0 (*)
+     +--- androidx.media3:media3-datasource-okhttp:1.8.0
+     |    +--- project :react-native-video (requested androidx.media3:media3-datasource-okhttp:1.4.1) (*)
+     |    \--- androidx.media3:media3-common:1.8.0 (*)
+     +--- androidx.media3:media3-session:1.8.0 (*)
+     +--- androidx.media3:media3-datasource:1.8.0
+     |    +--- project :react-native-video (requested androidx.media3:media3-datasource:1.4.1) (*)
+     |    +--- androidx.media3:media3-exoplayer:1.8.0 (*)
+     |    +--- androidx.media3:media3-datasource-okhttp:1.8.0 (*)
+     |    +--- androidx.media3:media3-session:1.8.0 (*)
+     |    \--- androidx.media3:media3-common:1.8.0 (*)
+     +--- androidx.media3:media3-extractor:1.8.0
+     |    +--- androidx.media3:media3-exoplayer:1.8.0 (*)
+     |    \--- androidx.media3:media3-common:1.8.0 (*)
+     +--- androidx.media3:media3-container:1.8.0
+     |    +--- androidx.media3:media3-exoplayer:1.8.0 (*)
+     |    +--- androidx.media3:media3-extractor:1.8.0 (*)
+     |    \--- androidx.media3:media3-common:1.8.0 (*)
+     +--- androidx.media3:media3-decoder:1.8.0
+     |    +--- androidx.media3:media3-exoplayer:1.8.0 (*)
+     |    +--- androidx.media3:media3-extractor:1.8.0 (*)
+     |    \--- androidx.media3:media3-common:1.8.0 (*)
+     +--- androidx.media3:media3-database:1.8.0
+     |    +--- androidx.media3:media3-exoplayer:1.8.0 (*)
+     |    +--- androidx.media3:media3-datasource:1.8.0 (*)
+     |    \--- androidx.media3:media3-common:1.8.0 (*)
+     \--- androidx.media3:media3-ui:1.8.0
+          +--- project :react-native-video (requested androidx.media3:media3-ui:1.4.1) (*)
+          \--- androidx.media3:media3-common:1.8.0 (*)
+
+androidx.media3:media3-session:1.4.1 -> 1.8.0
+\--- project :react-native-video
+     \--- releaseRuntimeClasspath
+
+(*) - Indicates repeated occurrences of a transitive dependency subtree. Gradle expands transitive dependency subtrees only once per project; repeat occurrences only display the root of the subtree, followed by this annotation.
+
+A web-based, searchable dependency report is available by adding the --scan option.
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.8/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 26s
+6 actionable tasks: 1 executed, 5 up-to-date

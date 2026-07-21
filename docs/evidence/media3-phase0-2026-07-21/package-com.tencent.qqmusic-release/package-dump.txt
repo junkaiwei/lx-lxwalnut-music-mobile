@@ -1,0 +1,11 @@
+  com.tencent.qqmusic/androidx.core.content.FileProvider:
+    Provider{1ffba3c com.tencent.qqmusic/androidx.core.content.FileProvider}
+  com.tencent.qqmusic/com.RNFetchBlob.Utils.FileProvider:
+    Provider{b08c3c5 com.tencent.qqmusic/com.RNFetchBlob.Utils.FileProvider}
+  com.tencent.qqmusic/com.reactnativecommunity.webview.RNCWebViewFileProvider:
+    Provider{ce2e44b com.tencent.qqmusic/com.reactnativecommunity.webview.RNCWebViewFileProvider}
+    Provider{1ffba3c com.tencent.qqmusic/androidx.core.content.FileProvider}
+  [com.tencent.qqmusic.fileprovider]:
+    Provider{ce2e44b com.tencent.qqmusic/com.reactnativecommunity.webview.RNCWebViewFileProvider}
+    versionCode=260702 targetSdk=29
+    versionName=26.07.02
