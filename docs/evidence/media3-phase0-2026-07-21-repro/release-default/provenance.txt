@@ -1,0 +1,35 @@
+head=98cedfd8099d18fabd622e81f3a45e47a719745a
+git_status_porcelain=
+scenario=release-default
+APP_PACKAGE_NAME=com.lxwalnut.music.mobile
+APP_DEEP_LINK_SCHEME=lxmusic
+java_home=C:\Program Files\Microsoft\jdk-17.0.19.10-hotspot
+android_sdk=D:\Android\Sdk
+aapt=D:\Android\Sdk\build-tools\35.0.0\aapt.exe
+java_version:
+
+openjdk version "17.0.19" 2026-04-21 LTS
+OpenJDK Runtime Environment Microsoft-13877129 (build 17.0.19+10-LTS)
+OpenJDK 64-Bit Server VM Microsoft-13877129 (build 17.0.19+10-LTS, mixed mode, sharing)
+gradle_version:
+
+------------------------------------------------------------
+Gradle 8.8
+------------------------------------------------------------
+
+Build time:   2024-05-31 21:46:56 UTC
+Revision:     4bd1b3d3fc3f31db5a26eecb416a165b8cc36082
+
+Kotlin:       1.9.22
+Groovy:       3.0.21
+Ant:          Apache Ant(TM) version 1.10.13 compiled on January 4 2023
+JVM:          17.0.19 (Microsoft 17.0.19+10-LTS)
+OS:           Windows 11 10.0 amd64
+
+aapt_version:
+Android Asset Packaging Tool, v0.2-11948202
+
+artifact_source_commit=3c069951b122cdf44b0bdd14b20f4d65544c19cb
+release_apk=C:\Users\admin\AppData\Local\Temp\media3-api23-release-29688002586\lx-lxwalnut-music-mobile-v26.07.02-x86_64.apk
+release_apk_sha256=7E0B1FA70DBA82D634C76678FF8204A3D884B98F42A27173B6B433A5FA254527
+device_serial=emulator-5556

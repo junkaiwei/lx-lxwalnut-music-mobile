@@ -52,6 +52,14 @@ Phase 0 必须输出：
 
 ## 变更记录
 
+### 2026-07-21 - Phase 0 可复现默认 Release 取证
+
+- 阶段：Phase 0 - 基线与依赖审计
+- 状态：阻塞；从干净 commit `98cedfd8099d18fabd622e81f3a45e47a719745a` 用 `scripts/media3-phase0-capture.ps1` 重新生成默认 Release evidence，未修改播放器、Service、Bridge、Provider 或 Media3 依赖
+- 取证与结果：[`docs/evidence/media3-phase0-2026-07-21-repro/release-default`](evidence/media3-phase0-2026-07-21-repro/release-default) 的 `provenance.txt` 记录空的起始 `git_status_porcelain`、JDK 17.0.19、Gradle 8.8、aapt、实际 package/scheme、Release APK source commit `3c069951b122cdf44b0bdd14b20f4d65544c19cb` 与 SHA-256。完整命令、Release classpath、三项 Media3 insight、merged Manifest/report、API 23 标准安装、冷启动、logcat 与 UI dump 均已保存
+- 验证：`releaseRuntimeClasspath` 和三项 insight 仍解析 Media3 `1.8.0`；Release merged Manifest 仍含项目 `androidx.core.content.FileProvider` 与 `com.RNFetchBlob.Utils.FileProvider` 两个 class 共用 `com.lxwalnut.music.mobile.provider`。API 23 `pm install -r` 返回 `Success`，冷启动 `Status: ok`、`TotalTime: 2034`，AndroidRuntime 过滤日志无致命异常；安装/启动结果不解除 Provider 单一 owner 阻塞
+- 下一步：提交本默认 Release evidence 后，从新的干净 HEAD 生成第二个自定义包名 Debug evidence；Provider 与 Media3 1.9.4 继续保持后续独立 PR blocker
+
 ### 2026-07-21 - Phase 0 取证脚本：绑定干净源码状态
 
 - 阶段：Phase 0 - 基线与依赖审计
