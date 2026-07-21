@@ -2,6 +2,8 @@
 
 本目录保存 PR #1 二次评审所要求的原始输出，不包含 APK 二进制。APK 由 GitHub Actions artifact 保存；本目录以 SHA-256、`aapt`、`apksigner`、merged Manifest、Gradle 和 ADB 输出锁定被测对象与结果。
 
+后续本机取证统一使用 [`scripts/media3-phase0-capture.ps1`](../../../scripts/media3-phase0-capture.ps1)。它在输出前硬性拒绝脏工作树，并写入 HEAD、工具版本、完整命令和实际构建身份；旧目录保留为当时评审的历史证据。
+
 ## 目录和来源
 
 | 目录 | 范围 | 来源 |
