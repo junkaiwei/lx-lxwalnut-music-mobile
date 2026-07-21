@@ -1,0 +1,11 @@
+name=assembleDebug
+working_directory=D:\Program\lx-lxwalnut-music-mobile\android
+command=D:\Program\lx-lxwalnut-music-mobile\android\gradlew.bat :app:assembleDebug :app:processDebugMainManifest -PAPP_PACKAGE_NAME=com.lxwalnut.music.phase0audit -PAPP_DEEP_LINK_SCHEME=lxphaseaudit
+
+name=apk-badging
+working_directory=D:\Program\lx-lxwalnut-music-mobile
+command=D:\Android\Sdk\build-tools\35.0.0\aapt.exe dump badging D:\Program\lx-lxwalnut-music-mobile\android\app\build\outputs\apk\debug\lx-lxwalnut-music-mobile-v26.07.02-x86_64.apk
+
+name=apk-manifest-tree
+working_directory=D:\Program\lx-lxwalnut-music-mobile
+command=D:\Android\Sdk\build-tools\35.0.0\aapt.exe dump xmltree D:\Program\lx-lxwalnut-music-mobile\android\app\build\outputs\apk\debug\lx-lxwalnut-music-mobile-v26.07.02-x86_64.apk AndroidManifest.xml

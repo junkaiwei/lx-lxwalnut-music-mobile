@@ -1,0 +1,15 @@
+    package="com.lxwalnut.music.phase0audit"
+                    android:scheme="lxphaseaudit" />
+                <data android:scheme="file" />
+                <data android:scheme="content" />
+                <data android:scheme="file" />
+                <data android:scheme="content" />
+            android:authorities="com.lxwalnut.music.phase0audit.provider"
+            android:name="com.lxwalnut.music.mobile.widget.MusicWidgetProvider"
+                <action android:name="com.lxwalnut.music.phase0audit.widget.PLAY_PAUSE" />
+                <action android:name="com.lxwalnut.music.phase0audit.widget.PREV" />
+                <action android:name="com.lxwalnut.music.phase0audit.widget.NEXT" />
+                <action android:name="com.lxwalnut.music.phase0audit.widget.UPDATE" />
+            android:authorities="com.lxwalnut.music.phase0audit.fileprovider"
+            android:authorities="com.lxwalnut.music.phase0audit.provider"
+            android:authorities="com.lxwalnut.music.phase0audit.androidx-startup"

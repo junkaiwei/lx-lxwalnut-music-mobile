@@ -1,0 +1,2 @@
+	pkg: /data/local/tmp/media3-phase0-release.apk
+Success

@@ -1,0 +1,13 @@
+Starting: Intent { cmp=com.lxwalnut.music.mobile/.MainActivity }
+
+Status: ok
+
+Activity: com.lxwalnut.music.mobile/.MainActivity
+
+ThisTime: 406
+
+TotalTime: 406
+
+WaitTime: 439
+
+Complete
