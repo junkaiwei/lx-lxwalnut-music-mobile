@@ -75,9 +75,17 @@ function Invoke-Native([string]$WorkingDirectory, [string]$FilePath, [string[]]$
     # Java and Gradle legitimately use stderr for version text and warnings. A .NET
     # process keeps both streams out of PowerShell's version-specific error pipeline.
     $startInfo = New-Object System.Diagnostics.ProcessStartInfo
-    $startInfo.FileName = $FilePath
     $startInfo.WorkingDirectory = $WorkingDirectory
-    $startInfo.Arguments = (($Arguments | ForEach-Object { '"' + ($_ -replace '"', '\"') + '"' }) -join ' ')
+    $encodedArguments = (($Arguments | ForEach-Object { '"' + ($_ -replace '"', '\"') + '"' }) -join ' ')
+    if ([System.IO.Path]::GetExtension($FilePath) -ieq '.bat') {
+        # Starting a batch file directly can return after it spawns Gradle's Java
+        # wrapper. cmd /c owns the batch lifecycle and makes WaitForExit reliable.
+        $startInfo.FileName = $env:ComSpec
+        $startInfo.Arguments = '/d /c ""' + $FilePath + '" ' + $encodedArguments + '"'
+    } else {
+        $startInfo.FileName = $FilePath
+        $startInfo.Arguments = $encodedArguments
+    }
     $startInfo.UseShellExecute = $false
     $startInfo.RedirectStandardOutput = $true
     $startInfo.RedirectStandardError = $true
