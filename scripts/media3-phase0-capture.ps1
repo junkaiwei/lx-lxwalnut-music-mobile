@@ -71,11 +71,12 @@ function Write-Utf8File([string]$Path, [object[]]$Lines) {
     [System.IO.File]::WriteAllText($Path, $text, (New-Object System.Text.UTF8Encoding($false)))
 }
 
-function Invoke-Native([string]$FilePath, [string[]]$Arguments) {
+function Invoke-Native([string]$WorkingDirectory, [string]$FilePath, [string[]]$Arguments) {
     # Java and Gradle legitimately use stderr for version text and warnings. A .NET
     # process keeps both streams out of PowerShell's version-specific error pipeline.
     $startInfo = New-Object System.Diagnostics.ProcessStartInfo
     $startInfo.FileName = $FilePath
+    $startInfo.WorkingDirectory = $WorkingDirectory
     $startInfo.Arguments = (($Arguments | ForEach-Object { '"' + ($_ -replace '"', '\"') + '"' }) -join ' ')
     $startInfo.UseShellExecute = $false
     $startInfo.RedirectStandardOutput = $true
@@ -98,7 +99,7 @@ function Invoke-Checked([string]$Name, [string]$WorkingDirectory, [string]$FileP
     Add-Content -LiteralPath $commandsFile -Encoding utf8 "name=$Name`nworking_directory=$WorkingDirectory`ncommand=$FilePath $($Arguments -join ' ')`n"
     Push-Location $WorkingDirectory
     try {
-        $result = Invoke-Native $FilePath $Arguments
+        $result = Invoke-Native $WorkingDirectory $FilePath $Arguments
         Write-Utf8File (Join-Path $outputRoot "$Name.txt") $result.Output
         if ($result.ExitCode -ne 0) { throw "$Name failed with exit code $($result.ExitCode)." }
     } finally {
@@ -108,9 +109,9 @@ function Invoke-Checked([string]$Name, [string]$WorkingDirectory, [string]$FileP
 
 $identityBefore = [System.IO.File]::ReadAllBytes($identityPath)
 try {
-    $javaCall = Invoke-Native (Join-Path $JavaHome 'bin\java.exe') @('-version')
-    $gradleCall = Invoke-Native $gradle @('-version')
-    $aaptCall = Invoke-Native $aapt @('version')
+    $javaCall = Invoke-Native $repoRoot (Join-Path $JavaHome 'bin\java.exe') @('-version')
+    $gradleCall = Invoke-Native $androidRoot $gradle @('-version')
+    $aaptCall = Invoke-Native $repoRoot $aapt @('version')
     if ($javaCall.ExitCode -ne 0 -or $gradleCall.ExitCode -ne 0 -or $aaptCall.ExitCode -ne 0) {
         throw 'Failed to obtain Java, Gradle, or aapt version for provenance.'
     }
