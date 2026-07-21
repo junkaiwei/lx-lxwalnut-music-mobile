@@ -75,15 +75,17 @@ function Invoke-Native([string]$FilePath, [string[]]$Arguments) {
     # Java and Gradle legitimately use stderr for version text and warnings. Capture
     # it as evidence, then enforce their process exit code instead of PowerShell's
     # stderr-to-error conversion, which differs between Windows PowerShell and PS 7.
-    $previousErrorAction = $ErrorActionPreference
-    $ErrorActionPreference = 'Continue'
+    $stderrPath = [System.IO.Path]::GetTempFileName()
     try {
-        $output = & $FilePath @Arguments 2>&1
+        $stdout = & $FilePath @Arguments 2> $stderrPath
         $exitCode = $LASTEXITCODE
+        $stderr = [System.IO.File]::ReadAllText($stderrPath)
     } finally {
-        $ErrorActionPreference = $previousErrorAction
+        Remove-Item -LiteralPath $stderrPath -ErrorAction SilentlyContinue
     }
-    return [pscustomobject]@{ Output = @($output); ExitCode = $exitCode }
+    $output = @($stdout)
+    if ($stderr) { $output += $stderr.TrimEnd() }
+    return [pscustomobject]@{ Output = $output; ExitCode = $exitCode }
 }
 
 function Invoke-Checked([string]$Name, [string]$WorkingDirectory, [string]$FilePath, [string[]]$Arguments) {
