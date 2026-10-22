@@ -1,0 +1,15 @@
+    package="com.tencent.qqmusic"
+                    android:scheme="lxmusic" />
+                <data android:scheme="file" />
+                <data android:scheme="content" />
+                <data android:scheme="file" />
+                <data android:scheme="content" />
+            android:authorities="com.tencent.qqmusic.provider"
+            android:name="com.lxwalnut.music.mobile.widget.MusicWidgetProvider"
+                <action android:name="com.tencent.qqmusic.widget.PLAY_PAUSE" />
+                <action android:name="com.tencent.qqmusic.widget.PREV" />
+                <action android:name="com.tencent.qqmusic.widget.NEXT" />
+                <action android:name="com.tencent.qqmusic.widget.UPDATE" />
+            android:authorities="com.tencent.qqmusic.fileprovider"
+            android:authorities="com.tencent.qqmusic.provider"
+            android:authorities="com.tencent.qqmusic.androidx-startup"

@@ -1,0 +1,13 @@
+Starting: Intent { cmp=com.tencent.qqmusic/com.lxwalnut.music.mobile.MainActivity }
+
+Status: ok
+
+Activity: com.tencent.qqmusic/com.lxwalnut.music.mobile.MainActivity
+
+ThisTime: 514
+
+TotalTime: 514
+
+WaitTime: 616
+
+Complete

@@ -1,0 +1,60 @@
+name=releaseRuntimeClasspath
+working_directory=D:\Program\lx-lxwalnut-music-mobile\android
+command=D:\Program\lx-lxwalnut-music-mobile\android\gradlew.bat :app:dependencies --configuration releaseRuntimeClasspath
+
+name=dependencyInsight-media3-common
+working_directory=D:\Program\lx-lxwalnut-music-mobile\android
+command=D:\Program\lx-lxwalnut-music-mobile\android\gradlew.bat :app:dependencyInsight --configuration releaseRuntimeClasspath --dependency androidx.media3:media3-common
+
+name=dependencyInsight-media3-exoplayer
+working_directory=D:\Program\lx-lxwalnut-music-mobile\android
+command=D:\Program\lx-lxwalnut-music-mobile\android\gradlew.bat :app:dependencyInsight --configuration releaseRuntimeClasspath --dependency androidx.media3:media3-exoplayer
+
+name=dependencyInsight-media3-session
+working_directory=D:\Program\lx-lxwalnut-music-mobile\android
+command=D:\Program\lx-lxwalnut-music-mobile\android\gradlew.bat :app:dependencyInsight --configuration releaseRuntimeClasspath --dependency androidx.media3:media3-session
+
+name=processReleaseMainManifest
+working_directory=D:\Program\lx-lxwalnut-music-mobile\android
+command=D:\Program\lx-lxwalnut-music-mobile\android\gradlew.bat :app:processReleaseMainManifest -PAPP_PACKAGE_NAME=com.lxwalnut.music.mobile -PAPP_DEEP_LINK_SCHEME=lxmusic
+
+name=apk-badging
+working_directory=D:\Program\lx-lxwalnut-music-mobile
+command=D:\Android\Sdk\build-tools\35.0.0\aapt.exe dump badging C:\Users\admin\AppData\Local\Temp\media3-api23-release-29688002586\lx-lxwalnut-music-mobile-v26.07.02-x86_64.apk
+
+name=apk-manifest-tree
+working_directory=D:\Program\lx-lxwalnut-music-mobile
+command=D:\Android\Sdk\build-tools\35.0.0\aapt.exe dump xmltree C:\Users\admin\AppData\Local\Temp\media3-api23-release-29688002586\lx-lxwalnut-music-mobile-v26.07.02-x86_64.apk AndroidManifest.xml
+
+name=device-properties
+working_directory=D:\Program\lx-lxwalnut-music-mobile
+command=D:\Android\Sdk\platform-tools\adb.exe -s emulator-5556 shell getprop
+
+name=adb-logcat-clear
+working_directory=D:\Program\lx-lxwalnut-music-mobile
+command=D:\Android\Sdk\platform-tools\adb.exe -s emulator-5556 logcat -c
+
+name=adb-push-release-apk
+working_directory=D:\Program\lx-lxwalnut-music-mobile
+command=D:\Android\Sdk\platform-tools\adb.exe -s emulator-5556 push C:\Users\admin\AppData\Local\Temp\media3-api23-release-29688002586\lx-lxwalnut-music-mobile-v26.07.02-x86_64.apk /data/local/tmp/media3-phase0-release.apk
+
+name=install-standard
+working_directory=D:\Program\lx-lxwalnut-music-mobile
+command=D:\Android\Sdk\platform-tools\adb.exe -s emulator-5556 shell pm install -r /data/local/tmp/media3-phase0-release.apk
+
+name=cold-start
+working_directory=D:\Program\lx-lxwalnut-music-mobile
+command=D:\Android\Sdk\platform-tools\adb.exe -s emulator-5556 shell am start -W -n com.lxwalnut.music.mobile/com.lxwalnut.music.mobile.MainActivity
+
+name=androidruntime-logcat
+working_directory=D:\Program\lx-lxwalnut-music-mobile
+command=D:\Android\Sdk\platform-tools\adb.exe -s emulator-5556 logcat -d -v brief AndroidRuntime:E *:S
+
+name=uiautomator-dump
+working_directory=D:\Program\lx-lxwalnut-music-mobile
+command=D:\Android\Sdk\platform-tools\adb.exe -s emulator-5556 shell uiautomator dump /sdcard/media3-phase0-window.xml
+
+name=uiautomator-pull
+working_directory=D:\Program\lx-lxwalnut-music-mobile
+command=D:\Android\Sdk\platform-tools\adb.exe -s emulator-5556 pull /sdcard/media3-phase0-window.xml D:\Program\lx-lxwalnut-music-mobile\docs\evidence\media3-phase0-2026-07-21-repro\release-default\window.xml
+

@@ -1,0 +1,7 @@
+[ro.build.fingerprint]: [Android/sdk_google_phone_x86_64/generic_x86_64:6.0/MASTER/6695544:userdebug/test-keys]
+[ro.build.version.sdk]: [23]
+[ro.product.cpu.abi]: [x86_64]
+[ro.product.cpu.abilist]: [x86_64,x86]
+[ro.product.cpu.abilist32]: [x86]
+[ro.product.cpu.abilist64]: [x86_64]
+[ro.product.model]: [Android SDK built for x86_64]

@@ -1,0 +1,15 @@
+    package="com.lxwalnut.music.mobile"
+                    android:scheme="lxmusic" />
+                <data android:scheme="file" />
+                <data android:scheme="content" />
+                <data android:scheme="file" />
+                <data android:scheme="content" />
+            android:authorities="com.lxwalnut.music.mobile.provider"
+            android:name="com.lxwalnut.music.mobile.widget.MusicWidgetProvider"
+                <action android:name="com.lxwalnut.music.mobile.widget.PLAY_PAUSE" />
+                <action android:name="com.lxwalnut.music.mobile.widget.PREV" />
+                <action android:name="com.lxwalnut.music.mobile.widget.NEXT" />
+                <action android:name="com.lxwalnut.music.mobile.widget.UPDATE" />
+            android:authorities="com.lxwalnut.music.mobile.fileprovider"
+            android:authorities="com.lxwalnut.music.mobile.provider"
+            android:authorities="com.lxwalnut.music.mobile.androidx-startup"

@@ -1,0 +1,910 @@
+-- Merging decision tree log ---
+data
+INJECTED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:42:11-74
+	android:scheme
+		INJECTED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml
+provider#androidx.core.content.FileProvider
+INJECTED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:90:7-98:18
+	android:authorities
+		INJECTED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml
+action#com.lxwalnut.music.phase0audit.widget.PLAY_PAUSE
+INJECTED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:107:11-72
+	android:name
+		INJECTED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml
+action#com.lxwalnut.music.phase0audit.widget.PREV
+INJECTED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:108:11-66
+	android:name
+		INJECTED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml
+action#com.lxwalnut.music.phase0audit.widget.NEXT
+INJECTED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:109:11-66
+	android:name
+		INJECTED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml
+action#com.lxwalnut.music.phase0audit.widget.UPDATE
+INJECTED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:110:11-68
+	android:name
+		INJECTED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml
+manifest
+ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:1:1-117:12
+MERGED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:1:1-117:12
+INJECTED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\debug\AndroidManifest.xml:2:1-9:12
+INJECTED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\debug\AndroidManifest.xml:2:1-9:12
+INJECTED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\debug\AndroidManifest.xml:2:1-9:12
+MERGED from [:react-native-async-storage_async-storage] D:\Program\lx-lxwalnut-music-mobile\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-7:12
+MERGED from [:react-native-pager-view] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-pager-view\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-7:12
+MERGED from [:react-native-video] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-video\android\buildOutput_a15d4dee7fc4eda61b91308cbb6a2e72\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-7:12
+MERGED from [:react-native-webview] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-webview\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-31:12
+MERGED from [com.facebook.react:flipper-integration:0.73.11] C:\Users\admin\.gradle\caches\8.8\transforms\175b617e073aca2a8bf5785ad2f1f8e2\transformed\jetified-flipper-integration-0.73.11-debug\AndroidManifest.xml:2:1-7:12
+MERGED from [:d11_react-native-fast-image] D:\Program\lx-lxwalnut-music-mobile\node_modules\@d11\react-native-fast-image\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-7:12
+MERGED from [:react-native-clipboard_clipboard] D:\Program\lx-lxwalnut-music-mobile\node_modules\@react-native-clipboard\clipboard\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-7:12
+MERGED from [:react-native-community_slider] D:\Program\lx-lxwalnut-music-mobile\node_modules\@react-native-community\slider\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-7:12
+MERGED from [:react-native-cookies_cookies] D:\Program\lx-lxwalnut-music-mobile\node_modules\@react-native-cookies\cookies\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-7:12
+MERGED from [:react-native-background-timer] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-background-timer\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-6:12
+MERGED from [:react-native-exception-handler] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-exception-handler\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-12:12
+MERGED from [:react-native-file-system] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-file-system\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-7:12
+MERGED from [:react-native-fs] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-fs\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-9:12
+MERGED from [:react-native-local-media-metadata] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-local-media-metadata\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-10:12
+MERGED from [:react-native-navigation] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-navigation\lib\android\app\build\intermediates\merged_manifest\reactNative71Debug\processReactNative71DebugManifest\AndroidManifest.xml:2:1-14:12
+MERGED from [:react-native-quick-base64] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-quick-base64\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-7:12
+MERGED from [:react-native-quick-md5] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-quick-md5\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-7:12
+MERGED from [:react-native-svg] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-svg\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-7:12
+MERGED from [:react-native-track-player] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-track-player\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-32:12
+MERGED from [:react-native-udp] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-udp\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-12:12
+MERGED from [:react-native-vector-icons] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-vector-icons\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-7:12
+MERGED from [:rn-fetch-blob] D:\Program\lx-lxwalnut-music-mobile\node_modules\rn-fetch-blob\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-43:12
+MERGED from [com.facebook.react:react-android:0.73.11] C:\Users\admin\.gradle\caches\8.8\transforms\c728e393e5d7a7637fe69ef310865395\transformed\jetified-react-android-0.73.11-debug\AndroidManifest.xml:2:1-24:12
+MERGED from [androidx.appcompat:appcompat-resources:1.6.1] C:\Users\admin\.gradle\caches\8.8\transforms\7a1d8558485fa74d3040104370a73d25\transformed\jetified-appcompat-resources-1.6.1\AndroidManifest.xml:17:1-22:12
+MERGED from [com.facebook.flipper:flipper-network-plugin:0.201.0] C:\Users\admin\.gradle\caches\8.8\transforms\ce9f7ee2c3336b96d1c23e5be4890024\transformed\jetified-flipper-network-plugin-0.201.0\AndroidManifest.xml:8:1-13:12
+MERGED from [com.facebook.fresco:flipper-fresco-plugin:3.1.3] C:\Users\admin\.gradle\caches\8.8\transforms\badcd117d3b81368af9f8abf32527737\transformed\jetified-flipper-fresco-plugin-3.1.3\AndroidManifest.xml:8:1-13:12
+MERGED from [com.facebook.flipper:flipper:0.201.0] C:\Users\admin\.gradle\caches\8.8\transforms\ae8a180b41868b68d3734dc7e8eb4088\transformed\jetified-flipper-0.201.0\AndroidManifest.xml:8:1-16:12
+MERGED from [com.github.penfeizhou.android.animation:glide-plugin:3.0.5] C:\Users\admin\.gradle\caches\8.8\transforms\ff47650fa7e121be5df4bb3a7b413ff9\transformed\jetified-glide-plugin-3.0.5\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.constraintlayout:constraintlayout:2.0.4] C:\Users\admin\.gradle\caches\8.8\transforms\934961c8a8ffe6fdc0dbbf0b1e9dec0c\transformed\constraintlayout-2.0.4\AndroidManifest.xml:2:1-11:12
+MERGED from [com.github.wix-playground:ahbottomnavigation:3.3.0] C:\Users\admin\.gradle\caches\8.8\transforms\86ee13d1daba45a2dd6d7acc8a89e568\transformed\jetified-ahbottomnavigation-3.3.0\AndroidManifest.xml:2:1-13:12
+MERGED from [com.google.android.material:material:1.2.0-alpha03] C:\Users\admin\.gradle\caches\8.8\transforms\1790820b1b0fb928462c78ab7e8b78ff\transformed\material-1.2.0-alpha03\AndroidManifest.xml:17:1-24:12
+MERGED from [com.github.wix-playground:reflow-animator:1.0.6] C:\Users\admin\.gradle\caches\8.8\transforms\0faa0a65a76b5985467ef3c4abce8f2e\transformed\jetified-reflow-animator-1.0.6\AndroidManifest.xml:2:1-11:12
+MERGED from [com.facebook.stetho:stetho:1.6.0] C:\Users\admin\.gradle\caches\8.8\transforms\d20849c225ce97c00fdc5a4fd0e46ea3\transformed\jetified-stetho-1.6.0\AndroidManifest.xml:2:1-13:12
+MERGED from [com.github.penfeizhou.android.animation:awebp:3.0.5] C:\Users\admin\.gradle\caches\8.8\transforms\b73014c4e177c35d66879cbf3b5890de\transformed\jetified-awebp-3.0.5\AndroidManifest.xml:2:1-7:12
+MERGED from [com.github.penfeizhou.android.animation:apng:3.0.5] C:\Users\admin\.gradle\caches\8.8\transforms\edcb2650e65a7c32261928cec33cbf28\transformed\jetified-apng-3.0.5\AndroidManifest.xml:2:1-7:12
+MERGED from [com.github.penfeizhou.android.animation:gif:3.0.5] C:\Users\admin\.gradle\caches\8.8\transforms\81d0acce4b9e43f469ca92470d29590b\transformed\jetified-gif-3.0.5\AndroidManifest.xml:2:1-7:12
+MERGED from [com.github.penfeizhou.android.animation:avif:3.0.5] C:\Users\admin\.gradle\caches\8.8\transforms\deb31d94597b4bdeb556c7a8744b74b2\transformed\jetified-avif-3.0.5\AndroidManifest.xml:2:1-7:12
+MERGED from [com.github.penfeizhou.android.animation:frameanimation:3.0.5] C:\Users\admin\.gradle\caches\8.8\transforms\01540baad4e5829dcc68b2bd51a1887b\transformed\jetified-frameanimation-3.0.5\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.appcompat:appcompat:1.6.1] C:\Users\admin\.gradle\caches\8.8\transforms\151bbf5d5ee2b33b27059f541b5ff0d6\transformed\appcompat-1.6.1\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.room:room-ktx:2.4.3] C:\Users\admin\.gradle\caches\8.8\transforms\e6748b50cc615055d97759c845ef856a\transformed\jetified-room-ktx-2.4.3\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.autofill:autofill:1.1.0] C:\Users\admin\.gradle\caches\8.8\transforms\62b62eaa4f8205e14787bf671a900c7e\transformed\jetified-autofill-1.1.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.legacy:legacy-support-v4:1.0.0] C:\Users\admin\.gradle\caches\8.8\transforms\a7adf62ee55f4dc96115bbfe8b88592c\transformed\legacy-support-v4-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] C:\Users\admin\.gradle\caches\8.8\transforms\eb35bef228079ab2cb5b635d714e1778\transformed\legacy-support-core-ui-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.1.0] C:\Users\admin\.gradle\caches\8.8\transforms\0d7566c5ecc8df759a1f78dcaaa0dda7\transformed\swiperefreshlayout-1.1.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.media3:media3-exoplayer-dash:1.8.0] C:\Users\admin\.gradle\caches\8.8\transforms\c734dd35ef7bb1019558141de54f3954\transformed\jetified-media3-exoplayer-dash-1.8.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.media3:media3-exoplayer-hls:1.8.0] C:\Users\admin\.gradle\caches\8.8\transforms\beae3f034378bc0c82770a5d0849c273\transformed\jetified-media3-exoplayer-hls-1.8.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.media3:media3-exoplayer-smoothstreaming:1.8.0] C:\Users\admin\.gradle\caches\8.8\transforms\29a980ef06266e9a86a5807555656b6e\transformed\jetified-media3-exoplayer-smoothstreaming-1.8.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.media3:media3-exoplayer:1.8.0] C:\Users\admin\.gradle\caches\8.8\transforms\ab3698a0a03b027ef051a4aebe235855\transformed\jetified-media3-exoplayer-1.8.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.media3:media3-datasource-okhttp:1.8.0] C:\Users\admin\.gradle\caches\8.8\transforms\1739983c58e8c9f9f7e833088d574d1b\transformed\jetified-media3-datasource-okhttp-1.8.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.media3:media3-session:1.8.0] C:\Users\admin\.gradle\caches\8.8\transforms\b9ec595047d2109c16ffdf3e0bdfdd29\transformed\jetified-media3-session-1.8.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.media3:media3-datasource:1.8.0] C:\Users\admin\.gradle\caches\8.8\transforms\846d985327a65c83cf62b9141310f983\transformed\jetified-media3-datasource-1.8.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.media3:media3-extractor:1.8.0] C:\Users\admin\.gradle\caches\8.8\transforms\60575d93a8439459dc2dc4f710b937c4\transformed\jetified-media3-extractor-1.8.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.media3:media3-container:1.8.0] C:\Users\admin\.gradle\caches\8.8\transforms\3fe19e5851f3c943bc75039e94be1fa8\transformed\jetified-media3-container-1.8.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.media3:media3-decoder:1.8.0] C:\Users\admin\.gradle\caches\8.8\transforms\ea4f25c92f3774af0bf95cafc5f8698e\transformed\jetified-media3-decoder-1.8.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.media3:media3-database:1.8.0] C:\Users\admin\.gradle\caches\8.8\transforms\ed61f3c8daac6ab9134967bbaad97754\transformed\jetified-media3-database-1.8.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.media3:media3-common:1.8.0] C:\Users\admin\.gradle\caches\8.8\transforms\df2e10686214fe737f26e7e4fc0c0801\transformed\jetified-media3-common-1.8.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.media3:media3-ui:1.8.0] C:\Users\admin\.gradle\caches\8.8\transforms\6cd571eb4319113bd206a7f0ae66adf5\transformed\jetified-media3-ui-1.8.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.recyclerview:recyclerview:1.3.1] C:\Users\admin\.gradle\caches\8.8\transforms\c750cf7b9660e066926e8bc6882b39b8\transformed\recyclerview-1.3.1\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.viewpager2:viewpager2:1.1.0] C:\Users\admin\.gradle\caches\8.8\transforms\744cd28531e1066a7f2019c1f1a98c29\transformed\jetified-viewpager2-1.1.0\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.media:media:1.7.0] C:\Users\admin\.gradle\caches\8.8\transforms\ba51eb0ec1249d6d80ecea80a979dd8c\transformed\media-1.7.0\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.webkit:webkit:1.14.0] C:\Users\admin\.gradle\caches\8.8\transforms\a8a0be691250cf2414412dff9a26cea4\transformed\webkit-1.14.0\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] C:\Users\admin\.gradle\caches\8.8\transforms\338f5afd97d8607c6743b58d89ebb988\transformed\drawerlayout-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.emoji2:emoji2-views-helper:1.2.0] C:\Users\admin\.gradle\caches\8.8\transforms\36c98660476b7b3f3fe71a1ae921fcea\transformed\jetified-emoji2-views-helper-1.2.0\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.emoji2:emoji2:1.2.0] C:\Users\admin\.gradle\caches\8.8\transforms\ef63390370716cc9ce2a61eb34595174\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:17:1-35:12
+MERGED from [com.github.bumptech.glide:okhttp3-integration:4.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\05ec2a6ef4aded1f9fc206872e5a86e4\transformed\jetified-okhttp3-integration-4.16.0\AndroidManifest.xml:2:1-15:12
+MERGED from [com.github.bumptech.glide:avif-integration:4.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\6d3611760a48daa48c451337a062badd\transformed\jetified-avif-integration-4.16.0\AndroidManifest.xml:2:1-9:12
+MERGED from [com.github.zjupure:webpdecoder:2.7.4.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\8f8c1d05cc62af08989d3a814729a3cf\transformed\jetified-webpdecoder-2.7.4.16.0\AndroidManifest.xml:2:1-15:12
+MERGED from [com.github.bumptech.glide:glide:4.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\c672ee2435f0ba992ca8f8cb4e1047a2\transformed\jetified-glide-4.16.0\AndroidManifest.xml:2:1-9:12
+MERGED from [androidx.fragment:fragment:1.3.6] C:\Users\admin\.gradle\caches\8.8\transforms\93f7b4d356a18ee287be994160e7f2bc\transformed\fragment-1.3.6\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] C:\Users\admin\.gradle\caches\8.8\transforms\6cbed87183509329842d3942b322d542\transformed\vectordrawable-animated-1.1.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] C:\Users\admin\.gradle\caches\8.8\transforms\8c1e85a15efffac1b9ca78b05f9cda55\transformed\vectordrawable-1.1.0\AndroidManifest.xml:17:1-24:12
+MERGED from [com.facebook.fresco:flipper:3.1.3] C:\Users\admin\.gradle\caches\8.8\transforms\b85757379687ad084b3d9133cb7b4df4\transformed\jetified-flipper-3.1.3\AndroidManifest.xml:2:1-7:12
+MERGED from [com.facebook.fresco:fresco:3.1.3] C:\Users\admin\.gradle\caches\8.8\transforms\1ae51875ec878a96365fc40edbea4b6d\transformed\jetified-fresco-3.1.3\AndroidManifest.xml:2:1-7:12
+MERGED from [com.facebook.fresco:imagepipeline-okhttp3:3.1.3] C:\Users\admin\.gradle\caches\8.8\transforms\8cf0c155f703921ca07a4a6615552fd3\transformed\jetified-imagepipeline-okhttp3-3.1.3\AndroidManifest.xml:2:1-7:12
+MERGED from [com.facebook.fresco:drawee:3.1.3] C:\Users\admin\.gradle\caches\8.8\transforms\cf201f0e4c71874b24b2513e0e18df64\transformed\jetified-drawee-3.1.3\AndroidManifest.xml:2:1-7:12
+MERGED from [com.facebook.fresco:nativeimagefilters:3.1.3] C:\Users\admin\.gradle\caches\8.8\transforms\1fdf3837b531512ee2e0461c5dd2e664\transformed\jetified-nativeimagefilters-3.1.3\AndroidManifest.xml:2:1-7:12
+MERGED from [com.facebook.fresco:memory-type-native:3.1.3] C:\Users\admin\.gradle\caches\8.8\transforms\77d6fae11f322aa5b6b059aa8af5e361\transformed\jetified-memory-type-native-3.1.3\AndroidManifest.xml:2:1-7:12
+MERGED from [com.facebook.fresco:memory-type-java:3.1.3] C:\Users\admin\.gradle\caches\8.8\transforms\4c0b4d9989d87f851ef525bfe9fdbf9d\transformed\jetified-memory-type-java-3.1.3\AndroidManifest.xml:2:1-7:12
+MERGED from [com.facebook.fresco:imagepipeline-native:3.1.3] C:\Users\admin\.gradle\caches\8.8\transforms\c96b4fc9d395e946cd099583639aa2be\transformed\jetified-imagepipeline-native-3.1.3\AndroidManifest.xml:2:1-7:12
+MERGED from [com.facebook.fresco:memory-type-ashmem:3.1.3] C:\Users\admin\.gradle\caches\8.8\transforms\6fc806a964d138487901a5914d72915a\transformed\jetified-memory-type-ashmem-3.1.3\AndroidManifest.xml:2:1-7:12
+MERGED from [com.facebook.fresco:imagepipeline:3.1.3] C:\Users\admin\.gradle\caches\8.8\transforms\f354d88063da5d77f660f126acc6499a\transformed\jetified-imagepipeline-3.1.3\AndroidManifest.xml:2:1-7:12
+MERGED from [com.facebook.fresco:nativeimagetranscoder:3.1.3] C:\Users\admin\.gradle\caches\8.8\transforms\05da73600e459071a46e939ef01311f5\transformed\jetified-nativeimagetranscoder-3.1.3\AndroidManifest.xml:2:1-7:12
+MERGED from [com.facebook.fresco:imagepipeline-base:3.1.3] C:\Users\admin\.gradle\caches\8.8\transforms\2c681d7e9f8c10c44db31bd374d7b8a3\transformed\jetified-imagepipeline-base-3.1.3\AndroidManifest.xml:2:1-7:12
+MERGED from [com.facebook.fresco:middleware:3.1.3] C:\Users\admin\.gradle\caches\8.8\transforms\c183072e324421c0f8794311c2f312c0\transformed\jetified-middleware-3.1.3\AndroidManifest.xml:2:1-7:12
+MERGED from [com.facebook.fresco:ui-common:3.1.3] C:\Users\admin\.gradle\caches\8.8\transforms\d7dfbe6354db233c323ab5d4bb817072\transformed\jetified-ui-common-3.1.3\AndroidManifest.xml:2:1-7:12
+MERGED from [com.facebook.fresco:soloader:3.1.3] C:\Users\admin\.gradle\caches\8.8\transforms\d1c86acbe9b1bc31efaa861c5f024f0b\transformed\jetified-soloader-3.1.3\AndroidManifest.xml:2:1-7:12
+MERGED from [com.facebook.fresco:fbcore:3.1.3] C:\Users\admin\.gradle\caches\8.8\transforms\c074a79eb2ae20a8eebc4769bd22a5b9\transformed\jetified-fbcore-3.1.3\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.1.0] C:\Users\admin\.gradle\caches\8.8\transforms\7e755ef2322e1c69ea501c8477c8be74\transformed\coordinatorlayout-1.1.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.transition:transition:1.2.0] C:\Users\admin\.gradle\caches\8.8\transforms\036bf556b96bc62835311f589be70d81\transformed\transition-1.2.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.activity:activity:1.9.3] C:\Users\admin\.gradle\caches\8.8\transforms\9bbd318a77326b7eff5f8193069479b7\transformed\jetified-activity-1.9.3\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.activity:activity-ktx:1.9.3] C:\Users\admin\.gradle\caches\8.8\transforms\5d98e1f0c9a3bbca405dcc73a885e0a9\transformed\jetified-activity-ktx-1.9.3\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] C:\Users\admin\.gradle\caches\8.8\transforms\099dfc178fa01caf885a69ed3068d266\transformed\jetified-customview-poolingcontainer-1.0.0\AndroidManifest.xml:17:1-23:12
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] C:\Users\admin\.gradle\caches\8.8\transforms\9079ea55691855ef7d4b25606282bc44\transformed\legacy-support-core-utils-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.loader:loader:1.0.0] C:\Users\admin\.gradle\caches\8.8\transforms\d0f177aa8777aa4df6da3982de9917fc\transformed\loader-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.6.2] C:\Users\admin\.gradle\caches\8.8\transforms\beb365e459d1dfc90136e125513679de\transformed\lifecycle-livedata-2.6.2\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2] C:\Users\admin\.gradle\caches\8.8\transforms\61721b006642bc41079080cde33766f6\transformed\jetified-lifecycle-viewmodel-ktx-2.6.2\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.6.2] C:\Users\admin\.gradle\caches\8.8\transforms\11d6d99bf165d7f6062ba17cf9567db8\transformed\lifecycle-viewmodel-2.6.2\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx:2.6.2] C:\Users\admin\.gradle\caches\8.8\transforms\1bd2a88113601352aea24f32ebc20ed9\transformed\jetified-lifecycle-runtime-ktx-2.6.2\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\admin\.gradle\caches\8.8\transforms\8f17fe30b8f8f57e62f64b6232e3d56a\transformed\jetified-lifecycle-process-2.6.2\AndroidManifest.xml:17:1-35:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.6.2] C:\Users\admin\.gradle\caches\8.8\transforms\c2a784763b4a00b4e13893f0bc236e02\transformed\lifecycle-livedata-core-2.6.2\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.6.2] C:\Users\admin\.gradle\caches\8.8\transforms\ec50e02f29c861167224b2640d6abb16\transformed\jetified-lifecycle-viewmodel-savedstate-2.6.2\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.core:core-ktx:1.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\48883173e31e573951aa44c7452c9ad9\transformed\jetified-core-ktx-1.16.0\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\admin\.gradle\caches\8.8\transforms\b1efbe1ccb2d34049a786fe80abfc208\transformed\viewpager-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.slidingpanelayout:slidingpanelayout:1.0.0] C:\Users\admin\.gradle\caches\8.8\transforms\cc0877e41de2ed3726492b03121d2aec\transformed\slidingpanelayout-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.customview:customview:1.0.0] C:\Users\admin\.gradle\caches\8.8\transforms\9f79926a8b4659cd5bb5507e4094c5ed\transformed\customview-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.asynclayoutinflater:asynclayoutinflater:1.0.0] C:\Users\admin\.gradle\caches\8.8\transforms\af116918ef5f11570e162896f593f3c1\transformed\asynclayoutinflater-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.core:core:1.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\d4f80c37e609d08f9ba9a352a21b1205\transformed\core-1.16.0\AndroidManifest.xml:17:1-30:12
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.6.2] C:\Users\admin\.gradle\caches\8.8\transforms\3bd21c050b3e47c9dcbd511f89e0c282\transformed\lifecycle-runtime-2.6.2\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] C:\Users\admin\.gradle\caches\8.8\transforms\98d9c6f6bfc45973dfb2f53aee98a489\transformed\jetified-savedstate-ktx-1.2.1\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.savedstate:savedstate:1.2.1] C:\Users\admin\.gradle\caches\8.8\transforms\efc2594b9832f2e67e863a10502f33c6\transformed\jetified-savedstate-1.2.1\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.room:room-runtime:2.4.3] C:\Users\admin\.gradle\caches\8.8\transforms\04c51b8584a818b790b03719e0c73547\transformed\room-runtime-2.4.3\AndroidManifest.xml:17:1-31:12
+MERGED from [androidx.annotation:annotation-experimental:1.4.1] C:\Users\admin\.gradle\caches\8.8\transforms\99c1304d2dd3364e820327590c75900b\transformed\jetified-annotation-experimental-1.4.1\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.core:core-viewtree:1.0.0] C:\Users\admin\.gradle\caches\8.8\transforms\35b6fd9f88ef620f4ed579a481d0326c\transformed\jetified-core-viewtree-1.0.0\AndroidManifest.xml:2:1-7:12
+MERGED from [com.facebook.react:hermes-android:0.73.11] C:\Users\admin\.gradle\caches\8.8\transforms\da8f8e20e9fa7a0024690f3f7db22cff\transformed\jetified-hermes-android-0.73.11-debug\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.documentfile:documentfile:1.0.1] C:\Users\admin\.gradle\caches\8.8\transforms\60da311090a158d5852833dc4cd406eb\transformed\documentfile-1.0.1\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.1.0] C:\Users\admin\.gradle\caches\8.8\transforms\22538bc4b270f0bca72ed55fcb94647d\transformed\localbroadcastmanager-1.1.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\admin\.gradle\caches\8.8\transforms\a1087d813421850773c14c67bceb89b8\transformed\cursoradapter-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\admin\.gradle\caches\8.8\transforms\5f3efc7a7f0d23af1742d22ef32c0590\transformed\interpolator-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.sqlite:sqlite-framework:2.2.0] C:\Users\admin\.gradle\caches\8.8\transforms\c6e42c4f75dca273881525c4c0b93bce\transformed\sqlite-framework-2.2.0\AndroidManifest.xml:17:1-24:12
+MERGED from [com.github.bumptech.glide:gifdecoder:4.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\b001e1c85107495e6566176189f9bc5e\transformed\jetified-gifdecoder-4.16.0\AndroidManifest.xml:2:1-9:12
+MERGED from [androidx.exifinterface:exifinterface:1.3.6] C:\Users\admin\.gradle\caches\8.8\transforms\aabcafc18a9e97503987c758e5ebdb8a\transformed\exifinterface-1.3.6\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.sqlite:sqlite:2.2.0] C:\Users\admin\.gradle\caches\8.8\transforms\88c9b003d1b80a9499125920b7ae432d\transformed\sqlite-2.2.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.cardview:cardview:1.0.0] C:\Users\admin\.gradle\caches\8.8\transforms\95629ea7f2b0454e619a7451da038e9c\transformed\cardview-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\admin\.gradle\caches\8.8\transforms\f9c55bdcbfa0b550f6995f71be73ac86\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:17:1-55:12
+MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\admin\.gradle\caches\8.8\transforms\5307adc6fd393a1bdc6e16ce04e4c950\transformed\jetified-startup-runtime-1.1.1\AndroidManifest.xml:17:1-33:12
+MERGED from [androidx.tracing:tracing:1.2.0] C:\Users\admin\.gradle\caches\8.8\transforms\821c1a7762b0fee2c51fb7d337059624\transformed\jetified-tracing-1.2.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\admin\.gradle\caches\8.8\transforms\996882af4ba2a022b98ce118d0e703ac\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:17:1-27:12
+MERGED from [androidx.arch.core:core-runtime:2.2.0] C:\Users\admin\.gradle\caches\8.8\transforms\d642f08526f6eca79037ef6a698b8697\transformed\core-runtime-2.2.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.print:print:1.0.0] C:\Users\admin\.gradle\caches\8.8\transforms\d21a355f5a4a97f572c935b414cf3f0d\transformed\print-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [wang.harlon.quickjs:wrapper-android:2.4.0] C:\Users\admin\.gradle\caches\8.8\transforms\d8132221018358bafc0a3cdcc2eb8b64\transformed\jetified-wrapper-android-2.4.0\AndroidManifest.xml:2:1-7:12
+MERGED from [com.facebook.fbjni:fbjni:0.5.1] C:\Users\admin\.gradle\caches\8.8\transforms\31398558b4c5aff352a2c14bc54c9ccb\transformed\jetified-fbjni-0.5.1\AndroidManifest.xml:2:1-7:12
+MERGED from [com.facebook.soloader:soloader:0.10.5] C:\Users\admin\.gradle\caches\8.8\transforms\59bb2ea205ff6a0273bc186a045caa7b\transformed\jetified-soloader-0.10.5\AndroidManifest.xml:2:1-17:12
+MERGED from [org.aomedia.avif.android:avif:1.1.1.14d8e3c4] C:\Users\admin\.gradle\caches\8.8\transforms\e59d62ee2000724958d3245880ae7723\transformed\jetified-avif-1.1.1.14d8e3c4\AndroidManifest.xml:2:1-7:12
+MERGED from [com.github.clans:fab:1.6.4] C:\Users\admin\.gradle\caches\8.8\transforms\c42a3ffb2a71668fe57b3e6deefcfddd\transformed\jetified-fab-1.6.4\AndroidManifest.xml:2:1-14:12
+MERGED from [com.android.ndk.thirdparty:openssl:1.1.1l-beta-1] C:\Users\admin\.gradle\caches\8.8\transforms\4033e649215a5c424b56cbc0d263efea\transformed\jetified-openssl-1.1.1l-beta-1\AndroidManifest.xml:1:1-3:12
+	package
+		INJECTED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\debug\AndroidManifest.xml
+	android:versionName
+		INJECTED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\debug\AndroidManifest.xml
+	xmlns:tools
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:2:3-49
+	android:versionCode
+		INJECTED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\debug\AndroidManifest.xml
+	xmlns:android
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:1:11-69
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:4:5-80
+MERGED from [:react-native-local-media-metadata] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-local-media-metadata\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:7:5-80
+MERGED from [:react-native-local-media-metadata] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-local-media-metadata\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:7:5-80
+	android:name
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:4:22-77
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:5:5-81
+MERGED from [:react-native-fs] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-fs\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:7:5-81
+MERGED from [:react-native-fs] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-fs\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:7:5-81
+MERGED from [:react-native-local-media-metadata] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-local-media-metadata\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:8:5-81
+MERGED from [:react-native-local-media-metadata] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-local-media-metadata\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:8:5-81
+MERGED from [:rn-fetch-blob] D:\Program\lx-lxwalnut-music-mobile\node_modules\rn-fetch-blob\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:29:5-81
+MERGED from [:rn-fetch-blob] D:\Program\lx-lxwalnut-music-mobile\node_modules\rn-fetch-blob\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:29:5-81
+	android:name
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:5:22-78
+uses-permission#android.permission.INTERNET
+ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:6:5-67
+MERGED from [:react-native-udp] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-udp\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:7:5-67
+MERGED from [:react-native-udp] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-udp\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:7:5-67
+MERGED from [:rn-fetch-blob] D:\Program\lx-lxwalnut-music-mobile\node_modules\rn-fetch-blob\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:11:5-67
+MERGED from [:rn-fetch-blob] D:\Program\lx-lxwalnut-music-mobile\node_modules\rn-fetch-blob\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:11:5-67
+MERGED from [com.facebook.flipper:flipper:0.201.0] C:\Users\admin\.gradle\caches\8.8\transforms\ae8a180b41868b68d3734dc7e8eb4088\transformed\jetified-flipper-0.201.0\AndroidManifest.xml:13:5-67
+MERGED from [com.facebook.flipper:flipper:0.201.0] C:\Users\admin\.gradle\caches\8.8\transforms\ae8a180b41868b68d3734dc7e8eb4088\transformed\jetified-flipper-0.201.0\AndroidManifest.xml:13:5-67
+	android:name
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:6:22-64
+uses-permission#android.permission.REQUEST_INSTALL_PACKAGES
+ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:7:5-83
+	android:name
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:7:22-80
+uses-permission#android.permission.ACCESS_WIFI_STATE
+ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:8:5-76
+MERGED from [:react-native-udp] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-udp\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:9:5-76
+MERGED from [:react-native-udp] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-udp\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:9:5-76
+MERGED from [:rn-fetch-blob] D:\Program\lx-lxwalnut-music-mobile\node_modules\rn-fetch-blob\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:26:5-76
+MERGED from [:rn-fetch-blob] D:\Program\lx-lxwalnut-music-mobile\node_modules\rn-fetch-blob\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:26:5-76
+MERGED from [com.facebook.flipper:flipper:0.201.0] C:\Users\admin\.gradle\caches\8.8\transforms\ae8a180b41868b68d3734dc7e8eb4088\transformed\jetified-flipper-0.201.0\AndroidManifest.xml:14:5-76
+MERGED from [com.facebook.flipper:flipper:0.201.0] C:\Users\admin\.gradle\caches\8.8\transforms\ae8a180b41868b68d3734dc7e8eb4088\transformed\jetified-flipper-0.201.0\AndroidManifest.xml:14:5-76
+	android:name
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:8:22-73
+uses-permission#android.permission.SYSTEM_ALERT_WINDOW
+ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:9:5-78
+MERGED from [com.facebook.react:react-android:0.73.11] C:\Users\admin\.gradle\caches\8.8\transforms\c728e393e5d7a7637fe69ef310865395\transformed\jetified-react-android-0.73.11-debug\AndroidManifest.xml:16:5-78
+MERGED from [com.facebook.react:react-android:0.73.11] C:\Users\admin\.gradle\caches\8.8\transforms\c728e393e5d7a7637fe69ef310865395\transformed\jetified-react-android-0.73.11-debug\AndroidManifest.xml:16:5-78
+	android:name
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:9:22-75
+uses-permission#android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
+ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:10:5-95
+	android:name
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:10:22-92
+uses-permission#android.permission.RECORD_AUDIO
+ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:11:5-71
+	android:name
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:11:22-68
+uses-permission#android.permission.FOREGROUND_SERVICE
+ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:12:5-77
+MERGED from [:react-native-track-player] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-track-player\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:8:5-77
+MERGED from [:react-native-track-player] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-track-player\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:8:5-77
+	android:name
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:12:22-74
+uses-permission#android.permission.FOREGROUND_SERVICE_MICROPHONE
+ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:13:5-88
+	android:name
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:13:22-85
+application
+ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:15:5-116:19
+MERGED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:15:5-116:19
+MERGED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:15:5-116:19
+INJECTED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\debug\AndroidManifest.xml:5:5-8:51
+MERGED from [:react-native-webview] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-webview\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:19:5-29:19
+MERGED from [:react-native-webview] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-webview\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:19:5-29:19
+MERGED from [:react-native-exception-handler] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-exception-handler\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:7:5-10:19
+MERGED from [:react-native-exception-handler] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-exception-handler\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:7:5-10:19
+MERGED from [:react-native-navigation] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-navigation\lib\android\app\build\intermediates\merged_manifest\reactNative71Debug\processReactNative71DebugManifest\AndroidManifest.xml:8:5-12:19
+MERGED from [:react-native-navigation] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-navigation\lib\android\app\build\intermediates\merged_manifest\reactNative71Debug\processReactNative71DebugManifest\AndroidManifest.xml:8:5-12:19
+MERGED from [:react-native-track-player] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-track-player\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:10:5-30:19
+MERGED from [:react-native-track-player] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-track-player\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:10:5-30:19
+MERGED from [:rn-fetch-blob] D:\Program\lx-lxwalnut-music-mobile\node_modules\rn-fetch-blob\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:31:5-41:19
+MERGED from [:rn-fetch-blob] D:\Program\lx-lxwalnut-music-mobile\node_modules\rn-fetch-blob\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:31:5-41:19
+MERGED from [com.facebook.react:react-android:0.73.11] C:\Users\admin\.gradle\caches\8.8\transforms\c728e393e5d7a7637fe69ef310865395\transformed\jetified-react-android-0.73.11-debug\AndroidManifest.xml:18:5-22:19
+MERGED from [com.facebook.react:react-android:0.73.11] C:\Users\admin\.gradle\caches\8.8\transforms\c728e393e5d7a7637fe69ef310865395\transformed\jetified-react-android-0.73.11-debug\AndroidManifest.xml:18:5-22:19
+MERGED from [androidx.constraintlayout:constraintlayout:2.0.4] C:\Users\admin\.gradle\caches\8.8\transforms\934961c8a8ffe6fdc0dbbf0b1e9dec0c\transformed\constraintlayout-2.0.4\AndroidManifest.xml:9:5-20
+MERGED from [androidx.constraintlayout:constraintlayout:2.0.4] C:\Users\admin\.gradle\caches\8.8\transforms\934961c8a8ffe6fdc0dbbf0b1e9dec0c\transformed\constraintlayout-2.0.4\AndroidManifest.xml:9:5-20
+MERGED from [com.github.wix-playground:ahbottomnavigation:3.3.0] C:\Users\admin\.gradle\caches\8.8\transforms\86ee13d1daba45a2dd6d7acc8a89e568\transformed\jetified-ahbottomnavigation-3.3.0\AndroidManifest.xml:11:5-20
+MERGED from [com.github.wix-playground:ahbottomnavigation:3.3.0] C:\Users\admin\.gradle\caches\8.8\transforms\86ee13d1daba45a2dd6d7acc8a89e568\transformed\jetified-ahbottomnavigation-3.3.0\AndroidManifest.xml:11:5-20
+MERGED from [com.google.android.material:material:1.2.0-alpha03] C:\Users\admin\.gradle\caches\8.8\transforms\1790820b1b0fb928462c78ab7e8b78ff\transformed\material-1.2.0-alpha03\AndroidManifest.xml:22:5-20
+MERGED from [com.google.android.material:material:1.2.0-alpha03] C:\Users\admin\.gradle\caches\8.8\transforms\1790820b1b0fb928462c78ab7e8b78ff\transformed\material-1.2.0-alpha03\AndroidManifest.xml:22:5-20
+MERGED from [com.facebook.stetho:stetho:1.6.0] C:\Users\admin\.gradle\caches\8.8\transforms\d20849c225ce97c00fdc5a4fd0e46ea3\transformed\jetified-stetho-1.6.0\AndroidManifest.xml:11:5-20
+MERGED from [com.facebook.stetho:stetho:1.6.0] C:\Users\admin\.gradle\caches\8.8\transforms\d20849c225ce97c00fdc5a4fd0e46ea3\transformed\jetified-stetho-1.6.0\AndroidManifest.xml:11:5-20
+MERGED from [androidx.emoji2:emoji2:1.2.0] C:\Users\admin\.gradle\caches\8.8\transforms\ef63390370716cc9ce2a61eb34595174\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.emoji2:emoji2:1.2.0] C:\Users\admin\.gradle\caches\8.8\transforms\ef63390370716cc9ce2a61eb34595174\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:23:5-33:19
+MERGED from [com.github.bumptech.glide:okhttp3-integration:4.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\05ec2a6ef4aded1f9fc206872e5a86e4\transformed\jetified-okhttp3-integration-4.16.0\AndroidManifest.xml:9:5-13:19
+MERGED from [com.github.bumptech.glide:okhttp3-integration:4.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\05ec2a6ef4aded1f9fc206872e5a86e4\transformed\jetified-okhttp3-integration-4.16.0\AndroidManifest.xml:9:5-13:19
+MERGED from [com.github.zjupure:webpdecoder:2.7.4.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\8f8c1d05cc62af08989d3a814729a3cf\transformed\jetified-webpdecoder-2.7.4.16.0\AndroidManifest.xml:9:5-13:19
+MERGED from [com.github.zjupure:webpdecoder:2.7.4.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\8f8c1d05cc62af08989d3a814729a3cf\transformed\jetified-webpdecoder-2.7.4.16.0\AndroidManifest.xml:9:5-13:19
+MERGED from [androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\admin\.gradle\caches\8.8\transforms\8f17fe30b8f8f57e62f64b6232e3d56a\transformed\jetified-lifecycle-process-2.6.2\AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\admin\.gradle\caches\8.8\transforms\8f17fe30b8f8f57e62f64b6232e3d56a\transformed\jetified-lifecycle-process-2.6.2\AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.core:core:1.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\d4f80c37e609d08f9ba9a352a21b1205\transformed\core-1.16.0\AndroidManifest.xml:28:5-89
+MERGED from [androidx.core:core:1.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\d4f80c37e609d08f9ba9a352a21b1205\transformed\core-1.16.0\AndroidManifest.xml:28:5-89
+MERGED from [androidx.room:room-runtime:2.4.3] C:\Users\admin\.gradle\caches\8.8\transforms\04c51b8584a818b790b03719e0c73547\transformed\room-runtime-2.4.3\AndroidManifest.xml:24:5-29:19
+MERGED from [androidx.room:room-runtime:2.4.3] C:\Users\admin\.gradle\caches\8.8\transforms\04c51b8584a818b790b03719e0c73547\transformed\room-runtime-2.4.3\AndroidManifest.xml:24:5-29:19
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\admin\.gradle\caches\8.8\transforms\f9c55bdcbfa0b550f6995f71be73ac86\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:23:5-53:19
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\admin\.gradle\caches\8.8\transforms\f9c55bdcbfa0b550f6995f71be73ac86\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:23:5-53:19
+MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\admin\.gradle\caches\8.8\transforms\5307adc6fd393a1bdc6e16ce04e4c950\transformed\jetified-startup-runtime-1.1.1\AndroidManifest.xml:25:5-31:19
+MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\admin\.gradle\caches\8.8\transforms\5307adc6fd393a1bdc6e16ce04e4c950\transformed\jetified-startup-runtime-1.1.1\AndroidManifest.xml:25:5-31:19
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\admin\.gradle\caches\8.8\transforms\996882af4ba2a022b98ce118d0e703ac\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:24:5-25:19
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\admin\.gradle\caches\8.8\transforms\996882af4ba2a022b98ce118d0e703ac\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:24:5-25:19
+MERGED from [com.facebook.soloader:soloader:0.10.5] C:\Users\admin\.gradle\caches\8.8\transforms\59bb2ea205ff6a0273bc186a045caa7b\transformed\jetified-soloader-0.10.5\AndroidManifest.xml:11:5-15:19
+MERGED from [com.facebook.soloader:soloader:0.10.5] C:\Users\admin\.gradle\caches\8.8\transforms\59bb2ea205ff6a0273bc186a045caa7b\transformed\jetified-soloader-0.10.5\AndroidManifest.xml:11:5-15:19
+MERGED from [org.aomedia.avif.android:avif:1.1.1.14d8e3c4] C:\Users\admin\.gradle\caches\8.8\transforms\e59d62ee2000724958d3245880ae7723\transformed\jetified-avif-1.1.1.14d8e3c4\AndroidManifest.xml:5:5-6:19
+MERGED from [org.aomedia.avif.android:avif:1.1.1.14d8e3c4] C:\Users\admin\.gradle\caches\8.8\transforms\e59d62ee2000724958d3245880ae7723\transformed\jetified-avif-1.1.1.14d8e3c4\AndroidManifest.xml:5:5-6:19
+MERGED from [com.github.clans:fab:1.6.4] C:\Users\admin\.gradle\caches\8.8\transforms\c42a3ffb2a71668fe57b3e6deefcfddd\transformed\jetified-fab-1.6.4\AndroidManifest.xml:12:5-20
+MERGED from [com.github.clans:fab:1.6.4] C:\Users\admin\.gradle\caches\8.8\transforms\c42a3ffb2a71668fe57b3e6deefcfddd\transformed\jetified-fab-1.6.4\AndroidManifest.xml:12:5-20
+	android:extractNativeLibs
+		INJECTED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\debug\AndroidManifest.xml
+	android:requestLegacyExternalStorage
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:19:7-50
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:19:7-50
+	tools:ignore
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\debug\AndroidManifest.xml:8:9-48
+	android:roundIcon
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:22:7-52
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:22:7-52
+	android:icon
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:21:7-41
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:21:7-41
+	android:networkSecurityConfig
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:18:7-67
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:18:7-67
+	android:appComponentFactory
+		ADDED from [androidx.core:core:1.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\d4f80c37e609d08f9ba9a352a21b1205\transformed\core-1.16.0\AndroidManifest.xml:28:18-86
+	android:label
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:17:7-39
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:17:7-39
+	android:hardwareAccelerated
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:20:7-41
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:20:7-41
+	tools:targetApi
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:25:7-26
+	android:allowBackup
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:23:7-34
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:23:7-34
+	android:theme
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:24:7-38
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:24:7-38
+	android:usesCleartextTraffic
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\debug\AndroidManifest.xml:6:9-44
+	android:name
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:16:7-38
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:16:7-38
+meta-data#android.app.shortcuts
+ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:26:7-91
+	android:resource
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:26:55-88
+	android:name
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:26:18-54
+activity#com.lxwalnut.music.mobile.MainActivity
+ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:27:7-88:18
+	android:launchMode
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:30:9-40
+	android:hardwareAccelerated
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:31:9-43
+	android:windowSoftInputMode
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:32:9-51
+	android:exported
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:33:9-32
+	android:configChanges
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:29:9-118
+	android:name
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:28:9-37
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:34:9-37:25
+action#android.intent.action.MAIN
+ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:35:11-63
+	android:name
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:35:19-60
+category#android.intent.category.LAUNCHER
+ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:36:11-71
+	android:name
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:36:21-68
+intent-filter#action:name:android.intent.action.VIEW+category:name:android.intent.category.BROWSABLE+category:name:android.intent.category.DEFAULT+data:host:*+data:scheme:lxphaseaudit
+ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:38:9-43:25
+action#android.intent.action.VIEW
+ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:39:11-63
+	android:name
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:39:19-60
+category#android.intent.category.DEFAULT
+ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:40:11-70
+	android:name
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:40:21-67
+category#android.intent.category.BROWSABLE
+ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:41:11-72
+	android:name
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:41:21-69
+intent-filter#action:name:android.intent.action.VIEW+category:name:android.intent.category.DEFAULT+category:name:android.intent.category.OPENABLE+data:mimeType:application/ogg+data:mimeType:application/x-ogg+data:mimeType:audio/*+data:mimeType:vnd.android.cursor.dir/audio+data:scheme:content+data:scheme:file
+ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:44:9-54:25
+	android:priority
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:44:24-45
+category#android.intent.category.OPENABLE
+ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:47:11-70
+	android:name
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:47:21-68
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.APP_MUSIC
+ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:55:9-58:25
+category#android.intent.category.APP_MUSIC
+ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:57:11-72
+	android:name
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:57:21-69
+intent-filter#action:name:com.cyanogenmod.eleven.AUDIO_PLAYER+category:name:android.intent.category.DEFAULT
+ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:59:9-62:25
+action#com.cyanogenmod.eleven.AUDIO_PLAYER
+ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:60:11-71
+	android:name
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:60:19-69
+intent-filter#action:name:android.intent.action.VIEW+category:name:android.intent.category.DEFAULT+category:name:android.intent.category.OPENABLE+data:host:*+data:mimeType:application/javascript+data:mimeType:application/json+data:mimeType:application/octet-stream+data:mimeType:application/x-javascript+data:mimeType:text/javascript+data:pathPattern:.*\..*\..*\.js+data:pathPattern:.*\..*\..*\.json+data:pathPattern:.*\..*\..*\.lxmc+data:pathPattern:.*\..*\.js+data:pathPattern:.*\..*\.json+data:pathPattern:.*\..*\.lxmc+data:pathPattern:.*\.js+data:pathPattern:.*\.json+data:pathPattern:.*\.lxmc+data:scheme:content+data:scheme:file
+ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:63:9-87:25
+	android:priority
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:63:24-45
+receiver#com.lxwalnut.music.mobile.widget.MusicWidgetProvider
+ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:100:7-115:18
+	android:exported
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:102:9-32
+	android:name
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:101:9-51
+intent-filter#action:name:android.appwidget.action.APPWIDGET_UPDATE
+ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:103:9-105:25
+action#android.appwidget.action.APPWIDGET_UPDATE
+ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:104:11-78
+	android:name
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:104:19-75
+intent-filter#action:name:com.lxwalnut.music.phase0audit.widget.NEXT+action:name:com.lxwalnut.music.phase0audit.widget.PLAY_PAUSE+action:name:com.lxwalnut.music.phase0audit.widget.PREV+action:name:com.lxwalnut.music.phase0audit.widget.UPDATE
+ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:106:9-111:25
+meta-data#android.appwidget.provider
+ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:112:9-114:55
+	android:resource
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:114:11-52
+	android:name
+		ADDED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:113:11-52
+uses-sdk
+INJECTED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\debug\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\debug\AndroidManifest.xml
+INJECTED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\debug\AndroidManifest.xml
+MERGED from [:react-native-async-storage_async-storage] D:\Program\lx-lxwalnut-music-mobile\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:react-native-async-storage_async-storage] D:\Program\lx-lxwalnut-music-mobile\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:react-native-pager-view] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-pager-view\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:react-native-pager-view] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-pager-view\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:react-native-video] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-video\android\buildOutput_a15d4dee7fc4eda61b91308cbb6a2e72\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:react-native-video] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-video\android\buildOutput_a15d4dee7fc4eda61b91308cbb6a2e72\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:react-native-webview] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-webview\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:react-native-webview] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-webview\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [com.facebook.react:flipper-integration:0.73.11] C:\Users\admin\.gradle\caches\8.8\transforms\175b617e073aca2a8bf5785ad2f1f8e2\transformed\jetified-flipper-integration-0.73.11-debug\AndroidManifest.xml:5:5-44
+MERGED from [com.facebook.react:flipper-integration:0.73.11] C:\Users\admin\.gradle\caches\8.8\transforms\175b617e073aca2a8bf5785ad2f1f8e2\transformed\jetified-flipper-integration-0.73.11-debug\AndroidManifest.xml:5:5-44
+MERGED from [:d11_react-native-fast-image] D:\Program\lx-lxwalnut-music-mobile\node_modules\@d11\react-native-fast-image\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:d11_react-native-fast-image] D:\Program\lx-lxwalnut-music-mobile\node_modules\@d11\react-native-fast-image\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:react-native-clipboard_clipboard] D:\Program\lx-lxwalnut-music-mobile\node_modules\@react-native-clipboard\clipboard\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:react-native-clipboard_clipboard] D:\Program\lx-lxwalnut-music-mobile\node_modules\@react-native-clipboard\clipboard\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:react-native-community_slider] D:\Program\lx-lxwalnut-music-mobile\node_modules\@react-native-community\slider\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:react-native-community_slider] D:\Program\lx-lxwalnut-music-mobile\node_modules\@react-native-community\slider\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:react-native-cookies_cookies] D:\Program\lx-lxwalnut-music-mobile\node_modules\@react-native-cookies\cookies\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:react-native-cookies_cookies] D:\Program\lx-lxwalnut-music-mobile\node_modules\@react-native-cookies\cookies\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:react-native-background-timer] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-background-timer\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:4:5-44
+MERGED from [:react-native-background-timer] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-background-timer\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:4:5-44
+MERGED from [:react-native-exception-handler] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-exception-handler\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:react-native-exception-handler] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-exception-handler\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:react-native-file-system] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-file-system\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:react-native-file-system] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-file-system\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:react-native-fs] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-fs\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:react-native-fs] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-fs\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:react-native-local-media-metadata] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-local-media-metadata\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:react-native-local-media-metadata] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-local-media-metadata\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:react-native-navigation] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-navigation\lib\android\app\build\intermediates\merged_manifest\reactNative71Debug\processReactNative71DebugManifest\AndroidManifest.xml:6:5-44
+MERGED from [:react-native-navigation] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-navigation\lib\android\app\build\intermediates\merged_manifest\reactNative71Debug\processReactNative71DebugManifest\AndroidManifest.xml:6:5-44
+MERGED from [:react-native-quick-base64] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-quick-base64\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:react-native-quick-base64] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-quick-base64\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:react-native-quick-md5] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-quick-md5\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:react-native-quick-md5] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-quick-md5\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:react-native-svg] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-svg\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:react-native-svg] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-svg\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:react-native-track-player] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-track-player\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:react-native-track-player] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-track-player\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:react-native-udp] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-udp\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:react-native-udp] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-udp\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:react-native-vector-icons] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-vector-icons\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:react-native-vector-icons] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-vector-icons\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:rn-fetch-blob] D:\Program\lx-lxwalnut-music-mobile\node_modules\rn-fetch-blob\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:rn-fetch-blob] D:\Program\lx-lxwalnut-music-mobile\node_modules\rn-fetch-blob\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [com.facebook.react:react-android:0.73.11] C:\Users\admin\.gradle\caches\8.8\transforms\c728e393e5d7a7637fe69ef310865395\transformed\jetified-react-android-0.73.11-debug\AndroidManifest.xml:10:5-44
+MERGED from [com.facebook.react:react-android:0.73.11] C:\Users\admin\.gradle\caches\8.8\transforms\c728e393e5d7a7637fe69ef310865395\transformed\jetified-react-android-0.73.11-debug\AndroidManifest.xml:10:5-44
+MERGED from [androidx.appcompat:appcompat-resources:1.6.1] C:\Users\admin\.gradle\caches\8.8\transforms\7a1d8558485fa74d3040104370a73d25\transformed\jetified-appcompat-resources-1.6.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.appcompat:appcompat-resources:1.6.1] C:\Users\admin\.gradle\caches\8.8\transforms\7a1d8558485fa74d3040104370a73d25\transformed\jetified-appcompat-resources-1.6.1\AndroidManifest.xml:20:5-44
+MERGED from [com.facebook.flipper:flipper-network-plugin:0.201.0] C:\Users\admin\.gradle\caches\8.8\transforms\ce9f7ee2c3336b96d1c23e5be4890024\transformed\jetified-flipper-network-plugin-0.201.0\AndroidManifest.xml:11:5-44
+MERGED from [com.facebook.flipper:flipper-network-plugin:0.201.0] C:\Users\admin\.gradle\caches\8.8\transforms\ce9f7ee2c3336b96d1c23e5be4890024\transformed\jetified-flipper-network-plugin-0.201.0\AndroidManifest.xml:11:5-44
+MERGED from [com.facebook.fresco:flipper-fresco-plugin:3.1.3] C:\Users\admin\.gradle\caches\8.8\transforms\badcd117d3b81368af9f8abf32527737\transformed\jetified-flipper-fresco-plugin-3.1.3\AndroidManifest.xml:11:5-44
+MERGED from [com.facebook.fresco:flipper-fresco-plugin:3.1.3] C:\Users\admin\.gradle\caches\8.8\transforms\badcd117d3b81368af9f8abf32527737\transformed\jetified-flipper-fresco-plugin-3.1.3\AndroidManifest.xml:11:5-44
+MERGED from [com.facebook.flipper:flipper:0.201.0] C:\Users\admin\.gradle\caches\8.8\transforms\ae8a180b41868b68d3734dc7e8eb4088\transformed\jetified-flipper-0.201.0\AndroidManifest.xml:11:5-44
+MERGED from [com.facebook.flipper:flipper:0.201.0] C:\Users\admin\.gradle\caches\8.8\transforms\ae8a180b41868b68d3734dc7e8eb4088\transformed\jetified-flipper-0.201.0\AndroidManifest.xml:11:5-44
+MERGED from [com.github.penfeizhou.android.animation:glide-plugin:3.0.5] C:\Users\admin\.gradle\caches\8.8\transforms\ff47650fa7e121be5df4bb3a7b413ff9\transformed\jetified-glide-plugin-3.0.5\AndroidManifest.xml:5:5-44
+MERGED from [com.github.penfeizhou.android.animation:glide-plugin:3.0.5] C:\Users\admin\.gradle\caches\8.8\transforms\ff47650fa7e121be5df4bb3a7b413ff9\transformed\jetified-glide-plugin-3.0.5\AndroidManifest.xml:5:5-44
+MERGED from [androidx.constraintlayout:constraintlayout:2.0.4] C:\Users\admin\.gradle\caches\8.8\transforms\934961c8a8ffe6fdc0dbbf0b1e9dec0c\transformed\constraintlayout-2.0.4\AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.constraintlayout:constraintlayout:2.0.4] C:\Users\admin\.gradle\caches\8.8\transforms\934961c8a8ffe6fdc0dbbf0b1e9dec0c\transformed\constraintlayout-2.0.4\AndroidManifest.xml:5:5-7:41
+MERGED from [com.github.wix-playground:ahbottomnavigation:3.3.0] C:\Users\admin\.gradle\caches\8.8\transforms\86ee13d1daba45a2dd6d7acc8a89e568\transformed\jetified-ahbottomnavigation-3.3.0\AndroidManifest.xml:7:5-9:41
+MERGED from [com.github.wix-playground:ahbottomnavigation:3.3.0] C:\Users\admin\.gradle\caches\8.8\transforms\86ee13d1daba45a2dd6d7acc8a89e568\transformed\jetified-ahbottomnavigation-3.3.0\AndroidManifest.xml:7:5-9:41
+MERGED from [com.google.android.material:material:1.2.0-alpha03] C:\Users\admin\.gradle\caches\8.8\transforms\1790820b1b0fb928462c78ab7e8b78ff\transformed\material-1.2.0-alpha03\AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.material:material:1.2.0-alpha03] C:\Users\admin\.gradle\caches\8.8\transforms\1790820b1b0fb928462c78ab7e8b78ff\transformed\material-1.2.0-alpha03\AndroidManifest.xml:20:5-44
+MERGED from [com.github.wix-playground:reflow-animator:1.0.6] C:\Users\admin\.gradle\caches\8.8\transforms\0faa0a65a76b5985467ef3c4abce8f2e\transformed\jetified-reflow-animator-1.0.6\AndroidManifest.xml:7:5-9:41
+MERGED from [com.github.wix-playground:reflow-animator:1.0.6] C:\Users\admin\.gradle\caches\8.8\transforms\0faa0a65a76b5985467ef3c4abce8f2e\transformed\jetified-reflow-animator-1.0.6\AndroidManifest.xml:7:5-9:41
+MERGED from [com.facebook.stetho:stetho:1.6.0] C:\Users\admin\.gradle\caches\8.8\transforms\d20849c225ce97c00fdc5a4fd0e46ea3\transformed\jetified-stetho-1.6.0\AndroidManifest.xml:7:5-9:41
+MERGED from [com.facebook.stetho:stetho:1.6.0] C:\Users\admin\.gradle\caches\8.8\transforms\d20849c225ce97c00fdc5a4fd0e46ea3\transformed\jetified-stetho-1.6.0\AndroidManifest.xml:7:5-9:41
+MERGED from [com.github.penfeizhou.android.animation:awebp:3.0.5] C:\Users\admin\.gradle\caches\8.8\transforms\b73014c4e177c35d66879cbf3b5890de\transformed\jetified-awebp-3.0.5\AndroidManifest.xml:5:5-44
+MERGED from [com.github.penfeizhou.android.animation:awebp:3.0.5] C:\Users\admin\.gradle\caches\8.8\transforms\b73014c4e177c35d66879cbf3b5890de\transformed\jetified-awebp-3.0.5\AndroidManifest.xml:5:5-44
+MERGED from [com.github.penfeizhou.android.animation:apng:3.0.5] C:\Users\admin\.gradle\caches\8.8\transforms\edcb2650e65a7c32261928cec33cbf28\transformed\jetified-apng-3.0.5\AndroidManifest.xml:5:5-44
+MERGED from [com.github.penfeizhou.android.animation:apng:3.0.5] C:\Users\admin\.gradle\caches\8.8\transforms\edcb2650e65a7c32261928cec33cbf28\transformed\jetified-apng-3.0.5\AndroidManifest.xml:5:5-44
+MERGED from [com.github.penfeizhou.android.animation:gif:3.0.5] C:\Users\admin\.gradle\caches\8.8\transforms\81d0acce4b9e43f469ca92470d29590b\transformed\jetified-gif-3.0.5\AndroidManifest.xml:5:5-44
+MERGED from [com.github.penfeizhou.android.animation:gif:3.0.5] C:\Users\admin\.gradle\caches\8.8\transforms\81d0acce4b9e43f469ca92470d29590b\transformed\jetified-gif-3.0.5\AndroidManifest.xml:5:5-44
+MERGED from [com.github.penfeizhou.android.animation:avif:3.0.5] C:\Users\admin\.gradle\caches\8.8\transforms\deb31d94597b4bdeb556c7a8744b74b2\transformed\jetified-avif-3.0.5\AndroidManifest.xml:5:5-44
+MERGED from [com.github.penfeizhou.android.animation:avif:3.0.5] C:\Users\admin\.gradle\caches\8.8\transforms\deb31d94597b4bdeb556c7a8744b74b2\transformed\jetified-avif-3.0.5\AndroidManifest.xml:5:5-44
+MERGED from [com.github.penfeizhou.android.animation:frameanimation:3.0.5] C:\Users\admin\.gradle\caches\8.8\transforms\01540baad4e5829dcc68b2bd51a1887b\transformed\jetified-frameanimation-3.0.5\AndroidManifest.xml:5:5-44
+MERGED from [com.github.penfeizhou.android.animation:frameanimation:3.0.5] C:\Users\admin\.gradle\caches\8.8\transforms\01540baad4e5829dcc68b2bd51a1887b\transformed\jetified-frameanimation-3.0.5\AndroidManifest.xml:5:5-44
+MERGED from [androidx.appcompat:appcompat:1.6.1] C:\Users\admin\.gradle\caches\8.8\transforms\151bbf5d5ee2b33b27059f541b5ff0d6\transformed\appcompat-1.6.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.appcompat:appcompat:1.6.1] C:\Users\admin\.gradle\caches\8.8\transforms\151bbf5d5ee2b33b27059f541b5ff0d6\transformed\appcompat-1.6.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.room:room-ktx:2.4.3] C:\Users\admin\.gradle\caches\8.8\transforms\e6748b50cc615055d97759c845ef856a\transformed\jetified-room-ktx-2.4.3\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.room:room-ktx:2.4.3] C:\Users\admin\.gradle\caches\8.8\transforms\e6748b50cc615055d97759c845ef856a\transformed\jetified-room-ktx-2.4.3\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.autofill:autofill:1.1.0] C:\Users\admin\.gradle\caches\8.8\transforms\62b62eaa4f8205e14787bf671a900c7e\transformed\jetified-autofill-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.autofill:autofill:1.1.0] C:\Users\admin\.gradle\caches\8.8\transforms\62b62eaa4f8205e14787bf671a900c7e\transformed\jetified-autofill-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.legacy:legacy-support-v4:1.0.0] C:\Users\admin\.gradle\caches\8.8\transforms\a7adf62ee55f4dc96115bbfe8b88592c\transformed\legacy-support-v4-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-v4:1.0.0] C:\Users\admin\.gradle\caches\8.8\transforms\a7adf62ee55f4dc96115bbfe8b88592c\transformed\legacy-support-v4-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] C:\Users\admin\.gradle\caches\8.8\transforms\eb35bef228079ab2cb5b635d714e1778\transformed\legacy-support-core-ui-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] C:\Users\admin\.gradle\caches\8.8\transforms\eb35bef228079ab2cb5b635d714e1778\transformed\legacy-support-core-ui-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.1.0] C:\Users\admin\.gradle\caches\8.8\transforms\0d7566c5ecc8df759a1f78dcaaa0dda7\transformed\swiperefreshlayout-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.1.0] C:\Users\admin\.gradle\caches\8.8\transforms\0d7566c5ecc8df759a1f78dcaaa0dda7\transformed\swiperefreshlayout-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.media3:media3-exoplayer-dash:1.8.0] C:\Users\admin\.gradle\caches\8.8\transforms\c734dd35ef7bb1019558141de54f3954\transformed\jetified-media3-exoplayer-dash-1.8.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-exoplayer-dash:1.8.0] C:\Users\admin\.gradle\caches\8.8\transforms\c734dd35ef7bb1019558141de54f3954\transformed\jetified-media3-exoplayer-dash-1.8.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-exoplayer-hls:1.8.0] C:\Users\admin\.gradle\caches\8.8\transforms\beae3f034378bc0c82770a5d0849c273\transformed\jetified-media3-exoplayer-hls-1.8.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-exoplayer-hls:1.8.0] C:\Users\admin\.gradle\caches\8.8\transforms\beae3f034378bc0c82770a5d0849c273\transformed\jetified-media3-exoplayer-hls-1.8.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-exoplayer-smoothstreaming:1.8.0] C:\Users\admin\.gradle\caches\8.8\transforms\29a980ef06266e9a86a5807555656b6e\transformed\jetified-media3-exoplayer-smoothstreaming-1.8.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-exoplayer-smoothstreaming:1.8.0] C:\Users\admin\.gradle\caches\8.8\transforms\29a980ef06266e9a86a5807555656b6e\transformed\jetified-media3-exoplayer-smoothstreaming-1.8.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-exoplayer:1.8.0] C:\Users\admin\.gradle\caches\8.8\transforms\ab3698a0a03b027ef051a4aebe235855\transformed\jetified-media3-exoplayer-1.8.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-exoplayer:1.8.0] C:\Users\admin\.gradle\caches\8.8\transforms\ab3698a0a03b027ef051a4aebe235855\transformed\jetified-media3-exoplayer-1.8.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-datasource-okhttp:1.8.0] C:\Users\admin\.gradle\caches\8.8\transforms\1739983c58e8c9f9f7e833088d574d1b\transformed\jetified-media3-datasource-okhttp-1.8.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-datasource-okhttp:1.8.0] C:\Users\admin\.gradle\caches\8.8\transforms\1739983c58e8c9f9f7e833088d574d1b\transformed\jetified-media3-datasource-okhttp-1.8.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-session:1.8.0] C:\Users\admin\.gradle\caches\8.8\transforms\b9ec595047d2109c16ffdf3e0bdfdd29\transformed\jetified-media3-session-1.8.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-session:1.8.0] C:\Users\admin\.gradle\caches\8.8\transforms\b9ec595047d2109c16ffdf3e0bdfdd29\transformed\jetified-media3-session-1.8.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-datasource:1.8.0] C:\Users\admin\.gradle\caches\8.8\transforms\846d985327a65c83cf62b9141310f983\transformed\jetified-media3-datasource-1.8.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-datasource:1.8.0] C:\Users\admin\.gradle\caches\8.8\transforms\846d985327a65c83cf62b9141310f983\transformed\jetified-media3-datasource-1.8.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-extractor:1.8.0] C:\Users\admin\.gradle\caches\8.8\transforms\60575d93a8439459dc2dc4f710b937c4\transformed\jetified-media3-extractor-1.8.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-extractor:1.8.0] C:\Users\admin\.gradle\caches\8.8\transforms\60575d93a8439459dc2dc4f710b937c4\transformed\jetified-media3-extractor-1.8.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-container:1.8.0] C:\Users\admin\.gradle\caches\8.8\transforms\3fe19e5851f3c943bc75039e94be1fa8\transformed\jetified-media3-container-1.8.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-container:1.8.0] C:\Users\admin\.gradle\caches\8.8\transforms\3fe19e5851f3c943bc75039e94be1fa8\transformed\jetified-media3-container-1.8.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-decoder:1.8.0] C:\Users\admin\.gradle\caches\8.8\transforms\ea4f25c92f3774af0bf95cafc5f8698e\transformed\jetified-media3-decoder-1.8.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-decoder:1.8.0] C:\Users\admin\.gradle\caches\8.8\transforms\ea4f25c92f3774af0bf95cafc5f8698e\transformed\jetified-media3-decoder-1.8.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-database:1.8.0] C:\Users\admin\.gradle\caches\8.8\transforms\ed61f3c8daac6ab9134967bbaad97754\transformed\jetified-media3-database-1.8.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-database:1.8.0] C:\Users\admin\.gradle\caches\8.8\transforms\ed61f3c8daac6ab9134967bbaad97754\transformed\jetified-media3-database-1.8.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-common:1.8.0] C:\Users\admin\.gradle\caches\8.8\transforms\df2e10686214fe737f26e7e4fc0c0801\transformed\jetified-media3-common-1.8.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-common:1.8.0] C:\Users\admin\.gradle\caches\8.8\transforms\df2e10686214fe737f26e7e4fc0c0801\transformed\jetified-media3-common-1.8.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-ui:1.8.0] C:\Users\admin\.gradle\caches\8.8\transforms\6cd571eb4319113bd206a7f0ae66adf5\transformed\jetified-media3-ui-1.8.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-ui:1.8.0] C:\Users\admin\.gradle\caches\8.8\transforms\6cd571eb4319113bd206a7f0ae66adf5\transformed\jetified-media3-ui-1.8.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.recyclerview:recyclerview:1.3.1] C:\Users\admin\.gradle\caches\8.8\transforms\c750cf7b9660e066926e8bc6882b39b8\transformed\recyclerview-1.3.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.recyclerview:recyclerview:1.3.1] C:\Users\admin\.gradle\caches\8.8\transforms\c750cf7b9660e066926e8bc6882b39b8\transformed\recyclerview-1.3.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager2:viewpager2:1.1.0] C:\Users\admin\.gradle\caches\8.8\transforms\744cd28531e1066a7f2019c1f1a98c29\transformed\jetified-viewpager2-1.1.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.viewpager2:viewpager2:1.1.0] C:\Users\admin\.gradle\caches\8.8\transforms\744cd28531e1066a7f2019c1f1a98c29\transformed\jetified-viewpager2-1.1.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.media:media:1.7.0] C:\Users\admin\.gradle\caches\8.8\transforms\ba51eb0ec1249d6d80ecea80a979dd8c\transformed\media-1.7.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.media:media:1.7.0] C:\Users\admin\.gradle\caches\8.8\transforms\ba51eb0ec1249d6d80ecea80a979dd8c\transformed\media-1.7.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.webkit:webkit:1.14.0] C:\Users\admin\.gradle\caches\8.8\transforms\a8a0be691250cf2414412dff9a26cea4\transformed\webkit-1.14.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.webkit:webkit:1.14.0] C:\Users\admin\.gradle\caches\8.8\transforms\a8a0be691250cf2414412dff9a26cea4\transformed\webkit-1.14.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] C:\Users\admin\.gradle\caches\8.8\transforms\338f5afd97d8607c6743b58d89ebb988\transformed\drawerlayout-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] C:\Users\admin\.gradle\caches\8.8\transforms\338f5afd97d8607c6743b58d89ebb988\transformed\drawerlayout-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.emoji2:emoji2-views-helper:1.2.0] C:\Users\admin\.gradle\caches\8.8\transforms\36c98660476b7b3f3fe71a1ae921fcea\transformed\jetified-emoji2-views-helper-1.2.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.emoji2:emoji2-views-helper:1.2.0] C:\Users\admin\.gradle\caches\8.8\transforms\36c98660476b7b3f3fe71a1ae921fcea\transformed\jetified-emoji2-views-helper-1.2.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.emoji2:emoji2:1.2.0] C:\Users\admin\.gradle\caches\8.8\transforms\ef63390370716cc9ce2a61eb34595174\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:21:5-44
+MERGED from [androidx.emoji2:emoji2:1.2.0] C:\Users\admin\.gradle\caches\8.8\transforms\ef63390370716cc9ce2a61eb34595174\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:21:5-44
+MERGED from [com.github.bumptech.glide:okhttp3-integration:4.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\05ec2a6ef4aded1f9fc206872e5a86e4\transformed\jetified-okhttp3-integration-4.16.0\AndroidManifest.xml:5:5-7:41
+MERGED from [com.github.bumptech.glide:okhttp3-integration:4.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\05ec2a6ef4aded1f9fc206872e5a86e4\transformed\jetified-okhttp3-integration-4.16.0\AndroidManifest.xml:5:5-7:41
+MERGED from [com.github.bumptech.glide:avif-integration:4.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\6d3611760a48daa48c451337a062badd\transformed\jetified-avif-integration-4.16.0\AndroidManifest.xml:5:5-7:41
+MERGED from [com.github.bumptech.glide:avif-integration:4.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\6d3611760a48daa48c451337a062badd\transformed\jetified-avif-integration-4.16.0\AndroidManifest.xml:5:5-7:41
+MERGED from [com.github.zjupure:webpdecoder:2.7.4.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\8f8c1d05cc62af08989d3a814729a3cf\transformed\jetified-webpdecoder-2.7.4.16.0\AndroidManifest.xml:5:5-7:41
+MERGED from [com.github.zjupure:webpdecoder:2.7.4.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\8f8c1d05cc62af08989d3a814729a3cf\transformed\jetified-webpdecoder-2.7.4.16.0\AndroidManifest.xml:5:5-7:41
+MERGED from [com.github.bumptech.glide:glide:4.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\c672ee2435f0ba992ca8f8cb4e1047a2\transformed\jetified-glide-4.16.0\AndroidManifest.xml:5:5-7:41
+MERGED from [com.github.bumptech.glide:glide:4.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\c672ee2435f0ba992ca8f8cb4e1047a2\transformed\jetified-glide-4.16.0\AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.fragment:fragment:1.3.6] C:\Users\admin\.gradle\caches\8.8\transforms\93f7b4d356a18ee287be994160e7f2bc\transformed\fragment-1.3.6\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.fragment:fragment:1.3.6] C:\Users\admin\.gradle\caches\8.8\transforms\93f7b4d356a18ee287be994160e7f2bc\transformed\fragment-1.3.6\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] C:\Users\admin\.gradle\caches\8.8\transforms\6cbed87183509329842d3942b322d542\transformed\vectordrawable-animated-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] C:\Users\admin\.gradle\caches\8.8\transforms\6cbed87183509329842d3942b322d542\transformed\vectordrawable-animated-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] C:\Users\admin\.gradle\caches\8.8\transforms\8c1e85a15efffac1b9ca78b05f9cda55\transformed\vectordrawable-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] C:\Users\admin\.gradle\caches\8.8\transforms\8c1e85a15efffac1b9ca78b05f9cda55\transformed\vectordrawable-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [com.facebook.fresco:flipper:3.1.3] C:\Users\admin\.gradle\caches\8.8\transforms\b85757379687ad084b3d9133cb7b4df4\transformed\jetified-flipper-3.1.3\AndroidManifest.xml:5:5-44
+MERGED from [com.facebook.fresco:flipper:3.1.3] C:\Users\admin\.gradle\caches\8.8\transforms\b85757379687ad084b3d9133cb7b4df4\transformed\jetified-flipper-3.1.3\AndroidManifest.xml:5:5-44
+MERGED from [com.facebook.fresco:fresco:3.1.3] C:\Users\admin\.gradle\caches\8.8\transforms\1ae51875ec878a96365fc40edbea4b6d\transformed\jetified-fresco-3.1.3\AndroidManifest.xml:5:5-44
+MERGED from [com.facebook.fresco:fresco:3.1.3] C:\Users\admin\.gradle\caches\8.8\transforms\1ae51875ec878a96365fc40edbea4b6d\transformed\jetified-fresco-3.1.3\AndroidManifest.xml:5:5-44
+MERGED from [com.facebook.fresco:imagepipeline-okhttp3:3.1.3] C:\Users\admin\.gradle\caches\8.8\transforms\8cf0c155f703921ca07a4a6615552fd3\transformed\jetified-imagepipeline-okhttp3-3.1.3\AndroidManifest.xml:5:5-44
+MERGED from [com.facebook.fresco:imagepipeline-okhttp3:3.1.3] C:\Users\admin\.gradle\caches\8.8\transforms\8cf0c155f703921ca07a4a6615552fd3\transformed\jetified-imagepipeline-okhttp3-3.1.3\AndroidManifest.xml:5:5-44
+MERGED from [com.facebook.fresco:drawee:3.1.3] C:\Users\admin\.gradle\caches\8.8\transforms\cf201f0e4c71874b24b2513e0e18df64\transformed\jetified-drawee-3.1.3\AndroidManifest.xml:5:5-44
+MERGED from [com.facebook.fresco:drawee:3.1.3] C:\Users\admin\.gradle\caches\8.8\transforms\cf201f0e4c71874b24b2513e0e18df64\transformed\jetified-drawee-3.1.3\AndroidManifest.xml:5:5-44
+MERGED from [com.facebook.fresco:nativeimagefilters:3.1.3] C:\Users\admin\.gradle\caches\8.8\transforms\1fdf3837b531512ee2e0461c5dd2e664\transformed\jetified-nativeimagefilters-3.1.3\AndroidManifest.xml:5:5-44
+MERGED from [com.facebook.fresco:nativeimagefilters:3.1.3] C:\Users\admin\.gradle\caches\8.8\transforms\1fdf3837b531512ee2e0461c5dd2e664\transformed\jetified-nativeimagefilters-3.1.3\AndroidManifest.xml:5:5-44
+MERGED from [com.facebook.fresco:memory-type-native:3.1.3] C:\Users\admin\.gradle\caches\8.8\transforms\77d6fae11f322aa5b6b059aa8af5e361\transformed\jetified-memory-type-native-3.1.3\AndroidManifest.xml:5:5-44
+MERGED from [com.facebook.fresco:memory-type-native:3.1.3] C:\Users\admin\.gradle\caches\8.8\transforms\77d6fae11f322aa5b6b059aa8af5e361\transformed\jetified-memory-type-native-3.1.3\AndroidManifest.xml:5:5-44
+MERGED from [com.facebook.fresco:memory-type-java:3.1.3] C:\Users\admin\.gradle\caches\8.8\transforms\4c0b4d9989d87f851ef525bfe9fdbf9d\transformed\jetified-memory-type-java-3.1.3\AndroidManifest.xml:5:5-44
+MERGED from [com.facebook.fresco:memory-type-java:3.1.3] C:\Users\admin\.gradle\caches\8.8\transforms\4c0b4d9989d87f851ef525bfe9fdbf9d\transformed\jetified-memory-type-java-3.1.3\AndroidManifest.xml:5:5-44
+MERGED from [com.facebook.fresco:imagepipeline-native:3.1.3] C:\Users\admin\.gradle\caches\8.8\transforms\c96b4fc9d395e946cd099583639aa2be\transformed\jetified-imagepipeline-native-3.1.3\AndroidManifest.xml:5:5-44
+MERGED from [com.facebook.fresco:imagepipeline-native:3.1.3] C:\Users\admin\.gradle\caches\8.8\transforms\c96b4fc9d395e946cd099583639aa2be\transformed\jetified-imagepipeline-native-3.1.3\AndroidManifest.xml:5:5-44
+MERGED from [com.facebook.fresco:memory-type-ashmem:3.1.3] C:\Users\admin\.gradle\caches\8.8\transforms\6fc806a964d138487901a5914d72915a\transformed\jetified-memory-type-ashmem-3.1.3\AndroidManifest.xml:5:5-44
+MERGED from [com.facebook.fresco:memory-type-ashmem:3.1.3] C:\Users\admin\.gradle\caches\8.8\transforms\6fc806a964d138487901a5914d72915a\transformed\jetified-memory-type-ashmem-3.1.3\AndroidManifest.xml:5:5-44
+MERGED from [com.facebook.fresco:imagepipeline:3.1.3] C:\Users\admin\.gradle\caches\8.8\transforms\f354d88063da5d77f660f126acc6499a\transformed\jetified-imagepipeline-3.1.3\AndroidManifest.xml:5:5-44
+MERGED from [com.facebook.fresco:imagepipeline:3.1.3] C:\Users\admin\.gradle\caches\8.8\transforms\f354d88063da5d77f660f126acc6499a\transformed\jetified-imagepipeline-3.1.3\AndroidManifest.xml:5:5-44
+MERGED from [com.facebook.fresco:nativeimagetranscoder:3.1.3] C:\Users\admin\.gradle\caches\8.8\transforms\05da73600e459071a46e939ef01311f5\transformed\jetified-nativeimagetranscoder-3.1.3\AndroidManifest.xml:5:5-44
+MERGED from [com.facebook.fresco:nativeimagetranscoder:3.1.3] C:\Users\admin\.gradle\caches\8.8\transforms\05da73600e459071a46e939ef01311f5\transformed\jetified-nativeimagetranscoder-3.1.3\AndroidManifest.xml:5:5-44
+MERGED from [com.facebook.fresco:imagepipeline-base:3.1.3] C:\Users\admin\.gradle\caches\8.8\transforms\2c681d7e9f8c10c44db31bd374d7b8a3\transformed\jetified-imagepipeline-base-3.1.3\AndroidManifest.xml:5:5-44
+MERGED from [com.facebook.fresco:imagepipeline-base:3.1.3] C:\Users\admin\.gradle\caches\8.8\transforms\2c681d7e9f8c10c44db31bd374d7b8a3\transformed\jetified-imagepipeline-base-3.1.3\AndroidManifest.xml:5:5-44
+MERGED from [com.facebook.fresco:middleware:3.1.3] C:\Users\admin\.gradle\caches\8.8\transforms\c183072e324421c0f8794311c2f312c0\transformed\jetified-middleware-3.1.3\AndroidManifest.xml:5:5-44
+MERGED from [com.facebook.fresco:middleware:3.1.3] C:\Users\admin\.gradle\caches\8.8\transforms\c183072e324421c0f8794311c2f312c0\transformed\jetified-middleware-3.1.3\AndroidManifest.xml:5:5-44
+MERGED from [com.facebook.fresco:ui-common:3.1.3] C:\Users\admin\.gradle\caches\8.8\transforms\d7dfbe6354db233c323ab5d4bb817072\transformed\jetified-ui-common-3.1.3\AndroidManifest.xml:5:5-44
+MERGED from [com.facebook.fresco:ui-common:3.1.3] C:\Users\admin\.gradle\caches\8.8\transforms\d7dfbe6354db233c323ab5d4bb817072\transformed\jetified-ui-common-3.1.3\AndroidManifest.xml:5:5-44
+MERGED from [com.facebook.fresco:soloader:3.1.3] C:\Users\admin\.gradle\caches\8.8\transforms\d1c86acbe9b1bc31efaa861c5f024f0b\transformed\jetified-soloader-3.1.3\AndroidManifest.xml:5:5-44
+MERGED from [com.facebook.fresco:soloader:3.1.3] C:\Users\admin\.gradle\caches\8.8\transforms\d1c86acbe9b1bc31efaa861c5f024f0b\transformed\jetified-soloader-3.1.3\AndroidManifest.xml:5:5-44
+MERGED from [com.facebook.fresco:fbcore:3.1.3] C:\Users\admin\.gradle\caches\8.8\transforms\c074a79eb2ae20a8eebc4769bd22a5b9\transformed\jetified-fbcore-3.1.3\AndroidManifest.xml:5:5-44
+MERGED from [com.facebook.fresco:fbcore:3.1.3] C:\Users\admin\.gradle\caches\8.8\transforms\c074a79eb2ae20a8eebc4769bd22a5b9\transformed\jetified-fbcore-3.1.3\AndroidManifest.xml:5:5-44
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.1.0] C:\Users\admin\.gradle\caches\8.8\transforms\7e755ef2322e1c69ea501c8477c8be74\transformed\coordinatorlayout-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.1.0] C:\Users\admin\.gradle\caches\8.8\transforms\7e755ef2322e1c69ea501c8477c8be74\transformed\coordinatorlayout-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.transition:transition:1.2.0] C:\Users\admin\.gradle\caches\8.8\transforms\036bf556b96bc62835311f589be70d81\transformed\transition-1.2.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.transition:transition:1.2.0] C:\Users\admin\.gradle\caches\8.8\transforms\036bf556b96bc62835311f589be70d81\transformed\transition-1.2.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.activity:activity:1.9.3] C:\Users\admin\.gradle\caches\8.8\transforms\9bbd318a77326b7eff5f8193069479b7\transformed\jetified-activity-1.9.3\AndroidManifest.xml:20:5-44
+MERGED from [androidx.activity:activity:1.9.3] C:\Users\admin\.gradle\caches\8.8\transforms\9bbd318a77326b7eff5f8193069479b7\transformed\jetified-activity-1.9.3\AndroidManifest.xml:20:5-44
+MERGED from [androidx.activity:activity-ktx:1.9.3] C:\Users\admin\.gradle\caches\8.8\transforms\5d98e1f0c9a3bbca405dcc73a885e0a9\transformed\jetified-activity-ktx-1.9.3\AndroidManifest.xml:5:5-44
+MERGED from [androidx.activity:activity-ktx:1.9.3] C:\Users\admin\.gradle\caches\8.8\transforms\5d98e1f0c9a3bbca405dcc73a885e0a9\transformed\jetified-activity-ktx-1.9.3\AndroidManifest.xml:5:5-44
+MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] C:\Users\admin\.gradle\caches\8.8\transforms\099dfc178fa01caf885a69ed3068d266\transformed\jetified-customview-poolingcontainer-1.0.0\AndroidManifest.xml:20:5-21:38
+MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] C:\Users\admin\.gradle\caches\8.8\transforms\099dfc178fa01caf885a69ed3068d266\transformed\jetified-customview-poolingcontainer-1.0.0\AndroidManifest.xml:20:5-21:38
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] C:\Users\admin\.gradle\caches\8.8\transforms\9079ea55691855ef7d4b25606282bc44\transformed\legacy-support-core-utils-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] C:\Users\admin\.gradle\caches\8.8\transforms\9079ea55691855ef7d4b25606282bc44\transformed\legacy-support-core-utils-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] C:\Users\admin\.gradle\caches\8.8\transforms\d0f177aa8777aa4df6da3982de9917fc\transformed\loader-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] C:\Users\admin\.gradle\caches\8.8\transforms\d0f177aa8777aa4df6da3982de9917fc\transformed\loader-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.6.2] C:\Users\admin\.gradle\caches\8.8\transforms\beb365e459d1dfc90136e125513679de\transformed\lifecycle-livedata-2.6.2\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.6.2] C:\Users\admin\.gradle\caches\8.8\transforms\beb365e459d1dfc90136e125513679de\transformed\lifecycle-livedata-2.6.2\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2] C:\Users\admin\.gradle\caches\8.8\transforms\61721b006642bc41079080cde33766f6\transformed\jetified-lifecycle-viewmodel-ktx-2.6.2\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2] C:\Users\admin\.gradle\caches\8.8\transforms\61721b006642bc41079080cde33766f6\transformed\jetified-lifecycle-viewmodel-ktx-2.6.2\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.6.2] C:\Users\admin\.gradle\caches\8.8\transforms\11d6d99bf165d7f6062ba17cf9567db8\transformed\lifecycle-viewmodel-2.6.2\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.6.2] C:\Users\admin\.gradle\caches\8.8\transforms\11d6d99bf165d7f6062ba17cf9567db8\transformed\lifecycle-viewmodel-2.6.2\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx:2.6.2] C:\Users\admin\.gradle\caches\8.8\transforms\1bd2a88113601352aea24f32ebc20ed9\transformed\jetified-lifecycle-runtime-ktx-2.6.2\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx:2.6.2] C:\Users\admin\.gradle\caches\8.8\transforms\1bd2a88113601352aea24f32ebc20ed9\transformed\jetified-lifecycle-runtime-ktx-2.6.2\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\admin\.gradle\caches\8.8\transforms\8f17fe30b8f8f57e62f64b6232e3d56a\transformed\jetified-lifecycle-process-2.6.2\AndroidManifest.xml:21:5-44
+MERGED from [androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\admin\.gradle\caches\8.8\transforms\8f17fe30b8f8f57e62f64b6232e3d56a\transformed\jetified-lifecycle-process-2.6.2\AndroidManifest.xml:21:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.6.2] C:\Users\admin\.gradle\caches\8.8\transforms\c2a784763b4a00b4e13893f0bc236e02\transformed\lifecycle-livedata-core-2.6.2\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.6.2] C:\Users\admin\.gradle\caches\8.8\transforms\c2a784763b4a00b4e13893f0bc236e02\transformed\lifecycle-livedata-core-2.6.2\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.6.2] C:\Users\admin\.gradle\caches\8.8\transforms\ec50e02f29c861167224b2640d6abb16\transformed\jetified-lifecycle-viewmodel-savedstate-2.6.2\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.6.2] C:\Users\admin\.gradle\caches\8.8\transforms\ec50e02f29c861167224b2640d6abb16\transformed\jetified-lifecycle-viewmodel-savedstate-2.6.2\AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core-ktx:1.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\48883173e31e573951aa44c7452c9ad9\transformed\jetified-core-ktx-1.16.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.core:core-ktx:1.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\48883173e31e573951aa44c7452c9ad9\transformed\jetified-core-ktx-1.16.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\admin\.gradle\caches\8.8\transforms\b1efbe1ccb2d34049a786fe80abfc208\transformed\viewpager-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\admin\.gradle\caches\8.8\transforms\b1efbe1ccb2d34049a786fe80abfc208\transformed\viewpager-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.slidingpanelayout:slidingpanelayout:1.0.0] C:\Users\admin\.gradle\caches\8.8\transforms\cc0877e41de2ed3726492b03121d2aec\transformed\slidingpanelayout-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.slidingpanelayout:slidingpanelayout:1.0.0] C:\Users\admin\.gradle\caches\8.8\transforms\cc0877e41de2ed3726492b03121d2aec\transformed\slidingpanelayout-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview:1.0.0] C:\Users\admin\.gradle\caches\8.8\transforms\9f79926a8b4659cd5bb5507e4094c5ed\transformed\customview-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview:1.0.0] C:\Users\admin\.gradle\caches\8.8\transforms\9f79926a8b4659cd5bb5507e4094c5ed\transformed\customview-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.asynclayoutinflater:asynclayoutinflater:1.0.0] C:\Users\admin\.gradle\caches\8.8\transforms\af116918ef5f11570e162896f593f3c1\transformed\asynclayoutinflater-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.asynclayoutinflater:asynclayoutinflater:1.0.0] C:\Users\admin\.gradle\caches\8.8\transforms\af116918ef5f11570e162896f593f3c1\transformed\asynclayoutinflater-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core:1.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\d4f80c37e609d08f9ba9a352a21b1205\transformed\core-1.16.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core:1.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\d4f80c37e609d08f9ba9a352a21b1205\transformed\core-1.16.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.6.2] C:\Users\admin\.gradle\caches\8.8\transforms\3bd21c050b3e47c9dcbd511f89e0c282\transformed\lifecycle-runtime-2.6.2\AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.6.2] C:\Users\admin\.gradle\caches\8.8\transforms\3bd21c050b3e47c9dcbd511f89e0c282\transformed\lifecycle-runtime-2.6.2\AndroidManifest.xml:5:5-44
+MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] C:\Users\admin\.gradle\caches\8.8\transforms\98d9c6f6bfc45973dfb2f53aee98a489\transformed\jetified-savedstate-ktx-1.2.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] C:\Users\admin\.gradle\caches\8.8\transforms\98d9c6f6bfc45973dfb2f53aee98a489\transformed\jetified-savedstate-ktx-1.2.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate:1.2.1] C:\Users\admin\.gradle\caches\8.8\transforms\efc2594b9832f2e67e863a10502f33c6\transformed\jetified-savedstate-1.2.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate:1.2.1] C:\Users\admin\.gradle\caches\8.8\transforms\efc2594b9832f2e67e863a10502f33c6\transformed\jetified-savedstate-1.2.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.room:room-runtime:2.4.3] C:\Users\admin\.gradle\caches\8.8\transforms\04c51b8584a818b790b03719e0c73547\transformed\room-runtime-2.4.3\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.room:room-runtime:2.4.3] C:\Users\admin\.gradle\caches\8.8\transforms\04c51b8584a818b790b03719e0c73547\transformed\room-runtime-2.4.3\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.annotation:annotation-experimental:1.4.1] C:\Users\admin\.gradle\caches\8.8\transforms\99c1304d2dd3364e820327590c75900b\transformed\jetified-annotation-experimental-1.4.1\AndroidManifest.xml:5:5-44
+MERGED from [androidx.annotation:annotation-experimental:1.4.1] C:\Users\admin\.gradle\caches\8.8\transforms\99c1304d2dd3364e820327590c75900b\transformed\jetified-annotation-experimental-1.4.1\AndroidManifest.xml:5:5-44
+MERGED from [androidx.core:core-viewtree:1.0.0] C:\Users\admin\.gradle\caches\8.8\transforms\35b6fd9f88ef620f4ed579a481d0326c\transformed\jetified-core-viewtree-1.0.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.core:core-viewtree:1.0.0] C:\Users\admin\.gradle\caches\8.8\transforms\35b6fd9f88ef620f4ed579a481d0326c\transformed\jetified-core-viewtree-1.0.0\AndroidManifest.xml:5:5-44
+MERGED from [com.facebook.react:hermes-android:0.73.11] C:\Users\admin\.gradle\caches\8.8\transforms\da8f8e20e9fa7a0024690f3f7db22cff\transformed\jetified-hermes-android-0.73.11-debug\AndroidManifest.xml:5:5-44
+MERGED from [com.facebook.react:hermes-android:0.73.11] C:\Users\admin\.gradle\caches\8.8\transforms\da8f8e20e9fa7a0024690f3f7db22cff\transformed\jetified-hermes-android-0.73.11-debug\AndroidManifest.xml:5:5-44
+MERGED from [androidx.documentfile:documentfile:1.0.1] C:\Users\admin\.gradle\caches\8.8\transforms\60da311090a158d5852833dc4cd406eb\transformed\documentfile-1.0.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.documentfile:documentfile:1.0.1] C:\Users\admin\.gradle\caches\8.8\transforms\60da311090a158d5852833dc4cd406eb\transformed\documentfile-1.0.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.1.0] C:\Users\admin\.gradle\caches\8.8\transforms\22538bc4b270f0bca72ed55fcb94647d\transformed\localbroadcastmanager-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.1.0] C:\Users\admin\.gradle\caches\8.8\transforms\22538bc4b270f0bca72ed55fcb94647d\transformed\localbroadcastmanager-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\admin\.gradle\caches\8.8\transforms\a1087d813421850773c14c67bceb89b8\transformed\cursoradapter-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\admin\.gradle\caches\8.8\transforms\a1087d813421850773c14c67bceb89b8\transformed\cursoradapter-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\admin\.gradle\caches\8.8\transforms\5f3efc7a7f0d23af1742d22ef32c0590\transformed\interpolator-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\admin\.gradle\caches\8.8\transforms\5f3efc7a7f0d23af1742d22ef32c0590\transformed\interpolator-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.sqlite:sqlite-framework:2.2.0] C:\Users\admin\.gradle\caches\8.8\transforms\c6e42c4f75dca273881525c4c0b93bce\transformed\sqlite-framework-2.2.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.sqlite:sqlite-framework:2.2.0] C:\Users\admin\.gradle\caches\8.8\transforms\c6e42c4f75dca273881525c4c0b93bce\transformed\sqlite-framework-2.2.0\AndroidManifest.xml:20:5-22:41
+MERGED from [com.github.bumptech.glide:gifdecoder:4.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\b001e1c85107495e6566176189f9bc5e\transformed\jetified-gifdecoder-4.16.0\AndroidManifest.xml:5:5-7:41
+MERGED from [com.github.bumptech.glide:gifdecoder:4.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\b001e1c85107495e6566176189f9bc5e\transformed\jetified-gifdecoder-4.16.0\AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.exifinterface:exifinterface:1.3.6] C:\Users\admin\.gradle\caches\8.8\transforms\aabcafc18a9e97503987c758e5ebdb8a\transformed\exifinterface-1.3.6\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.exifinterface:exifinterface:1.3.6] C:\Users\admin\.gradle\caches\8.8\transforms\aabcafc18a9e97503987c758e5ebdb8a\transformed\exifinterface-1.3.6\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.sqlite:sqlite:2.2.0] C:\Users\admin\.gradle\caches\8.8\transforms\88c9b003d1b80a9499125920b7ae432d\transformed\sqlite-2.2.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.sqlite:sqlite:2.2.0] C:\Users\admin\.gradle\caches\8.8\transforms\88c9b003d1b80a9499125920b7ae432d\transformed\sqlite-2.2.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.cardview:cardview:1.0.0] C:\Users\admin\.gradle\caches\8.8\transforms\95629ea7f2b0454e619a7451da038e9c\transformed\cardview-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.cardview:cardview:1.0.0] C:\Users\admin\.gradle\caches\8.8\transforms\95629ea7f2b0454e619a7451da038e9c\transformed\cardview-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\admin\.gradle\caches\8.8\transforms\f9c55bdcbfa0b550f6995f71be73ac86\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:21:5-44
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\admin\.gradle\caches\8.8\transforms\f9c55bdcbfa0b550f6995f71be73ac86\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:21:5-44
+MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\admin\.gradle\caches\8.8\transforms\5307adc6fd393a1bdc6e16ce04e4c950\transformed\jetified-startup-runtime-1.1.1\AndroidManifest.xml:21:5-23:41
+MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\admin\.gradle\caches\8.8\transforms\5307adc6fd393a1bdc6e16ce04e4c950\transformed\jetified-startup-runtime-1.1.1\AndroidManifest.xml:21:5-23:41
+MERGED from [androidx.tracing:tracing:1.2.0] C:\Users\admin\.gradle\caches\8.8\transforms\821c1a7762b0fee2c51fb7d337059624\transformed\jetified-tracing-1.2.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.tracing:tracing:1.2.0] C:\Users\admin\.gradle\caches\8.8\transforms\821c1a7762b0fee2c51fb7d337059624\transformed\jetified-tracing-1.2.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\admin\.gradle\caches\8.8\transforms\996882af4ba2a022b98ce118d0e703ac\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\admin\.gradle\caches\8.8\transforms\996882af4ba2a022b98ce118d0e703ac\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.arch.core:core-runtime:2.2.0] C:\Users\admin\.gradle\caches\8.8\transforms\d642f08526f6eca79037ef6a698b8697\transformed\core-runtime-2.2.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.arch.core:core-runtime:2.2.0] C:\Users\admin\.gradle\caches\8.8\transforms\d642f08526f6eca79037ef6a698b8697\transformed\core-runtime-2.2.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.print:print:1.0.0] C:\Users\admin\.gradle\caches\8.8\transforms\d21a355f5a4a97f572c935b414cf3f0d\transformed\print-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.print:print:1.0.0] C:\Users\admin\.gradle\caches\8.8\transforms\d21a355f5a4a97f572c935b414cf3f0d\transformed\print-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [wang.harlon.quickjs:wrapper-android:2.4.0] C:\Users\admin\.gradle\caches\8.8\transforms\d8132221018358bafc0a3cdcc2eb8b64\transformed\jetified-wrapper-android-2.4.0\AndroidManifest.xml:5:5-44
+MERGED from [wang.harlon.quickjs:wrapper-android:2.4.0] C:\Users\admin\.gradle\caches\8.8\transforms\d8132221018358bafc0a3cdcc2eb8b64\transformed\jetified-wrapper-android-2.4.0\AndroidManifest.xml:5:5-44
+MERGED from [com.facebook.fbjni:fbjni:0.5.1] C:\Users\admin\.gradle\caches\8.8\transforms\31398558b4c5aff352a2c14bc54c9ccb\transformed\jetified-fbjni-0.5.1\AndroidManifest.xml:5:5-44
+MERGED from [com.facebook.fbjni:fbjni:0.5.1] C:\Users\admin\.gradle\caches\8.8\transforms\31398558b4c5aff352a2c14bc54c9ccb\transformed\jetified-fbjni-0.5.1\AndroidManifest.xml:5:5-44
+MERGED from [com.facebook.soloader:soloader:0.10.5] C:\Users\admin\.gradle\caches\8.8\transforms\59bb2ea205ff6a0273bc186a045caa7b\transformed\jetified-soloader-0.10.5\AndroidManifest.xml:7:5-9:41
+MERGED from [com.facebook.soloader:soloader:0.10.5] C:\Users\admin\.gradle\caches\8.8\transforms\59bb2ea205ff6a0273bc186a045caa7b\transformed\jetified-soloader-0.10.5\AndroidManifest.xml:7:5-9:41
+MERGED from [org.aomedia.avif.android:avif:1.1.1.14d8e3c4] C:\Users\admin\.gradle\caches\8.8\transforms\e59d62ee2000724958d3245880ae7723\transformed\jetified-avif-1.1.1.14d8e3c4\AndroidManifest.xml:4:5-44
+MERGED from [org.aomedia.avif.android:avif:1.1.1.14d8e3c4] C:\Users\admin\.gradle\caches\8.8\transforms\e59d62ee2000724958d3245880ae7723\transformed\jetified-avif-1.1.1.14d8e3c4\AndroidManifest.xml:4:5-44
+MERGED from [com.github.clans:fab:1.6.4] C:\Users\admin\.gradle\caches\8.8\transforms\c42a3ffb2a71668fe57b3e6deefcfddd\transformed\jetified-fab-1.6.4\AndroidManifest.xml:8:5-10:41
+MERGED from [com.github.clans:fab:1.6.4] C:\Users\admin\.gradle\caches\8.8\transforms\c42a3ffb2a71668fe57b3e6deefcfddd\transformed\jetified-fab-1.6.4\AndroidManifest.xml:8:5-10:41
+MERGED from [com.android.ndk.thirdparty:openssl:1.1.1l-beta-1] C:\Users\admin\.gradle\caches\8.8\transforms\4033e649215a5c424b56cbc0d263efea\transformed\jetified-openssl-1.1.1l-beta-1\AndroidManifest.xml:2:2-70
+MERGED from [com.android.ndk.thirdparty:openssl:1.1.1l-beta-1] C:\Users\admin\.gradle\caches\8.8\transforms\4033e649215a5c424b56cbc0d263efea\transformed\jetified-openssl-1.1.1l-beta-1\AndroidManifest.xml:2:2-70
+	android:targetSdkVersion
+		INJECTED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\debug\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from D:\Program\lx-lxwalnut-music-mobile\android\app\src\debug\AndroidManifest.xml
+queries
+ADDED from [:react-native-webview] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-webview\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:7:5-17:15
+intent#action:name:org.chromium.intent.action.PAY
+ADDED from [:react-native-webview] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-webview\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:8:9-10:18
+action#org.chromium.intent.action.PAY
+ADDED from [:react-native-webview] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-webview\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:9:13-69
+	android:name
+		ADDED from [:react-native-webview] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-webview\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:9:21-66
+intent#action:name:org.chromium.intent.action.IS_READY_TO_PAY
+ADDED from [:react-native-webview] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-webview\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:11:9-13:18
+action#org.chromium.intent.action.IS_READY_TO_PAY
+ADDED from [:react-native-webview] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-webview\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:12:13-81
+	android:name
+		ADDED from [:react-native-webview] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-webview\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:12:21-78
+intent#action:name:org.chromium.intent.action.UPDATE_PAYMENT_DETAILS
+ADDED from [:react-native-webview] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-webview\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:14:9-16:18
+action#org.chromium.intent.action.UPDATE_PAYMENT_DETAILS
+ADDED from [:react-native-webview] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-webview\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:15:13-88
+	android:name
+		ADDED from [:react-native-webview] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-webview\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:15:21-85
+provider#com.reactnativecommunity.webview.RNCWebViewFileProvider
+ADDED from [:react-native-webview] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-webview\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:20:9-28:20
+	android:grantUriPermissions
+		ADDED from [:react-native-webview] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-webview\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:24:13-47
+	android:authorities
+		ADDED from [:react-native-webview] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-webview\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:22:13-64
+	android:exported
+		ADDED from [:react-native-webview] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-webview\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:23:13-37
+	android:name
+		ADDED from [:react-native-webview] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-webview\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:21:13-83
+meta-data#android.support.FILE_PROVIDER_PATHS
+ADDED from [:react-native-webview] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-webview\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:25:13-27:63
+	android:resource
+		ADDED from [:react-native-webview] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-webview\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:27:17-60
+	android:name
+		ADDED from [:react-native-webview] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-webview\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:26:17-67
+activity#com.masteratul.exceptionhandler.DefaultErrorScreen
+ADDED from [:react-native-exception-handler] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-exception-handler\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:8:9-9:20
+	android:name
+		ADDED from [:react-native-exception-handler] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-exception-handler\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:8:19-84
+activity#com.facebook.react.devsupport.DevSettingsActivity
+ADDED from [:react-native-navigation] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-navigation\lib\android\app\build\intermediates\merged_manifest\reactNative71Debug\processReactNative71DebugManifest\AndroidManifest.xml:9:9-11:40
+MERGED from [com.facebook.react:react-android:0.73.11] C:\Users\admin\.gradle\caches\8.8\transforms\c728e393e5d7a7637fe69ef310865395\transformed\jetified-react-android-0.73.11-debug\AndroidManifest.xml:19:9-21:40
+MERGED from [com.facebook.react:react-android:0.73.11] C:\Users\admin\.gradle\caches\8.8\transforms\c728e393e5d7a7637fe69ef310865395\transformed\jetified-react-android-0.73.11-debug\AndroidManifest.xml:19:9-21:40
+	android:exported
+		ADDED from [:react-native-navigation] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-navigation\lib\android\app\build\intermediates\merged_manifest\reactNative71Debug\processReactNative71DebugManifest\AndroidManifest.xml:11:13-37
+	android:name
+		ADDED from [:react-native-navigation] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-navigation\lib\android\app\build\intermediates\merged_manifest\reactNative71Debug\processReactNative71DebugManifest\AndroidManifest.xml:10:13-77
+uses-permission#android.permission.WAKE_LOCK
+ADDED from [:react-native-track-player] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-track-player\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:7:5-68
+MERGED from [:rn-fetch-blob] D:\Program\lx-lxwalnut-music-mobile\node_modules\rn-fetch-blob\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:17:5-68
+MERGED from [:rn-fetch-blob] D:\Program\lx-lxwalnut-music-mobile\node_modules\rn-fetch-blob\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:17:5-68
+	android:name
+		ADDED from [:react-native-track-player] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-track-player\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:7:22-65
+service#com.guichaguri.trackplayer.service.MusicService
+ADDED from [:react-native-track-player] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-track-player\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:13:9-20:19
+	android:enabled
+		ADDED from [:react-native-track-player] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-track-player\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:15:13-35
+	android:exported
+		ADDED from [:react-native-track-player] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-track-player\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:16:13-36
+	android:name
+		ADDED from [:react-native-track-player] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-track-player\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:14:13-75
+intent-filter#action:name:android.intent.action.MEDIA_BUTTON
+ADDED from [:react-native-track-player] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-track-player\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:17:13-19:29
+action#android.intent.action.MEDIA_BUTTON
+ADDED from [:react-native-track-player] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-track-player\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:18:17-77
+	android:name
+		ADDED from [:react-native-track-player] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-track-player\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:18:25-74
+receiver#androidx.media.session.MediaButtonReceiver
+ADDED from [:react-native-track-player] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-track-player\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:23:9-29:20
+	android:exported
+		ADDED from [:react-native-track-player] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-track-player\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:25:13-36
+	android:name
+		ADDED from [:react-native-track-player] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-track-player\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:24:13-70
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from [:react-native-udp] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-udp\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:8:5-79
+MERGED from [:rn-fetch-blob] D:\Program\lx-lxwalnut-music-mobile\node_modules\rn-fetch-blob\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:23:5-79
+MERGED from [:rn-fetch-blob] D:\Program\lx-lxwalnut-music-mobile\node_modules\rn-fetch-blob\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:23:5-79
+MERGED from [androidx.media3:media3-exoplayer:1.8.0] C:\Users\admin\.gradle\caches\8.8\transforms\ab3698a0a03b027ef051a4aebe235855\transformed\jetified-media3-exoplayer-1.8.0\AndroidManifest.xml:22:5-79
+MERGED from [androidx.media3:media3-exoplayer:1.8.0] C:\Users\admin\.gradle\caches\8.8\transforms\ab3698a0a03b027ef051a4aebe235855\transformed\jetified-media3-exoplayer-1.8.0\AndroidManifest.xml:22:5-79
+MERGED from [androidx.media3:media3-common:1.8.0] C:\Users\admin\.gradle\caches\8.8\transforms\df2e10686214fe737f26e7e4fc0c0801\transformed\jetified-media3-common-1.8.0\AndroidManifest.xml:22:5-79
+MERGED from [androidx.media3:media3-common:1.8.0] C:\Users\admin\.gradle\caches\8.8\transforms\df2e10686214fe737f26e7e4fc0c0801\transformed\jetified-media3-common-1.8.0\AndroidManifest.xml:22:5-79
+	android:name
+		ADDED from [:react-native-udp] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-udp\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:8:22-76
+uses-permission#android.permission.CHANGE_WIFI_MULTICAST_STATE
+ADDED from [:react-native-udp] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-udp\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:10:5-86
+	android:name
+		ADDED from [:react-native-udp] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-udp\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:10:22-83
+uses-permission#com.android.vending.CHECK_LICENSE
+ADDED from [:rn-fetch-blob] D:\Program\lx-lxwalnut-music-mobile\node_modules\rn-fetch-blob\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:8:5-73
+	android:name
+		ADDED from [:rn-fetch-blob] D:\Program\lx-lxwalnut-music-mobile\node_modules\rn-fetch-blob\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:8:22-70
+provider#com.RNFetchBlob.Utils.FileProvider
+ADDED from [:rn-fetch-blob] D:\Program\lx-lxwalnut-music-mobile\node_modules\rn-fetch-blob\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:32:9-40:20
+	android:grantUriPermissions
+		ADDED from [:rn-fetch-blob] D:\Program\lx-lxwalnut-music-mobile\node_modules\rn-fetch-blob\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:36:13-47
+	android:authorities
+		ADDED from [:rn-fetch-blob] D:\Program\lx-lxwalnut-music-mobile\node_modules\rn-fetch-blob\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:34:13-60
+	android:exported
+		ADDED from [:rn-fetch-blob] D:\Program\lx-lxwalnut-music-mobile\node_modules\rn-fetch-blob\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:35:13-37
+	android:name
+		ADDED from [:rn-fetch-blob] D:\Program\lx-lxwalnut-music-mobile\node_modules\rn-fetch-blob\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:33:13-62
+provider#androidx.startup.InitializationProvider
+ADDED from [androidx.emoji2:emoji2:1.2.0] C:\Users\admin\.gradle\caches\8.8\transforms\ef63390370716cc9ce2a61eb34595174\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\admin\.gradle\caches\8.8\transforms\8f17fe30b8f8f57e62f64b6232e3d56a\transformed\jetified-lifecycle-process-2.6.2\AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\admin\.gradle\caches\8.8\transforms\8f17fe30b8f8f57e62f64b6232e3d56a\transformed\jetified-lifecycle-process-2.6.2\AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\admin\.gradle\caches\8.8\transforms\f9c55bdcbfa0b550f6995f71be73ac86\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\admin\.gradle\caches\8.8\transforms\f9c55bdcbfa0b550f6995f71be73ac86\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\admin\.gradle\caches\8.8\transforms\5307adc6fd393a1bdc6e16ce04e4c950\transformed\jetified-startup-runtime-1.1.1\AndroidManifest.xml:26:9-30:34
+MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\admin\.gradle\caches\8.8\transforms\5307adc6fd393a1bdc6e16ce04e4c950\transformed\jetified-startup-runtime-1.1.1\AndroidManifest.xml:26:9-30:34
+	tools:node
+		ADDED from [androidx.emoji2:emoji2:1.2.0] C:\Users\admin\.gradle\caches\8.8\transforms\ef63390370716cc9ce2a61eb34595174\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:28:13-31
+	android:authorities
+		ADDED from [androidx.emoji2:emoji2:1.2.0] C:\Users\admin\.gradle\caches\8.8\transforms\ef63390370716cc9ce2a61eb34595174\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:26:13-68
+	android:exported
+		ADDED from [androidx.emoji2:emoji2:1.2.0] C:\Users\admin\.gradle\caches\8.8\transforms\ef63390370716cc9ce2a61eb34595174\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:27:13-37
+	android:name
+		ADDED from [androidx.emoji2:emoji2:1.2.0] C:\Users\admin\.gradle\caches\8.8\transforms\ef63390370716cc9ce2a61eb34595174\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:25:13-67
+meta-data#androidx.emoji2.text.EmojiCompatInitializer
+ADDED from [androidx.emoji2:emoji2:1.2.0] C:\Users\admin\.gradle\caches\8.8\transforms\ef63390370716cc9ce2a61eb34595174\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:29:13-31:52
+	android:value
+		ADDED from [androidx.emoji2:emoji2:1.2.0] C:\Users\admin\.gradle\caches\8.8\transforms\ef63390370716cc9ce2a61eb34595174\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:31:17-49
+	android:name
+		ADDED from [androidx.emoji2:emoji2:1.2.0] C:\Users\admin\.gradle\caches\8.8\transforms\ef63390370716cc9ce2a61eb34595174\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:30:17-75
+meta-data#com.bumptech.glide.integration.okhttp3.OkHttpGlideModule
+ADDED from [com.github.bumptech.glide:okhttp3-integration:4.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\05ec2a6ef4aded1f9fc206872e5a86e4\transformed\jetified-okhttp3-integration-4.16.0\AndroidManifest.xml:10:9-12:43
+	android:value
+		ADDED from [com.github.bumptech.glide:okhttp3-integration:4.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\05ec2a6ef4aded1f9fc206872e5a86e4\transformed\jetified-okhttp3-integration-4.16.0\AndroidManifest.xml:12:13-40
+	android:name
+		ADDED from [com.github.bumptech.glide:okhttp3-integration:4.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\05ec2a6ef4aded1f9fc206872e5a86e4\transformed\jetified-okhttp3-integration-4.16.0\AndroidManifest.xml:11:13-84
+meta-data#com.bumptech.glide.integration.webp.WebpGlideModule
+ADDED from [com.github.zjupure:webpdecoder:2.7.4.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\8f8c1d05cc62af08989d3a814729a3cf\transformed\jetified-webpdecoder-2.7.4.16.0\AndroidManifest.xml:10:9-12:43
+	android:value
+		ADDED from [com.github.zjupure:webpdecoder:2.7.4.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\8f8c1d05cc62af08989d3a814729a3cf\transformed\jetified-webpdecoder-2.7.4.16.0\AndroidManifest.xml:12:13-40
+	android:name
+		ADDED from [com.github.zjupure:webpdecoder:2.7.4.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\8f8c1d05cc62af08989d3a814729a3cf\transformed\jetified-webpdecoder-2.7.4.16.0\AndroidManifest.xml:11:13-79
+meta-data#androidx.lifecycle.ProcessLifecycleInitializer
+ADDED from [androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\admin\.gradle\caches\8.8\transforms\8f17fe30b8f8f57e62f64b6232e3d56a\transformed\jetified-lifecycle-process-2.6.2\AndroidManifest.xml:29:13-31:52
+	android:value
+		ADDED from [androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\admin\.gradle\caches\8.8\transforms\8f17fe30b8f8f57e62f64b6232e3d56a\transformed\jetified-lifecycle-process-2.6.2\AndroidManifest.xml:31:17-49
+	android:name
+		ADDED from [androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\admin\.gradle\caches\8.8\transforms\8f17fe30b8f8f57e62f64b6232e3d56a\transformed\jetified-lifecycle-process-2.6.2\AndroidManifest.xml:30:17-78
+permission#${applicationId}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\d4f80c37e609d08f9ba9a352a21b1205\transformed\core-1.16.0\AndroidManifest.xml:22:5-24:47
+	android:protectionLevel
+		ADDED from [androidx.core:core:1.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\d4f80c37e609d08f9ba9a352a21b1205\transformed\core-1.16.0\AndroidManifest.xml:24:9-44
+	android:name
+		ADDED from [androidx.core:core:1.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\d4f80c37e609d08f9ba9a352a21b1205\transformed\core-1.16.0\AndroidManifest.xml:23:9-81
+permission#com.lxwalnut.music.phase0audit.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\d4f80c37e609d08f9ba9a352a21b1205\transformed\core-1.16.0\AndroidManifest.xml:22:5-24:47
+	android:protectionLevel
+		ADDED from [androidx.core:core:1.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\d4f80c37e609d08f9ba9a352a21b1205\transformed\core-1.16.0\AndroidManifest.xml:24:9-44
+	android:name
+		ADDED from [androidx.core:core:1.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\d4f80c37e609d08f9ba9a352a21b1205\transformed\core-1.16.0\AndroidManifest.xml:23:9-81
+uses-permission#${applicationId}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\d4f80c37e609d08f9ba9a352a21b1205\transformed\core-1.16.0\AndroidManifest.xml:26:5-97
+	android:name
+		ADDED from [androidx.core:core:1.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\d4f80c37e609d08f9ba9a352a21b1205\transformed\core-1.16.0\AndroidManifest.xml:26:22-94
+uses-permission#com.lxwalnut.music.phase0audit.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\d4f80c37e609d08f9ba9a352a21b1205\transformed\core-1.16.0\AndroidManifest.xml:26:5-97
+	android:name
+		ADDED from [androidx.core:core:1.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\d4f80c37e609d08f9ba9a352a21b1205\transformed\core-1.16.0\AndroidManifest.xml:26:22-94
+service#androidx.room.MultiInstanceInvalidationService
+ADDED from [androidx.room:room-runtime:2.4.3] C:\Users\admin\.gradle\caches\8.8\transforms\04c51b8584a818b790b03719e0c73547\transformed\room-runtime-2.4.3\AndroidManifest.xml:25:9-28:40
+	android:exported
+		ADDED from [androidx.room:room-runtime:2.4.3] C:\Users\admin\.gradle\caches\8.8\transforms\04c51b8584a818b790b03719e0c73547\transformed\room-runtime-2.4.3\AndroidManifest.xml:28:13-37
+	android:directBootAware
+		ADDED from [androidx.room:room-runtime:2.4.3] C:\Users\admin\.gradle\caches\8.8\transforms\04c51b8584a818b790b03719e0c73547\transformed\room-runtime-2.4.3\AndroidManifest.xml:27:13-43
+	android:name
+		ADDED from [androidx.room:room-runtime:2.4.3] C:\Users\admin\.gradle\caches\8.8\transforms\04c51b8584a818b790b03719e0c73547\transformed\room-runtime-2.4.3\AndroidManifest.xml:26:13-74
+meta-data#androidx.profileinstaller.ProfileInstallerInitializer
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\admin\.gradle\caches\8.8\transforms\f9c55bdcbfa0b550f6995f71be73ac86\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:29:13-31:52
+	android:value
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\admin\.gradle\caches\8.8\transforms\f9c55bdcbfa0b550f6995f71be73ac86\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:31:17-49
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\admin\.gradle\caches\8.8\transforms\f9c55bdcbfa0b550f6995f71be73ac86\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:30:17-85
+receiver#androidx.profileinstaller.ProfileInstallReceiver
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\admin\.gradle\caches\8.8\transforms\f9c55bdcbfa0b550f6995f71be73ac86\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:34:9-52:20
+	android:enabled
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\admin\.gradle\caches\8.8\transforms\f9c55bdcbfa0b550f6995f71be73ac86\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:37:13-35
+	android:exported
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\admin\.gradle\caches\8.8\transforms\f9c55bdcbfa0b550f6995f71be73ac86\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:38:13-36
+	android:permission
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\admin\.gradle\caches\8.8\transforms\f9c55bdcbfa0b550f6995f71be73ac86\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:39:13-57
+	android:directBootAware
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\admin\.gradle\caches\8.8\transforms\f9c55bdcbfa0b550f6995f71be73ac86\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:36:13-44
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\admin\.gradle\caches\8.8\transforms\f9c55bdcbfa0b550f6995f71be73ac86\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:35:13-76
+intent-filter#action:name:androidx.profileinstaller.action.INSTALL_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\admin\.gradle\caches\8.8\transforms\f9c55bdcbfa0b550f6995f71be73ac86\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:40:13-42:29
+action#androidx.profileinstaller.action.INSTALL_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\admin\.gradle\caches\8.8\transforms\f9c55bdcbfa0b550f6995f71be73ac86\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:41:17-91
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\admin\.gradle\caches\8.8\transforms\f9c55bdcbfa0b550f6995f71be73ac86\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:41:25-88
+intent-filter#action:name:androidx.profileinstaller.action.SKIP_FILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\admin\.gradle\caches\8.8\transforms\f9c55bdcbfa0b550f6995f71be73ac86\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:43:13-45:29
+action#androidx.profileinstaller.action.SKIP_FILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\admin\.gradle\caches\8.8\transforms\f9c55bdcbfa0b550f6995f71be73ac86\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:44:17-85
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\admin\.gradle\caches\8.8\transforms\f9c55bdcbfa0b550f6995f71be73ac86\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:44:25-82
+intent-filter#action:name:androidx.profileinstaller.action.SAVE_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\admin\.gradle\caches\8.8\transforms\f9c55bdcbfa0b550f6995f71be73ac86\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:46:13-48:29
+action#androidx.profileinstaller.action.SAVE_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\admin\.gradle\caches\8.8\transforms\f9c55bdcbfa0b550f6995f71be73ac86\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:47:17-88
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\admin\.gradle\caches\8.8\transforms\f9c55bdcbfa0b550f6995f71be73ac86\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:47:25-85
+intent-filter#action:name:androidx.profileinstaller.action.BENCHMARK_OPERATION
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\admin\.gradle\caches\8.8\transforms\f9c55bdcbfa0b550f6995f71be73ac86\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:49:13-51:29
+action#androidx.profileinstaller.action.BENCHMARK_OPERATION
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\admin\.gradle\caches\8.8\transforms\f9c55bdcbfa0b550f6995f71be73ac86\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:50:17-95
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\admin\.gradle\caches\8.8\transforms\f9c55bdcbfa0b550f6995f71be73ac86\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:50:25-92
+meta-data#com.facebook.soloader.enabled
+ADDED from [com.facebook.soloader:soloader:0.10.5] C:\Users\admin\.gradle\caches\8.8\transforms\59bb2ea205ff6a0273bc186a045caa7b\transformed\jetified-soloader-0.10.5\AndroidManifest.xml:12:9-14:37
+	android:value
+		ADDED from [com.facebook.soloader:soloader:0.10.5] C:\Users\admin\.gradle\caches\8.8\transforms\59bb2ea205ff6a0273bc186a045caa7b\transformed\jetified-soloader-0.10.5\AndroidManifest.xml:14:13-34
+	android:name
+		ADDED from [com.facebook.soloader:soloader:0.10.5] C:\Users\admin\.gradle\caches\8.8\transforms\59bb2ea205ff6a0273bc186a045caa7b\transformed\jetified-soloader-0.10.5\AndroidManifest.xml:13:13-57

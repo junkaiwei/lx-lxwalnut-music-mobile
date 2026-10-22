@@ -1,0 +1,484 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.lxwalnut.music.mobile"
+4    android:versionCode="260702"
+5    android:versionName="26.07.02" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="23"
+9        android:targetSdkVersion="29" />
+10
+11    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+11-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:4:5-80
+11-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:4:22-77
+12    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+12-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:5:5-81
+12-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:5:22-78
+13    <uses-permission android:name="android.permission.INTERNET" />
+13-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:6:5-67
+13-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:6:22-64
+14    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+14-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:7:5-83
+14-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:7:22-80
+15    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+15-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:8:5-76
+15-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:8:22-73
+16    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+16-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:9:5-78
+16-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:9:22-75
+17    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+17-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:10:5-95
+17-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:10:22-92
+18    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+18-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:11:5-71
+18-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:11:22-68
+19    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+19-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:12:5-77
+19-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:12:22-74
+20    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
+20-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:13:5-88
+20-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:13:22-85
+21
+22    <queries>
+22-->[:react-native-webview] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-webview\android\build\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml:7:5-17:15
+23        <intent>
+23-->[:react-native-webview] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-webview\android\build\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml:8:9-10:18
+24            <action android:name="org.chromium.intent.action.PAY" />
+24-->[:react-native-webview] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-webview\android\build\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml:9:13-69
+24-->[:react-native-webview] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-webview\android\build\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml:9:21-66
+25        </intent>
+26        <intent>
+26-->[:react-native-webview] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-webview\android\build\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml:11:9-13:18
+27            <action android:name="org.chromium.intent.action.IS_READY_TO_PAY" />
+27-->[:react-native-webview] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-webview\android\build\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml:12:13-81
+27-->[:react-native-webview] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-webview\android\build\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml:12:21-78
+28        </intent>
+29        <intent>
+29-->[:react-native-webview] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-webview\android\build\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml:14:9-16:18
+30            <action android:name="org.chromium.intent.action.UPDATE_PAYMENT_DETAILS" />
+30-->[:react-native-webview] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-webview\android\build\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml:15:13-88
+30-->[:react-native-webview] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-webview\android\build\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml:15:21-85
+31        </intent>
+32    </queries>
+33
+34    <uses-permission android:name="android.permission.WAKE_LOCK" />
+34-->[:react-native-track-player] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-track-player\android\build\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml:7:5-68
+34-->[:react-native-track-player] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-track-player\android\build\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml:7:22-65
+35    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+35-->[:react-native-udp] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-udp\android\build\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml:8:5-79
+35-->[:react-native-udp] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-udp\android\build\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml:8:22-76
+36    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" /> <!-- Required to access Google Play Licensing -->
+36-->[:react-native-udp] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-udp\android\build\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml:10:5-86
+36-->[:react-native-udp] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-udp\android\build\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml:10:22-83
+37    <uses-permission android:name="com.android.vending.CHECK_LICENSE" />
+37-->[:rn-fetch-blob] D:\Program\lx-lxwalnut-music-mobile\node_modules\rn-fetch-blob\android\build\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml:8:5-73
+37-->[:rn-fetch-blob] D:\Program\lx-lxwalnut-music-mobile\node_modules\rn-fetch-blob\android\build\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml:8:22-70
+38
+39    <permission
+39-->[androidx.core:core:1.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\d4f80c37e609d08f9ba9a352a21b1205\transformed\core-1.16.0\AndroidManifest.xml:22:5-24:47
+40        android:name="com.lxwalnut.music.mobile.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+40-->[androidx.core:core:1.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\d4f80c37e609d08f9ba9a352a21b1205\transformed\core-1.16.0\AndroidManifest.xml:23:9-81
+41        android:protectionLevel="signature" />
+41-->[androidx.core:core:1.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\d4f80c37e609d08f9ba9a352a21b1205\transformed\core-1.16.0\AndroidManifest.xml:24:9-44
+42
+43    <uses-permission android:name="com.lxwalnut.music.mobile.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+43-->[androidx.core:core:1.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\d4f80c37e609d08f9ba9a352a21b1205\transformed\core-1.16.0\AndroidManifest.xml:26:5-97
+43-->[androidx.core:core:1.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\d4f80c37e609d08f9ba9a352a21b1205\transformed\core-1.16.0\AndroidManifest.xml:26:22-94
+44
+45    <application
+45-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:15:5-116:19
+46        android:name="com.lxwalnut.music.mobile.MainApplication"
+46-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:16:7-38
+47        android:allowBackup="false"
+47-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:23:7-34
+48        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+48-->[androidx.core:core:1.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\d4f80c37e609d08f9ba9a352a21b1205\transformed\core-1.16.0\AndroidManifest.xml:28:18-86
+49        android:extractNativeLibs="false"
+50        android:hardwareAccelerated="true"
+50-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:20:7-41
+51        android:icon="@mipmap/ic_launcher"
+51-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:21:7-41
+52        android:label="@string/app_name"
+52-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:17:7-39
+53        android:networkSecurityConfig="@xml/network_security_config"
+53-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:18:7-67
+54        android:requestLegacyExternalStorage="true"
+54-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:19:7-50
+55        android:roundIcon="@mipmap/ic_launcher_round"
+55-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:22:7-52
+56        android:theme="@style/AppTheme" >
+56-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:24:7-38
+57        <meta-data
+57-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:26:7-91
+58            android:name="android.app.shortcuts"
+58-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:26:18-54
+59            android:resource="@xml/shortcuts" />
+59-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:26:55-88
+60
+61        <activity
+61-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:27:7-88:18
+62            android:name="com.lxwalnut.music.mobile.MainActivity"
+62-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:28:9-37
+63            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
+63-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:29:9-118
+64            android:exported="true"
+64-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:33:9-32
+65            android:hardwareAccelerated="true"
+65-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:31:9-43
+66            android:launchMode="singleTask"
+66-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:30:9-40
+67            android:windowSoftInputMode="adjustResize" >
+67-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:32:9-51
+68            <intent-filter>
+68-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:34:9-37:25
+69                <action android:name="android.intent.action.MAIN" />
+69-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:35:11-63
+69-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:35:19-60
+70
+71                <category android:name="android.intent.category.LAUNCHER" />
+71-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:36:11-71
+71-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:36:21-68
+72            </intent-filter>
+73            <intent-filter>
+73-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:38:9-43:25
+74                <action android:name="android.intent.action.VIEW" />
+74-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:39:11-63
+74-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:39:19-60
+75
+76                <category android:name="android.intent.category.DEFAULT" />
+76-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:40:11-70
+76-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:40:21-67
+77                <category android:name="android.intent.category.BROWSABLE" />
+77-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:41:11-72
+77-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:41:21-69
+78
+79                <data
+80                    android:host="*"
+80-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:42:55-71
+81                    android:scheme="lxmusic" />
+81-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:42:17-54
+82            </intent-filter>
+83            <intent-filter android:priority="80" >
+83-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:44:9-54:25
+83-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:44:24-45
+84                <action android:name="android.intent.action.VIEW" />
+84-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:39:11-63
+84-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:39:19-60
+85
+86                <category android:name="android.intent.category.DEFAULT" />
+86-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:40:11-70
+86-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:40:21-67
+87                <category android:name="android.intent.category.OPENABLE" />
+87-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:47:11-70
+87-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:47:21-68
+88
+89                <data android:scheme="file" />
+89-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:42:17-54
+90                <data android:scheme="content" />
+90-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:42:17-54
+91                <data android:mimeType="audio/*" />
+91-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:50:17-43
+92                <data android:mimeType="vnd.android.cursor.dir/audio" />
+92-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:50:17-43
+93                <data android:mimeType="application/ogg" />
+93-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:50:17-43
+94                <data android:mimeType="application/x-ogg" />
+94-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:50:17-43
+95            </intent-filter>
+96            <intent-filter>
+96-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:55:9-58:25
+97                <action android:name="android.intent.action.MAIN" />
+97-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:35:11-63
+97-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:35:19-60
+98
+99                <category android:name="android.intent.category.APP_MUSIC" />
+99-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:57:11-72
+99-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:57:21-69
+100            </intent-filter>
+101            <intent-filter>
+101-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:59:9-62:25
+102                <action android:name="com.cyanogenmod.eleven.AUDIO_PLAYER" />
+102-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:60:11-71
+102-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:60:19-69
+103
+104                <category android:name="android.intent.category.DEFAULT" />
+104-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:40:11-70
+104-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:40:21-67
+105            </intent-filter>
+106            <intent-filter android:priority="80" >
+106-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:63:9-87:25
+106-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:63:24-45
+107                <action android:name="android.intent.action.VIEW" />
+107-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:39:11-63
+107-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:39:19-60
+108
+109                <category android:name="android.intent.category.DEFAULT" />
+109-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:40:11-70
+109-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:40:21-67
+110                <category android:name="android.intent.category.OPENABLE" />
+110-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:47:11-70
+110-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:47:21-68
+111
+112                <data android:scheme="file" />
+112-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:42:17-54
+113                <data android:scheme="content" />
+113-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:42:17-54
+114                <data android:host="*" />
+114-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:42:55-71
+115                <data android:mimeType="application/octet-stream" />
+115-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:50:17-43
+116                <data android:mimeType="text/javascript" />
+116-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:50:17-43
+117                <data android:mimeType="application/x-javascript" />
+117-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:50:17-43
+118                <data android:mimeType="application/javascript" />
+118-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:50:17-43
+119                <data android:pathPattern=".*\.js" />
+119-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:74:17-45
+120                <data android:pathPattern=".*\..*\.js" />
+120-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:74:17-45
+121                <data android:pathPattern=".*\..*\..*\.js" />
+121-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:74:17-45
+122                <data android:pathSuffix=".js" />
+122-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:77:17-41
+123                <data android:mimeType="application/json" />
+123-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:50:17-43
+124                <data android:pathPattern=".*\.json" />
+124-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:74:17-45
+125                <data android:pathPattern=".*\..*\.json" />
+125-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:74:17-45
+126                <data android:pathPattern=".*\..*\..*\.json" />
+126-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:74:17-45
+127                <data android:pathSuffix=".json" />
+127-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:77:17-41
+128                <data android:pathPattern=".*\.lxmc" />
+128-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:74:17-45
+129                <data android:pathPattern=".*\..*\.lxmc" />
+129-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:74:17-45
+130                <data android:pathPattern=".*\..*\..*\.lxmc" />
+130-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:74:17-45
+131                <data android:pathSuffix=".lxmc" />
+131-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:77:17-41
+132            </intent-filter>
+133        </activity>
+134
+135        <provider
+136            android:name="androidx.core.content.FileProvider"
+136-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:91:9-58
+137            android:authorities="com.lxwalnut.music.mobile.provider"
+137-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:92:9-54
+138            android:exported="false"
+138-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:93:9-33
+139            android:grantUriPermissions="true" >
+139-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:94:9-43
+140            <meta-data
+140-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:95:9-97:48
+141                android:name="android.support.FILE_PROVIDER_PATHS"
+141-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:96:11-61
+142                android:resource="@xml/file_paths" />
+142-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:97:11-45
+143        </provider>
+144
+145        <receiver
+145-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:100:7-115:18
+146            android:name="com.lxwalnut.music.mobile.widget.MusicWidgetProvider"
+146-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:101:9-51
+147            android:exported="true" >
+147-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:102:9-32
+148            <intent-filter>
+148-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:103:9-105:25
+149                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+149-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:104:11-78
+149-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:104:19-75
+150            </intent-filter>
+151            <intent-filter>
+151-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:106:9-111:25
+152                <action android:name="com.lxwalnut.music.mobile.widget.PLAY_PAUSE" />
+152-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:107:19-69
+153                <action android:name="com.lxwalnut.music.mobile.widget.PREV" />
+153-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:108:19-63
+154                <action android:name="com.lxwalnut.music.mobile.widget.NEXT" />
+154-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:109:19-63
+155                <action android:name="com.lxwalnut.music.mobile.widget.UPDATE" />
+155-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:110:19-65
+156            </intent-filter>
+157
+158            <meta-data
+158-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:112:9-114:55
+159                android:name="android.appwidget.provider"
+159-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:113:11-52
+160                android:resource="@xml/widget_music_info" />
+160-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:114:11-52
+161        </receiver>
+162
+163        <provider
+163-->[:react-native-webview] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-webview\android\build\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml:20:9-28:20
+164            android:name="com.reactnativecommunity.webview.RNCWebViewFileProvider"
+164-->[:react-native-webview] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-webview\android\build\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml:21:13-83
+165            android:authorities="com.lxwalnut.music.mobile.fileprovider"
+165-->[:react-native-webview] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-webview\android\build\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml:22:13-64
+166            android:exported="false"
+166-->[:react-native-webview] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-webview\android\build\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml:23:13-37
+167            android:grantUriPermissions="true" >
+167-->[:react-native-webview] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-webview\android\build\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml:24:13-47
+168            <meta-data
+168-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:95:9-97:48
+169                android:name="android.support.FILE_PROVIDER_PATHS"
+169-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:96:11-61
+170                android:resource="@xml/file_provider_paths" />
+170-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:97:11-45
+171        </provider>
+172
+173        <activity android:name="com.masteratul.exceptionhandler.DefaultErrorScreen" >
+173-->[:react-native-exception-handler] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-exception-handler\android\build\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml:8:9-9:20
+173-->[:react-native-exception-handler] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-exception-handler\android\build\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml:8:19-84
+174        </activity>
+175        <activity
+175-->[:react-native-navigation] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-navigation\lib\android\app\build\intermediates\merged_manifest\reactNative71Release\processReactNative71ReleaseManifest\AndroidManifest.xml:9:9-11:40
+176            android:name="com.facebook.react.devsupport.DevSettingsActivity"
+176-->[:react-native-navigation] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-navigation\lib\android\app\build\intermediates\merged_manifest\reactNative71Release\processReactNative71ReleaseManifest\AndroidManifest.xml:10:13-77
+177            android:exported="false" /> <!-- The main service, handles playback, playlists and media buttons -->
+177-->[:react-native-navigation] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-navigation\lib\android\app\build\intermediates\merged_manifest\reactNative71Release\processReactNative71ReleaseManifest\AndroidManifest.xml:11:13-37
+178        <service
+178-->[:react-native-track-player] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-track-player\android\build\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml:13:9-20:19
+179            android:name="com.guichaguri.trackplayer.service.MusicService"
+179-->[:react-native-track-player] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-track-player\android\build\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml:14:13-75
+180            android:enabled="true"
+180-->[:react-native-track-player] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-track-player\android\build\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml:15:13-35
+181            android:exported="true" >
+181-->[:react-native-track-player] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-track-player\android\build\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml:16:13-36
+182            <intent-filter>
+182-->[:react-native-track-player] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-track-player\android\build\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml:17:13-19:29
+183                <action android:name="android.intent.action.MEDIA_BUTTON" />
+183-->[:react-native-track-player] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-track-player\android\build\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml:18:17-77
+183-->[:react-native-track-player] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-track-player\android\build\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml:18:25-74
+184            </intent-filter>
+185        </service> <!-- A receiver that will receive media buttons. Required on pre-lollipop devices -->
+186        <receiver
+186-->[:react-native-track-player] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-track-player\android\build\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml:23:9-29:20
+187            android:name="androidx.media.session.MediaButtonReceiver"
+187-->[:react-native-track-player] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-track-player\android\build\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml:24:13-70
+188            android:exported="true" >
+188-->[:react-native-track-player] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-track-player\android\build\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml:25:13-36
+189            <intent-filter>
+189-->[:react-native-track-player] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-track-player\android\build\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml:17:13-19:29
+190                <action android:name="android.intent.action.MEDIA_BUTTON" />
+190-->[:react-native-track-player] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-track-player\android\build\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml:18:17-77
+190-->[:react-native-track-player] D:\Program\lx-lxwalnut-music-mobile\node_modules\react-native-track-player\android\build\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml:18:25-74
+191            </intent-filter>
+192        </receiver>
+193
+194        <provider
+194-->[:rn-fetch-blob] D:\Program\lx-lxwalnut-music-mobile\node_modules\rn-fetch-blob\android\build\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml:32:9-40:20
+195            android:name="com.RNFetchBlob.Utils.FileProvider"
+195-->[:rn-fetch-blob] D:\Program\lx-lxwalnut-music-mobile\node_modules\rn-fetch-blob\android\build\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml:33:13-62
+196            android:authorities="com.lxwalnut.music.mobile.provider"
+196-->[:rn-fetch-blob] D:\Program\lx-lxwalnut-music-mobile\node_modules\rn-fetch-blob\android\build\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml:34:13-60
+197            android:exported="false"
+197-->[:rn-fetch-blob] D:\Program\lx-lxwalnut-music-mobile\node_modules\rn-fetch-blob\android\build\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml:35:13-37
+198            android:grantUriPermissions="true" >
+198-->[:rn-fetch-blob] D:\Program\lx-lxwalnut-music-mobile\node_modules\rn-fetch-blob\android\build\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml:36:13-47
+199            <meta-data
+199-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:95:9-97:48
+200                android:name="android.support.FILE_PROVIDER_PATHS"
+200-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:96:11-61
+201                android:resource="@xml/provider_paths" />
+201-->D:\Program\lx-lxwalnut-music-mobile\android\app\src\main\AndroidManifest.xml:97:11-45
+202        </provider>
+203        <provider
+203-->[androidx.emoji2:emoji2:1.2.0] C:\Users\admin\.gradle\caches\8.8\transforms\ef63390370716cc9ce2a61eb34595174\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:24:9-32:20
+204            android:name="androidx.startup.InitializationProvider"
+204-->[androidx.emoji2:emoji2:1.2.0] C:\Users\admin\.gradle\caches\8.8\transforms\ef63390370716cc9ce2a61eb34595174\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:25:13-67
+205            android:authorities="com.lxwalnut.music.mobile.androidx-startup"
+205-->[androidx.emoji2:emoji2:1.2.0] C:\Users\admin\.gradle\caches\8.8\transforms\ef63390370716cc9ce2a61eb34595174\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:26:13-68
+206            android:exported="false" >
+206-->[androidx.emoji2:emoji2:1.2.0] C:\Users\admin\.gradle\caches\8.8\transforms\ef63390370716cc9ce2a61eb34595174\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:27:13-37
+207            <meta-data
+207-->[androidx.emoji2:emoji2:1.2.0] C:\Users\admin\.gradle\caches\8.8\transforms\ef63390370716cc9ce2a61eb34595174\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:29:13-31:52
+208                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+208-->[androidx.emoji2:emoji2:1.2.0] C:\Users\admin\.gradle\caches\8.8\transforms\ef63390370716cc9ce2a61eb34595174\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:30:17-75
+209                android:value="androidx.startup" />
+209-->[androidx.emoji2:emoji2:1.2.0] C:\Users\admin\.gradle\caches\8.8\transforms\ef63390370716cc9ce2a61eb34595174\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:31:17-49
+210            <meta-data
+210-->[androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\admin\.gradle\caches\8.8\transforms\8f17fe30b8f8f57e62f64b6232e3d56a\transformed\jetified-lifecycle-process-2.6.2\AndroidManifest.xml:29:13-31:52
+211                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+211-->[androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\admin\.gradle\caches\8.8\transforms\8f17fe30b8f8f57e62f64b6232e3d56a\transformed\jetified-lifecycle-process-2.6.2\AndroidManifest.xml:30:17-78
+212                android:value="androidx.startup" />
+212-->[androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\admin\.gradle\caches\8.8\transforms\8f17fe30b8f8f57e62f64b6232e3d56a\transformed\jetified-lifecycle-process-2.6.2\AndroidManifest.xml:31:17-49
+213            <meta-data
+213-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\admin\.gradle\caches\8.8\transforms\f9c55bdcbfa0b550f6995f71be73ac86\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:29:13-31:52
+214                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+214-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\admin\.gradle\caches\8.8\transforms\f9c55bdcbfa0b550f6995f71be73ac86\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:30:17-85
+215                android:value="androidx.startup" />
+215-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\admin\.gradle\caches\8.8\transforms\f9c55bdcbfa0b550f6995f71be73ac86\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:31:17-49
+216        </provider>
+217
+218        <meta-data
+218-->[com.github.bumptech.glide:okhttp3-integration:4.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\05ec2a6ef4aded1f9fc206872e5a86e4\transformed\jetified-okhttp3-integration-4.16.0\AndroidManifest.xml:10:9-12:43
+219            android:name="com.bumptech.glide.integration.okhttp3.OkHttpGlideModule"
+219-->[com.github.bumptech.glide:okhttp3-integration:4.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\05ec2a6ef4aded1f9fc206872e5a86e4\transformed\jetified-okhttp3-integration-4.16.0\AndroidManifest.xml:11:13-84
+220            android:value="GlideModule" />
+220-->[com.github.bumptech.glide:okhttp3-integration:4.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\05ec2a6ef4aded1f9fc206872e5a86e4\transformed\jetified-okhttp3-integration-4.16.0\AndroidManifest.xml:12:13-40
+221        <meta-data
+221-->[com.github.zjupure:webpdecoder:2.7.4.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\8f8c1d05cc62af08989d3a814729a3cf\transformed\jetified-webpdecoder-2.7.4.16.0\AndroidManifest.xml:10:9-12:43
+222            android:name="com.bumptech.glide.integration.webp.WebpGlideModule"
+222-->[com.github.zjupure:webpdecoder:2.7.4.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\8f8c1d05cc62af08989d3a814729a3cf\transformed\jetified-webpdecoder-2.7.4.16.0\AndroidManifest.xml:11:13-79
+223            android:value="GlideModule" />
+223-->[com.github.zjupure:webpdecoder:2.7.4.16.0] C:\Users\admin\.gradle\caches\8.8\transforms\8f8c1d05cc62af08989d3a814729a3cf\transformed\jetified-webpdecoder-2.7.4.16.0\AndroidManifest.xml:12:13-40
+224
+225        <service
+225-->[androidx.room:room-runtime:2.4.3] C:\Users\admin\.gradle\caches\8.8\transforms\04c51b8584a818b790b03719e0c73547\transformed\room-runtime-2.4.3\AndroidManifest.xml:25:9-28:40
+226            android:name="androidx.room.MultiInstanceInvalidationService"
+226-->[androidx.room:room-runtime:2.4.3] C:\Users\admin\.gradle\caches\8.8\transforms\04c51b8584a818b790b03719e0c73547\transformed\room-runtime-2.4.3\AndroidManifest.xml:26:13-74
+227            android:directBootAware="true"
+227-->[androidx.room:room-runtime:2.4.3] C:\Users\admin\.gradle\caches\8.8\transforms\04c51b8584a818b790b03719e0c73547\transformed\room-runtime-2.4.3\AndroidManifest.xml:27:13-43
+228            android:exported="false" />
+228-->[androidx.room:room-runtime:2.4.3] C:\Users\admin\.gradle\caches\8.8\transforms\04c51b8584a818b790b03719e0c73547\transformed\room-runtime-2.4.3\AndroidManifest.xml:28:13-37
+229
+230        <receiver
+230-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\admin\.gradle\caches\8.8\transforms\f9c55bdcbfa0b550f6995f71be73ac86\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:34:9-52:20
+231            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+231-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\admin\.gradle\caches\8.8\transforms\f9c55bdcbfa0b550f6995f71be73ac86\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:35:13-76
+232            android:directBootAware="false"
+232-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\admin\.gradle\caches\8.8\transforms\f9c55bdcbfa0b550f6995f71be73ac86\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:36:13-44
+233            android:enabled="true"
+233-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\admin\.gradle\caches\8.8\transforms\f9c55bdcbfa0b550f6995f71be73ac86\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:37:13-35
+234            android:exported="true"
+234-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\admin\.gradle\caches\8.8\transforms\f9c55bdcbfa0b550f6995f71be73ac86\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:38:13-36
+235            android:permission="android.permission.DUMP" >
+235-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\admin\.gradle\caches\8.8\transforms\f9c55bdcbfa0b550f6995f71be73ac86\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:39:13-57
+236            <intent-filter>
+236-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\admin\.gradle\caches\8.8\transforms\f9c55bdcbfa0b550f6995f71be73ac86\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:40:13-42:29
+237                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+237-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\admin\.gradle\caches\8.8\transforms\f9c55bdcbfa0b550f6995f71be73ac86\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:41:17-91
+237-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\admin\.gradle\caches\8.8\transforms\f9c55bdcbfa0b550f6995f71be73ac86\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:41:25-88
+238            </intent-filter>
+239            <intent-filter>
+239-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\admin\.gradle\caches\8.8\transforms\f9c55bdcbfa0b550f6995f71be73ac86\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:43:13-45:29
+240                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+240-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\admin\.gradle\caches\8.8\transforms\f9c55bdcbfa0b550f6995f71be73ac86\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:44:17-85
+240-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\admin\.gradle\caches\8.8\transforms\f9c55bdcbfa0b550f6995f71be73ac86\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:44:25-82
+241            </intent-filter>
+242            <intent-filter>
+242-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\admin\.gradle\caches\8.8\transforms\f9c55bdcbfa0b550f6995f71be73ac86\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:46:13-48:29
+243                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+243-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\admin\.gradle\caches\8.8\transforms\f9c55bdcbfa0b550f6995f71be73ac86\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:47:17-88
+243-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\admin\.gradle\caches\8.8\transforms\f9c55bdcbfa0b550f6995f71be73ac86\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:47:25-85
+244            </intent-filter>
+245            <intent-filter>
+245-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\admin\.gradle\caches\8.8\transforms\f9c55bdcbfa0b550f6995f71be73ac86\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:49:13-51:29
+246                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+246-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\admin\.gradle\caches\8.8\transforms\f9c55bdcbfa0b550f6995f71be73ac86\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:50:17-95
+246-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\admin\.gradle\caches\8.8\transforms\f9c55bdcbfa0b550f6995f71be73ac86\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:50:25-92
+247            </intent-filter>
+248        </receiver>
+249
+250        <meta-data
+250-->[com.facebook.soloader:soloader:0.10.5] C:\Users\admin\.gradle\caches\8.8\transforms\59bb2ea205ff6a0273bc186a045caa7b\transformed\jetified-soloader-0.10.5\AndroidManifest.xml:12:9-14:37
+251            android:name="com.facebook.soloader.enabled"
+251-->[com.facebook.soloader:soloader:0.10.5] C:\Users\admin\.gradle\caches\8.8\transforms\59bb2ea205ff6a0273bc186a045caa7b\transformed\jetified-soloader-0.10.5\AndroidManifest.xml:13:13-57
+252            android:value="false" />
+252-->[com.facebook.soloader:soloader:0.10.5] C:\Users\admin\.gradle\caches\8.8\transforms\59bb2ea205ff6a0273bc186a045caa7b\transformed\jetified-soloader-0.10.5\AndroidManifest.xml:14:13-34
+253    </application>
+254
+255</manifest>

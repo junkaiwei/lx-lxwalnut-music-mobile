@@ -1,0 +1,9 @@
+TASK com.lxwalnut.music.mobile id=6
+  ACTIVITY com.lxwalnut.music.mobile/.MainActivity a3d5d2c pid=7245
+    Local Activity fe91617 State:
+          mHost=android.app.Activity$HostCallbacks@8eb9b8b
+              mHost=android.app.Activity$HostCallbacks@8eb9b8b
+        mHost=android.app.Activity$HostCallbacks@8eb9b8b
+        mContainer=android.app.Activity$HostCallbacks@8eb9b8b
+      Message 0: { when=+1s309ms what=132 target=android.app.ActivityThread$H }
+    Local FragmentActivity fe91617 State:

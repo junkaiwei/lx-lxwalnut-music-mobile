@@ -1,0 +1,148 @@
+Configuration on demand is an incubating feature.
+> Task :gradle-plugin:compileKotlin UP-TO-DATE
+> Task :gradle-plugin:compileJava NO-SOURCE
+> Task :gradle-plugin:pluginDescriptors UP-TO-DATE
+> Task :gradle-plugin:processResources UP-TO-DATE
+> Task :gradle-plugin:classes UP-TO-DATE
+> Task :gradle-plugin:jar UP-TO-DATE
+> Task :gradle-plugin:inspectClassesForKotlinIC UP-TO-DATE
+
+> Configure project :react-native-quick-md5
+react-native-quick-md5: node_modules/ found at: D:\Program\lx-lxwalnut-music-mobile\node_modules
+
+> Configure project :react-native-video
+Kotlin version is correct: 1.9.24
+AndroidX version is correct: 1.9.3
+useExoplayerIMA: false
+useExoplayerSmoothStreaming: true
+useExoplayerDash: true
+useExoplayerHls: true
+useExoplayerRtsp: false
+buildFromSource: false
+
+> Task :react-native-exception-handler:preBuild UP-TO-DATE
+> Task :react-native-cookies_cookies:preBuild UP-TO-DATE
+> Task :react-native-cookies_cookies:preDebugBuild UP-TO-DATE
+> Task :react-native-exception-handler:preDebugBuild UP-TO-DATE
+> Task :d11_react-native-fast-image:preBuild UP-TO-DATE
+> Task :d11_react-native-fast-image:preDebugBuild UP-TO-DATE
+> Task :react-native-community_slider:preBuild UP-TO-DATE
+> Task :react-native-clipboard_clipboard:preBuild UP-TO-DATE
+> Task :react-native-clipboard_clipboard:preDebugBuild UP-TO-DATE
+> Task :react-native-community_slider:preDebugBuild UP-TO-DATE
+> Task :react-native-cookies_cookies:generateDebugResValues UP-TO-DATE
+> Task :react-native-background-timer:preBuild UP-TO-DATE
+> Task :react-native-async-storage_async-storage:preBuild UP-TO-DATE
+> Task :react-native-async-storage_async-storage:preDebugBuild UP-TO-DATE
+> Task :react-native-background-timer:preDebugBuild UP-TO-DATE
+> Task :react-native-community_slider:generateDebugResValues UP-TO-DATE
+> Task :react-native-clipboard_clipboard:generateDebugResValues UP-TO-DATE
+> Task :react-native-exception-handler:generateDebugResValues UP-TO-DATE
+> Task :react-native-cookies_cookies:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-clipboard_clipboard:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-background-timer:generateDebugResValues UP-TO-DATE
+> Task :react-native-async-storage_async-storage:generateDebugResValues UP-TO-DATE
+> Task :react-native-background-timer:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-community_slider:extractDeepLinksDebug UP-TO-DATE
+> Task :d11_react-native-fast-image:generateDebugResValues UP-TO-DATE
+> Task :react-native-async-storage_async-storage:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-clipboard_clipboard:processDebugManifest UP-TO-DATE
+> Task :react-native-file-system:preBuild UP-TO-DATE
+> Task :react-native-exception-handler:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-file-system:preDebugBuild UP-TO-DATE
+> Task :d11_react-native-fast-image:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-file-system:generateDebugResValues UP-TO-DATE
+> Task :react-native-background-timer:processDebugManifest UP-TO-DATE
+> Task :react-native-community_slider:processDebugManifest UP-TO-DATE
+> Task :react-native-local-media-metadata:preBuild UP-TO-DATE
+> Task :react-native-local-media-metadata:preDebugBuild UP-TO-DATE
+> Task :react-native-cookies_cookies:processDebugManifest UP-TO-DATE
+> Task :react-native-local-media-metadata:generateDebugResValues UP-TO-DATE
+> Task :react-native-navigation:preBuild UP-TO-DATE
+> Task :react-native-navigation:preReactNative71DebugBuild UP-TO-DATE
+> Task :react-native-exception-handler:processDebugManifest UP-TO-DATE
+> Task :react-native-navigation:generateReactNative71DebugResValues UP-TO-DATE
+> Task :react-native-fs:preBuild UP-TO-DATE
+> Task :react-native-fs:preDebugBuild UP-TO-DATE
+> Task :react-native-async-storage_async-storage:processDebugManifest UP-TO-DATE
+> Task :react-native-local-media-metadata:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-fs:generateDebugResValues UP-TO-DATE
+> Task :react-native-pager-view:preBuild UP-TO-DATE
+> Task :react-native-pager-view:preDebugBuild UP-TO-DATE
+> Task :react-native-file-system:extractDeepLinksDebug UP-TO-DATE
+> Task :d11_react-native-fast-image:processDebugManifest UP-TO-DATE
+> Task :react-native-fs:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-navigation:extractDeepLinksReactNative71Debug UP-TO-DATE
+> Task :react-native-quick-md5:preBuild UP-TO-DATE
+> Task :react-native-quick-md5:preDebugBuild UP-TO-DATE
+> Task :react-native-pager-view:generateDebugResValues UP-TO-DATE
+> Task :react-native-pager-view:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-file-system:processDebugManifest UP-TO-DATE
+> Task :react-native-quick-md5:generateDebugResValues UP-TO-DATE
+> Task :react-native-quick-base64:preBuild UP-TO-DATE
+> Task :react-native-svg:preBuild UP-TO-DATE
+> Task :react-native-svg:preDebugBuild UP-TO-DATE
+> Task :react-native-quick-base64:preDebugBuild UP-TO-DATE
+> Task :react-native-quick-md5:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-svg:generateDebugResValues UP-TO-DATE
+> Task :react-native-quick-base64:generateDebugResValues UP-TO-DATE
+> Task :react-native-pager-view:processDebugManifest UP-TO-DATE
+> Task :react-native-local-media-metadata:processDebugManifest UP-TO-DATE
+> Task :react-native-navigation:processReactNative71DebugManifest UP-TO-DATE
+> Task :react-native-quick-md5:processDebugManifest UP-TO-DATE
+> Task :react-native-vector-icons:preBuild UP-TO-DATE
+> Task :react-native-track-player:preBuild UP-TO-DATE
+> Task :react-native-udp:preBuild UP-TO-DATE
+> Task :react-native-vector-icons:preDebugBuild UP-TO-DATE
+> Task :react-native-quick-base64:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-track-player:preDebugBuild UP-TO-DATE
+> Task :react-native-svg:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-video:preBuild UP-TO-DATE
+> Task :react-native-video:preDebugBuild UP-TO-DATE
+> Task :react-native-track-player:generateDebugResValues UP-TO-DATE
+> Task :react-native-fs:processDebugManifest UP-TO-DATE
+> Task :react-native-video:generateDebugResValues UP-TO-DATE
+> Task :react-native-track-player:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-webview:preBuild UP-TO-DATE
+> Task :react-native-webview:preDebugBuild UP-TO-DATE
+> Task :react-native-udp:preDebugBuild UP-TO-DATE
+> Task :react-native-video:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-webview:generateDebugResValues UP-TO-DATE
+> Task :react-native-vector-icons:generateDebugResValues UP-TO-DATE
+> Task :react-native-svg:processDebugManifest UP-TO-DATE
+> Task :rn-fetch-blob:preBuild UP-TO-DATE
+> Task :rn-fetch-blob:preDebugBuild UP-TO-DATE
+> Task :react-native-quick-base64:processDebugManifest UP-TO-DATE
+> Task :react-native-track-player:processDebugManifest UP-TO-DATE
+> Task :react-native-vector-icons:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-video:processDebugManifest UP-TO-DATE
+> Task :react-native-webview:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-udp:generateDebugResValues UP-TO-DATE
+> Task :rn-fetch-blob:generateDebugResValues UP-TO-DATE
+> Task :react-native-udp:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-vector-icons:processDebugManifest UP-TO-DATE
+> Task :rn-fetch-blob:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-webview:processDebugManifest UP-TO-DATE
+> Task :react-native-udp:processDebugManifest UP-TO-DATE
+> Task :rn-fetch-blob:processDebugManifest UP-TO-DATE
+
+> Task :app:generateBuildIdentity
+Generated src\config\buildIdentity.ts for com.lxwalnut.music.phase0audit
+
+> Task :app:generateCodegenSchemaFromJavaScript SKIPPED
+> Task :app:generateCodegenArtifactsFromSchema SKIPPED
+> Task :app:generatePackageList
+> Task :app:preBuild
+> Task :app:preDebugBuild
+> Task :app:generateDebugResValues UP-TO-DATE
+> Task :app:extractDeepLinksDebug UP-TO-DATE
+> Task :app:processDebugMainManifest UP-TO-DATE
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.8/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 27s
+73 actionable tasks: 2 executed, 71 up-to-date

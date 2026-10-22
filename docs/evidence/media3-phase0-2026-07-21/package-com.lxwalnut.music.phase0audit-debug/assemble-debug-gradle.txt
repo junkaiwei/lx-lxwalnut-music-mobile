@@ -1,0 +1,627 @@
+Starting a Gradle Daemon, 2 busy and 1 incompatible Daemons could not be reused, use --status for details
+Configuration on demand is an incubating feature.
+> Task :gradle-plugin:compileKotlin UP-TO-DATE
+> Task :gradle-plugin:compileJava NO-SOURCE
+> Task :gradle-plugin:pluginDescriptors UP-TO-DATE
+> Task :gradle-plugin:processResources UP-TO-DATE
+> Task :gradle-plugin:classes UP-TO-DATE
+> Task :gradle-plugin:jar UP-TO-DATE
+> Task :gradle-plugin:inspectClassesForKotlinIC UP-TO-DATE
+.\gradlew.bat : Warning: SDK processing. This version only understands SDK XML versions up to 3 but an SDK XML file of
+version 4 was encountered. This can happen if you use versions of Android Studio and the command-line tools that were r
+eleased at different times.
+At line:2 char:309
++ ... on android; .\gradlew.bat :app:assembleDebug :app:processDebugMainMan ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Warning: SDK pr...ifferent times.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+> Configure project :react-native-quick-md5
+react-native-quick-md5: node_modules/ found at: D:\Program\lx-lxwalnut-music-mobile\node_modules
+
+> Configure project :react-native-video
+Kotlin version is correct: 1.9.24
+AndroidX version is correct: 1.9.3
+useExoplayerIMA: false
+useExoplayerSmoothStreaming: true
+useExoplayerDash: true
+useExoplayerHls: true
+useExoplayerRtsp: false
+buildFromSource: false
+
+> Task :react-native-clipboard_clipboard:preBuild UP-TO-DATE
+> Task :react-native-community_slider:preBuild UP-TO-DATE
+> Task :react-native-cookies_cookies:preBuild UP-TO-DATE
+> Task :d11_react-native-fast-image:preBuild UP-TO-DATE
+> Task :react-native-background-timer:preBuild UP-TO-DATE
+> Task :react-native-exception-handler:preBuild UP-TO-DATE
+> Task :react-native-async-storage_async-storage:preBuild UP-TO-DATE
+> Task :react-native-exception-handler:preDebugBuild UP-TO-DATE
+> Task :react-native-clipboard_clipboard:preDebugBuild UP-TO-DATE
+> Task :react-native-background-timer:preDebugBuild UP-TO-DATE
+> Task :react-native-cookies_cookies:preDebugBuild UP-TO-DATE
+> Task :react-native-async-storage_async-storage:preDebugBuild UP-TO-DATE
+> Task :d11_react-native-fast-image:preDebugBuild UP-TO-DATE
+> Task :react-native-community_slider:preDebugBuild UP-TO-DATE
+> Task :react-native-cookies_cookies:writeDebugAarMetadata UP-TO-DATE
+> Task :react-native-clipboard_clipboard:writeDebugAarMetadata UP-TO-DATE
+> Task :react-native-community_slider:writeDebugAarMetadata UP-TO-DATE
+> Task :react-native-exception-handler:writeDebugAarMetadata UP-TO-DATE
+> Task :react-native-background-timer:writeDebugAarMetadata UP-TO-DATE
+> Task :d11_react-native-fast-image:writeDebugAarMetadata UP-TO-DATE
+> Task :react-native-async-storage_async-storage:writeDebugAarMetadata UP-TO-DATE
+> Task :react-native-file-system:preBuild UP-TO-DATE
+> Task :react-native-fs:preBuild UP-TO-DATE
+> Task :react-native-file-system:preDebugBuild UP-TO-DATE
+> Task :react-native-quick-base64:preBuild UP-TO-DATE
+> Task :react-native-quick-base64:preDebugBuild UP-TO-DATE
+> Task :react-native-navigation:preBuild UP-TO-DATE
+> Task :react-native-quick-md5:preBuild UP-TO-DATE
+> Task :react-native-quick-base64:writeDebugAarMetadata UP-TO-DATE
+> Task :react-native-local-media-metadata:preBuild UP-TO-DATE
+> Task :react-native-local-media-metadata:preDebugBuild UP-TO-DATE
+> Task :react-native-svg:preBuild UP-TO-DATE
+> Task :react-native-fs:preDebugBuild UP-TO-DATE
+> Task :react-native-file-system:writeDebugAarMetadata UP-TO-DATE
+> Task :react-native-track-player:preBuild UP-TO-DATE
+> Task :react-native-quick-md5:preDebugBuild UP-TO-DATE
+> Task :react-native-pager-view:preBuild UP-TO-DATE
+> Task :react-native-local-media-metadata:writeDebugAarMetadata UP-TO-DATE
+> Task :react-native-fs:writeDebugAarMetadata UP-TO-DATE
+> Task :react-native-svg:preDebugBuild UP-TO-DATE
+> Task :react-native-udp:preBuild UP-TO-DATE
+> Task :react-native-navigation:preReactNative71DebugBuild UP-TO-DATE
+> Task :react-native-pager-view:preDebugBuild UP-TO-DATE
+> Task :react-native-quick-md5:writeDebugAarMetadata UP-TO-DATE
+> Task :react-native-udp:preDebugBuild UP-TO-DATE
+> Task :react-native-video:preBuild UP-TO-DATE
+> Task :react-native-video:preDebugBuild UP-TO-DATE
+> Task :react-native-track-player:preDebugBuild UP-TO-DATE
+> Task :react-native-pager-view:writeDebugAarMetadata UP-TO-DATE
+> Task :react-native-udp:writeDebugAarMetadata UP-TO-DATE
+> Task :react-native-webview:preBuild UP-TO-DATE
+> Task :react-native-webview:preDebugBuild UP-TO-DATE
+> Task :react-native-track-player:writeDebugAarMetadata UP-TO-DATE
+> Task :react-native-svg:writeDebugAarMetadata UP-TO-DATE
+> Task :react-native-vector-icons:preBuild UP-TO-DATE
+> Task :rn-fetch-blob:preBuild UP-TO-DATE
+> Task :rn-fetch-blob:preDebugBuild UP-TO-DATE
+> Task :react-native-vector-icons:preDebugBuild UP-TO-DATE
+> Task :react-native-webview:writeDebugAarMetadata UP-TO-DATE
+> Task :react-native-video:writeDebugAarMetadata UP-TO-DATE
+> Task :react-native-navigation:writeReactNative71DebugAarMetadata UP-TO-DATE
+> Task :rn-fetch-blob:writeDebugAarMetadata UP-TO-DATE
+> Task :d11_react-native-fast-image:generateDebugResValues UP-TO-DATE
+> Task :react-native-vector-icons:writeDebugAarMetadata UP-TO-DATE
+> Task :react-native-async-storage_async-storage:generateDebugResValues UP-TO-DATE
+> Task :react-native-clipboard_clipboard:generateDebugResValues UP-TO-DATE
+> Task :react-native-background-timer:generateDebugResValues UP-TO-DATE
+> Task :react-native-async-storage_async-storage:generateDebugResources UP-TO-DATE
+> Task :react-native-cookies_cookies:generateDebugResValues UP-TO-DATE
+> Task :react-native-clipboard_clipboard:generateDebugResources UP-TO-DATE
+> Task :d11_react-native-fast-image:generateDebugResources UP-TO-DATE
+> Task :react-native-community_slider:generateDebugResValues UP-TO-DATE
+> Task :react-native-background-timer:generateDebugResources UP-TO-DATE
+> Task :react-native-exception-handler:generateDebugResValues UP-TO-DATE
+> Task :react-native-cookies_cookies:generateDebugResources UP-TO-DATE
+> Task :react-native-community_slider:generateDebugResources UP-TO-DATE
+> Task :react-native-exception-handler:generateDebugResources UP-TO-DATE
+> Task :react-native-async-storage_async-storage:packageDebugResources UP-TO-DATE
+> Task :react-native-clipboard_clipboard:packageDebugResources UP-TO-DATE
+> Task :react-native-background-timer:packageDebugResources UP-TO-DATE
+> Task :react-native-cookies_cookies:packageDebugResources UP-TO-DATE
+> Task :d11_react-native-fast-image:packageDebugResources UP-TO-DATE
+> Task :react-native-file-system:generateDebugResValues UP-TO-DATE
+> Task :react-native-fs:generateDebugResValues UP-TO-DATE
+> Task :react-native-navigation:generateReactNative71DebugResValues UP-TO-DATE
+> Task :react-native-local-media-metadata:generateDebugResValues UP-TO-DATE
+> Task :react-native-exception-handler:packageDebugResources UP-TO-DATE
+> Task :react-native-pager-view:generateDebugResValues UP-TO-DATE
+> Task :react-native-community_slider:packageDebugResources UP-TO-DATE
+> Task :react-native-fs:generateDebugResources UP-TO-DATE
+> Task :react-native-quick-base64:generateDebugResValues UP-TO-DATE
+> Task :react-native-file-system:generateDebugResources UP-TO-DATE
+> Task :react-native-navigation:generateReactNative71DebugResources UP-TO-DATE
+> Task :react-native-quick-base64:generateDebugResources UP-TO-DATE
+> Task :react-native-quick-md5:generateDebugResValues UP-TO-DATE
+> Task :react-native-local-media-metadata:generateDebugResources UP-TO-DATE
+> Task :react-native-file-system:packageDebugResources UP-TO-DATE
+> Task :react-native-navigation:packageReactNative71DebugResources UP-TO-DATE
+> Task :react-native-fs:packageDebugResources UP-TO-DATE
+> Task :react-native-pager-view:generateDebugResources UP-TO-DATE
+> Task :react-native-svg:generateDebugResValues UP-TO-DATE
+> Task :react-native-quick-md5:generateDebugResources UP-TO-DATE
+> Task :react-native-udp:generateDebugResValues UP-TO-DATE
+> Task :react-native-track-player:generateDebugResValues UP-TO-DATE
+> Task :react-native-quick-base64:packageDebugResources UP-TO-DATE
+> Task :react-native-svg:generateDebugResources UP-TO-DATE
+> Task :react-native-udp:generateDebugResources UP-TO-DATE
+> Task :react-native-vector-icons:generateDebugResValues UP-TO-DATE
+> Task :react-native-track-player:generateDebugResources UP-TO-DATE
+> Task :react-native-vector-icons:generateDebugResources UP-TO-DATE
+> Task :react-native-svg:packageDebugResources UP-TO-DATE
+> Task :react-native-video:generateDebugResValues UP-TO-DATE
+> Task :react-native-local-media-metadata:packageDebugResources UP-TO-DATE
+> Task :react-native-udp:packageDebugResources UP-TO-DATE
+> Task :react-native-pager-view:packageDebugResources UP-TO-DATE
+> Task :rn-fetch-blob:generateDebugResValues UP-TO-DATE
+> Task :react-native-video:generateDebugResources UP-TO-DATE
+> Task :rn-fetch-blob:generateDebugResources UP-TO-DATE
+> Task :react-native-vector-icons:packageDebugResources UP-TO-DATE
+> Task :d11_react-native-fast-image:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-webview:generateDebugResValues UP-TO-DATE
+> Task :react-native-track-player:packageDebugResources UP-TO-DATE
+> Task :react-native-quick-md5:packageDebugResources UP-TO-DATE
+> Task :react-native-async-storage_async-storage:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-background-timer:extractDeepLinksDebug UP-TO-DATE
+> Task :rn-fetch-blob:packageDebugResources UP-TO-DATE
+> Task :react-native-video:packageDebugResources UP-TO-DATE
+> Task :react-native-clipboard_clipboard:extractDeepLinksDebug UP-TO-DATE
+> Task :d11_react-native-fast-image:processDebugManifest UP-TO-DATE
+> Task :react-native-async-storage_async-storage:processDebugManifest UP-TO-DATE
+> Task :react-native-webview:generateDebugResources UP-TO-DATE
+> Task :react-native-cookies_cookies:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-community_slider:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-file-system:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-background-timer:processDebugManifest UP-TO-DATE
+> Task :react-native-exception-handler:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-fs:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-community_slider:processDebugManifest UP-TO-DATE
+> Task :react-native-cookies_cookies:processDebugManifest UP-TO-DATE
+> Task :react-native-file-system:processDebugManifest UP-TO-DATE
+> Task :react-native-local-media-metadata:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-pager-view:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-navigation:extractDeepLinksReactNative71Debug UP-TO-DATE
+> Task :react-native-clipboard_clipboard:processDebugManifest UP-TO-DATE
+> Task :react-native-exception-handler:processDebugManifest UP-TO-DATE
+> Task :react-native-fs:processDebugManifest UP-TO-DATE
+> Task :react-native-quick-base64:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-quick-md5:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-local-media-metadata:processDebugManifest UP-TO-DATE
+> Task :react-native-webview:packageDebugResources UP-TO-DATE
+> Task :react-native-navigation:processReactNative71DebugManifest UP-TO-DATE
+> Task :react-native-quick-base64:processDebugManifest UP-TO-DATE
+> Task :react-native-svg:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-quick-md5:processDebugManifest UP-TO-DATE
+> Task :react-native-video:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-udp:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-vector-icons:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-webview:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-svg:processDebugManifest UP-TO-DATE
+> Task :react-native-udp:processDebugManifest UP-TO-DATE
+> Task :react-native-track-player:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-video:processDebugManifest UP-TO-DATE
+> Task :rn-fetch-blob:extractDeepLinksDebug UP-TO-DATE
+> Task :d11_react-native-fast-image:compileDebugLibraryResources UP-TO-DATE
+> Task :react-native-track-player:processDebugManifest UP-TO-DATE
+> Task :react-native-vector-icons:processDebugManifest UP-TO-DATE
+> Task :react-native-pager-view:processDebugManifest UP-TO-DATE
+> Task :react-native-async-storage_async-storage:compileDebugLibraryResources UP-TO-DATE
+> Task :react-native-community_slider:compileDebugLibraryResources UP-TO-DATE
+> Task :react-native-background-timer:compileDebugLibraryResources UP-TO-DATE
+> Task :react-native-clipboard_clipboard:compileDebugLibraryResources UP-TO-DATE
+> Task :react-native-webview:processDebugManifest UP-TO-DATE
+> Task :rn-fetch-blob:processDebugManifest UP-TO-DATE
+> Task :d11_react-native-fast-image:parseDebugLocalResources UP-TO-DATE
+> Task :react-native-async-storage_async-storage:parseDebugLocalResources UP-TO-DATE
+> Task :react-native-exception-handler:compileDebugLibraryResources UP-TO-DATE
+> Task :react-native-clipboard_clipboard:parseDebugLocalResources UP-TO-DATE
+> Task :react-native-background-timer:parseDebugLocalResources UP-TO-DATE
+> Task :react-native-cookies_cookies:compileDebugLibraryResources UP-TO-DATE
+> Task :react-native-community_slider:parseDebugLocalResources UP-TO-DATE
+> Task :react-native-exception-handler:parseDebugLocalResources UP-TO-DATE
+> Task :react-native-cookies_cookies:parseDebugLocalResources UP-TO-DATE
+> Task :d11_react-native-fast-image:generateDebugRFile UP-TO-DATE
+> Task :react-native-file-system:compileDebugLibraryResources UP-TO-DATE
+> Task :react-native-async-storage_async-storage:generateDebugRFile UP-TO-DATE
+> Task :react-native-clipboard_clipboard:generateDebugRFile UP-TO-DATE
+> Task :react-native-fs:compileDebugLibraryResources UP-TO-DATE
+> Task :react-native-local-media-metadata:compileDebugLibraryResources UP-TO-DATE
+> Task :react-native-fs:parseDebugLocalResources UP-TO-DATE
+> Task :react-native-file-system:parseDebugLocalResources UP-TO-DATE
+> Task :react-native-local-media-metadata:parseDebugLocalResources UP-TO-DATE
+> Task :react-native-exception-handler:generateDebugRFile UP-TO-DATE
+> Task :react-native-file-system:generateDebugRFile UP-TO-DATE
+> Task :react-native-local-media-metadata:generateDebugRFile UP-TO-DATE
+> Task :react-native-fs:generateDebugRFile UP-TO-DATE
+> Task :react-native-background-timer:generateDebugRFile UP-TO-DATE
+> Task :react-native-cookies_cookies:generateDebugRFile UP-TO-DATE
+> Task :react-native-quick-base64:compileDebugLibraryResources UP-TO-DATE
+> Task :react-native-quick-md5:compileDebugLibraryResources UP-TO-DATE
+> Task :react-native-navigation:compileReactNative71DebugLibraryResources UP-TO-DATE
+> Task :react-native-community_slider:generateDebugRFile UP-TO-DATE
+> Task :react-native-pager-view:compileDebugLibraryResources UP-TO-DATE
+> Task :react-native-pager-view:parseDebugLocalResources UP-TO-DATE
+> Task :react-native-quick-base64:parseDebugLocalResources UP-TO-DATE
+> Task :react-native-navigation:parseReactNative71DebugLocalResources UP-TO-DATE
+> Task :react-native-udp:compileDebugLibraryResources UP-TO-DATE
+> Task :react-native-track-player:compileDebugLibraryResources UP-TO-DATE
+> Task :react-native-quick-md5:parseDebugLocalResources UP-TO-DATE
+> Task :react-native-svg:compileDebugLibraryResources UP-TO-DATE
+> Task :react-native-pager-view:generateDebugRFile UP-TO-DATE
+> Task :react-native-vector-icons:compileDebugLibraryResources UP-TO-DATE
+> Task :react-native-track-player:parseDebugLocalResources UP-TO-DATE
+> Task :react-native-vector-icons:parseDebugLocalResources UP-TO-DATE
+> Task :react-native-navigation:generateReactNative71DebugRFile UP-TO-DATE
+> Task :react-native-quick-base64:generateDebugRFile UP-TO-DATE
+> Task :react-native-svg:parseDebugLocalResources UP-TO-DATE
+> Task :react-native-udp:parseDebugLocalResources UP-TO-DATE
+> Task :react-native-quick-md5:generateDebugRFile UP-TO-DATE
+> Task :react-native-video:compileDebugLibraryResources UP-TO-DATE
+> Task :react-native-webview:compileDebugLibraryResources UP-TO-DATE
+> Task :rn-fetch-blob:compileDebugLibraryResources UP-TO-DATE
+> Task :react-native-video:parseDebugLocalResources UP-TO-DATE
+> Task :react-native-webview:parseDebugLocalResources UP-TO-DATE
+> Task :rn-fetch-blob:parseDebugLocalResources UP-TO-DATE
+> Task :react-native-vector-icons:generateDebugRFile UP-TO-DATE
+> Task :react-native-webview:generateDebugRFile UP-TO-DATE
+> Task :react-native-udp:generateDebugRFile UP-TO-DATE
+> Task :react-native-track-player:generateDebugRFile UP-TO-DATE
+> Task :rn-fetch-blob:generateDebugRFile UP-TO-DATE
+> Task :react-native-background-timer:generateDebugBuildConfig UP-TO-DATE
+> Task :d11_react-native-fast-image:generateDebugBuildConfig UP-TO-DATE
+> Task :react-native-background-timer:javaPreCompileDebug UP-TO-DATE
+> Task :react-native-community_slider:generateDebugBuildConfig UP-TO-DATE
+> Task :react-native-clipboard_clipboard:generateDebugBuildConfig UP-TO-DATE
+> Task :react-native-svg:generateDebugRFile UP-TO-DATE
+> Task :react-native-community_slider:javaPreCompileDebug UP-TO-DATE
+> Task :react-native-clipboard_clipboard:javaPreCompileDebug UP-TO-DATE
+> Task :react-native-cookies_cookies:generateDebugBuildConfig UP-TO-DATE
+> Task :react-native-cookies_cookies:javaPreCompileDebug UP-TO-DATE
+> Task :react-native-async-storage_async-storage:checkKotlinGradlePluginConfigurationErrors
+> Task :react-native-video:generateDebugRFile UP-TO-DATE
+> Task :react-native-exception-handler:generateDebugBuildConfig UP-TO-DATE
+> Task :react-native-exception-handler:javaPreCompileDebug UP-TO-DATE
+> Task :react-native-async-storage_async-storage:generateDebugBuildConfig UP-TO-DATE
+> Task :d11_react-native-fast-image:javaPreCompileDebug UP-TO-DATE
+> Task :react-native-background-timer:compileDebugJavaWithJavac UP-TO-DATE
+> Task :react-native-community_slider:compileDebugJavaWithJavac UP-TO-DATE
+> Task :react-native-exception-handler:compileDebugJavaWithJavac UP-TO-DATE
+> Task :react-native-background-timer:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :react-native-community_slider:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :react-native-exception-handler:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :react-native-fs:generateDebugBuildConfig UP-TO-DATE
+> Task :react-native-fs:javaPreCompileDebug UP-TO-DATE
+> Task :react-native-file-system:generateDebugBuildConfig UP-TO-DATE
+> Task :react-native-clipboard_clipboard:compileDebugJavaWithJavac UP-TO-DATE
+> Task :react-native-file-system:javaPreCompileDebug UP-TO-DATE
+> Task :react-native-clipboard_clipboard:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :react-native-fs:compileDebugJavaWithJavac UP-TO-DATE
+> Task :react-native-cookies_cookies:compileDebugJavaWithJavac UP-TO-DATE
+> Task :react-native-fs:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :react-native-cookies_cookies:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :react-native-local-media-metadata:generateDebugBuildConfig UP-TO-DATE
+> Task :react-native-navigation:checkKotlinGradlePluginConfigurationErrors
+> Task :react-native-navigation:generateReactNative71DebugBuildConfig UP-TO-DATE
+> Task :react-native-pager-view:checkKotlinGradlePluginConfigurationErrors
+> Task :react-native-local-media-metadata:javaPreCompileDebug UP-TO-DATE
+> Task :react-native-pager-view:generateDebugBuildConfig UP-TO-DATE
+> Task :react-native-file-system:compileDebugJavaWithJavac UP-TO-DATE
+> Task :d11_react-native-fast-image:compileDebugJavaWithJavac UP-TO-DATE
+> Task :react-native-pager-view:compileDebugKotlin UP-TO-DATE
+> Task :react-native-navigation:compileReactNative71DebugKotlin UP-TO-DATE
+> Task :react-native-file-system:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :react-native-navigation:javaPreCompileReactNative71Debug UP-TO-DATE
+> Task :d11_react-native-fast-image:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :react-native-async-storage_async-storage:kspDebugKotlin UP-TO-DATE
+> Task :react-native-pager-view:javaPreCompileDebug UP-TO-DATE
+> Task :react-native-quick-md5:generateDebugBuildConfig UP-TO-DATE
+> Task :react-native-quick-md5:javaPreCompileDebug UP-TO-DATE
+> Task :react-native-local-media-metadata:compileDebugJavaWithJavac UP-TO-DATE
+> Task :react-native-quick-base64:generateDebugBuildConfig UP-TO-DATE
+> Task :react-native-navigation:compileReactNative71DebugJavaWithJavac UP-TO-DATE
+> Task :react-native-pager-view:compileDebugJavaWithJavac UP-TO-DATE
+> Task :react-native-navigation:bundleLibCompileToJarReactNative71Debug UP-TO-DATE
+> Task :react-native-local-media-metadata:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :react-native-pager-view:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :react-native-quick-base64:javaPreCompileDebug UP-TO-DATE
+> Task :react-native-quick-md5:compileDebugJavaWithJavac UP-TO-DATE
+> Task :react-native-svg:generateDebugBuildConfig UP-TO-DATE
+> Task :react-native-quick-md5:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :react-native-video:checkKotlinGradlePluginConfigurationErrors
+> Task :react-native-svg:javaPreCompileDebug UP-TO-DATE
+> Task :react-native-udp:generateDebugBuildConfig UP-TO-DATE
+> Task :react-native-vector-icons:generateDebugBuildConfig UP-TO-DATE
+> Task :react-native-track-player:generateDebugBuildConfig UP-TO-DATE
+> Task :react-native-udp:javaPreCompileDebug UP-TO-DATE
+> Task :react-native-vector-icons:javaPreCompileDebug UP-TO-DATE
+> Task :react-native-video:generateDebugBuildConfig UP-TO-DATE
+> Task :react-native-track-player:javaPreCompileDebug UP-TO-DATE
+> Task :react-native-udp:compileDebugJavaWithJavac UP-TO-DATE
+> Task :react-native-udp:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :react-native-vector-icons:compileDebugJavaWithJavac UP-TO-DATE
+> Task :react-native-vector-icons:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :react-native-webview:checkKotlinGradlePluginConfigurationErrors
+> Task :react-native-webview:generateDebugBuildConfig UP-TO-DATE
+> Task :react-native-quick-base64:compileDebugJavaWithJavac UP-TO-DATE
+> Task :react-native-quick-base64:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :rn-fetch-blob:generateDebugBuildConfig UP-TO-DATE
+> Task :react-native-svg:compileDebugJavaWithJavac UP-TO-DATE
+> Task :react-native-async-storage_async-storage:compileDebugKotlin UP-TO-DATE
+> Task :react-native-svg:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :react-native-async-storage_async-storage:javaPreCompileDebug UP-TO-DATE
+> Task :rn-fetch-blob:javaPreCompileDebug UP-TO-DATE
+> Task :rn-fetch-blob:compileDebugJavaWithJavac UP-TO-DATE
+> Task :rn-fetch-blob:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :react-native-webview:compileDebugKotlin UP-TO-DATE
+> Task :react-native-track-player:compileDebugJavaWithJavac UP-TO-DATE
+> Task :d11_react-native-fast-image:mergeDebugShaders UP-TO-DATE
+> Task :react-native-webview:javaPreCompileDebug UP-TO-DATE
+> Task :react-native-background-timer:mergeDebugShaders UP-TO-DATE
+> Task :react-native-async-storage_async-storage:compileDebugJavaWithJavac UP-TO-DATE
+> Task :react-native-video:compileDebugKotlin UP-TO-DATE
+> Task :react-native-track-player:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :react-native-clipboard_clipboard:mergeDebugShaders UP-TO-DATE
+> Task :d11_react-native-fast-image:compileDebugShaders NO-SOURCE
+> Task :d11_react-native-fast-image:generateDebugAssets UP-TO-DATE
+> Task :react-native-background-timer:compileDebugShaders NO-SOURCE
+> Task :react-native-background-timer:generateDebugAssets UP-TO-DATE
+> Task :react-native-video:javaPreCompileDebug UP-TO-DATE
+> Task :react-native-community_slider:mergeDebugShaders UP-TO-DATE
+> Task :react-native-async-storage_async-storage:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :react-native-community_slider:compileDebugShaders NO-SOURCE
+> Task :react-native-community_slider:generateDebugAssets UP-TO-DATE
+> Task :react-native-clipboard_clipboard:compileDebugShaders NO-SOURCE
+> Task :react-native-webview:compileDebugJavaWithJavac UP-TO-DATE
+> Task :react-native-clipboard_clipboard:generateDebugAssets UP-TO-DATE
+> Task :d11_react-native-fast-image:packageDebugAssets UP-TO-DATE
+> Task :react-native-background-timer:packageDebugAssets UP-TO-DATE
+> Task :react-native-webview:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :react-native-community_slider:packageDebugAssets UP-TO-DATE
+> Task :react-native-async-storage_async-storage:mergeDebugShaders UP-TO-DATE
+> Task :react-native-cookies_cookies:mergeDebugShaders UP-TO-DATE
+> Task :react-native-file-system:mergeDebugShaders UP-TO-DATE
+> Task :react-native-clipboard_clipboard:packageDebugAssets UP-TO-DATE
+> Task :react-native-exception-handler:mergeDebugShaders UP-TO-DATE
+> Task :react-native-video:compileDebugJavaWithJavac UP-TO-DATE
+> Task :react-native-cookies_cookies:compileDebugShaders NO-SOURCE
+> Task :react-native-cookies_cookies:generateDebugAssets UP-TO-DATE
+> Task :react-native-fs:mergeDebugShaders UP-TO-DATE
+> Task :react-native-async-storage_async-storage:compileDebugShaders NO-SOURCE
+> Task :react-native-async-storage_async-storage:generateDebugAssets UP-TO-DATE
+> Task :react-native-fs:compileDebugShaders NO-SOURCE
+> Task :react-native-file-system:compileDebugShaders NO-SOURCE
+> Task :react-native-fs:generateDebugAssets UP-TO-DATE
+> Task :react-native-file-system:generateDebugAssets UP-TO-DATE
+> Task :react-native-exception-handler:compileDebugShaders NO-SOURCE
+> Task :react-native-cookies_cookies:packageDebugAssets UP-TO-DATE
+> Task :react-native-fs:packageDebugAssets UP-TO-DATE
+> Task :react-native-async-storage_async-storage:packageDebugAssets UP-TO-DATE
+> Task :react-native-file-system:packageDebugAssets UP-TO-DATE
+> Task :react-native-video:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :react-native-exception-handler:generateDebugAssets UP-TO-DATE
+> Task :react-native-local-media-metadata:mergeDebugShaders UP-TO-DATE
+> Task :react-native-exception-handler:packageDebugAssets UP-TO-DATE
+> Task :react-native-pager-view:mergeDebugShaders UP-TO-DATE
+> Task :react-native-svg:mergeDebugShaders UP-TO-DATE
+> Task :react-native-navigation:mergeReactNative71DebugShaders UP-TO-DATE
+> Task :react-native-quick-base64:mergeDebugShaders UP-TO-DATE
+> Task :react-native-pager-view:compileDebugShaders NO-SOURCE
+> Task :react-native-local-media-metadata:compileDebugShaders NO-SOURCE
+> Task :react-native-pager-view:generateDebugAssets UP-TO-DATE
+> Task :react-native-quick-base64:compileDebugShaders NO-SOURCE
+> Task :react-native-local-media-metadata:generateDebugAssets UP-TO-DATE
+> Task :react-native-navigation:compileReactNative71DebugShaders NO-SOURCE
+> Task :react-native-svg:compileDebugShaders NO-SOURCE
+> Task :react-native-quick-base64:generateDebugAssets UP-TO-DATE
+> Task :react-native-quick-md5:mergeDebugShaders UP-TO-DATE
+> Task :react-native-navigation:generateReactNative71DebugAssets UP-TO-DATE
+> Task :react-native-svg:generateDebugAssets UP-TO-DATE
+> Task :react-native-track-player:mergeDebugShaders UP-TO-DATE
+> Task :react-native-quick-md5:compileDebugShaders NO-SOURCE
+> Task :react-native-quick-md5:generateDebugAssets UP-TO-DATE
+> Task :react-native-pager-view:packageDebugAssets UP-TO-DATE
+> Task :react-native-svg:packageDebugAssets UP-TO-DATE
+> Task :react-native-navigation:packageReactNative71DebugAssets UP-TO-DATE
+> Task :react-native-quick-base64:packageDebugAssets UP-TO-DATE
+> Task :react-native-track-player:compileDebugShaders NO-SOURCE
+> Task :react-native-track-player:generateDebugAssets UP-TO-DATE
+> Task :react-native-local-media-metadata:packageDebugAssets UP-TO-DATE
+> Task :react-native-udp:mergeDebugShaders UP-TO-DATE
+> Task :react-native-webview:mergeDebugShaders UP-TO-DATE
+> Task :react-native-video:mergeDebugShaders UP-TO-DATE
+> Task :react-native-vector-icons:mergeDebugShaders UP-TO-DATE
+> Task :react-native-quick-md5:packageDebugAssets UP-TO-DATE
+> Task :rn-fetch-blob:mergeDebugShaders UP-TO-DATE
+> Task :react-native-track-player:packageDebugAssets UP-TO-DATE
+> Task :react-native-udp:compileDebugShaders NO-SOURCE
+> Task :react-native-video:compileDebugShaders NO-SOURCE
+> Task :react-native-udp:generateDebugAssets UP-TO-DATE
+> Task :rn-fetch-blob:compileDebugShaders NO-SOURCE
+> Task :react-native-video:generateDebugAssets UP-TO-DATE
+> Task :rn-fetch-blob:generateDebugAssets UP-TO-DATE
+> Task :react-native-webview:compileDebugShaders NO-SOURCE
+> Task :react-native-webview:generateDebugAssets UP-TO-DATE
+> Task :react-native-udp:packageDebugAssets UP-TO-DATE
+> Task :react-native-webview:packageDebugAssets UP-TO-DATE
+> Task :rn-fetch-blob:packageDebugAssets UP-TO-DATE
+> Task :react-native-pager-view:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :react-native-video:packageDebugAssets UP-TO-DATE
+> Task :d11_react-native-fast-image:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :react-native-async-storage_async-storage:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :react-native-vector-icons:compileDebugShaders NO-SOURCE
+> Task :react-native-webview:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :react-native-vector-icons:generateDebugAssets UP-TO-DATE
+> Task :react-native-video:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :react-native-clipboard_clipboard:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :react-native-cookies_cookies:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :react-native-community_slider:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :react-native-vector-icons:packageDebugAssets UP-TO-DATE
+> Task :react-native-fs:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :react-native-exception-handler:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :react-native-background-timer:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :react-native-local-media-metadata:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :react-native-file-system:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :react-native-quick-base64:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :react-native-navigation:bundleLibRuntimeToJarReactNative71Debug UP-TO-DATE
+> Task :react-native-quick-md5:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :react-native-svg:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :react-native-track-player:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :rn-fetch-blob:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :react-native-vector-icons:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :react-native-udp:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :d11_react-native-fast-image:processDebugJavaRes UP-TO-DATE
+> Task :react-native-background-timer:processDebugJavaRes NO-SOURCE
+> Task :react-native-clipboard_clipboard:processDebugJavaRes NO-SOURCE
+> Task :react-native-community_slider:processDebugJavaRes NO-SOURCE
+> Task :react-native-cookies_cookies:processDebugJavaRes NO-SOURCE
+> Task :react-native-exception-handler:processDebugJavaRes NO-SOURCE
+> Task :react-native-navigation:processReactNative71DebugJavaRes UP-TO-DATE
+> Task :react-native-fs:processDebugJavaRes NO-SOURCE
+> Task :react-native-local-media-metadata:processDebugJavaRes NO-SOURCE
+> Task :react-native-file-system:processDebugJavaRes NO-SOURCE
+> Task :react-native-quick-md5:processDebugJavaRes NO-SOURCE
+> Task :react-native-quick-base64:processDebugJavaRes NO-SOURCE
+> Task :react-native-async-storage_async-storage:processDebugJavaRes UP-TO-DATE
+> Task :react-native-svg:processDebugJavaRes NO-SOURCE
+> Task :react-native-track-player:processDebugJavaRes NO-SOURCE
+> Task :react-native-udp:processDebugJavaRes NO-SOURCE
+> Task :react-native-vector-icons:processDebugJavaRes NO-SOURCE
+> Task :rn-fetch-blob:processDebugJavaRes NO-SOURCE
+> Task :react-native-webview:processDebugJavaRes UP-TO-DATE
+> Task :react-native-video:processDebugJavaRes UP-TO-DATE
+> Task :react-native-pager-view:processDebugJavaRes UP-TO-DATE
+> Task :react-native-cookies_cookies:mergeDebugJniLibFolders UP-TO-DATE
+> Task :react-native-community_slider:mergeDebugJniLibFolders UP-TO-DATE
+> Task :react-native-background-timer:mergeDebugJniLibFolders UP-TO-DATE
+> Task :d11_react-native-fast-image:mergeDebugJniLibFolders UP-TO-DATE
+> Task :react-native-async-storage_async-storage:mergeDebugJniLibFolders UP-TO-DATE
+> Task :react-native-exception-handler:mergeDebugJniLibFolders UP-TO-DATE
+> Task :react-native-clipboard_clipboard:mergeDebugJniLibFolders UP-TO-DATE
+> Task :react-native-background-timer:mergeDebugNativeLibs NO-SOURCE
+> Task :react-native-async-storage_async-storage:mergeDebugNativeLibs NO-SOURCE
+> Task :d11_react-native-fast-image:mergeDebugNativeLibs NO-SOURCE
+> Task :react-native-clipboard_clipboard:mergeDebugNativeLibs NO-SOURCE
+> Task :react-native-cookies_cookies:mergeDebugNativeLibs NO-SOURCE
+> Task :react-native-async-storage_async-storage:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :react-native-background-timer:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :d11_react-native-fast-image:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :react-native-exception-handler:mergeDebugNativeLibs NO-SOURCE
+> Task :react-native-clipboard_clipboard:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :react-native-local-media-metadata:mergeDebugJniLibFolders UP-TO-DATE
+> Task :react-native-fs:mergeDebugJniLibFolders UP-TO-DATE
+> Task :react-native-file-system:mergeDebugJniLibFolders UP-TO-DATE
+> Task :react-native-navigation:mergeReactNative71DebugJniLibFolders UP-TO-DATE
+> Task :react-native-cookies_cookies:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :react-native-exception-handler:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :react-native-community_slider:mergeDebugNativeLibs NO-SOURCE
+> Task :react-native-local-media-metadata:mergeDebugNativeLibs NO-SOURCE
+> Task :react-native-fs:mergeDebugNativeLibs NO-SOURCE
+> Task :react-native-file-system:mergeDebugNativeLibs NO-SOURCE
+> Task :react-native-navigation:mergeReactNative71DebugNativeLibs NO-SOURCE
+
+> Task :app:generateBuildIdentity
+Generated src\config\buildIdentity.ts for com.lxwalnut.music.phase0audit
+
+> Task :react-native-local-media-metadata:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :react-native-pager-view:mergeDebugJniLibFolders UP-TO-DATE
+> Task :react-native-file-system:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :react-native-fs:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :react-native-community_slider:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :react-native-navigation:copyReactNative71DebugJniLibsProjectOnly UP-TO-DATE
+> Task :react-native-pager-view:mergeDebugNativeLibs NO-SOURCE
+> Task :react-native-track-player:mergeDebugJniLibFolders UP-TO-DATE
+> Task :react-native-vector-icons:mergeDebugJniLibFolders UP-TO-DATE
+> Task :react-native-pager-view:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :react-native-vector-icons:mergeDebugNativeLibs NO-SOURCE
+> Task :react-native-track-player:mergeDebugNativeLibs NO-SOURCE
+> Task :react-native-svg:mergeDebugJniLibFolders UP-TO-DATE
+> Task :react-native-track-player:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :app:generateCodegenSchemaFromJavaScript SKIPPED
+> Task :app:generateCodegenArtifactsFromSchema SKIPPED
+> Task :react-native-vector-icons:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :react-native-udp:mergeDebugJniLibFolders UP-TO-DATE
+> Task :react-native-svg:mergeDebugNativeLibs NO-SOURCE
+> Task :react-native-webview:mergeDebugJniLibFolders UP-TO-DATE
+> Task :rn-fetch-blob:mergeDebugJniLibFolders UP-TO-DATE
+> Task :react-native-video:mergeDebugJniLibFolders UP-TO-DATE
+> Task :react-native-svg:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :react-native-udp:mergeDebugNativeLibs NO-SOURCE
+> Task :react-native-webview:mergeDebugNativeLibs NO-SOURCE
+> Task :rn-fetch-blob:mergeDebugNativeLibs NO-SOURCE
+> Task :react-native-video:mergeDebugNativeLibs NO-SOURCE
+> Task :rn-fetch-blob:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :react-native-webview:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :react-native-udp:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :react-native-video:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :app:generatePackageList
+> Task :app:preBuild
+> Task :app:preDebugBuild
+> Task :app:mergeDebugNativeDebugMetadata NO-SOURCE
+> Task :app:checkKotlinGradlePluginConfigurationErrors
+> Task :app:generateDebugBuildConfig
+> Task :react-native-quick-md5:configureCMakeDebug[arm64-v8a]
+> Task :app:checkDebugAarMetadata UP-TO-DATE
+> Task :app:generateDebugResValues
+> Task :react-native-quick-base64:configureCMakeDebug[arm64-v8a]
+> Task :app:mapDebugSourceSetPaths UP-TO-DATE
+> Task :app:generateDebugResources UP-TO-DATE
+> Task :react-native-quick-md5:buildCMakeDebug[arm64-v8a]
+> Task :react-native-quick-md5:configureCMakeDebug[armeabi-v7a]
+> Task :react-native-quick-base64:buildCMakeDebug[arm64-v8a]
+> Task :react-native-quick-md5:buildCMakeDebug[armeabi-v7a]
+> Task :react-native-quick-base64:configureCMakeDebug[armeabi-v7a]
+> Task :react-native-quick-md5:configureCMakeDebug[x86]
+> Task :react-native-quick-base64:buildCMakeDebug[armeabi-v7a]
+> Task :react-native-quick-md5:buildCMakeDebug[x86]
+> Task :react-native-quick-base64:configureCMakeDebug[x86]
+> Task :react-native-quick-md5:configureCMakeDebug[x86_64]
+> Task :react-native-quick-md5:buildCMakeDebug[x86_64]
+> Task :react-native-quick-md5:mergeDebugJniLibFolders UP-TO-DATE
+> Task :react-native-quick-md5:mergeDebugNativeLibs UP-TO-DATE
+> Task :react-native-quick-md5:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :react-native-quick-base64:buildCMakeDebug[x86]
+> Task :react-native-quick-base64:configureCMakeDebug[x86_64]
+> Task :react-native-quick-base64:buildCMakeDebug[x86_64]
+> Task :react-native-quick-base64:mergeDebugJniLibFolders UP-TO-DATE
+> Task :react-native-quick-base64:mergeDebugNativeLibs UP-TO-DATE
+> Task :react-native-quick-base64:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :app:packageDebugResources
+> Task :app:createDebugCompatibleScreenManifests
+> Task :app:extractDeepLinksDebug
+> Task :app:parseDebugLocalResources
+
+> Task :app:processDebugMainManifest
+D:\Program\lx-lxwalnut-music-mobile\android\app\src\debug\AndroidManifest.xml Warning:
+	meta-data#android.support.FILE_PROVIDER_PATHS@android:resource was tagged at AndroidManifest.xml:0 to replace other declarations but no other declaration present
+
+> Task :app:processDebugManifest
+> Task :app:javaPreCompileDebug UP-TO-DATE
+> Task :app:mergeDebugShaders UP-TO-DATE
+> Task :app:compileDebugShaders NO-SOURCE
+> Task :app:generateDebugAssets UP-TO-DATE
+> Task :app:mergeDebugAssets UP-TO-DATE
+> Task :app:compressDebugAssets UP-TO-DATE
+> Task :app:desugarDebugFileDependencies UP-TO-DATE
+> Task :app:checkDebugDuplicateClasses UP-TO-DATE
+> Task :app:mergeExtDexDebug UP-TO-DATE
+> Task :app:mergeLibDexDebug UP-TO-DATE
+> Task :app:mergeDebugJniLibFolders UP-TO-DATE
+> Task :app:mergeDebugNativeLibs UP-TO-DATE
+> Task :app:stripDebugDebugSymbols UP-TO-DATE
+> Task :app:validateSigningDebug UP-TO-DATE
+> Task :app:writeDebugAppMetadata UP-TO-DATE
+> Task :app:writeDebugSigningConfigVersions UP-TO-DATE
+> Task :app:processDebugManifestForPackage
+> Task :app:mergeDebugResources
+> Task :app:processDebugResources
+> Task :app:compileDebugKotlin NO-SOURCE
+> Task :app:compileDebugJavaWithJavac
+> Task :app:dexBuilderDebug
+> Task :app:mergeDebugGlobalSynthetics UP-TO-DATE
+> Task :app:processDebugJavaRes NO-SOURCE
+> Task :app:mergeDebugJavaResource UP-TO-DATE
+> Task :app:mergeProjectDexDebug
+> Task :app:packageDebug
+> Task :app:createDebugApkListingFileRedirect
+> Task :app:assembleDebug
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.8/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 1m 36s
+456 actionable tasks: 40 executed, 416 up-to-date
